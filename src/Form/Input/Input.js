@@ -177,14 +177,19 @@ Input.publicProps = {
   onChange: PropTypes.func,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   placeholder: PropTypes.string,
-  attributes: PropTypes.objectOf(PropTypes.string),
-  value: PropTypes.any,
-  valueOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    })
+  attributes: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
+  value: PropTypes.any,
+  valueOptions: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string,
+      })
+    ),
+    PropTypes.func,
+  ]),
   minSymbols: PropTypes.number,
   maxSymbols: PropTypes.number,
   mask: PropTypes.string,

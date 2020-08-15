@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../helpers/compareObjects';
+import useValueOptions from '../../../helpers/getValueOptions';
 
 function Select(props) {
   const {
-    valueOptions,
+    valueOptions: options,
     name,
     value: currentValue,
     placeholder,
     onChange,
     required,
   } = props;
+
+  let [valueOptions, loading] = useValueOptions(options);
 
   function renderOption(valueOption) {
     return (
@@ -19,6 +22,12 @@ function Select(props) {
       </option>
     );
   }
+
+  useEffect(() => {
+    if (valueOptions && valueOptions.length === 1 && !placeholder) {
+      onChange({ target: { name, value: valueOptions[0].value } });
+    }
+  }, [valueOptions, placeholder]);
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
@@ -34,7 +43,13 @@ function Select(props) {
           {placeholder}
         </option>
       )}
-      {valueOptions.map((value) => renderOption(value))}
+      {loading ? (
+        <option disabled value="">
+          loading...
+        </option>
+      ) : (
+        valueOptions.map((value) => renderOption(value))
+      )}
     </select>
   );
 }
@@ -50,12 +65,15 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   required: PropTypes.bool,
   name: PropTypes.string.isRequired,
-  valueOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string,
-    })
-  ).isRequired,
+  valueOptions: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string,
+      })
+    ),
+    PropTypes.func,
+  ]).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

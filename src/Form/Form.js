@@ -8,6 +8,7 @@ import formatFormValues from '../helpers/formHelpers/formatFormValues';
 import validateForm from '../helpers/formHelpers/validateForm';
 import setFormDefaultValue from '../helpers/formHelpers/setFormDefaultValue';
 import CreateInput from './CreateInput';
+import Spinner from '../Spinner';
 
 class Form extends React.Component {
   constructor(props) {

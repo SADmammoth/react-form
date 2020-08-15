@@ -1,10 +1,15 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import checkboxValueSeparator from '../../../helpers/formHelpers/checkboxValueSeparator';
 import compareObjects from '../../../helpers/compareObjects';
+import useValueOptions from '../../../helpers/getValueOptions';
+import Spinner from '../../../Spinner';
 
 function CheckboxGroup(props) {
+  let { valueOptions: options } = props;
+  let [valueOptions, loading] = useValueOptions(options);
+
   function renderCheckbox(
     valueOption,
     { value: commonValue, id, type, name, onChange, attributes }
@@ -49,8 +54,14 @@ function CheckboxGroup(props) {
   }
 
   function renderCheckboxes() {
-    return props.valueOptions.map((valueOption) =>
-      renderCheckbox(valueOption, props)
+    return (
+      <>
+        {loading ? (
+          <Spinner size={12} />
+        ) : (
+          valueOptions.map((valueOption) => renderCheckbox(valueOption, props))
+        )}
+      </>
     );
   }
 
@@ -84,12 +95,15 @@ CheckboxGroup.propTypes = {
   ]),
 
   // List of buttons values in group
-  valueOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string,
-    })
-  ).isRequired,
+  valueOptions: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string,
+      })
+    ),
+    PropTypes.func,
+  ]).isRequired,
   description: PropTypes.string,
   onInput: PropTypes.func,
   onChange: PropTypes.func,
