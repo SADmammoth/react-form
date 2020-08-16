@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../styles/spinner.scss';
 
 function Spinner({ centered, spinnerColor, spinnerBgColor, size }) {
   return (

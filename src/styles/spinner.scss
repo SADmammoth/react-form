@@ -1,0 +1,42 @@
+@import './variables.scss';
+@import './animation.scss';
+
+.spinner {
+  --spinnerSize: 40px;
+
+  position: relative;
+  width: var(--spinnerSize);
+  height: var(--spinnerSize);
+  border: calc(var(--spinnerSize) / 5) solid var(--common-color);
+  border-radius: 100%;
+  box-sizing: border-box;
+
+  &_centered {
+    position: absolute;
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%, 50%);
+  }
+
+  &::before {
+    content: '';
+    --i: 0;
+    display: block;
+    position: absolute;
+    top: calc(-1 * (var(--spinnerSize) / 5 + 1px));
+    left: calc(-1 * (var(--spinnerSize) / 5 + 1px));
+    width: calc(var(--spinnerSize) + 2px);
+    height: calc(var(--spinnerSize) + 2px);
+    border-radius: 100%;
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        calc(90deg + var(--i)),
+        transparent 50%,
+        var(--bg-color) 50%
+      ),
+      linear-gradient(90deg, var(--bg-color) 50%, transparent 50%);
+
+    animation: spin 0.8s linear infinite, scale 1.5s infinite ease-in-out;
+  }
+}

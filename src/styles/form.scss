@@ -1,0 +1,32 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.form-textarea {
+  resize: none;
+
+  @include input;
+
+  &.placeholdered {
+    color: $muted;
+  }
+}
+
+.form-control {
+  @include input;
+}
+
+.form-select {
+  @include input;
+
+  &.placeholdered {
+    color: $muted;
+  }
+}
+
+.form-checkbox {
+  @include checkbox;
+}
+
+.form-radio {
+  @include radiobutton;
+}

@@ -1,0 +1,78 @@
+@import './variables.scss';
+
+@mixin input {
+  background-color: $bg;
+  border: $border-width solid $common;
+  border-radius: $border-radius;
+  color: $common;
+  outline-color: $highlight;
+  padding: 2%;
+
+  &::-webkit-input-placeholder {
+    color: $muted;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $common;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+}
+
+@mixin checkbox {
+  appearance: none;
+  outline: none;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin-bottom: -3px;
+    border: $border-width solid $common;
+    border-radius: $border-radius;
+    background-color: none;
+  }
+  &:checked::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 8px;
+    height: 8px;
+    margin-bottom: -3px;
+    border-radius: 1px;
+    background-color: $highlight;
+  }
+}
+
+@mixin radiobutton {
+  appearance: none;
+  outline: none;
+  position: relative;
+  &::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border: $border-width solid $common;
+    border-radius: 100%;
+    background-color: none;
+  }
+  &:checked::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background-color: $highlight;
+  }
+}
