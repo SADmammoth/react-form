@@ -47,11 +47,43 @@ const App = () => {
             return new Promise((resolve, reject) => {
               setTimeout(() => {
                 resolve([{ value: 'val', label: 'label' }]);
-              }, 10000);
+              }, 1000);
             });
           },
           required: false,
           label: 'Checkboxes',
+        },
+        {
+          type: 'toggle',
+          name: 'toggles',
+          valueOptions: [
+            {
+              value: 'toggle1',
+              label: 'Toggle 1',
+            },
+            {
+              value: 'toggle2',
+              label: 'Toggle 2',
+            },
+          ],
+          required: false,
+          label: 'Toggles',
+        },
+        {
+          type: 'spoiler',
+          name: 'spoilers',
+          valueOptions: [
+            {
+              value: 'spoiler1',
+              label: 'Spoiler 1',
+            },
+            {
+              value: 'spoiler2',
+              label: 'Spoiler 2',
+            },
+          ],
+          required: false,
+          label: 'Spoilers',
         },
         {
           type: 'select',

@@ -79,6 +79,7 @@ class Form extends React.Component {
       valuesData[input.name] = {
         id: input.name,
         value: input.defaultValue || input.value,
+        required: input.required,
         defaultValue: setFormDefaultValue(values, input),
       };
     });

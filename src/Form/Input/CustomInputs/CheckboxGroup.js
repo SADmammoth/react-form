@@ -21,7 +21,7 @@ function CheckboxGroup(props) {
     const values = checkboxValueSeparator(commonValue);
 
     const onChangeHandler = (event) => {
-      if (type === 'checkbox') {
+      if (type === 'checkbox' || type === 'toggle' || type === 'spoiler') {
         const { checked, value } = event.target;
         if (checked) {
           values.push(value);
@@ -39,7 +39,11 @@ function CheckboxGroup(props) {
         <input
           id={id + valueOption.value}
           name={name}
-          type={type}
+          type={
+            type === 'checkbox' || type === 'toggle' || type === 'spoiler'
+              ? 'checkbox'
+              : 'radio'
+          }
           className={`form-${type}${required ? ' required' : ''}`}
           value={valueOption.value}
           onChange={onChangeHandler}
@@ -86,7 +90,7 @@ CheckboxGroup.defaultProps = {
 CheckboxGroup.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['radio', 'checkbox']).isRequired,
+  type: PropTypes.oneOf(['radio', 'checkbox', 'toggle', 'spoiler']).isRequired,
 
   // String of array for checkbox and string for radio
   value: PropTypes.oneOfType([

@@ -55,6 +55,7 @@
   appearance: none;
   outline: none;
   position: relative;
+
   &::before {
     content: '';
     display: block;
@@ -64,6 +65,7 @@
     border-radius: 100%;
     background-color: none;
   }
+
   &:checked::after {
     content: '';
     display: block;
@@ -74,5 +76,61 @@
     height: 8px;
     border-radius: 100%;
     background-color: $highlight;
+  }
+}
+
+@mixin toggle {
+  appearance: none;
+  outline: none;
+  position: relative;
+  margin-bottom: -2px;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 12px;
+    border: $border-width solid $common;
+    border-radius: 10px;
+    background-color: none;
+  }
+
+  &:checked::before {
+    border: $border-width solid $highlight;
+    background-color: $muted;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: unset;
+    left: calc(#{$border-width} + 2px);
+    top: calc(#{$border-width} + 2px);
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background-color: $common;
+  }
+  &:checked::after {
+    content: '';
+    left: unset;
+    right: calc(#{$border-width} + 2px);
+    background-color: $highlight;
+  }
+}
+
+@mixin spoiler {
+  appearance: none;
+  outline: none;
+  position: relative;
+  margin-bottom: -2px;
+
+  &::before {
+    content: '\25BC';
+  }
+
+  &:checked::before {
+    content: '\25B2';
   }
 }

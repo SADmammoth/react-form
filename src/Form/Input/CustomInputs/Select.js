@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../helpers/compareObjects';
 import useValueOptions from '../../../helpers/getValueOptions';
+import Spinner from '../../../Spinner';
 
 function Select(props) {
   const {
@@ -14,12 +15,27 @@ function Select(props) {
   } = props;
 
   let [valueOptions, loading] = useValueOptions(options);
+  let [currentLabel, setCurrentLabel] = useState(null);
 
   function renderOption(valueOption) {
+    let isActive;
+    if (currentValue === valueOption.value && !isActive) {
+      isActive = true;
+    } else {
+      isActive = false;
+    }
     return (
-      <option key={name + valueOption.value} value={valueOption.value}>
+      <div
+        className={`option${isActive ? ' active' : ''}`}
+        key={name + valueOption.value}
+        onClick={() => {
+          showList(false);
+          setCurrentLabel(valueOption.label);
+          onChange({ target: { name, value: valueOption.value } });
+        }}
+      >
         {valueOption.label}
-      </option>
+      </div>
     );
   }
 
@@ -28,29 +44,41 @@ function Select(props) {
       onChange({ target: { name, value: valueOptions[0].value } });
     }
   }, [valueOptions, placeholder]);
-  console.log(currentValue);
+
+  let [listShown, showList] = useState(false);
+
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <select
+    <div
       className={`form-select${!currentValue ? ' placeholdered' : ''}`}
       name={name}
-      value={currentValue}
-      onChange={onChange}
-      required={required && 'required'}
     >
-      {placeholder && (
-        <option disabled value="">
-          {placeholder}
-        </option>
+      <div className="select-header">
+        {currentLabel || placeholder || 'Choose option...'}
+        <input
+          type="checkbox"
+          className="form-spoiler"
+          name="select-header-button"
+          checked={listShown ? 'checked' : null}
+          onClick={() => {
+            showList(!listShown);
+          }}
+          style={{ fontSize: '10px', marginBottom: '0px' }}
+        />
+      </div>
+      {listShown && (
+        <div className="select-list">
+          {loading ? (
+            <div className="option disabled" value="">
+              <Spinner size={14} />
+              <span>loading...</span>
+            </div>
+          ) : (
+            valueOptions.map((value) => renderOption(value))
+          )}
+        </div>
       )}
-      {loading ? (
-        <option disabled value="">
-          loading...
-        </option>
-      ) : (
-        valueOptions.map((value) => renderOption(value))
-      )}
-    </select>
+    </div>
   );
 }
 

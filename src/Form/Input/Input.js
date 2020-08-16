@@ -66,7 +66,12 @@ function Input(props) {
   };
 
   function renderInput() {
-    if (type === 'checkbox' || type === 'radio') {
+    if (
+      type === 'checkbox' ||
+      type === 'radio' ||
+      type === 'toggle' ||
+      type === 'spoiler'
+    ) {
       return LabeledInput(
         label,
         id,
