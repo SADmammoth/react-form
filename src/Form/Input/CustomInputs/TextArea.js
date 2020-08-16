@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import checkCharsCount from '../../../helpers/formHelpers/checkCharsCount';
 import compareObjects from '../../../helpers/compareObjects';
@@ -16,7 +16,22 @@ function TextArea(props) {
     minSymbols,
     maxSymbols,
     onError,
+    placeholder,
   } = props;
+
+  let onFocus = (event) => {
+    switchPlaceholder(false);
+    event.target.value = value;
+  };
+
+  let [placeholderOn, switchPlaceholder] = useState(false);
+
+  useEffect(() => {
+    console.log(value);
+    if (!value) {
+      switchPlaceholder(true);
+    }
+  }, []);
 
   const onChangeHandler = (event) => {
     if (checkCharsCount(event.target.value, minSymbols, maxSymbols)) {
@@ -24,18 +39,22 @@ function TextArea(props) {
     } else {
       onError(event);
     }
+    if (!value) {
+      switchPlaceholder(true);
+    }
   };
 
   return (
     <textarea
       id={id}
-      className="form-textarea"
+      className={`form-textarea${placeholderOn ? ' placeholdered' : ''}`}
       name={name}
       onChange={onInput}
       onBlur={onChangeHandler}
       required={required && 'required'}
       {...attributes}
-      value={value}
+      value={placeholderOn ? placeholder : value}
+      onFocus={onFocus}
     >
       {description}
     </textarea>
@@ -45,7 +64,7 @@ function TextArea(props) {
 TextArea.defaultProps = {
   onInput: () => {},
   onChange: () => {},
-  value: null,
+  value: '',
   required: false,
   attributes: null,
   description: null,

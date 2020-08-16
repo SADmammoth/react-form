@@ -20,8 +20,25 @@ const App = () => {
         {
           type: 'textarea',
           name: 'content',
+          placeholder: 'Content',
           required: false,
           label: 'Content',
+        },
+        {
+          type: 'radio',
+          name: 'radiobuttons',
+          valueOptions: [
+            {
+              value: 'radio1',
+              label: 'Radio 1',
+            },
+            {
+              value: 'radio2',
+              label: 'Radio 2',
+            },
+          ],
+          required: false,
+          label: 'Radios',
         },
         {
           type: 'checkbox',
@@ -34,7 +51,7 @@ const App = () => {
             });
           },
           required: false,
-          label: 'Content',
+          label: 'Checkboxes',
         },
         {
           type: 'select',

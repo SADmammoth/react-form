@@ -8,7 +8,7 @@ export default function useValueOptions(fetch) {
       fetch().then((options) => setValueOptions(options));
     }, [setValueOptions]);
   } else {
-    setValueOptions(fetch);
+    valueOptions = fetch;
   }
 
   return [valueOptions, !valueOptions];

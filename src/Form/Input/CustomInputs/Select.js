@@ -28,11 +28,11 @@ function Select(props) {
       onChange({ target: { name, value: valueOptions[0].value } });
     }
   }, [valueOptions, placeholder]);
-
+  console.log(currentValue);
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <select
-      className="form-select"
+      className={`form-select${!currentValue ? ' placeholdered' : ''}`}
       name={name}
       value={currentValue}
       onChange={onChange}

@@ -122,6 +122,7 @@ function Input(props) {
           value={value}
           minSymbols={minSymbols}
           maxSymbols={maxSymbols}
+          placeholder={placeholder}
         />
       );
     }
