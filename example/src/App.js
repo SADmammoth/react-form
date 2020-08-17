@@ -104,7 +104,7 @@ const App = () => {
           value: 1,
           required: true,
           label: 'Duration, hrs',
-          attributes: { min: 1, max: 8, step: 2 },
+          attributes: { min: 1, max: 8, step: 0.5 },
         },
       ]}
       style={{ width: '20vw', margin: '0 auto' }}

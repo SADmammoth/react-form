@@ -9,6 +9,7 @@ function CustomNumber(props) {
     type,
     value: currentValue,
     placeholder,
+    onInput,
     onChange,
     required,
     attributes: { min, max, step },
@@ -16,8 +17,10 @@ function CustomNumber(props) {
 
   let getCounter = (value) => {
     let newValue = value;
-    if (step && step !== 1 && (newValue - min) / step !== 0) {
-      newValue = (step * (newValue - min)) % step;
+    let product = (newValue - min) / step;
+
+    if (step && step !== 1 && product !== Math.round(product)) {
+      newValue = step * Math.round(product) + min;
     }
 
     if (newValue > max) {
@@ -31,21 +34,19 @@ function CustomNumber(props) {
     return newValue;
   };
 
-  if (currentValue !== getCounter(currentValue)) {
-    onChange({ target: { name, value: min } });
-  }
-
-  let onChangeHandler = (counter) => {
-    onChange({ target: { name, value: counter } });
-  };
+  useEffect(() => {
+    if (currentValue !== getCounter(currentValue)) {
+      onChange({ target: { name, value: getCounter(currentValue) } });
+    }
+  }, [currentValue, onChange]);
 
   let increment = async (event) => {
-    event.target.value = getCounter(parseInt(currentValue) + step);
+    event.target.value = getCounter(parseFloat(currentValue) + step);
     onChange(event);
   };
 
   let decrement = async () => {
-    event.target.value = getCounter(parseInt(currentValue) - step);
+    event.target.value = getCounter(parseFloat(currentValue) - step);
     onChange(event);
   };
 
@@ -54,12 +55,14 @@ function CustomNumber(props) {
       return;
     }
 
-    if (type === 'number' && Validator.number(event.target.value, min, max)) {
-      if (event.target.value == getCounter(parseInt(event.target.value))) {
-        event.target.value = getCounter(parseInt(event.target.value));
-        onChange(event);
-      }
+    if (Validator.numericByChar(event.target.value)) {
+      onInput(event);
     }
+  };
+
+  let onChangeHandler = () => {
+    event.target.value = getCounter(parseFloat(event.target.value));
+    onChange(event);
   };
 
   return (
@@ -69,6 +72,7 @@ function CustomNumber(props) {
         type="text"
         name={name}
         onChange={onInputHandler}
+        onBlur={onChangeHandler}
         value={currentValue}
       ></input>
       <button
