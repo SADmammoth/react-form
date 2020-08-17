@@ -7,6 +7,7 @@ import errorNotification from '../../helpers/formHelpers/errorNotification';
 import compareObjects from '../../helpers/compareObjects';
 import MaskedInput from './MaskedInput';
 import LabeledInput from './LabeledInput';
+import CustomNumber from './CustomInputs/CustomNumber';
 
 function Input(props) {
   const {
@@ -88,6 +89,25 @@ function Input(props) {
           attributes={attributes}
           value={value}
           valueOptions={valueOptions}
+        />
+      );
+    }
+
+    if (type === 'number') {
+      return LabeledInput(
+        label,
+        id,
+        <CustomNumber
+          id={id}
+          type={type}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          placeholder={placeholder}
         />
       );
     }

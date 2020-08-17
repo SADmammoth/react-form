@@ -59,8 +59,8 @@ function Select(props) {
           type="checkbox"
           className="form-spoiler"
           name="select-header-button"
-          checked={listShown ? 'checked' : null}
-          onClick={() => {
+          checked={listShown ? 'checked' : ''}
+          onChange={() => {
             showList(!listShown);
           }}
           style={{ fontSize: '10px', marginBottom: '0px' }}
