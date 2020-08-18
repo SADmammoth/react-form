@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../helpers/compareObjects';
 import Validator from '../../../Validator/Validator';
+import getCounter from '../../../helpers/formHelpers/getCounter';
 
 function CustomNumber(props) {
   const {
@@ -15,38 +16,26 @@ function CustomNumber(props) {
     attributes: { min, max, step },
   } = props;
 
-  let getCounter = (value) => {
-    let newValue = value;
-    let product = (newValue - min) / step;
-
-    if (step && step !== 1 && product !== Math.round(product)) {
-      newValue = step * Math.round(product) + min;
-    }
-
-    if (newValue > max) {
-      newValue = max;
-    }
-
-    if (newValue < min) {
-      newValue = min;
-    }
-
-    return newValue;
-  };
+  let counter = useCallback(
+    (value) => {
+      return getCounter(value, min, max, step);
+    },
+    [min, max, step]
+  );
 
   useEffect(() => {
-    if (currentValue !== getCounter(currentValue)) {
-      onChange({ target: { name, value: getCounter(currentValue) } });
+    if (currentValue !== counter(currentValue)) {
+      onChange({ target: { name, value: counter(currentValue) } });
     }
   }, [currentValue, onChange]);
 
   let increment = async (event) => {
-    event.target.value = getCounter(parseFloat(currentValue) + step);
+    event.target.value = counter(parseFloat(currentValue) + step);
     onChange(event);
   };
 
   let decrement = async () => {
-    event.target.value = getCounter(parseFloat(currentValue) - step);
+    event.target.value = counter(parseFloat(currentValue) - step);
     onChange(event);
   };
 
@@ -61,7 +50,7 @@ function CustomNumber(props) {
   };
 
   let onChangeHandler = () => {
-    event.target.value = getCounter(parseFloat(event.target.value));
+    event.target.value = counter(parseFloat(event.target.value));
     onChange(event);
   };
 
@@ -117,6 +106,7 @@ CustomNumber.propTypes = {
     step: PropTypes.number,
   }),
   onChange: PropTypes.func.isRequired,
+  onInput: PropTypes.func,
 };
 
 export default React.memo(CustomNumber, compareObjects);
