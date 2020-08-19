@@ -106,6 +106,16 @@ const App = () => {
           label: 'Duration, hrs',
           attributes: { min: 1, max: 8, step: 0.5 },
         },
+        {
+          type: 'slider',
+          name: 'alphabet',
+          required: false,
+          label: 'Alphabet',
+          valueOptions: 'qwertyuiopafghjklzxcvbnm'
+            .split('')
+            .sort()
+            .map((letter) => ({ label: letter.toUpperCase(), value: letter })),
+        },
       ]}
       style={{ width: '20vw', margin: '0 auto' }}
       submitButton={<button>Submit</button>}

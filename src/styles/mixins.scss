@@ -134,3 +134,145 @@
     content: '\25B2';
   }
 }
+
+@mixin select {
+  position: relative;
+  .select-header {
+    @include input;
+    .form-spoiler {
+      position: absolute;
+      right: 3%;
+    }
+  }
+
+  .select-list {
+    @include input;
+    margin-top: 1px;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+
+    z-index: 999999;
+  }
+
+  .option {
+    display: flex;
+    justify-items: flex-start;
+
+    & :nth-child(n + 2) {
+      margin-left: 5px;
+    }
+  }
+
+  .option.disabled {
+    border: $border-width solid $muted;
+    color: $muted;
+    padding: 3%;
+  }
+
+  .option.active {
+    color: $highlight;
+    background-color: $muted;
+    width: calc(106% - #{$border-width} * 2);
+    margin-left: calc(#{$border-width} - 3%);
+    box-sizing: border-box;
+    padding: 3%;
+
+    &:first-child {
+      margin-top: calc(#{$border-width} - 3%);
+      margin-bottom: calc(#{$border-width} - 3%);
+    }
+  }
+
+  &.placeholdered > .select-header {
+    color: $muted;
+  }
+}
+
+@mixin number {
+  position: relative;
+  input {
+    width: 100%;
+  }
+  &-minus,
+  &-plus {
+    position: absolute;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  &-plus {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+    line-height: 0.1;
+    height: 8px;
+    top: 0px;
+    right: -4px;
+    margin: 0;
+  }
+
+  &-minus {
+    font-size: 18px;
+    width: 20px;
+    height: 8px;
+    text-align: center;
+    line-height: 0.1;
+    bottom: 0px;
+    right: -4px;
+    margin: 0;
+  }
+}
+
+@mixin slider {
+  --percent: 0;
+
+  height: 30px;
+
+  &-prev,
+  &-next {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  &-next {
+    display: inline-block;
+  }
+
+  input {
+    display: none;
+  }
+
+  &-bg {
+    display: inline-block;
+    width: 75%;
+    height: 2px;
+    background: $muted;
+    position: relative;
+    &::before {
+      content: '';
+      width: calc(var(--percent) * 1%);
+      height: 2px;
+      position: absolute;
+      left: 0;
+      background: $common;
+    }
+  }
+
+  &-thumb {
+    position: relative;
+    left: calc(var(--percent) * 1% - 5px);
+
+    margin-top: -4px;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background: $highlight;
+  }
+}

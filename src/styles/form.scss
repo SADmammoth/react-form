@@ -16,55 +16,7 @@
 }
 
 .form-select {
-  position: relative;
-  .select-header {
-    @include input;
-    .form-spoiler {
-      position: absolute;
-      right: 3%;
-    }
-  }
-
-  .select-list {
-    @include input;
-    margin-top: 1px;
-    position: absolute;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .option {
-    display: flex;
-    justify-items: flex-start;
-
-    & :nth-child(n + 2) {
-      margin-left: 5px;
-    }
-  }
-
-  .option.disabled {
-    border: $border-width solid $muted;
-    color: $muted;
-    padding: 3%;
-  }
-
-  .option.active {
-    color: $highlight;
-    background-color: $muted;
-    width: calc(106% - #{$border-width} * 2);
-    margin-left: calc(#{$border-width} - 3%);
-    box-sizing: border-box;
-    padding: 3%;
-
-    &:first-child {
-      margin-top: calc(#{$border-width} - 3%);
-      margin-bottom: calc(#{$border-width} - 3%);
-    }
-  }
-
-  &.placeholdered > .select-header {
-    color: $muted;
-  }
+  @include select;
 }
 
 .form-checkbox {
@@ -81,4 +33,12 @@
 
 .form-spoiler {
   @include spoiler;
+}
+
+.form-number {
+  @include number;
+}
+
+.form-slider {
+  @include slider;
 }

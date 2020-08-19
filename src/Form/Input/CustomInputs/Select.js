@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import compareObjects from '../../../helpers/compareObjects';
 import useValueOptions from '../../../helpers/getValueOptions';
 import Spinner from '../../../Spinner';
+import usePopup from '../../../helpers/usePopup';
 
 function Select(props) {
   const {
@@ -45,7 +46,7 @@ function Select(props) {
     }
   }, [valueOptions, placeholder]);
 
-  let [listShown, showList] = useState(false);
+  let [listShown, showList] = usePopup(false);
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
@@ -53,13 +54,18 @@ function Select(props) {
       className={`form-select${!currentValue ? ' placeholdered' : ''}`}
       name={name}
     >
-      <div className="select-header">
+      <div
+        className="select-header"
+        onClick={() => {
+          showList(!listShown);
+        }}
+      >
         {currentLabel || placeholder || 'Choose option...'}
         <input
           type="checkbox"
           className="form-spoiler"
           name="select-header-button"
-          checked={listShown ? 'checked' : ''}
+          checked={listShown}
           onChange={() => {
             showList(!listShown);
           }}

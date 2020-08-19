@@ -8,6 +8,7 @@ import compareObjects from '../../helpers/compareObjects';
 import MaskedInput from './MaskedInput';
 import LabeledInput from './LabeledInput';
 import CustomNumber from './CustomInputs/CustomNumber';
+import Slider from './CustomInputs/Slider';
 
 function Input(props) {
   const {
@@ -30,6 +31,7 @@ function Input(props) {
     mask,
     maskType,
     invalid,
+    valueSet,
     highlightInput,
     validationMessage,
   } = props;
@@ -147,6 +149,26 @@ function Input(props) {
           value={value}
           minSymbols={minSymbols}
           maxSymbols={maxSymbols}
+          placeholder={placeholder}
+        />
+      );
+    }
+
+    if (type === 'slider') {
+      return LabeledInput(
+        label,
+        id,
+        <Slider
+          id={id}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueSet={valueSet}
+          valueOptions={valueOptions}
           placeholder={placeholder}
         />
       );
