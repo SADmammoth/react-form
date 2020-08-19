@@ -229,6 +229,7 @@
 
 @mixin slider {
   --percent: 0;
+  --display-tip: 'none';
 
   height: 30px;
 
@@ -246,7 +247,21 @@
   }
 
   input {
-    display: none;
+    width: 100px;
+    height: 25px;
+    top: -25px;
+    text-align: center;
+    border: none;
+    position: absolute;
+    left: calc(var(--percent) * 1% - 50px);
+    display: var(--display-tip);
+    background: none;
+    outline: none;
+    pointer-events: none;
+  }
+
+  &:hover input {
+    display: unset;
   }
 
   &-bg {
@@ -255,6 +270,8 @@
     height: 2px;
     background: $muted;
     position: relative;
+    cursor: pointer;
+
     &::before {
       content: '';
       width: calc(var(--percent) * 1%);
@@ -274,5 +291,6 @@
     width: 10px;
     height: 10px;
     background: $highlight;
+    cursor: pointer;
   }
 }

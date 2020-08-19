@@ -115,6 +115,8 @@ const App = () => {
             .split('')
             .sort()
             .map((letter) => ({ label: letter.toUpperCase(), value: letter })),
+
+          alwaysShowTip: true,
         },
       ]}
       style={{ width: '20vw', margin: '0 auto' }}

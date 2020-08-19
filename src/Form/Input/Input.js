@@ -34,6 +34,7 @@ function Input(props) {
     valueSet,
     highlightInput,
     validationMessage,
+    alwaysShowTip,
   } = props;
 
   const onChangeHandler = ({
@@ -170,6 +171,7 @@ function Input(props) {
           valueSet={valueSet}
           valueOptions={valueOptions}
           placeholder={placeholder}
+          alwaysShowTip={alwaysShowTip}
         />
       );
     }
@@ -245,6 +247,7 @@ Input.publicProps = {
   byCharValidator: PropTypes.func,
   validator: PropTypes.func,
   validationMessage: PropTypes.string,
+  alwaysShowTip: PropTypes.bool,
 };
 
 Input.propTypes = {

@@ -115,6 +115,7 @@ class Form extends React.Component {
         validationMessage,
         onChange,
         onInput,
+        alwaysShowTip,
       }) => {
         const higlightInputCallback = () => this.highlightInput(name);
 
@@ -154,6 +155,7 @@ class Form extends React.Component {
           invalid: !!values[name].invalid,
           highlightInput: higlightInputCallback,
           validationMessage,
+          alwaysShowTip,
         });
 
         onInputsUpdate(inputsData);
