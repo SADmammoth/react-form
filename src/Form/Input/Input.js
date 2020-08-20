@@ -9,6 +9,7 @@ import MaskedInput from './MaskedInput';
 import LabeledInput from './LabeledInput';
 import CustomNumber from './CustomInputs/CustomNumber';
 import Slider from './CustomInputs/Slider';
+import Range from './CustomInputs/Slider/Range';
 
 function Input(props) {
   const {
@@ -160,6 +161,27 @@ function Input(props) {
         label,
         id,
         <Slider
+          id={id}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueSet={valueSet}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          alwaysShowTip={alwaysShowTip}
+        />
+      );
+    }
+
+    if (type === 'range') {
+      return LabeledInput(
+        label,
+        id,
+        <Range
           id={id}
           name={name}
           description={description}

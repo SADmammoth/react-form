@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../../helpers/compareObjects';
+import SliderThumb from './SliderThumb';
 
 function Slider(props) {
   const {
@@ -20,11 +21,7 @@ function Slider(props) {
   currentIndex = currentIndex < 0 ? 0 : currentIndex;
   let calcPercent = (index) => (index / (valueOptions.length - 1)) * 100;
 
-  let [dragging, setDragging] = useState(false);
-  let slider = useRef({});
-  let [prevPos, setPrevPos] = useState(0);
   let [index, setIndex] = useState(currentIndex);
-  let [part, setPart] = useState(0);
 
   useEffect(() => {
     setIndex(currentIndex);
@@ -48,54 +45,6 @@ function Slider(props) {
     }
   };
 
-  useEffect(() => {
-    let width = slider.current.getBoundingClientRect().width;
-
-    setPart(width / valueOptions.length);
-  }, [slider, valueOptions]);
-
-  useEffect(() => {
-    let endMove;
-    let mouseMove;
-
-    let removeListeners = () => {
-      document.removeEventListener('mousemove', mouseMove);
-      document.removeEventListener('mouseup', endMove);
-    };
-
-    if (dragging) {
-      endMove = () => {
-        setDragging(false);
-        onChangeHandler(index);
-      };
-
-      let update = (event) => {
-        removeListeners(event);
-        setPrevPos(event.clientX);
-      };
-
-      mouseMove = (event) => {
-        if (event.clientX - prevPos <= -part && index > 0) {
-          update(event);
-          setIndex(index - 1);
-          return;
-        }
-        if (
-          event.clientX - prevPos >= part &&
-          index < valueOptions.length - 1
-        ) {
-          update(event);
-          setIndex(index + 1);
-          return;
-        }
-      };
-
-      document.addEventListener('mousemove', mouseMove);
-      document.addEventListener('mouseup', endMove);
-    }
-    return removeListeners;
-  }, [index, dragging]);
-
   let moveTo = (event) => {
     let { left, width } = slider.current.getBoundingClientRect();
     let newIndex = parseInt(
@@ -104,13 +53,23 @@ function Slider(props) {
     onChangeHandler(newIndex);
   };
 
+  let slider = useRef({});
+
+  let [part, setPart] = useState(0);
+
+  useEffect(() => {
+    let width = slider.current.getBoundingClientRect().width;
+
+    setPart(width / valueOptions.length);
+  }, [slider, valueOptions]);
+
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
       className="form-slider"
       style={{
         '--percent': calcPercent(index),
-        '--display-tip': dragging || alwaysShowTip ? 'unset' : 'none',
+        '--display-tip': alwaysShowTip ? 'unset' : 'none',
       }}
     >
       <button
@@ -130,17 +89,17 @@ function Slider(props) {
           required={required}
           readOnly
         ></input>
-        <div
-          className="form-slider-thumb"
-          onMouseDown={(event) => {
-            setDragging(true);
-            setPrevPos(event.clientX);
-            // document.addEventListener('mousemove', mouseMove);
-            // document.addEventListener('mouseup', endMove);
+        <SliderThumb
+          sliderPart={part}
+          prev={() => {
+            if (index > 0) setIndex(index - 1);
           }}
-        ></div>
+          next={() => {
+            if (index < valueOptions.length - 1) setIndex(index + 1);
+          }}
+          onMoveEnd={() => onChangeHandler(index)}
+        />
       </div>
-
       <button
         type="button"
         name={name}

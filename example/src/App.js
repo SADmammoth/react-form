@@ -111,7 +111,19 @@ const App = () => {
           name: 'alphabet',
           required: false,
           label: 'Alphabet',
-          valueOptions: 'qwertyuiopafghjklzxcvbnm'
+          valueOptions: 'qwertyuiopasdfghjklzxcvbnm'
+            .split('')
+            .sort()
+            .map((letter) => ({ label: letter.toUpperCase(), value: letter })),
+
+          alwaysShowTip: true,
+        },
+        {
+          type: 'range',
+          name: 'range',
+          required: false,
+          label: 'Range',
+          valueOptions: 'qwertyuiopasdfghjklzxcvbnm'
             .split('')
             .sort()
             .map((letter) => ({ label: letter.toUpperCase(), value: letter })),

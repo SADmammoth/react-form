@@ -270,7 +270,6 @@
     height: 2px;
     background: $muted;
     position: relative;
-    cursor: pointer;
 
     &::before {
       content: '';
@@ -287,6 +286,101 @@
     left: calc(var(--percent) * 1% - 5px);
 
     margin-top: -4px;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background: $highlight;
+    cursor: pointer;
+  }
+}
+
+@mixin range {
+  -start: 0;
+  --percent: 0;
+  --display-tip: 'none';
+
+  height: 30px;
+
+  &-prev,
+  &-next {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  &-next {
+    display: inline-block;
+  }
+
+  input[name$='left'] {
+    width: 100px;
+    height: 25px;
+    top: -25px;
+    text-align: center;
+    border: none;
+    position: absolute;
+    left: calc(var(--start) * 1% - 50px);
+    display: var(--display-tip);
+    background: none;
+    outline: none;
+    pointer-events: none;
+  }
+
+  input[name$='right'] {
+    width: 100px;
+    height: 25px;
+    top: -25px;
+    text-align: center;
+    border: none;
+    position: absolute;
+    left: calc(var(--percent) * 1% - 50px);
+    display: var(--display-tip);
+    background: none;
+    outline: none;
+    pointer-events: none;
+  }
+
+  &:hover input {
+    display: unset;
+  }
+
+  &-bg {
+    display: inline-block;
+    width: 75%;
+    height: 2px;
+    background: $muted;
+    position: relative;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      width: calc((var(--percent) - var(--start)) * 1%);
+      height: 2px;
+      position: absolute;
+      left: calc(var(--start) * 1%);
+      background: $common;
+    }
+  }
+
+  .form-slider-thumb:first-of-type {
+    position: relative;
+    left: calc(var(--start) * 1% - 5px);
+
+    margin-top: -4px;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background: $highlight;
+    cursor: pointer;
+  }
+
+  .form-slider-thumb:last-of-type {
+    position: relative;
+    left: calc(var(--percent) * 1% - 5px);
+
+    margin-top: -10px;
     border-radius: 100%;
     width: 10px;
     height: 10px;
