@@ -82,7 +82,7 @@ function Range(props) {
             }
           }}
           next={() => {
-            if (leftIndex < rightIndex - 1) {
+            if (leftIndex < rightIndex) {
               setLeftIndex(leftIndex + 1);
             }
           }}
@@ -94,7 +94,7 @@ function Range(props) {
         <SliderThumb
           sliderPart={part}
           prev={() => {
-            if (rightIndex > leftIndex + 1) {
+            if (rightIndex > leftIndex) {
               setRightIndex(rightIndex - 1);
             }
           }}
