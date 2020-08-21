@@ -9,7 +9,7 @@ import MaskedInput from './MaskedInput';
 import LabeledInput from './LabeledInput';
 import CustomNumber from './CustomInputs/CustomNumber';
 import Slider from './CustomInputs/Slider';
-import Range from './CustomInputs/Slider/Range';
+import Range from './CustomInputs/Range';
 
 function Input(props) {
   const {

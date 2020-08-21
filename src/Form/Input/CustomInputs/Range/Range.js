@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../../helpers/compareObjects';
-import Slider from './Slider';
-import SliderThumb from './SliderThumb';
+import SliderThumb from '../SliderThumb';
+import calcPercent from '../../../../helpers/formHelpers/calcPercent';
+import useRange from '../../../../helpers/useRange';
+import useSliderPart from '../../../../helpers/formHelpers/useSliderPart';
 
 function Range(props) {
   const {
@@ -16,46 +18,46 @@ function Range(props) {
   } = props;
 
   let { from, to } = currentValue;
+  let length = valueOptions.length;
 
   if (!currentValue) {
     from = 0;
     to = valueOptions.length - 1;
   }
 
-  let calcPercent = (index) => (index / (valueOptions.length - 1)) * 100;
+  let [leftIndex, rightIndex, setLeftIndex, setRightIndex] = useRange(
+    from,
+    to,
+    length
+  );
 
-  let [leftIndex, setLeftIndex] = useState(from);
-  let [rightIndex, setRightIndex] = useState(to);
-
-  let range = useRef({});
-  let [part, setPart] = useState(0);
+  let [range, part] = useSliderPart(length);
 
   let onChangeHandler = (leftIndex, rightIndex) => {
-    onChange({
-      target: {
-        name,
-        value: {
-          ...valueOptions.slice(leftIndex, rightIndex + 1),
-          from: leftIndex,
-          to: rightIndex,
+    if (rightIndex >= 0 && rightIndex <= length - 1 && leftIndex <= rightIndex)
+      onChange({
+        target: {
+          name,
+          value: {
+            ...valueOptions.slice(leftIndex, rightIndex + 1),
+            from: leftIndex,
+            to: rightIndex,
+          },
         },
-      },
-    });
+      });
   };
 
-  useEffect(() => {
-    let width = range.current.getBoundingClientRect().width;
-
-    setPart(width / valueOptions.length);
-  }, [range, valueOptions]);
+  let onMoveEnd = () => {
+    onChangeHandler(leftIndex, rightIndex);
+  };
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
       className="form-range"
       style={{
-        '--start': calcPercent(leftIndex),
-        '--percent': calcPercent(rightIndex),
+        '--start': calcPercent(leftIndex, length),
+        '--percent': calcPercent(rightIndex, length),
         '--display-tip': alwaysShowTip ? 'unset' : 'none',
       }}
     >
@@ -74,38 +76,27 @@ function Range(props) {
           required={required}
           readOnly
         ></input>
+
         <SliderThumb
           sliderPart={part}
           prev={() => {
-            if (leftIndex > 0) {
-              setLeftIndex(leftIndex - 1);
-            }
+            setLeftIndex(leftIndex - 1);
           }}
           next={() => {
-            if (leftIndex < rightIndex) {
-              setLeftIndex(leftIndex + 1);
-            }
+            setLeftIndex(leftIndex + 1);
           }}
-          onMoveEnd={() => {
-            onChangeHandler(leftIndex, rightIndex);
-          }}
+          onMoveEnd={onMoveEnd}
         />
 
         <SliderThumb
           sliderPart={part}
           prev={() => {
-            if (rightIndex > leftIndex) {
-              setRightIndex(rightIndex - 1);
-            }
+            setRightIndex(rightIndex - 1);
           }}
           next={() => {
-            if (rightIndex < valueOptions.length - 1) {
-              setRightIndex(rightIndex + 1);
-            }
+            setRightIndex(rightIndex + 1);
           }}
-          onMoveEnd={() => {
-            onChangeHandler(leftIndex, rightIndex);
-          }}
+          onMoveEnd={onMoveEnd}
         />
       </div>
     </div>
@@ -124,10 +115,13 @@ Range.defaultProps = {
 };
 
 Range.propTypes = {
-  value: PropTypes.shape({
-    from: PropTypes.number.isRequired,
-    to: PropTypes.number.isRequired,
-  }),
+  value: PropTypes.oneOfType([
+    PropTypes.shape({
+      from: PropTypes.number.isRequired,
+      to: PropTypes.number.isRequired,
+    }),
+    PropTypes.string,
+  ]),
   placeholder: PropTypes.string,
   required: PropTypes.bool,
   name: PropTypes.string.isRequired,

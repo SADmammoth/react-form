@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../../helpers/compareObjects';
-import SliderThumb from './SliderThumb';
+import SliderThumb from '../SliderThumb';
+import useIndex from '../../../../helpers/useIndex';
+import useSliderPart from '../../../../helpers/formHelpers/useSliderPart';
+import calcPercent from '../../../../helpers/formHelpers/calcPercent';
 
 function Slider(props) {
   const {
@@ -17,20 +20,18 @@ function Slider(props) {
   let value = currentValue || valueOptions[0].value;
 
   let currentIndex = valueOptions.findIndex((el) => el.value === value);
-
   currentIndex = currentIndex < 0 ? 0 : currentIndex;
-  let calcPercent = (index) => (index / (valueOptions.length - 1)) * 100;
 
-  let [index, setIndex] = useState(currentIndex);
+  let length = valueOptions.length;
 
-  useEffect(() => {
-    setIndex(currentIndex);
-  }, [currentIndex]);
+  let [index, setIndex] = useIndex(currentIndex, length);
+  let [slider, part] = useSliderPart(length);
 
   let onChangeHandler = (index) => {
-    onChange({
-      target: { name, value: valueOptions[index].value },
-    });
+    if (index >= 0 && index <= length - 1)
+      onChange({
+        target: { name, value: valueOptions[index].value },
+      });
   };
 
   let prev = () => {
@@ -53,22 +54,12 @@ function Slider(props) {
     onChangeHandler(newIndex);
   };
 
-  let slider = useRef({});
-
-  let [part, setPart] = useState(0);
-
-  useEffect(() => {
-    let width = slider.current.getBoundingClientRect().width;
-
-    setPart(width / valueOptions.length);
-  }, [slider, valueOptions]);
-
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
       className="form-slider"
       style={{
-        '--percent': calcPercent(index),
+        '--percent': calcPercent(index, length),
         '--display-tip': alwaysShowTip ? 'unset' : 'none',
       }}
     >
@@ -89,17 +80,19 @@ function Slider(props) {
           required={required}
           readOnly
         ></input>
+
         <SliderThumb
           sliderPart={part}
           prev={() => {
-            if (index > 0) setIndex(index - 1);
+            setIndex(index - 1);
           }}
           next={() => {
-            if (index < valueOptions.length - 1) setIndex(index + 1);
+            setIndex(index + 1);
           }}
           onMoveEnd={() => onChangeHandler(index)}
         />
       </div>
+
       <button
         type="button"
         name={name}
