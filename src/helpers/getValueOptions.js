@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 export default function useValueOptions(fetch) {
   let [valueOptions, setValueOptions] = useState(null);
 
-  if (fetch instanceof Function) {
-    useEffect(() => {
+  useEffect(() => {
+    if (fetch instanceof Function) {
       fetch().then((options) => setValueOptions(options));
-    }, [setValueOptions]);
-  } else {
-    valueOptions = fetch;
-  }
+    } else {
+      setValueOptions(fetch);
+    }
+  }, [setValueOptions]);
 
   return [valueOptions, !valueOptions];
 }

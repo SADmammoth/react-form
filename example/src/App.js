@@ -130,6 +130,12 @@ const App = () => {
 
           alwaysShowTip: true,
         },
+        {
+          type: 'markdown',
+          name: 'md',
+          required: false,
+          label: 'Markdown',
+        },
       ]}
       style={{ width: '20vw', margin: '0 auto' }}
       submitButton={<button>Submit</button>}

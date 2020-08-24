@@ -16,6 +16,7 @@ function Select(props) {
   } = props;
 
   let [valueOptions, loading] = useValueOptions(options);
+
   let [currentLabel, setCurrentLabel] = useState(null);
 
   function renderOption(valueOption) {
@@ -39,12 +40,6 @@ function Select(props) {
       </div>
     );
   }
-
-  useEffect(() => {
-    if (valueOptions && valueOptions.length === 1 && !placeholder) {
-      onChange({ target: { name, value: valueOptions[0].value } });
-    }
-  }, [valueOptions, placeholder]);
 
   let [listShown, showList] = usePopup(false);
 
