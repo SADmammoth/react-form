@@ -397,3 +397,18 @@
     cursor: pointer;
   }
 }
+
+@mixin markdown {
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    & > li {
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+  }
+  &-input {
+    @include input;
+    height: 50px;
+  }
+}
