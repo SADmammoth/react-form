@@ -9,6 +9,7 @@ import safeHtml from './safeHtml';
 import getHtmlIndex from './getHtmlIndex';
 import getMarkdownIndex from './getMarkdownIndex';
 import useCaret, { actionTypes } from './useCaret';
+import shortcutMd from './shortcutMd';
 
 function MarkdownText({ value, onChange, name, onInput }) {
   let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex);
@@ -72,6 +73,7 @@ function MarkdownText({ value, onChange, name, onInput }) {
       mdDispatch({ type: actionTypes.delete });
     }
     if (event.key.length === 1) {
+      console.log(shortcutMd(html));
       htmlDispatch({ type: actionTypes.input, data: event.key });
       mdDispatch({ type: actionTypes.input, data: event.key });
     }
