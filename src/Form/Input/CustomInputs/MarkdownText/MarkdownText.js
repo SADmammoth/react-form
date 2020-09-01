@@ -9,10 +9,14 @@ import safeHtml from './safeHtml';
 import getHtmlIndex from './getHtmlIndex';
 import getMarkdownIndex from './getMarkdownIndex';
 import useCaret, { actionTypes } from './useCaret';
+import shortcutMd from './shortcutMd';
+import useMd from './useMd';
 
 function MarkdownText({ value, onChange, name, onInput }) {
   let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex);
   let [mdI, markdown, mdDispatch] = useCaret(value, getMarkdownIndex);
+
+  let [md, update] = useMd('');
 
   useEffect(() => {
     function setIndex(node, charsCount) {
@@ -72,6 +76,9 @@ function MarkdownText({ value, onChange, name, onInput }) {
       mdDispatch({ type: actionTypes.delete });
     }
     if (event.key.length === 1) {
+      update(event.target.value + event.key);
+      console.log(md);
+      console.log(shortcutMd(html));
       htmlDispatch({ type: actionTypes.input, data: event.key });
       mdDispatch({ type: actionTypes.input, data: event.key });
     }

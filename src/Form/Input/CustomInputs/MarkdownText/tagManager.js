@@ -6,7 +6,7 @@ const tagManager = {
     tagName,
     markdownEquiv,
     selectedText,
-    onChange
+    onChange = () => {}
   ) {
     onChange(value + markdownEquiv);
     return `${html}<${tagName}>`;
@@ -18,7 +18,7 @@ const tagManager = {
     tagName,
     markdownEquiv,
     selectedText,
-    onChange
+    onChange = () => {}
   ) {
     onChange(value + markdownEquiv);
     return `${html}</${tagName}>`;

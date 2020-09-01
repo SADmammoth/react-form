@@ -9,7 +9,11 @@ let actionTypes = {
   right: 'right',
 };
 
-export default function useCaret(init, getIndex) {
+export default function useCaret(
+  init,
+  getIndex,
+  onTextChange = (text) => text
+) {
   let reducer = (state, { type, data }) => {
     let { text, index } = state;
     switch (type) {
@@ -18,13 +22,13 @@ export default function useCaret(init, getIndex) {
         let textArray = [...text];
         textArray.splice(getIndex(text, index), 0, data);
         return {
-          text: textArray.join(''),
+          text: onTextChange(textArray.join('')),
           index: index + data.length,
         };
       }
       case actionTypes.set: {
         console.log(data);
-        return { text: data, index: data.length };
+        return { text: onTextChange(data), index: data.length };
       }
       case actionTypes.backspace: {
         console.log(index);
@@ -35,7 +39,7 @@ export default function useCaret(init, getIndex) {
         textArray.splice(getIndex(text, index - 1), 1);
 
         return {
-          text: textArray.join(''),
+          text: onTextChange(textArray).join(''),
           index: index - 1,
         };
       }
@@ -46,7 +50,7 @@ export default function useCaret(init, getIndex) {
         let textArray = [...text];
         textArray.splice(getIndex(text, index), 1);
         return {
-          text: textArray.join(''),
+          text: onTextChange(textArray.join('')),
           index,
         };
       }
