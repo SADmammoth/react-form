@@ -30,7 +30,6 @@ function CustomNumber(props) {
   }, [currentValue, onChange]);
 
   let increment = async (event) => {
-    console.log(1);
     event.target.value = counter(parseFloat(currentValue) + step);
     onChange(event);
   };

@@ -1,8 +1,7 @@
 import markdownMap from './markdownMap';
 import { useState, useMemo } from 'react';
-import { useReducer } from 'react';
 
-export default function useMd(text, replace) {
+export default function useMd() {
   let tagList = useMemo(() =>
     Object.values(markdownMap)
       .map(([html, open, close]) => {
@@ -27,19 +26,22 @@ export default function useMd(text, replace) {
       .flat()
   );
 
-  let reset = (text, opened = []) => {
+  let reset = (opened = []) => {
     return {
-      text,
       index: 1,
       candidates: tagList,
       opened,
     };
   };
 
+  let [state, setState] = useState(reset());
+
   let checkCandidates = ({ index, candidates, opened }, text) => {
+    console.log(11);
     let searched = text.slice(-index);
     let newOpened = [];
     let isOpened;
+    console.log(searched, index);
     let newCandidates = candidates.filter((tagItem) => {
       let { tag, id } = tagItem;
       isOpened = opened.includes(id);
@@ -58,8 +60,11 @@ export default function useMd(text, replace) {
     let newText = [...text];
 
     if (!newCandidates.length) {
+      console.log(candidates.length === tagList.length);
       if (candidates.length === tagList.length) {
-        return reset(text, newOpened);
+        setState(reset(newOpened));
+
+        return newText.join('');
       }
 
       let found = Object.values(markdownMap).find(([html, md]) => {
@@ -69,51 +74,36 @@ export default function useMd(text, replace) {
       });
 
       if (found) {
-        console.log(-index);
         newText.splice(-1, index - 1, `<${found[0]}>`);
+      } else {
+        setState(reset(newOpened));
+
+        return newText.join('');
       }
     }
-    console.log(candidates, newCandidates);
+
     if (newCandidates.length === 1) {
       let found = Object.values(markdownMap).find(
         ([html, md, close]) =>
           md === newCandidates[0].tag || close === newCandidates[0].tag
       );
       if (!found) {
-        return reset(text, newOpened);
+        setState(reset(newOpened));
+        return newText.join('');
       }
       let isOpened = opened.includes(found[0]);
-      console.log(index);
       newText.splice(-index, index, `<${isOpened ? found[1] : found[0]}>`);
-      console.log(newText);
     }
 
-    return {
-      text: newText.join(''),
+    setState({
       index: newCandidates.length === 1 ? 1 : index + 1,
       candidates: newCandidates,
       opened: [...opened, newOpened],
-    };
+    });
+
+    console.log(newText);
+    return newText.join('');
   };
 
-  let reducer = (state, { type, data }) => {
-    switch (type) {
-      case 'updateCandidate': {
-        return checkCandidates(state, data);
-      }
-      case 'reset': {
-        return reset(state.text, state.opened);
-      }
-    }
-  };
-
-  let [state, dispatch] = useReducer(reducer, reset(text));
-
-  return [
-    state.text,
-    (text) => {
-      dispatch({ type: 'updateCandidate', data: text });
-      return state.text;
-    },
-  ];
+  return (text) => checkCandidates(state, text);
 }

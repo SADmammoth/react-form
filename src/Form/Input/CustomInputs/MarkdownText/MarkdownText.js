@@ -9,11 +9,11 @@ import safeHtml from './safeHtml';
 import getHtmlIndex from './getHtmlIndex';
 import getMarkdownIndex from './getMarkdownIndex';
 import useCaret, { actionTypes } from './useCaret';
-import shortcutMd from './shortcutMd';
+// import shortcutMd from './shortcutMd';
 import useMd from './useMd';
 
 function MarkdownText({ value, onChange, name, onInput }) {
-  let [md, update] = useMd('');
+  let update = useMd();
   let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex, update);
   let [mdI, markdown, mdDispatch] = useCaret(value, getMarkdownIndex);
 
@@ -23,7 +23,6 @@ function MarkdownText({ value, onChange, name, onInput }) {
       let selection = window.getSelection();
       function recurse(node, charsCount, rang) {
         range = rang;
-        console.log(htmlI);
         if (!rang) {
           range = document.createRange();
           range.selectNode(node);
@@ -75,7 +74,6 @@ function MarkdownText({ value, onChange, name, onInput }) {
       mdDispatch({ type: actionTypes.delete });
     }
     if (event.key.length === 1) {
-      console.log(md);
       htmlDispatch({ type: actionTypes.input, data: event.key });
       mdDispatch({ type: actionTypes.input, data: event.key });
     }
