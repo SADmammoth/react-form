@@ -2,7 +2,7 @@ import markdownMap from './markdownMap';
 import { useState, useMemo } from 'react';
 import { useReducer } from 'react';
 
-export default function useMd(text) {
+export default function useMd(text, replace) {
   let tagList = useMemo(() =>
     Object.values(markdownMap)
       .map(([html, open, close]) => {
@@ -40,7 +40,6 @@ export default function useMd(text) {
     let searched = text.slice(-index);
     let newOpened = [];
     let isOpened;
-    console.log(candidates);
     let newCandidates = candidates.filter((tagItem) => {
       let { tag, id } = tagItem;
       isOpened = opened.includes(id);
@@ -56,24 +55,41 @@ export default function useMd(text) {
       }
     });
 
-    if (!newCandidates.length) {
-      return reset(text, [...opened, newOpened]);
-    }
+    let newText = [...text];
 
+    if (!newCandidates.length) {
+      if (candidates.length === tagList.length) {
+        return reset(text, newOpened);
+      }
+
+      let found = Object.values(markdownMap).find(([html, md]) => {
+        return candidates.some((candidate) => {
+          return md === candidate.tag && candidate.tag.length === index - 1;
+        });
+      });
+
+      if (found) {
+        console.log(-index);
+        newText.splice(-1, index - 1, `<${found[0]}>`);
+      }
+    }
+    console.log(candidates, newCandidates);
     if (newCandidates.length === 1) {
-      [...text].splice(
-        -1,
-        index,
-        `<${
-          Object.values(markdownMap).find(
-            ([html, md]) => md === newCandidates[0]
-          )[0]
-        }>`
+      let found = Object.values(markdownMap).find(
+        ([html, md, close]) =>
+          md === newCandidates[0].tag || close === newCandidates[0].tag
       );
+      if (!found) {
+        return reset(text, newOpened);
+      }
+      let isOpened = opened.includes(found[0]);
+      console.log(index);
+      newText.splice(-index, index, `<${isOpened ? found[1] : found[0]}>`);
+      console.log(newText);
     }
 
     return {
-      text,
+      text: newText.join(''),
       index: newCandidates.length === 1 ? 1 : index + 1,
       candidates: newCandidates,
       opened: [...opened, newOpened],
@@ -97,6 +113,7 @@ export default function useMd(text) {
     state.text,
     (text) => {
       dispatch({ type: 'updateCandidate', data: text });
+      return state.text;
     },
   ];
 }
