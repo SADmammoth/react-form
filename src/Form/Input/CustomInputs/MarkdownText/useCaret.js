@@ -18,20 +18,18 @@ export default function useCaret(
     let { text, index } = state;
     switch (type) {
       case actionTypes.input: {
-        console.log(data);
         let textArray = [...text];
-        textArray.splice(getIndex(text, index), 0, data);
+        textArray.splice(getIndex(text, index) + 1, 0, data);
+        let newText = onTextChange(textArray.join(''));
         return {
-          text: onTextChange(textArray.join('')),
-          index: index + data.length,
+          text: newText,
+          index: index + newText.length - text.length + data.length,
         };
       }
       case actionTypes.set: {
-        console.log(data);
         return { text: onTextChange(data), index: data.length };
       }
       case actionTypes.backspace: {
-        console.log(index);
         if (index <= 0) {
           return state;
         }

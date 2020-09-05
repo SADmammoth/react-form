@@ -23,9 +23,7 @@ export default function useHtml(init) {
     let newHtml = html;
     mdMap.forEach(([tag, md]) => {
       let reg = new RegExp(`^(.*)${regexpEscape(md)}$`);
-      console.log(reg);
 
-      console.log(state);
       let includes = state.includes(md);
       if (reg.test(html) && !includes) {
         newHtml = newHtml.replace(reg, `$1<${tag}>`);

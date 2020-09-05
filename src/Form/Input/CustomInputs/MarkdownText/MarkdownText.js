@@ -9,10 +9,12 @@ import safeHtml from './safeHtml';
 import getHtmlIndex from './getHtmlIndex';
 import getMarkdownIndex from './getMarkdownIndex';
 import useCaret, { actionTypes } from './useCaret';
-import shortcutMd from './shortcutMd';
+// import shortcutMd from './shortcutMd';
+import useMd from './useMd';
 
 function MarkdownText({ value, onChange, name, onInput }) {
-  let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex);
+  let update = useMd();
+  let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex, update);
   let [mdI, markdown, mdDispatch] = useCaret(value, getMarkdownIndex);
 
   useEffect(() => {
@@ -21,7 +23,6 @@ function MarkdownText({ value, onChange, name, onInput }) {
       let selection = window.getSelection();
       function recurse(node, charsCount, rang) {
         range = rang;
-        console.log(htmlI);
         if (!rang) {
           range = document.createRange();
           range.selectNode(node);
