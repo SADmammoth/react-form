@@ -73,12 +73,15 @@ function MarkdownText({ value, onChange, name, onInput }) {
       htmlDispatch({ type: actionTypes.delete });
       mdDispatch({ type: actionTypes.delete });
     }
-    if (event.key.length === 1) {
-      console.log(shortcutMd(html));
+    if (event.key === 'Enter') {
+      htmlDispatch({ type: actionTypes.newLine, data: '  ' });
+      mdDispatch({ type: actionTypes.newLine, data: '<br/>' });
+    }
+    if (event.key.length === 1 || event.key === 'Space') {
       htmlDispatch({ type: actionTypes.input, data: event.key });
       mdDispatch({ type: actionTypes.input, data: event.key });
     }
-    onInput({ target: { name, value: markdown } });
+    // onInput({ target: { name, value: markdown } });
   };
   return (
     <div className="markdown-text">

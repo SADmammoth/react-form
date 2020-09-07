@@ -2,6 +2,7 @@ import { useReducer } from 'react';
 
 let actionTypes = {
   input: 'input',
+  newLine: 'new_line',
   set: 'set',
   backspace: 'backspace',
   delete: 'delete',
@@ -23,47 +24,56 @@ export default function useCaret(
         let newText = onTextChange(textArray.join(''));
         return {
           text: newText,
-          index: index + newText.length - text.length + data.length,
+          index: index + newText.length - text.length,
         };
       }
-      case actionTypes.set: {
-        return { text: onTextChange(data), index: data.length };
-      }
-      case actionTypes.backspace: {
-        if (index <= 0) {
-          return state;
-        }
+      case actionTypes.newLine: {
         let textArray = [...text];
-        textArray.splice(getIndex(text, index - 1), 1);
-
+        textArray.splice(getIndex(text, index) + 1, 0, data);
+        let newText = onTextChange(textArray.join(''));
         return {
-          text: onTextChange(textArray).join(''),
-          index: index - 1,
-        };
-      }
-      case actionTypes.delete: {
-        if (index > text.length - 1) {
-          return state;
-        }
-        let textArray = [...text];
-        textArray.splice(getIndex(text, index), 1);
-        return {
-          text: onTextChange(textArray.join('')),
+          text: newText,
           index,
         };
       }
-      case actionTypes.left: {
-        if (index <= 0) {
-          return state;
-        }
-        return { text, index: index - 1 };
-      }
-      case actionTypes.right: {
-        if (index > text.length - 1) {
-          return state;
-        }
-        return { text, index: index + 1 };
-      }
+      // case actionTypes.set: {
+      //   return { text: onTextChange(data), index: data.length };
+      // }
+      // case actionTypes.backspace: {
+      //   if (index <= 0) {
+      //     return state;
+      //   }
+      //   let textArray = [...text];
+      //   textArray.splice(getIndex(text, index - 1), 1);
+
+      //   return {
+      //     text: onTextChange(textArray).join(''),
+      //     index: index - 1,
+      //   };
+      // }
+      // case actionTypes.delete: {
+      //   if (index > text.length - 1) {
+      //     return state;
+      //   }
+      //   let textArray = [...text];
+      //   textArray.splice(getIndex(text, index), 1);
+      //   return {
+      //     text: onTextChange(textArray.join('')),
+      //     index,
+      //   };
+      // }
+      // case actionTypes.left: {
+      //   if (index <= 0) {
+      //     return state;
+      //   }
+      //   return { text, index: index - 1 };
+      // }
+      // case actionTypes.right: {
+      //   if (index > text.length - 1) {
+      //     return state;
+      //   }
+      //   return { text, index: index + 1 };
+      // }
       default:
         return state;
     }
