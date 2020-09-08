@@ -14,46 +14,56 @@ import useMd from './useMd';
 
 function MarkdownText({ value, onChange, name, onInput }) {
   let update = useMd();
+  const input = useRef({});
   let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex, update);
   let [mdI, markdown, mdDispatch] = useCaret(value, getMarkdownIndex);
 
   useEffect(() => {
-    function setIndex(node, charsCount) {
-      let range;
-      let selection = window.getSelection();
-      function recurse(node, charsCount, rang) {
-        range = rang;
-        if (!rang) {
-          range = document.createRange();
-          range.selectNode(node);
-          range.setStart(node, 0);
-        }
-        if (node.nodeType === Node.TEXT_NODE) {
-          if (node.textContent.length < charsCount) {
-            charsCount -= node.textContent.length;
-          } else {
-            range.setEnd(node, charsCount);
-            charsCount = 0;
-          }
-        }
-        for (var lp = 0; lp < node.childNodes.length; lp++) {
-          range = recurse(node.childNodes[lp], charsCount, range);
-
-          if (charsCount === 0) {
-            break;
-          }
-        }
-        return range;
+    let range;
+    let selection = window.getSelection();
+    let toLookUp = [];
+    function rec(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        toLookUp.push(node);
+      } else {
+        node.childNodes.forEach((child) => rec(child));
       }
-      recurse(node, charsCount);
+    }
+
+    rec(input.current);
+
+    function setRange(node, index) {
+      console.log('sfsf', index);
+      range = document.createRange();
+      range.selectNode(node);
+      range.setStart(node, 0);
+      range.setEnd(node, index);
       range.collapse(false);
       selection.removeAllRanges();
       selection.addRange(range);
     }
-    setIndex(input.current, htmlI);
-  }, [htmlI, html]);
 
-  const input = useRef({});
+    console.log(toLookUp);
+    let i = 0;
+    let j;
+    for (j = 0; j < toLookUp.length; j++) {
+      console.log(i, i + toLookUp[j].nodeValue.length, htmlI, j - 1);
+      console.log(toLookUp[j].nodeValue, i, j, htmlI);
+
+      if (i + toLookUp[j].nodeValue.length + j >= htmlI) {
+        setRange(toLookUp[j], htmlI - i - j);
+        break;
+      }
+      i += toLookUp[j].nodeValue.length;
+    }
+
+    if (toLookUp.length && j === toLookUp.length) {
+      setRange(
+        toLookUp[toLookUp.length - 1],
+        toLookUp[toLookUp.length - 1].length
+      );
+    }
+  }, [htmlI, html]);
 
   let onInputHandler = (event) => {
     event.preventDefault();
@@ -81,7 +91,9 @@ function MarkdownText({ value, onChange, name, onInput }) {
       htmlDispatch({ type: actionTypes.input, data: event.key });
       mdDispatch({ type: actionTypes.input, data: event.key });
     }
-    // onInput({ target: { name, value: markdown } });
+    onInput({ target: { name, value: markdown } }, () => {
+      input.current.focus();
+    });
   };
   return (
     <div className="markdown-text">
@@ -92,39 +104,14 @@ function MarkdownText({ value, onChange, name, onInput }) {
             key: btnName,
             content: btnName,
             on: () => {
-              htmlDispatch({
-                type: actionTypes.set,
-                data: tagManager.open(
-                  markdown,
-                  html,
-                  name,
-                  tag,
-                  md,
-                  '',
-                  (data) => {
-                    htmlDispatch({ type: actionTypes.input, data });
-                  }
-                ),
-              });
+              htmlDispatch({ type: actionTypes.input, data: md });
+              mdDispatch({ type: actionTypes.input, data: md });
               onInput({ target: { name, value: markdown } });
               input.current.focus();
             },
             off: () => {
-              htmlDispatch({
-                type: actionTypes.set,
-                data: tagManager.open(
-                  markdown,
-                  html,
-                  name,
-                  tag,
-                  mdClose,
-                  '',
-                  (data) => {
-                    htmlDispatch({ type: actionTypes.input, data });
-                  }
-                ),
-              });
-
+              htmlDispatch({ type: actionTypes.input, data: mdClose });
+              mdDispatch({ type: actionTypes.input, data: mdClose });
               onInput({ target: { name, value: markdown } });
               input.current.focus();
             },
@@ -155,7 +142,7 @@ MarkdownText.propTypes = {
   value: PropTypes.string,
   minSymbols: PropTypes.number,
   maxSymbols: PropTypes.number,
-  onError: PropTypes.func.isRequired,
+  onError: PropTypes.func,
   markdownFeatures: PropTypes.shape({
     headings: PropTypes.bool,
     links: PropTypes.bool,

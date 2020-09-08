@@ -12,7 +12,11 @@ function TriggerButton({ children, init, on, off }) {
     }
     setState(!state);
   };
-  return <Button onClick={trigger}>{children}</Button>;
+  return (
+    <Button type="button" onClick={trigger}>
+      {children}
+    </Button>
+  );
 }
 
 TriggerButton.propTypes = {

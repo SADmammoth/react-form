@@ -29,7 +29,6 @@ Menu.propTypes = {
       content: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
     })
   ).isRequired,
-  actionsCallback: PropTypes.func.isRequired,
 };
 
 export default Menu;

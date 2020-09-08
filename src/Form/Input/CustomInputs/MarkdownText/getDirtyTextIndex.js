@@ -21,11 +21,45 @@ export default function getDirtyTextIndex(regexp, text, caretIndex) {
         continue;
       }
       nextIndex = nextMatch.value.index;
-    } else {
-      j++;
     }
+    j++;
+
     i++;
   }
   console.log(caretIndex, j);
   return i;
 }
+
+// export default function getDirtyTextIndex(regexp, text, caretIndex) {
+//   let arr = text.split(regexp);
+//   let matches = text.matchAll(regexp);
+
+//   console.log(
+//     arr,
+//     text,
+//     arr
+//       .map((item, i) =>
+//         matches[i] ? [...item.split(''), matches[i]] : item.split('')
+//       )
+//       .flat()
+//       .slice(0, caretIndex)
+//       .reduce((acc, item) => (acc += item.length), 0)
+//   );
+//   console.log(
+//     arr,
+//     matches,
+//     arr
+//       .map((item, i) =>
+//         matches[i] ? [...item.split(''), matches[i]] : item.split('')
+//       )
+//       .flat()
+//       .slice(0, caretIndex)
+//   );
+//   return arr
+//     .map((item, i) =>
+//       matches[i] ? [...item.split(''), matches[i]] : item.split('')
+//     )
+//     .flat()
+//     .slice(0, caretIndex)
+//     .reduce((acc, item) => (item ? (acc += item.length) : acc), 0);
+// }

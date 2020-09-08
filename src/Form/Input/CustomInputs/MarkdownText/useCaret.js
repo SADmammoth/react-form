@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import calcLength from './calcLength';
 
 let actionTypes = {
   input: 'input',
@@ -20,11 +21,19 @@ export default function useCaret(
     switch (type) {
       case actionTypes.input: {
         let textArray = [...text];
+        console.log(index);
         textArray.splice(getIndex(text, index) + 1, 0, data);
+        console.log(0);
         let newText = onTextChange(textArray.join(''));
+        console.log(newText);
+        let newIndex = index + data.length;
+        if (newText !== textArray.join('')) {
+          console.log(calcLength(newText));
+          newIndex = calcLength(newText);
+        }
         return {
           text: newText,
-          index: index + newText.length - text.length,
+          index: newIndex,
         };
       }
       case actionTypes.newLine: {
@@ -33,7 +42,7 @@ export default function useCaret(
         let newText = onTextChange(textArray.join(''));
         return {
           text: newText,
-          index,
+          index: index + 1,
         };
       }
       // case actionTypes.set: {
