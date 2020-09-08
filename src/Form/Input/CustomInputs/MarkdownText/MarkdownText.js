@@ -104,8 +104,33 @@ function MarkdownText({ value, onChange, name, onInput }) {
             key: btnName,
             content: btnName,
             on: () => {
-              htmlDispatch({ type: actionTypes.input, data: md });
-              mdDispatch({ type: actionTypes.input, data: md });
+              let { endOffset, startOffset } = window
+                .getSelection()
+                .getRangeAt(0);
+              if (endOffset === startOffset) {
+                htmlDispatch({ type: actionTypes.input, data: md });
+                mdDispatch({ type: actionTypes.input, data: md });
+              } else {
+                htmlDispatch({
+                  type: actionTypes.wrap,
+                  data: {
+                    from: startOffset,
+                    to: endOffset,
+                    leftWrap: `<${tag}>`,
+                    rightWrap: `</${tag}>`,
+                  },
+                });
+                mdDispatch({
+                  type: actionTypes.wrap,
+                  data: {
+                    from: startOffset,
+                    to: endOffset,
+                    leftWrap: md,
+                    rightWrap: mdClose,
+                  },
+                });
+              }
+
               onInput({ target: { name, value: markdown } });
               input.current.focus();
             },
