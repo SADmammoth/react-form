@@ -10,6 +10,7 @@ let actionTypes = {
   left: 'left',
   right: 'right',
   wrap: 'wrap',
+  moveIndex: 'move_index',
 };
 
 export default function useCaret(
@@ -103,6 +104,9 @@ export default function useCaret(
           return state;
         }
         return { text, index: index + 1 };
+      }
+      case actionTypes.moveIndex: {
+        return { text, index: data };
       }
       default:
         return state;
