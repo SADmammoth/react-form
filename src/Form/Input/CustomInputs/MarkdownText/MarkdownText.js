@@ -12,7 +12,7 @@ import getMarkdownIndex from './getMarkdownIndex';
 import useCaret, { actionTypes } from './useCaret';
 // import shortcutMd from './shortcutMd';
 import useMd from './useMd';
-import Link from './Link/Link';
+import Link from './Link';
 import Button from '../Button';
 
 function MarkdownText({ value, onChange, name, onInput }) {
@@ -168,7 +168,19 @@ function MarkdownText({ value, onChange, name, onInput }) {
             data: `<div id='link-${htmlI}'></div>`,
           });
           console.log(markdown);
-          setPortals({ ...portals, [`link-${htmlI}`]: <Link></Link> });
+          setPortals({
+            ...portals,
+            [`link-${htmlI}`]: (
+              <Link
+                setMd={(md) => {
+                  mdDispatch({
+                    type: actionTypes.input,
+                    data: md,
+                  });
+                }}
+              ></Link>
+            ),
+          });
         }}
       >
         Link

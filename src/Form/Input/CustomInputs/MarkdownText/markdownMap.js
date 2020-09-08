@@ -8,4 +8,10 @@ const markdownMap = {
   NewLine: ['br', '  '],
 };
 
+const specialTags = {
+  Link: [()=>{
+    
+  }]
+}
+
 export default markdownMap;
