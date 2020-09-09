@@ -412,3 +412,8 @@
     height: 500px;
   }
 }
+
+@mixin notPrintedChars {
+  color: $muted;
+  font-size: 70%;
+}
