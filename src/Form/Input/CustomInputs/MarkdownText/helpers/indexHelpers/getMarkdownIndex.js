@@ -1,5 +1,5 @@
-import markdownMap from './markdownMap';
-import regexpEscape from '../../../../Validator/regexpEscape';
+import markdownMap from '../markdownMap';
+import regexpEscape from '../../../../../../Validator/regexpEscape';
 import getDirtyTextIndex from './getDirtyTextIndex';
 
 export default function getMarkdownIndex(text, caretIndex) {

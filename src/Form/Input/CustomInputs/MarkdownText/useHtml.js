@@ -1,6 +1,6 @@
 import { useState, useMemo, useReducer } from 'react';
-import markdownMap from './markdownMap';
-import safeHtml from './safeHtml';
+import markdownMap from './helpers/markdownMap';
+import safeHtml from './helpers/safeHtml';
 import regexpEscape from '../../../../Validator/regexpEscape';
 
 export default function useHtml(init) {

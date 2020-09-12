@@ -4,14 +4,19 @@ import Button from './Button';
 import TriggerButton from './TriggerButton';
 
 function Menu({ buttons, commonButtonMode }) {
-  let renderButton = ({ key, mode, on, off, content }) => {
-    let btnMode = mode || commonButtonMode;
-    let NewButton = btnMode === 'trigger' ? TriggerButton : Button;
+  let renderButton = (button) => {
+    let { key, mode, content } = button;
     return (
       <li key={key}>
-        <NewButton type="button" on={on} off={off}>
-          {content}
-        </NewButton>
+        {mode === 'trigger' ? (
+          <TriggerButton type="button" on={button.on} off={button.off}>
+            {content}
+          </TriggerButton>
+        ) : (
+          <Button type="button" onClick={button.onClick}>
+            {content}
+          </Button>
+        )}
       </li>
     );
   };
@@ -19,15 +24,24 @@ function Menu({ buttons, commonButtonMode }) {
 }
 
 Menu.propTypes = {
-  commonButtonMode: PropTypes.oneOf(['button', 'trigger']),
   buttons: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      mode: PropTypes.oneOf(['button', 'trigger']),
-      on: PropTypes.func.isRequired,
-      off: PropTypes.func.isRequired,
-      content: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
-    })
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        key: PropTypes.string.isRequired,
+        mode: PropTypes.oneOf(['trigger']).isRequired,
+        on: PropTypes.func.isRequired,
+        off: PropTypes.func.isRequired,
+        content: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
+          .isRequired,
+      }),
+      PropTypes.shape({
+        key: PropTypes.string.isRequired,
+        mode: PropTypes.oneOf(['button']).isRequired,
+        onClick: PropTypes.func.isRequired,
+        content: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
+          .isRequired,
+      }),
+    ])
   ).isRequired,
 };
 

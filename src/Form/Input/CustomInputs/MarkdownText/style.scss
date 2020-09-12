@@ -1,42 +1,89 @@
 @import '../../../../styles/variables.scss';
 @import '../../../../styles/mixins.scss';
 
-h1::before {
-  content: '#';
-  @include notPrintedChars;
+.show-not-printable {
+  h1::before {
+    content: '#';
+    @include notPrintedChars;
+  }
+
+  h2::before {
+    content: '##';
+    @include notPrintedChars;
+  }
+
+  h3::before {
+    content: '###';
+    @include notPrintedChars;
+  }
+
+  h4::before {
+    content: '####';
+    @include notPrintedChars;
+  }
+
+  b::before {
+    content: '**';
+    @include notPrintedChars;
+  }
+
+  b::after {
+    content: '**';
+    @include notPrintedChars;
+  }
+
+  i::before {
+    content: '_';
+    @include notPrintedChars;
+  }
+
+  i::after {
+    content: '_';
+    @include notPrintedChars;
+  }
 }
 
-h2::before {
-  content: '##';
-  @include notPrintedChars;
+.modal {
+  position: relative;
+  z-index: 100;
+  border: 2px solid $muted;
+  top: 25px;
+  padding: 5px;
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    left: -2px;
+    top: -20px;
+    height: 20px;
+    width: 5px;
+    padding: 0;
+    display: block;
+    border-left: 2px solid $muted;
+  }
+  input {
+    width: 95%;
+  }
+
+  &-backdrop {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 99;
+  }
 }
 
-h3::before {
-  content: '###';
-  @include notPrintedChars;
+.close-icon {
+  border: none;
+  background: none;
+  position: absolute;
+  right: 0px;
+  top: 5px;
 }
 
-h4::before {
-  content: '####';
-  @include notPrintedChars;
-}
-
-b::before {
-  content: '**';
-  @include notPrintedChars;
-}
-
-b::after {
-  content: '**';
-  @include notPrintedChars;
-}
-
-i::before {
-  content: '_';
-  @include notPrintedChars;
-}
-
-i::after {
-  content: '_';
-  @include notPrintedChars;
+*[data-input='true'] {
+  caret-color: transparent;
+  input {
+    caret-color: auto;
+  }
 }

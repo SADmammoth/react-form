@@ -11,14 +11,23 @@ function Link({ setMd }) {
   return (
     <>
       {show ? (
-        <EditLink
-          setData={(text, link) => {
-            setText(text);
-            setLink(link);
-            setMd(`[${text}](${link})`);
-          }}
-          close={() => setShow(false)}
-        />
+        <>
+          <EditLink
+            setData={(text, link) => {
+              setText(text);
+              setLink(link);
+              setMd(`[${text}](${link})`);
+            }}
+            close={() => setShow(false)}
+          />
+          <div
+            data-input="true"
+            className="modal-backdrop"
+            onClick={() => {
+              setShow(false);
+            }}
+          ></div>
+        </>
       ) : (
         <a
           href={link}

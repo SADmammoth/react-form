@@ -262,7 +262,13 @@ class Form extends React.Component {
           style={{ ...style }}
           onSubmit={this.onSubmit}
         >
-          {children || Object.values(inputs)}
+          {children || (
+            <ul>
+              {Object.entries(inputs).map(([name, input]) => (
+                <li key={name}>{input}</li>
+              ))}
+            </ul>
+          )}
           {React.cloneElement(submitButton, { type: 'submit' })}
         </form>
       </>

@@ -1,20 +1,24 @@
 export default function getDirtyTextIndex(regexp, text, caretIndex) {
   let matches = text.matchAll(regexp);
+
   let nextMatch = matches.next();
   if (nextMatch.done) {
     return caretIndex;
   }
+
   let nextIndex = nextMatch.value.index;
-  let j = 0;
-  let i = 0;
-  while (j <= caretIndex) {
+  let currentCaretIndex = 0;
+  let realIndex = 0;
+
+  while (currentCaretIndex <= caretIndex) {
     if (nextMatch.done) {
-      i++;
-      j++;
+      realIndex++;
+      currentCaretIndex++;
       continue;
     }
-    if (nextIndex === i) {
-      i += nextMatch.value[0].length - 1;
+
+    if (nextIndex === realIndex) {
+      realIndex += nextMatch.value[0].length - 1;
       nextMatch = matches.next();
       if (nextMatch.done) {
         nextIndex = -1;
@@ -22,12 +26,12 @@ export default function getDirtyTextIndex(regexp, text, caretIndex) {
       }
       nextIndex = nextMatch.value.index;
     }
-    j++;
 
-    i++;
+    realIndex++;
+    currentCaretIndex++;
   }
-  console.log(caretIndex, j);
-  return i;
+
+  return realIndex;
 }
 
 // export default function getDirtyTextIndex(regexp, text, caretIndex) {
