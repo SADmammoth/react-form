@@ -1,9 +1,8 @@
 import { useState, useMemo, useReducer } from 'react';
-import markdownMap from './helpers/markdownMap';
 import safeHtml from './helpers/safeHtml';
 import regexpEscape from '../../../../Validator/regexpEscape';
 
-export default function useHtml(init) {
+export default function useHtml(init, markdownMap) {
   let mdMap = useMemo(() => Object.values(markdownMap));
 
   let [html, setHtml] = useState(safeHtml(init));

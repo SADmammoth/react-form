@@ -1,28 +1,30 @@
-import markdownMap from './helpers/markdownMap';
 import { useState, useCallback, useMemo } from 'react';
 
-export default function useOTGMdShortcuts() {
-  let tagList = useMemo(() =>
-    Object.values(markdownMap)
-      .map(([, open, close]) => {
-        if (close) {
-          return [
-            {
+export default function useOTGMdShortcuts(markdownMap) {
+  console.log(markdownMap);
+  let tagList = useMemo(
+    () =>
+      Object.values(markdownMap)
+        .map(([, open, close]) => {
+          if (close) {
+            return [
+              {
+                tag: open,
+              },
+              {
+                tag: close,
+                close: true,
+              },
+            ];
+          } else {
+            return {
+              id: open,
               tag: open,
-            },
-            {
-              tag: close,
-              close: true,
-            },
-          ];
-        } else {
-          return {
-            id: open,
-            tag: open,
-          };
-        }
-      })
-      .flat()
+            };
+          }
+        })
+        .flat(),
+    [markdownMap]
   );
 
   let reset = (opened = []) => {

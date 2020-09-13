@@ -1,11 +1,10 @@
-import markdownMap from './markdownMap';
-
 export default function createMdShortcutsButtons(
   htmlDispatch,
   mdDispatch,
   actionTypes,
   onInput,
-  specialButtons
+  specialButtons,
+  markdownMap
 ) {
   return [
     ...Object.entries(markdownMap).map(([btnName, [tag, md, mdClose]]) => ({

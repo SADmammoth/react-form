@@ -15,13 +15,26 @@ import CheckboxGroup from '../CheckboxGroup';
 import Form from '../../../Form';
 import TriggerButton from '../TriggerButton';
 import compareObjects from '../../../../helpers/compareObjects';
+import filterMarkdownMap from './helpers/filterMarkdownMap';
 
-function MarkdownText({ value, onChange, name, onInput }) {
-  let update = useMd();
+function MarkdownText({ value, onChange, name, onInput, markdownFeatures }) {
   const input = useRef({});
+
+  let [filteredMarkdownMap] = filterMarkdownMap(
+    markdownMap,
+    undefined,
+    markdownFeatures
+  );
+
+  let update = useMd(filteredMarkdownMap);
+
   let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex, update);
-  let [mdI, markdown, mdDispatch] = useCaret(value, getMarkdownIndex);
+  let [mdI, markdown, mdDispatch] = useCaret(value, getMdIndex);
   let [portals, setPortals] = useState({});
+
+  function getMdIndex(text, index) {
+    getMarkdownIndex(text, index, filteredMarkdownMap);
+  }
 
   let [showNotPrintable, setShowNotPrintable] = useState(false);
 
@@ -78,6 +91,19 @@ function MarkdownText({ value, onChange, name, onInput }) {
     }
   };
 
+  let [, filteredSpecialButtons] = filterMarkdownMap(
+    undefined,
+    specialButtons(
+      htmlDispatch,
+      htmlI,
+      mdDispatch,
+      actionTypes,
+      portals,
+      setPortals
+    ),
+    markdownFeatures
+  );
+
   let buttons = useMemo(
     () =>
       createMdShortcutsButtons(
@@ -88,14 +114,8 @@ function MarkdownText({ value, onChange, name, onInput }) {
           onInput({ target: { name, value: markdown } });
           input.current.focus();
         },
-        specialButtons(
-          htmlDispatch,
-          htmlI,
-          mdDispatch,
-          actionTypes,
-          portals,
-          setPortals
-        )
+        filteredSpecialButtons,
+        filteredMarkdownMap
       ),
     [onInput]
   );
@@ -145,13 +165,16 @@ MarkdownText.propTypes = {
     links: PropTypes.bool,
     bold: PropTypes.bool,
     italic: PropTypes.bool,
-    lists: PropTypes.bool,
-    images: PropTypes.bool,
-    quotes: PropTypes.bool,
-    code: PropTypes.bool,
-    todo: PropTypes.bool,
-    tables: PropTypes.bool,
+    // lists: PropTypes.bool,
+    // images: PropTypes.bool,
+    // quotes: PropTypes.bool,
+    // code: PropTypes.bool,
+    // todo: PropTypes.bool,
+    // tables: PropTypes.bool,
   }),
+};
+MarkdownText.defaultProps = {
+  markdownFeatures: { bold: true, italic: true },
 };
 
 export default React.memo(MarkdownText, compareObjects);
