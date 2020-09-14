@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import notify from '../helpers/formHelpers/notify';
@@ -10,93 +10,15 @@ import setFormDefaultValue from '../helpers/formHelpers/setFormDefaultValue';
 import CreateInput from './CreateInput';
 import Spinner from '../Spinner';
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      values: {}, // Store values of inputs (for internal use)
-      inputs: {}, // Store inputs components (for external use)
-    };
-
-    this.updateValue = this.updateValue.bind(this);
-    this.onValidationFail = this.onValidationFail.bind(this);
-    this.highlightInput = this.highlightInput.bind(this);
-    this.unhighlightInput = this.unhighlightInput.bind(this);
-    this.onResponseReceived = this.onResponseReceived.bind(this);
-    this.onResponseError = this.onResponseError.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    this.update();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { inputs } = this.props;
-    const { values } = this.state;
-
-    if (
-      !compareObjects(prevProps.inputs, inputs) ||
-      Object.keys(values).length !== inputs.length ||
-      !compareObjects(prevState.values, values)
-    ) {
-      this.update();
-    }
-  }
-
-  // eslint-disable-next-line react/sort-comp
-  update() {
-    this.createValues();
-    this.createInputs();
-  }
-
-  getInput(name) {
-    const { input } = this.state;
-    return input[name];
-  }
-
-  updateValue(name, value) {
-    const { values } = this.state;
-    values[name].value = value;
-
-    this.setState({ values });
-    this.createInputs();
-  }
-
-  createValue(id, type, name) {
-    this.setState((state) => ({
-      ...state,
-      values: { ...state.values, [name]: { type, id } },
-    }));
-  }
-
-  createValues() {
-    const { inputs } = this.props;
-    const { values } = this.state;
-    const valuesData = {};
-    inputs.forEach((input) => {
-      valuesData[input.name] = {
-        id: input.name,
-        value: input.defaultValue || input.value,
-        required: input.required,
-        defaultValue: setFormDefaultValue(values, input),
-      };
-    });
-
-    this.setState({ values: valuesData });
-  }
-
-  createInputs() {
-    const { values } = this.state;
-    const { inputs, onInputsUpdate } = this.props;
-
-    if (!Object.keys(values).length) {
-      return;
+const Form = (props) => {
+  const createInputs = (inputsProps, valuesState, onInputsUpdate) => {
+    if (!Object.keys(valuesState).length) {
+      return {};
     }
 
     const inputsData = {};
-    inputs.forEach(
+
+    inputsProps.forEach(
       ({
         type,
         name,
@@ -117,24 +39,26 @@ class Form extends React.Component {
         onInput,
         alwaysShowTip,
       }) => {
-        const higlightInputCallback = () => this.highlightInput(name);
+        const higlightInputCallback = () => highlightInput(name);
 
         const onChangeHandler = (inputName, value) => {
           if (onChange) {
             onChange(inputName, value);
           }
-          this.updateValue(inputName, value);
+
+          updateValueCallback(inputName, value);
         };
 
         const onInputHandler = (inputName, value) => {
           if (onInput) {
             onInput(inputName, value);
           }
-          this.updateValue(inputName, value);
+
+          updateValueCallback(inputName, value);
         };
 
         inputsData[name] = CreateInput({
-          id: values[name].id,
+          id: valuesState[name].id,
           type,
           name,
           description,
@@ -148,32 +72,195 @@ class Form extends React.Component {
           label,
           placeholder,
           attributes,
-          value: values[name].value,
+          value: valuesState[name].value,
           valueOptions,
           minSymbols,
           maxSymbols,
-          invalid: !!values[name].invalid,
+          invalid: !!valuesState[name].invalid,
           highlightInput: higlightInputCallback,
           validationMessage,
           alwaysShowTip,
         });
-
         onInputsUpdate(inputsData);
-
-        this.setState({ inputs: inputsData });
       }
     );
-  }
-  // * -end- Create Inputs
+    return inputsData;
+  };
 
-  successNotification(title, message) {
+  function updateInput(
+    inputProps,
+    newValue,
+    inputName,
+    valuesState,
+    inputsState
+  ) {
+    console.log(inputProps);
+    let {
+      type,
+      name,
+      description,
+      required,
+      label,
+      placeholder,
+      attributes,
+      byCharValidator,
+      validator,
+      valueOptions,
+      minSymbols,
+      maxSymbols,
+      mask,
+      maskType,
+      validationMessage,
+      onChange,
+      onInput,
+      alwaysShowTip,
+    } = inputProps.find((inputProp) => inputProp.name === inputName);
+
+    const higlightInputCallback = () => highlightInput(name);
+
+    const onChangeHandler = (inputName, value) => {
+      if (onChange) {
+        onChange(inputName, value);
+      }
+
+      updateValueCallback(inputName, value);
+    };
+
+    const onInputHandler = (inputName, value) => {
+      if (onInput) {
+        onInput(inputName, value);
+      }
+
+      updateValueCallback(inputName, value);
+    };
+
+    let newInput = CreateInput({
+      id: valuesState[name].id,
+      type,
+      name,
+      description,
+      onInput: onInputHandler,
+      onChange: onChangeHandler,
+      mask,
+      maskType,
+      validator,
+      byCharValidator,
+      required,
+      label,
+      placeholder,
+      attributes,
+      value: valuesState[name].value,
+      valueOptions,
+      minSymbols,
+      maxSymbols,
+      invalid: !!valuesState[name].invalid,
+      highlightInput: higlightInputCallback,
+      validationMessage,
+      alwaysShowTip,
+    });
+    console.log(newInput);
+    let newInputsState = { ...inputsState, [inputName]: newInput };
+    console.log(newInputsState);
+    onInputsUpdate(newInputsState);
+    return newInputsState;
+  }
+
+  function createValues(inputsProps, valuesState) {
+    const valuesData = {};
+    inputsProps.forEach((input) => {
+      valuesData[input.name] = {
+        id: input.name,
+        value: input.defaultValue || input.value,
+        required: input.required,
+        defaultValue: setFormDefaultValue(valuesState, input),
+      };
+    });
+
+    return { ...valuesState, ...valuesData };
+  }
+  let {
+    inputs: inputsProps,
+    onInputsUpdate,
+    onSubmit: onSubmitHandler,
+  } = props;
+
+  let reducer = (state, { type, data }) => {
+    let { inputs, values } = state;
+    switch (type) {
+      case 'updateInput':
+        return {
+          ...state,
+          inputs: {
+            ...updateInput(inputsProps, data.name, values, inputs),
+          },
+        };
+      case 'updateValue':
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            ...updateValue(data.name, values[data.name], data.value),
+          },
+        };
+      case 'createInputs':
+        return {
+          ...state,
+          inputs: createInputs(inputsProps, values, onInputsUpdate),
+        };
+      case 'createValues':
+        return { ...state, values: createValues(inputsProps, values) };
+      case 'highlightInput':
+        return {
+          ...state,
+          values: { ...state.values, ...highlightInput(values[data.name]) },
+        };
+    }
+  };
+
+  let [state, dispatch] = useReducer(reducer, { inputs: {}, values: {} });
+
+  let actions = {
+    updateInput: (name, value) =>
+      dispatch({ type: 'updateInput', data: { name, value } }),
+    updateValue: (name, value) =>
+      dispatch({ type: 'updateValue', data: { name, value } }),
+    createInputs: () => dispatch({ type: 'createInputs' }),
+    createValues: () => dispatch({ type: 'createValues' }),
+  };
+
+  useEffect(() => {
+    actions.createValues();
+  }, [inputsProps]);
+
+  useEffect(() => {
+    console.log(state.values);
+    console.log(state);
+    actions.createInputs();
+  }, [state.values]);
+
+  function getInput(name) {
+    const { input } = state;
+    return input[name];
+  }
+
+  function updateValue(name, valueItem, newValue) {
+    console.log(valueItem.name);
+    return { [name]: { ...valueItem, value: newValue } };
+  }
+
+  function updateValueCallback(name, value) {
+    console.log(name);
+    actions.updateValue(name, value);
+  }
+
+  function successNotification(title, message) {
     const { showNotifications } = this.props;
     if (showNotifications === 'all') {
       notify('success', title, message);
     }
   }
 
-  errorNotification(title, message) {
+  function errorNotification(title, message) {
     console.trace();
     const { showNotifications } = this.props;
 
@@ -182,7 +269,7 @@ class Form extends React.Component {
     }
   }
 
-  onValidationFail(input) {
+  function onValidationFail(input) {
     this.highlightInput(input.name);
     errorNotification(
       input.description || input.label || input.name,
@@ -191,21 +278,18 @@ class Form extends React.Component {
     return false;
   }
 
-  highlightInput(name) {
-    const { values } = this.state;
-
-    values[name].invalid = true;
-    this.setState({ values }, () => this.createInputs());
-    setTimeout(() => this.unhighlightInput(name), 3000);
+  function highlightInput(input) {
+    //TODO update inputs
+    //TODO unhighlight after 3000ms
+    return { [input.name]: { ...input, invalid: true } };
   }
 
-  unhighlightInput(name) {
-    const { values } = this.state;
-    values[name].invalid = false;
-    this.setState({ values }, () => this.createInputs());
+  function unhighlightInput(input) {
+    //TODO update inputs
+    return { [input.name]: { ...input, invalid: false } };
   }
 
-  onResponseReceived(response) {
+  function onResponseReceived(response) {
     if (response) {
       if (response.status === 200) {
         this.successNotification('Success', 'Data sent and accepted by server');
@@ -215,16 +299,16 @@ class Form extends React.Component {
     }
   }
 
-  onResponseError(error) {
+  function onResponseError(error) {
     this.errorNotification(
       'Server error',
       error.response ? error.response.data.Message : error.toString()
     );
   }
 
-  onSubmit(event) {
-    const { values } = this.state;
-    const { onSubmit: onSubmitHandler, inputs } = this.props;
+  function onSubmit(event) {
+    const { values } = state;
+    const { inputs } = props;
     if (onSubmitHandler === null) {
       event.preventDefault();
       return;
@@ -234,41 +318,32 @@ class Form extends React.Component {
       event.preventDefault();
     }
 
-    if (validateForm(values, inputs, this.onValidationFail)) {
+    if (validateForm(values, inputs, onValidationFail)) {
       if (onSubmitHandler) {
         onSubmitHandler(formatFormValues(values))
-          .then(this.onResponseReceived)
-          .catch(this.onResponseError);
+          .then(onResponseReceived)
+          .catch(onResponseError);
       }
     }
   }
 
-  render() {
-    const {
-      method,
-      action,
-      className,
-      style,
-      submitButton,
-      children,
-    } = this.props;
-    const { inputs } = this.state;
-    return (
-      <>
-        <form
-          method={method}
-          action={action}
-          className={`form ${className}` || ''}
-          style={{ ...style }}
-          onSubmit={this.onSubmit}
-        >
-          {children || Object.values(inputs)}
-          {React.cloneElement(submitButton, { type: 'submit' })}
-        </form>
-      </>
-    );
-  }
-}
+  const { method, action, className, style, submitButton, children } = props;
+  const { inputs } = state;
+  return (
+    <>
+      <form
+        method={method}
+        action={action}
+        className={`form ${className}` || ''}
+        style={{ ...style }}
+        onSubmit={onSubmit}
+      >
+        {children || Object.values(inputs)}
+        {React.cloneElement(submitButton, { type: 'submit' })}
+      </form>
+    </>
+  );
+};
 
 Form.defaultProps = {
   method: 'GET',

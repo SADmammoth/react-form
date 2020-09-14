@@ -27,7 +27,6 @@ function TextArea(props) {
   let [placeholderOn, switchPlaceholder] = useState(false);
 
   useEffect(() => {
-    console.log(value);
     if (!value) {
       switchPlaceholder(true);
     }

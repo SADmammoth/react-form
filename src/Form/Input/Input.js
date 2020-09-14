@@ -10,6 +10,7 @@ import LabeledInput from './LabeledInput';
 import CustomNumber from './CustomInputs/CustomNumber';
 import Slider from './CustomInputs/Slider';
 import Range from './CustomInputs/Range';
+import MarkdownText from './CustomInputs/MarkdownText';
 
 function Input(props) {
   const {
@@ -93,6 +94,24 @@ function Input(props) {
           attributes={attributes}
           value={value}
           valueOptions={valueOptions}
+        />
+      );
+    }
+
+    if (type === 'markdown') {
+      return LabeledInput(
+        label,
+        id,
+        <MarkdownText
+          id={id}
+          type={type}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
         />
       );
     }
