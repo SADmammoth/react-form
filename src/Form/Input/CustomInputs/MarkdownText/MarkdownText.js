@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Menu from '../Menu';
@@ -16,8 +16,29 @@ import Form from '../../../Form';
 import TriggerButton from '../TriggerButton';
 import compareObjects from '../../../../helpers/compareObjects';
 import filterMarkdownMap from './helpers/filterMarkdownMap';
+import shortcutMd from './helpers/shortcutMd';
+import MarkdownOutput from '../../../MarkdownOutput';
 
-function MarkdownText({ value, onChange, name, onInput, markdownFeatures }) {
+function MarkdownText({
+  id,
+  value,
+  onChange,
+  name,
+  onInput,
+  markdownFeatures,
+  editable,
+}) {
+  if (!editable) {
+    return (
+      <MarkdownOutput
+        id={id}
+        name={name}
+        value={value}
+        markdownFeatures={markdownFeatures}
+      />
+    );
+  }
+
   const input = useRef({});
 
   let [filteredMarkdownMap] = filterMarkdownMap(
@@ -28,20 +49,24 @@ function MarkdownText({ value, onChange, name, onInput, markdownFeatures }) {
 
   let update = useMd(filteredMarkdownMap);
 
-  let [htmlI, html, htmlDispatch] = useCaret(value, getHtmlIndex, update);
-  let [mdI, markdown, mdDispatch] = useCaret(value, getMdIndex);
-  let [portals, setPortals] = useState({});
+  let [htmlI, html, htmlDispatch] = useCaret(
+    shortcutMd(value, filteredMarkdownMap),
+    getHtmlIndex,
+    update
+  );
 
   function getMdIndex(text, index) {
-    getMarkdownIndex(text, index, filteredMarkdownMap);
+    return getMarkdownIndex(text, index, filteredMarkdownMap);
   }
+
+  let [mdI, markdown, mdDispatch] = useCaret(value, getMdIndex);
+  let [portals, setPortals] = useState({});
 
   let [showNotPrintable, setShowNotPrintable] = useState(false);
 
   useEffect(() => {
     if (Object.entries(portals).length) {
       Object.entries(portals).forEach(([id, component]) => {
-        console.log(id, document.getElementById(id), component);
         ReactDOM.render(component, document.getElementById(id));
       });
       setPortals({});
@@ -141,6 +166,10 @@ function MarkdownText({ value, onChange, name, onInput, markdownFeatures }) {
         contentEditable={true}
         name={name}
         onKeyDown={onInputHandler}
+        onBlur={() => {
+          console.log(markdown);
+          onChange({ target: { name, value: markdown } });
+        }}
         onClick={onMouseClick}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
@@ -172,9 +201,11 @@ MarkdownText.propTypes = {
     // todo: PropTypes.bool,
     // tables: PropTypes.bool,
   }),
+  editable: PropTypes.bool,
 };
 MarkdownText.defaultProps = {
   markdownFeatures: { bold: true, italic: true },
+  editable: true,
 };
 
 export default React.memo(MarkdownText, compareObjects);
