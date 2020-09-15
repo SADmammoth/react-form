@@ -1,7 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 
 export default function useOTGMdShortcuts(markdownMap) {
-  console.log(markdownMap);
   let tagList = useMemo(
     () =>
       Object.values(markdownMap)

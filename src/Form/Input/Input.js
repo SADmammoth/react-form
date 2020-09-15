@@ -37,6 +37,7 @@ function Input(props) {
     highlightInput,
     validationMessage,
     alwaysShowTip,
+    editable,
   } = props;
 
   const onChangeHandler = ({
@@ -112,6 +113,7 @@ function Input(props) {
           required={required}
           attributes={attributes}
           value={value}
+          editable={editable}
         />
       );
     }
@@ -289,6 +291,7 @@ Input.publicProps = {
   validator: PropTypes.func,
   validationMessage: PropTypes.string,
   alwaysShowTip: PropTypes.bool,
+  editable: PropTypes.bool,
 };
 
 Input.propTypes = {

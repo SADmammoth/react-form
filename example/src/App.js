@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Form from 'react-form';
 import 'react-form/dist/index.css';
 
 const App = () => {
+  let [value, setValue] = useState('');
+
   return (
     <Form
       onSubmit={async (data) => {
@@ -114,7 +116,10 @@ const App = () => {
           valueOptions: 'qwertyuiopasdfghjklzxcvbnm'
             .split('')
             .sort()
-            .map((letter) => ({ label: letter.toUpperCase(), value: letter })),
+            .map((letter) => ({
+              label: letter.toUpperCase(),
+              value: letter,
+            })),
 
           alwaysShowTip: true,
         },
@@ -126,7 +131,10 @@ const App = () => {
           valueOptions: 'qwertyuiopasdfghjklzxcvbnm'
             .split('')
             .sort()
-            .map((letter) => ({ label: letter.toUpperCase(), value: letter })),
+            .map((letter) => ({
+              label: letter.toUpperCase(),
+              value: letter,
+            })),
 
           alwaysShowTip: true,
         },
@@ -135,6 +143,14 @@ const App = () => {
           name: 'md',
           required: false,
           label: 'Markdown',
+        },
+        {
+          type: 'markdown',
+          name: 'mdOutput',
+          required: false,
+          label: 'Markdown Output',
+          editable: false,
+          bind: 'md',
         },
       ]}
       style={{ width: '20vw', margin: '0 auto' }}

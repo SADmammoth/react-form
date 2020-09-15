@@ -38,6 +38,7 @@ const Form = (props) => {
         onChange,
         onInput,
         alwaysShowTip,
+        editable,
       }) => {
         const higlightInputCallback = () => highlightInput(name);
 
@@ -80,6 +81,7 @@ const Form = (props) => {
           highlightInput: higlightInputCallback,
           validationMessage,
           alwaysShowTip,
+          editable,
         });
         onInputsUpdate(inputsData);
       }
@@ -94,7 +96,6 @@ const Form = (props) => {
     valuesState,
     inputsState
   ) {
-    console.log(inputProps);
     let {
       type,
       name,
@@ -114,6 +115,7 @@ const Form = (props) => {
       onChange,
       onInput,
       alwaysShowTip,
+      editable,
     } = inputProps.find((inputProp) => inputProp.name === inputName);
 
     const higlightInputCallback = () => highlightInput(name);
@@ -157,10 +159,11 @@ const Form = (props) => {
       highlightInput: higlightInputCallback,
       validationMessage,
       alwaysShowTip,
+      editable,
     });
-    console.log(newInput);
+
     let newInputsState = { ...inputsState, [inputName]: newInput };
-    console.log(newInputsState);
+
     onInputsUpdate(newInputsState);
     return newInputsState;
   }
@@ -169,11 +172,16 @@ const Form = (props) => {
     const valuesData = {};
     inputsProps.forEach((input) => {
       valuesData[input.name] = {
+        ...valuesData[input.name],
         id: input.name,
         value: input.defaultValue || input.value,
         required: input.required,
         defaultValue: setFormDefaultValue(valuesState, input),
       };
+      if (valuesData[input.bind])
+        !valuesData[input.bind].bind
+          ? (valuesData[input.bind].bind = [input.name])
+          : valuesData[input.bind].bind.push(input.name);
     });
 
     return { ...valuesState, ...valuesData };
@@ -199,7 +207,7 @@ const Form = (props) => {
           ...state,
           values: {
             ...state.values,
-            ...updateValue(data.name, values[data.name], data.value),
+            ...updateValue(data.name, values, data.value),
           },
         };
       case 'createInputs':
@@ -233,8 +241,6 @@ const Form = (props) => {
   }, [inputsProps]);
 
   useEffect(() => {
-    console.log(state.values);
-    console.log(state);
     actions.createInputs();
   }, [state.values]);
 
@@ -243,13 +249,21 @@ const Form = (props) => {
     return input[name];
   }
 
-  function updateValue(name, valueItem, newValue) {
-    console.log(valueItem.name);
+  function updateValue(name, valuesState, newValue) {
+    let valueItem = valuesState[name];
+
+    if (valueItem.bind) {
+      let newValues = { [name]: { ...valueItem, value: newValue } };
+      valueItem.bind.forEach(
+        (name) => (newValues[name] = { ...valuesState[name], value: newValue })
+      );
+
+      return newValues;
+    }
     return { [name]: { ...valueItem, value: newValue } };
   }
 
   function updateValueCallback(name, value) {
-    console.log(name);
     actions.updateValue(name, value);
   }
 

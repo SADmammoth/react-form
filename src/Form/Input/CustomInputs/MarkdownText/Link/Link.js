@@ -33,7 +33,6 @@ function Link({ setMd }) {
           href={link}
           title="Ctrl + Click to follow the link"
           onClick={(event) => {
-            console.log(window.event.ctrlKey);
             if (!window.event.ctrlKey) {
               event.preventDefault();
               setShow(true);

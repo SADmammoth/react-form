@@ -75,19 +75,14 @@ function input(text, index, data, getIndex, onTextChange) {
   let textArray = [...text];
   let realIndex = getIndex(text, index);
   textArray.splice(realIndex, 0, data);
-  console.log(
-    textArray.slice(0, realIndex + 1).join(''),
-    textArray.slice(realIndex + 1, -1).join('')
-  );
   let newText =
     onTextChange(textArray.slice(0, realIndex + 1).join('')) +
     textArray.slice(realIndex + 1, -1).join('');
-
+  console.log(getIndex(text, index));
   let newIndex = index + data.length;
   if (newText !== textArray.join('')) {
     newIndex = calcLength(newText);
   }
-  console.log(newIndex, newText);
   return {
     text: newText,
     index: newIndex,
