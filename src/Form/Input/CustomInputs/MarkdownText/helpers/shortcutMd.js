@@ -2,7 +2,7 @@ import tagManager from './tagManager';
 import regexpEscape from '../../../../../Validator/regexpEscape';
 
 export default function shortcutMd(html, markdownMap) {
-  let newHtml = [...html];
+  let newHtml = html.split('');
   let opened = [];
 
   let regex = new RegExp(
@@ -21,7 +21,6 @@ export default function shortcutMd(html, markdownMap) {
       ([html, md, close]) => close === currentMd || md === currentMd
     );
   }
-
   let offset = 0;
 
   while (!text.done && currentMatch.value) {

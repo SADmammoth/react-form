@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import markdownMap from './Input/CustomInputs/MarkdownText/helpers/markdownMap';
-import getHtmlIndex from './Input/CustomInputs/MarkdownText/helpers/indexHelpers/getHtmlIndex';
-import getMarkdownIndex from './Input/CustomInputs/MarkdownText/helpers/indexHelpers/getMarkdownIndex';
-import useCaret from './Input/CustomInputs/MarkdownText/useCaret';
-import useMd from './Input/CustomInputs/MarkdownText/useOTGMdShortcuts';
 import compareObjects from '../helpers/compareObjects';
 import filterMarkdownMap from './Input/CustomInputs/MarkdownText/helpers/filterMarkdownMap';
 import shortcutMd from './Input/CustomInputs/MarkdownText/helpers/shortcutMd';
@@ -16,28 +12,17 @@ function MarkdownOutput({ id, value, name, markdownFeatures }) {
     markdownFeatures
   );
 
-  let update = useMd(filteredMarkdownMap);
+  // let update = useMd(filteredMarkdownMap);
 
-  let [, html, htmlDispatch] = useCaret(
-    shortcutMd(value, filteredMarkdownMap),
-    getHtmlIndex,
-    update
-  );
+  let [html, setHtml] = useState(shortcutMd(value, filteredMarkdownMap));
 
-  function getMdIndex(text, index) {
-    return getMarkdownIndex(text, index, filteredMarkdownMap);
-  }
-
-  let [, markdown, mdDispatch] = useCaret(value, getMdIndex);
+  let [markdown, setMarkdown] = useState(value);
 
   useEffect(() => {
     if (value !== markdown) {
       console.log(value);
-      mdDispatch({ type: 'set', data: value });
-      htmlDispatch({
-        type: 'set',
-        data: shortcutMd(value, filteredMarkdownMap),
-      });
+      setMarkdown(value);
+      setHtml(shortcutMd(value, filteredMarkdownMap));
     }
   });
 
