@@ -55,7 +55,7 @@ export default function useOTGMdShortcuts(markdownMap) {
     };
 
     let newCandidates = getNewCandidates(candidates, index, searched, isOpened);
-    let newText = [...text];
+    let newText = text.split('');
 
     if (!newCandidates.length && candidates.length) {
       let fullMatches = candidates.filter(({ tag }) => {
@@ -94,10 +94,10 @@ export default function useOTGMdShortcuts(markdownMap) {
             1
           );
         } else if (!found[2]) {
-          newText.splice(-index, index - 1, `<${found[0]}/>`);
+          newText.splice(newText.length - index, index - 1, `<${found[0]}/>`);
         } else {
           newOpened.push(found[1]);
-          newText.splice(-index, index - 1, `<${found[0]}>`);
+          newText.splice(newText.length - index, index - 1, `<${found[0]}>`);
         }
       } else {
         setState(reset(newOpened));
@@ -126,12 +126,12 @@ export default function useOTGMdShortcuts(markdownMap) {
               tagList.findIndex((tagItem) => tagItem === found[1]),
               1
             );
-            newText.splice(-index, index, `</${found[0]}>`);
+            newText.splice(newText.length - index, index, `</${found[0]}>`);
           } else if (!found[2]) {
-            newText.splice(-index, index, `<${found[0]}/>`);
+            newText.splice(newText.length - index, index, `<${found[0]}/>`);
           } else {
             newOpened.push(found[1]);
-            newText.splice(-index, index, `<${found[0]}>`);
+            newText.splice(newText.length - index, index, `<${found[0]}>`);
           }
         }
       }
