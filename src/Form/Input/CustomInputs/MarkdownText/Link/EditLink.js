@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Form from '../../../../Form';
+// import Form from '../../../../Form';
 import Button from '../../Button';
 
 function EditLink({ setData, close, textDefault, linkDefault }) {
@@ -14,7 +14,7 @@ function EditLink({ setData, close, textDefault, linkDefault }) {
       >
         x
       </button>
-      <Form
+      {/* <Form
         onSubmit={async ({ text, link }) => {
           setData(text, link);
           close();
@@ -38,7 +38,7 @@ function EditLink({ setData, close, textDefault, linkDefault }) {
           },
         ]}
         submitButton={<button type="submit">Edit</button>}
-      ></Form>
+      ></Form> */}
     </div>
   );
 }

@@ -26,56 +26,49 @@
   appearance: none;
   outline: none;
   position: relative;
+  padding: none;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  margin-right: 10px;
+  margin-bottom: 1px;
 
   &::before {
     content: '';
     display: block;
+    position: absolute;
     width: 10px;
     height: 10px;
-    margin-bottom: -3px;
     border: $border-width solid $common;
     border-radius: $border-radius;
     background-color: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
   &:checked::after {
     content: '';
     display: block;
     position: absolute;
-    left: 2px;
-    top: 2px;
-    width: 8px;
-    height: 8px;
-    margin-bottom: -3px;
-    border-radius: 1px;
-    background-color: $highlight;
+    width: 6px;
+    height: 6px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: $highlight;
+    border: $border-width solid $common;
+    border-radius: $border-radius;
   }
 }
 
 @mixin radiobutton {
-  appearance: none;
-  outline: none;
-  position: relative;
+  @include checkbox();
 
   &::before {
-    content: '';
-    display: block;
-    width: 10px;
-    height: 10px;
-    border: $border-width solid $common;
     border-radius: 100%;
-    background-color: none;
   }
-
   &:checked::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 2px;
-    top: 2px;
-    width: 8px;
-    height: 8px;
     border-radius: 100%;
-    background-color: $highlight;
   }
 }
 
@@ -83,6 +76,8 @@
   appearance: none;
   outline: none;
   position: relative;
+  margin: 0;
+  margin-right: 10px;
   margin-bottom: -2px;
 
   &::before {
@@ -106,7 +101,8 @@
     position: absolute;
     right: unset;
     left: calc(#{$border-width} + 2px);
-    top: calc(#{$border-width} + 2px);
+    top: 50%;
+    transform: translateY(-50%);
     width: 8px;
     height: 8px;
     border-radius: 100%;
@@ -124,6 +120,8 @@
   appearance: none;
   outline: none;
   position: relative;
+  margin: 0;
+  margin-right: 5px;
   margin-bottom: -2px;
 
   &::before {
@@ -142,6 +140,8 @@
     .form-spoiler {
       position: absolute;
       right: 3%;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 
@@ -158,6 +158,7 @@
   .option {
     display: flex;
     justify-items: flex-start;
+    cursor: pointer;
 
     & :nth-child(n + 2) {
       margin-left: 5px;
@@ -168,6 +169,7 @@
     border: $border-width solid $muted;
     color: $muted;
     padding: 3%;
+    cursor: auto;
   }
 
   .option.active {
@@ -177,6 +179,7 @@
     margin-left: calc(#{$border-width} - 3%);
     box-sizing: border-box;
     padding: 3%;
+    cursor: auto;
 
     &:first-child {
       margin-top: calc(#{$border-width} - 3%);
@@ -232,6 +235,10 @@
   --display-tip: 'none';
 
   height: 30px;
+  position: relative;
+  margin: 10px;
+  margin-left: 15px;
+  @include blockSelection();
 
   &-prev,
   &-next {
@@ -240,10 +247,13 @@
     background: none;
     cursor: pointer;
     display: inline-block;
+    height: 10px;
+    position: absolute;
+    top: 4px;
   }
 
-  &-next {
-    display: inline-block;
+  &-prev {
+    left: -17px;
   }
 
   input {
@@ -253,7 +263,7 @@
     text-align: center;
     border: none;
     position: absolute;
-    left: calc(var(--percent) * 1% - 50px);
+    left: calc(var(--percent) * 1% - 47px);
     display: var(--display-tip);
     background: none;
     outline: none;
@@ -283,7 +293,7 @@
 
   &-thumb {
     position: relative;
-    left: calc(var(--percent) * 1% - 5px);
+    left: calc(var(--percent) * 1%);
 
     margin-top: -4px;
     border-radius: 100%;
@@ -300,6 +310,9 @@
   --display-tip: 'none';
 
   height: 30px;
+  margin: 10px;
+  margin-left: 15px;
+  @include blockSelection();
 
   &-prev,
   &-next {
@@ -364,6 +377,10 @@
     }
   }
 
+  .form-slider-thumb {
+    padding: 0;
+  }
+
   .form-slider-thumb:first-of-type {
     &::before {
       content: '\25b6';
@@ -376,7 +393,7 @@
     position: relative;
     left: calc(var(--start) * 1% - 12px);
 
-    margin-top: -10px;
+    margin-top: -8px;
     background: none;
     cursor: pointer;
   }
@@ -416,4 +433,13 @@
 @mixin notPrintedChars {
   color: $muted;
   font-size: 70%;
+}
+
+@mixin blockSelection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

@@ -1,65 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import calcSliderIndex from '../../../../helpers/formHelpers/calcSliderIndex';
+import calcSliderPart from '../../../../helpers/formHelpers/calcSliderPart';
 
-function SliderThumb({ sliderPart, prev, next, onMoveEnd }) {
-  let [dragging, setDragging] = useState(false);
-  let [prevPos, setPrevPos] = useState(0);
+function SliderThumb({
+  sliderRef,
+  sliderValuesCount,
+  moveTo,
+  moveToStart,
+  moveToEnd,
+}) {
+  const [dragging, setDragging] = useState(false);
+  const [sliderRectParams, setSliderRectParams] = useState({});
+  const sliderPartLength = calcSliderPart(sliderRef, sliderValuesCount);
 
   useEffect(() => {
-    let endMove;
-    let mouseMove;
+    if (!_.isEmpty(sliderRef)) {
+      setSliderRectParams(sliderRef.getBoundingClientRect());
+    }
+  }, [sliderRef]);
 
-    let removeListeners = () => {
+  const mouseMove = useCallback(
+    (event) => {
+      if (dragging) {
+        const { left, width } = sliderRectParams;
+
+        if (event.clientX < left) {
+          moveToStart();
+          return;
+        }
+
+        if (event.clientX - left > width) {
+          moveToEnd();
+          return;
+        }
+
+        const steps = Math.round((event.clientX - left) / sliderPartLength);
+
+        if (steps) {
+          moveTo(steps);
+        }
+      }
+    },
+    [dragging, JSON.stringify(sliderRectParams), sliderPartLength]
+  );
+
+  const endMove = () => setDragging(false);
+
+  useEffect(() => {
+    function removeListeners() {
       document.removeEventListener('mousemove', mouseMove);
       document.removeEventListener('mouseup', endMove);
-    };
-
-    if (dragging) {
-      endMove = () => {
-        setDragging(false);
-        onMoveEnd();
-      };
-
-      let update = (event) => {
-        removeListeners(event);
-        setPrevPos(event.clientX);
-      };
-
-      mouseMove = (event) => {
-        if (event.clientX - prevPos <= -sliderPart) {
-          update(event);
-          prev();
-          return;
-        }
-        if (event.clientX - prevPos >= sliderPart) {
-          update(event);
-          next();
-          return;
-        }
-      };
-
-      document.addEventListener('mousemove', mouseMove);
-      document.addEventListener('mouseup', endMove);
     }
+
+    removeListeners();
+
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', endMove);
+
     return removeListeners;
-  }, [prevPos, dragging]);
+  }, [mouseMove, endMove]);
 
   return (
     <div
+      draggable="false"
       className="form-slider-thumb"
-      onMouseDown={(event) => {
+      onMouseDown={() => {
         setDragging(true);
-        setPrevPos(event.clientX);
       }}
     ></div>
   );
 }
 
 SliderThumb.propTypes = {
-  sliderPart: PropTypes.number.isRequired,
-  prev: PropTypes.func.isRequired,
-  next: PropTypes.func.isRequired,
-  onMoveEnd: PropTypes.func.isRequired,
+  sliderRef: PropTypes.element.isRequired,
+  moveTo: PropTypes.func.isRequired,
+  moveToStart: PropTypes.func.isRequired,
+  moveToEnd: PropTypes.func.isRequired,
+  sliderValuesCount: PropTypes.number.isRequired,
 };
 
 export default SliderThumb;

@@ -11,8 +11,6 @@ import isMarkdownElement from './helpers/isMarkdownElement';
 import createMdShortcutsButtons from './helpers/createMdShortcutsButtons';
 import setCaret from './helpers/setCaret';
 import calculateCaretIndex from './helpers/calculateCaretIndex';
-import CheckboxGroup from '../CheckboxGroup';
-import Form from '../../../Form';
 import TriggerButton from '../TriggerButton';
 import compareObjects from '../../../../helpers/compareObjects';
 import filterMarkdownMap from './helpers/filterMarkdownMap';

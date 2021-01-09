@@ -78,7 +78,7 @@ function input(text, index, data, getIndex, onTextChange) {
   let newText =
     onTextChange(textArray.slice(0, realIndex + 1).join('')) +
     textArray.slice(realIndex + 1, -1).join('');
-  console.log(getIndex(text, index));
+
   let newIndex = index + data.length;
   if (newText !== textArray.join('')) {
     newIndex = calcLength(newText);

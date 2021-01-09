@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../../helpers/compareObjects';
 import SliderThumb from '../SliderThumb';
 import calcPercent from '../../../../helpers/formHelpers/calcPercent';
 import useRange from '../../../../helpers/useRange';
-import useSliderPart from '../../../../helpers/formHelpers/useSliderPart';
+import createEvent from '../../../../helpers/createEvent';
 
 function Range(props) {
   const {
@@ -18,38 +18,38 @@ function Range(props) {
   } = props;
 
   let { from, to } = currentValue;
-  let length = valueOptions.length;
+  const length = valueOptions.length;
+
+  const range = useRef({});
 
   if (!currentValue) {
     from = 0;
     to = valueOptions.length - 1;
   }
 
-  let [leftIndex, rightIndex, setLeftIndex, setRightIndex] = useRange(
+  const [leftIndex, rightIndex, setLeftIndex, setRightIndex] = useRange(
     from,
     to,
     length
   );
 
-  let [range, part] = useSliderPart(length);
+  useEffect(() => {
+    onChange(
+      createEvent(name, {
+        ...valueOptions.slice(leftIndex, rightIndex + 1),
+        from: leftIndex,
+        to: rightIndex,
+      })
+    );
+  }, [leftIndex, rightIndex]);
 
-  let onChangeHandler = (leftIndex, rightIndex) => {
-    if (rightIndex >= 0 && rightIndex <= length - 1 && leftIndex <= rightIndex)
-      onChange({
-        target: {
-          name,
-          value: {
-            ...valueOptions.slice(leftIndex, rightIndex + 1),
-            from: leftIndex,
-            to: rightIndex,
-          },
-        },
-      });
-  };
+  const moveEndLeft = useCallback(() => {
+    setLeftIndex(rightIndex);
+  }, [rightIndex]);
 
-  let onMoveEnd = () => {
-    onChangeHandler(leftIndex, rightIndex);
-  };
+  const moveStartRight = useCallback(() => {
+    setRightIndex(leftIndex);
+  }, [leftIndex]);
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
@@ -78,25 +78,19 @@ function Range(props) {
         ></input>
 
         <SliderThumb
-          sliderPart={part}
-          prev={() => {
-            setLeftIndex(leftIndex - 1);
-          }}
-          next={() => {
-            setLeftIndex(leftIndex + 1);
-          }}
-          onMoveEnd={onMoveEnd}
+          sliderRef={range.current}
+          sliderValuesCount={length}
+          moveTo={setLeftIndex}
+          moveToStart={() => setLeftIndex(0)}
+          moveToEnd={moveEndLeft}
         />
 
         <SliderThumb
-          sliderPart={part}
-          prev={() => {
-            setRightIndex(rightIndex - 1);
-          }}
-          next={() => {
-            setRightIndex(rightIndex + 1);
-          }}
-          onMoveEnd={onMoveEnd}
+          sliderRef={range.current}
+          sliderValuesCount={length}
+          moveTo={setRightIndex}
+          moveToStart={moveStartRight}
+          moveToEnd={() => setRightIndex(length - 1)}
         />
       </div>
     </div>

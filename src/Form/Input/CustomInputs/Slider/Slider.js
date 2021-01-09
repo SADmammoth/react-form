@@ -1,10 +1,13 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../../helpers/compareObjects';
 import SliderThumb from '../SliderThumb';
 import useIndex from '../../../../helpers/useIndex';
-import useSliderPart from '../../../../helpers/formHelpers/useSliderPart';
 import calcPercent from '../../../../helpers/formHelpers/calcPercent';
+import HoldButton from '../../../../Components/HoldButton';
+import calcSliderIndex from '../../../../helpers/formHelpers/calcSliderIndex.js';
+import createEvent from '../../../../helpers/createEvent';
+import { useRef } from 'react';
 
 function Slider(props) {
   const {
@@ -25,82 +28,70 @@ function Slider(props) {
   let length = valueOptions.length;
 
   let [index, setIndex] = useIndex(currentIndex, length);
-  let [slider, part] = useSliderPart(length);
+  const slider = useRef({});
 
-  let onChangeHandler = (index) => {
-    if (index >= 0 && index <= length - 1)
-      onChange({
-        target: { name, value: valueOptions[index].value },
-      });
-  };
+  useEffect(() => {
+    onChange(createEvent(name, valueOptions[index].value));
+  }, [index]);
 
   let prev = () => {
-    if (index > 0) {
-      onChangeHandler(index - 1);
-    }
+    setIndex((i) => i - 1);
   };
 
   let next = () => {
-    if (index < valueOptions.length - 1) {
-      onChangeHandler(index + 1);
-    }
+    setIndex((i) => i + 1);
   };
 
-  let moveTo = (event) => {
-    let { left, width } = slider.current.getBoundingClientRect();
-    let newIndex = parseInt(
-      ((event.clientX - left) / width) * valueOptions.length
-    );
-    onChangeHandler(newIndex);
+  let moveOnBackgroundClick = ({ clientX }) => {
+    setIndex(calcSliderIndex(slider, clientX, length));
   };
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
+      draggable="false"
       className="form-slider"
       style={{
         '--percent': calcPercent(index, length),
         '--display-tip': alwaysShowTip ? 'unset' : 'none',
       }}
     >
-      <button
-        type="button"
-        name={name}
-        className="form-slider-prev"
-        onClick={prev}
-      >
+      <HoldButton name={name} className="form-slider-prev" action={prev}>
         -
-      </button>
+      </HoldButton>
 
-      <div ref={slider} className="form-slider-bg" onClick={moveTo}>
+      <div
+        ref={slider}
+        className="form-slider-bg"
+        onClick={moveOnBackgroundClick}
+        draggable="false"
+      >
         <input
+          draggable="false"
           type="text"
           name={name}
           value={valueOptions[index].value}
           required={required}
           readOnly
-        ></input>
+        />
 
         <SliderThumb
-          sliderPart={part}
-          prev={() => {
-            setIndex(index - 1);
-          }}
-          next={() => {
-            setIndex(index + 1);
-          }}
-          onMoveEnd={() => onChangeHandler(index)}
+          sliderRef={slider.current}
+          sliderValuesCount={length}
+          moveTo={setIndex}
+          moveToStart={() => setIndex(0)}
+          moveToEnd={() => setIndex(length - 1)}
         />
       </div>
 
-      <button
+      <HoldButton
         type="button"
         name={name}
         className="form-slider-next"
-        onClick={next}
+        action={next}
       >
         +
-      </button>
+      </HoldButton>
     </div>
   );
 }
