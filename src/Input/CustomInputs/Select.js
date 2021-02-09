@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import compareObjects from '../../../helpers/compareObjects';
-import useValueOptions from '../../../helpers/getValueOptions';
-import Spinner from '../../../Spinner';
-import usePopup from '../../../helpers/usePopup';
+import compareObjects from '../../helpers/compareObjects';
+import useValueOptions from '../../helpers/getValueOptions';
+import Spinner from '../../Spinner';
+import usePopup from '../../helpers/usePopup';
 
 function Select(props) {
   const {

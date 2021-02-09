@@ -1,4 +1,4 @@
-import regexpEscape from '../../../../../../Validator/regexpEscape';
+import regexpEscape from '../../../../../Validator/regexpEscape';
 import getDirtyTextIndex from './getDirtyTextIndex';
 
 export default function getMarkdownIndex(text, caretIndex, markdownMap) {

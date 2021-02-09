@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 
-import placeInputCursorToEnd from '../../helpers/maskHelpers/placeInputCursorToEnd';
-import getMaskCharsBeforePlaceholder from '../../helpers/maskHelpers/getMaskCharsBeforePlaceholder';
-import invisibleMaskOnInputValue from '../../helpers/maskHelpers/invisibleMaskOnInputValue';
-import replaceSubstring from '../../helpers/formHelpers/replaceSubstring';
+import placeInputCursorToEnd from '../helpers/maskHelpers/placeInputCursorToEnd';
+import getMaskCharsBeforePlaceholder from '../helpers/maskHelpers/getMaskCharsBeforePlaceholder';
+import invisibleMaskOnInputValue from '../helpers/maskHelpers/invisibleMaskOnInputValue';
+import replaceSubstring from '../helpers/formHelpers/replaceSubstring';
 
 function InvisibleMaskComponent(input, maskArray) {
   const {

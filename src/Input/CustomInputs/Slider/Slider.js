@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import compareObjects from '../../../../helpers/compareObjects';
+import compareObjects from '../../../helpers/compareObjects';
 import SliderThumb from '../SliderThumb';
-import useIndex from '../../../../helpers/useIndex';
-import calcPercent from '../../../../helpers/formHelpers/calcPercent';
-import HoldButton from '../../../../Components/HoldButton';
-import calcSliderIndex from '../../../../helpers/formHelpers/calcSliderIndex.js';
-import createEvent from '../../../../helpers/createEvent';
+import useIndex from '../../../helpers/useIndex';
+import calcPercent from '../../../helpers/formHelpers/calcPercent';
+import HoldButton from '../../../Components/HoldButton';
+import calcSliderIndex from '../../../helpers/formHelpers/calcSliderIndex.js';
+import createEvent from '../../../helpers/createEvent';
 import { useRef } from 'react';
 
 function Slider(props) {

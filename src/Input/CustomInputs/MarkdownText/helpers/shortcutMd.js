@@ -1,5 +1,5 @@
 import tagManager from './tagManager';
-import regexpEscape from '../../../../../Validator/regexpEscape';
+import regexpEscape from '../../../../Validator/regexpEscape';
 
 export default function shortcutMd(html, markdownMap) {
   let newHtml = html.split('');

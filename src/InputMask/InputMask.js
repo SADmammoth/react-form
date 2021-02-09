@@ -1,9 +1,9 @@
 import React from 'react';
-import Validator from '../../Validator';
+import Validator from '../Validator';
 import InvisibleMaskComponent from './InvisibleMaskComponent';
 import MaskComponent from './MaskComponent';
-import maskEscapedCharsOrEmptyRegex from '../../helpers/maskHelpers/maskEscapedCharsOrEmptyRegex';
-import getValueFromMask from '../../helpers/maskHelpers/getValueFromMask';
+import maskEscapedCharsOrEmptyRegex from '../helpers/maskHelpers/maskEscapedCharsOrEmptyRegex';
+import getValueFromMask from '../helpers/maskHelpers/getValueFromMask';
 
 function InputMask(input, mask, validate = false, type = 'default') {
   let resultInput = input;

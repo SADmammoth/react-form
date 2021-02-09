@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import markdownMap from './Input/CustomInputs/MarkdownText/helpers/markdownMap';
+import markdownMap from './helpers/markdownMap';
 import compareObjects from '../../../helpers/compareObjects';
-import filterMarkdownMap from './Input/CustomInputs/MarkdownText/helpers/filterMarkdownMap';
-import shortcutMd from './Input/CustomInputs/MarkdownText/helpers/shortcutMd';
+import filterMarkdownMap from './helpers/filterMarkdownMap';
+import shortcutMd from './helpers/shortcutMd';
 
 function MarkdownOutput({ id, value, name, markdownFeatures }) {
   let [filteredMarkdownMap] = filterMarkdownMap(

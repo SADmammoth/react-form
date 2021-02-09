@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import Validator from '../../Validator';
-import getValueFromMask from '../../helpers/maskHelpers/getValueFromMask';
+import Validator from '../Validator';
+import getValueFromMask from '../helpers/maskHelpers/getValueFromMask';
 
-import addMask from '../../helpers/maskHelpers/addMask';
-import placeInputCursorToEnd from '../../helpers/maskHelpers/placeInputCursorToEnd';
-import maskNotSpecialCharsRegex from '../../helpers/maskHelpers/maskNotSpecialCharsRegex';
-import getUniqueItems from '../../helpers/getUniqueItems';
-import regexpEscape from '../../Validator/regexpEscape';
-import replaceAll from '../../helpers/formHelpers/replaceAll';
+import addMask from '../helpers/maskHelpers/addMask';
+import placeInputCursorToEnd from '../helpers/maskHelpers/placeInputCursorToEnd';
+import maskNotSpecialCharsRegex from '../helpers/maskHelpers/maskNotSpecialCharsRegex';
+import getUniqueItems from '../helpers/getUniqueItems';
+import regexpEscape from '../Validator/regexpEscape';
+import replaceAll from '../helpers/formHelpers/replaceAll';
 
 function MaskComponent(input, maskArray) {
   if (maskArray[input.props.value.length]) {

@@ -1,5 +1,4 @@
 import Form from './Form';
-import MarkdownOutput from './Form/MarkdownOutput';
+import { MarkdownOutput } from './Input/CustomInputs/MarkdownText';
 
-export default Form;
-export { MarkdownOutput };
+export {Form as default, MarkdownOutput };

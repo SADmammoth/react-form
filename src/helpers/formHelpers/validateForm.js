@@ -1,9 +1,10 @@
 import findInputByName from './findInputByName';
 
-export default function checkValidity(values, inputs, onValidationFail) {
+export default function checkValidity(inputs, values, onValidationFail) {
   let input;
   Object.keys(values).forEach((valueName) => {
     input = findInputByName(inputs, valueName);
+
     if (values[valueName].required && !values[valueName].value) {
       onValidationFail(input);
     }

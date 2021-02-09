@@ -12,10 +12,10 @@ import createMdShortcutsButtons from './helpers/createMdShortcutsButtons';
 import setCaret from './helpers/setCaret';
 import calculateCaretIndex from './helpers/calculateCaretIndex';
 import TriggerButton from '../TriggerButton';
-import compareObjects from '../../../../helpers/compareObjects';
+import compareObjects from '../../../helpers/compareObjects';
 import filterMarkdownMap from './helpers/filterMarkdownMap';
 import shortcutMd from './helpers/shortcutMd';
-import MarkdownOutput from '../../../MarkdownOutput';
+import MarkdownOutput from './MarkdownOutput';
 
 function MarkdownText({
   id,

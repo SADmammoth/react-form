@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import calcSliderIndex from '../../../../helpers/formHelpers/calcSliderIndex';
-import calcSliderPart from '../../../../helpers/formHelpers/calcSliderPart';
+import calcSliderPart from '../../../helpers/formHelpers/calcSliderPart';
 
 function SliderThumb({
   sliderRef,

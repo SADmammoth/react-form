@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import compareObjects from '../../../helpers/compareObjects';
-import Validator from '../../../Validator/Validator';
-import getCounter from '../../../helpers/formHelpers/getCounter';
+import compareObjects from '../../helpers/compareObjects';
+import Validator from '../../Validator/Validator';
+import getCounter from '../../helpers/formHelpers/getCounter';
 
 function CustomNumber(props) {
   const {

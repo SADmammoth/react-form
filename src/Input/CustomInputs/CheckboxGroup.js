@@ -1,10 +1,10 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import checkboxValueSeparator from '../../../helpers/formHelpers/checkboxValueSeparator';
-import compareObjects from '../../../helpers/compareObjects';
-import useValueOptions from '../../../helpers/getValueOptions';
-import Spinner from '../../../Spinner';
+import checkboxValueSeparator from '../../helpers/formHelpers/checkboxValueSeparator';
+import compareObjects from '../../helpers/compareObjects';
+import useValueOptions from '../../helpers/getValueOptions';
+import Spinner from '../../Spinner';
 
 function CheckboxGroup(props) {
   let { valueOptions: options } = props;

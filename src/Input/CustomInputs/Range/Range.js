@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import compareObjects from '../../../../helpers/compareObjects';
+import compareObjects from '../../../helpers/compareObjects';
 import SliderThumb from '../SliderThumb';
-import calcPercent from '../../../../helpers/formHelpers/calcPercent';
-import useRange from '../../../../helpers/useRange';
-import createEvent from '../../../../helpers/createEvent';
+import calcPercent from '../../../helpers/formHelpers/calcPercent';
+import useRange from '../../../helpers/useRange';
+import createEvent from '../../../helpers/createEvent';
 
 function Range(props) {
   const {
