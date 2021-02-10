@@ -9,9 +9,9 @@ function Link({ setMd }) {
   let [show, setShow] = useState(true);
 
   return (
-    <>
+    <Fragment>
       {show ? (
-        <>
+        <Fragment>
           <EditLink
             setData={(text, link) => {
               setText(text);
@@ -27,7 +27,7 @@ function Link({ setMd }) {
               setShow(false);
             }}
           ></div>
-        </>
+        </Fragment>
       ) : (
         <a
           href={link}
@@ -45,7 +45,7 @@ function Link({ setMd }) {
           {text}
         </a>
       )}
-    </>
+    </Fragment>
   );
 }
 

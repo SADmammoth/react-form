@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from 'react';
 
-import Form, { MarkdownOutput } from 'react-form';
+import Form, { MarkdownOutput, Spinner } from 'react-form';
 import 'react-form/dist/index.css';
 
 const App = () => {
   return (
-    <>
+    <Fragment>
       <Form
         onSubmit={async (data) => {
           console.log(data);
@@ -154,9 +154,16 @@ const App = () => {
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
+        renderLoader={(size, centered) => (
+          <>
+            <Spinner size={size} centered={centered}></Spinner>
+            <span>Loading...</span>
+          </>
+        )}
+        notify={(...args) => console.log(args)}
       />
       <MarkdownOutput value="ss**ss**ss" />
-    </>
+    </Fragment>
   );
 };
 

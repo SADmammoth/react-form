@@ -12,18 +12,21 @@ const Validator = {
 
   //
 
-  userNameMessage: 'Username must contain from 6 to 64 alphanumeric characters and underscore',
+  userNameMessage:
+    'Username must contain from 6 to 64 alphanumeric characters and underscore',
 
   userName: (userName, notContains) => {
     const notContainsUnescaped = regexpEscapeArray(notContains);
 
     Validator.userNameMessage = `${Validator.userNameMessage.replace(
       / and not contain: .*/,
-      '',
+      ''
     )} and not contain: "${notContainsUnescaped.join('","')}"`;
 
     const baseUserNameRegex = '^[a-zA-Z_0-9]{6,64}$';
-    return AddNotContains(baseUserNameRegex, notContainsUnescaped).test(userName);
+    return AddNotContains(baseUserNameRegex, notContainsUnescaped).test(
+      userName
+    );
   },
 
   //
@@ -36,16 +39,16 @@ const Validator = {
 
     Validator.passwordMessage = `${Validator.passwordMessage.replace(
       / Mustn't contain: .*/,
-      '',
+      ''
     )} Mustn't contain: "${notContains.join('","')}"`;
 
     const basePasswordRegex =
       '' +
       '(^' +
       '(?:' +
-      '(?=[a-zA-Z0-9~`!@#$%^&*()+=_{}[\\]\\|:;”’?\\/<>,.-]{8,})' +
+      '(?=[a-zA-Z0-9~`!@#$%^&*()+=_{}[\\]\\|:;”’?\\/<Fragment>,.-]{8,})' +
       /* Contains only latin letters, numbers and special characters */
-      '(?=.*[`!@#$%^&*()+=_{}[\\]\\|:;”’?\\/<>,.-].*)' +
+      '(?=.*[`!@#$%^&*()+=_{}[\\]\\|:;”’?\\/<Fragment>,.-].*)' +
       /* Contains at least 1 special character */
       '(?=.*[A-Z].*)' +
       /* Contains at least 1 uppercase letter */
@@ -58,7 +61,9 @@ const Validator = {
       ')(.*)' +
       '$)';
 
-    return AddNotContains(basePasswordRegex, notContainsUnescaped).test(userName);
+    return AddNotContains(basePasswordRegex, notContainsUnescaped).test(
+      userName
+    );
   },
 
   //
@@ -114,7 +119,7 @@ function AddNotContains(regexp, notContains) {
         ? `
         (?!(.*((${notContains.join(')|(')})).*))`
         : ''
-    }${regexp}`,
+    }${regexp}`
   );
 }
 

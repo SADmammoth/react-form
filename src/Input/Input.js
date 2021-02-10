@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import CheckboxGroup from './CustomInputs/CheckboxGroup';
 import Select from './CustomInputs/Select';
 import TextArea from './CustomInputs/TextArea';
-import errorNotification from '../helpers/formHelpers/errorNotification';
 import compareObjects from '../helpers/compareObjects';
 import MaskedInput from './MaskedInput';
 import LabeledInput from './LabeledInput';
@@ -38,6 +37,7 @@ function Input(props) {
     validationMessage,
     alwaysShowTip,
     editable,
+    renderLoader,
   } = props;
 
   const onChangeHandler = ({
@@ -45,7 +45,6 @@ function Input(props) {
   }) => {
     if (!validator(value)) {
       highlightInput();
-      errorNotification(description, validationMessage);
     }
     onChange(targetName, targetValue);
   };
@@ -69,7 +68,6 @@ function Input(props) {
 
   const onError = () => {
     highlightInput();
-    errorNotification(description || label || name, validationMessage);
   };
 
   function renderInput() {
@@ -95,6 +93,7 @@ function Input(props) {
           attributes={attributes}
           value={value}
           valueOptions={valueOptions}
+          renderLoader={renderLoader}
         />
       );
     }
@@ -153,6 +152,7 @@ function Input(props) {
           value={value}
           valueOptions={valueOptions}
           placeholder={placeholder}
+          renderLoader={renderLoader}
         />
       );
     }
@@ -260,6 +260,7 @@ Input.defaultProps = {
   maxSymbols: 1000,
   highlightInput: () => {},
   validationMessage: '',
+  renderLoader: (size, centered) => 'Loading...',
 };
 
 Input.publicProps = {
@@ -299,6 +300,7 @@ Input.propTypes = {
   required: PropTypes.bool,
   invalid: PropTypes.bool.isRequired,
   highlightInput: PropTypes.func,
+  renderLoader: PropTypes.func,
   ...Input.publicProps,
 };
 

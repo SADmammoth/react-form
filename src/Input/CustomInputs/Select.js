@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../helpers/compareObjects';
 import useValueOptions from '../../helpers/getValueOptions';
-import Spinner from '../../Spinner';
 import usePopup from '../../helpers/usePopup';
 
 function Select(props) {
@@ -13,6 +12,7 @@ function Select(props) {
     placeholder,
     onChange,
     required,
+    renderLoader,
   } = props;
 
   let [valueOptions, loading] = useValueOptions(options);
@@ -71,8 +71,7 @@ function Select(props) {
         <div className="select-list">
           {loading ? (
             <div className="option disabled" value="">
-              <Spinner size={14} />
-              <span>loading...</span>
+              {renderLoader(14)}
             </div>
           ) : (
             valueOptions.map((value) => renderOption(value))
@@ -104,6 +103,7 @@ Select.propTypes = {
     PropTypes.func,
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
+  renderLoader: PropTypes.func,
 };
 
 export default React.memo(Select, compareObjects);

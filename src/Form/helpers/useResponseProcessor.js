@@ -1,11 +1,10 @@
 export default function useResponceProcessor(notifications) {
   function onSuccess(response) {
-    notifications.success('Success', 'Data sent and accepted by server');
+    notifications.success();
   }
 
   function onError(error) {
     notifications.error(
-      'Server error',
       error.response ? error.response.data.Message : error.toString()
     );
   }

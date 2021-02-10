@@ -5,9 +5,13 @@ import useUpdateInput from './handlers/useUpdateInput';
 import useCreateValues from './handlers/useCreateValues';
 import useUpdateValue from './handlers/useUpdateValue';
 
-export default function useFormReducer(onInputsUpdate) {
-  const createInputs = useCreateInputs(updateValueCallback, onInputsUpdate);
-  const updateInput = useUpdateInput(updateValueCallback, onInputsUpdate);
+export default function useFormReducer(onInputsUpdate, renderLoader) {
+  const createInputs = useCreateInputs(updateValueCallback, renderLoader);
+  const updateInput = useUpdateInput(
+    updateValueCallback,
+    onInputsUpdate,
+    renderLoader
+  );
   const createValues = useCreateValues();
   const updateValue = useUpdateValue();
 

@@ -12,31 +12,31 @@ const Form = (props) => {
     onInputsUpdate,
     onSubmit: onSubmitHandler,
     showNotifications,
+    notify,
+    renderLoader,
   } = props;
 
-  let [state, dispatch, actions] = useFormReducer(onInputsUpdate);
+  let [state, dispatch, actions] = useFormReducer(onInputsUpdate, renderLoader);
 
   useEffect(() => {
     dispatch(actions.createValues(inputsProps));
   }, [inputsProps]);
 
   useEffect(() => {
-    dispatch(actions.createInputs(inputsProps));
+    dispatch(actions.createInputs(inputsProps, renderLoader));
   }, [state.values]);
 
-  const [notifications] = useNotifications({ showNotifications });
+  if (!notify) {
+    showNotifications = 'hideAll';
+  }
+
+  const [notifications] = useNotifications({ showNotifications }, notify);
 
   function onValidationFail(input) {
-    dispatch(actions.highlightInput(input.name));
-    console.log(
-      input.description || input.label || input.name,
-      input.validationMessage
-    );
-    notifications.error(
-      input.description || input.label || input.name,
-      input.validationMessage
-    );
-    return false;
+    if (input) {
+      dispatch(actions.highlightInput(input.name));
+      notifications.error(input.validationMessage);
+    }
   }
 
   const { values, inputs } = state;
@@ -68,7 +68,7 @@ Form.defaultProps = {
   action: '/',
   className: '',
   style: {},
-  submitButton: <></>,
+  submitButton: <Fragment></Fragment>,
   onInputsUpdate: (inputs) => inputs,
   showNotifications: 'all',
   children: null,
@@ -98,6 +98,7 @@ Form.propTypes = {
   defaultValue: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object])
   ),
+  notify: PropTypes.func,
 };
 
 export default Form;

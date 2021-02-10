@@ -8,13 +8,13 @@ function Modal({ showDefault, replaceComponent, getCallbacks }) {
   }, [setShow]);
 
   return (
-    <>
+    <Fragment>
       {show ? (
         <div data-input="true">{children}</div>
       ) : (
-        <>{replaceComponent || ''}</>
+        <Fragment>{replaceComponent || ''}</Fragment>
       )}
-    </>
+    </Fragment>
   );
 }
 

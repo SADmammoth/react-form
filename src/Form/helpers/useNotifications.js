@@ -1,22 +1,21 @@
 import { useState } from 'react';
 
-import notify from '../../helpers/formHelpers/notify';
-
-export default function useNotifications(initConfig) {
+export default function useNotifications(initConfig, notify) {
   const [config, setConfig] = useState(initConfig);
+  const statuses = { success: 'success', error: 'error' };
 
   return [
     {
-      success: (title, message) => {
+      success: () => {
         if (config.showNotifications === 'all') {
-          notify('success', title, message);
+          notify(statuses.success);
         }
       },
-      error: (title, message) => {
+      error: (error) => {
         console.trace();
 
         if (config.showNotifications !== 'hideAll') {
-          notify('error', title, message);
+          notify(statuses.error, error);
         }
       },
     },

@@ -22,7 +22,8 @@ export default function createInputProps(
     highlightInput,
   },
   updateValueCallback,
-  valuesState
+  valuesState,
+  renderLoader
 ) {
   const higlightInputCallback = () => highlightInput(name);
 
@@ -66,5 +67,6 @@ export default function createInputProps(
     validationMessage,
     alwaysShowTip,
     editable,
+    renderLoader,
   };
 }

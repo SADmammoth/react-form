@@ -57,9 +57,15 @@ const DateMask = {
             .replace(/(^|[^M])M($|[^M])/g, '$1(?<_0>[1-9]|1[0-2])$2')
             .replace(/(^|[^M])MM($|[^M])/g, '$1(?<_0>0[1-9]|1[0-2])$2')
 
-            .replace(/(^|[^M])MMM($|[^M])/g, `$1(?<_1>${monthsShort.join(')|(')})$2`)
+            .replace(
+              /(^|[^M])MMM($|[^M])/g,
+              `$1(?<_1>${monthsShort.join(')|(')})$2`
+            )
 
-            .replace(/(^|[^M])MMMM($|[^M])/g, `$1(?<_2>${months.join(')|(')})$2`)
+            .replace(
+              /(^|[^M])MMMM($|[^M])/g,
+              `$1(?<_2>${months.join(')|(')})$2`
+            )
 
             .replace(/(^|[^d])d($|[^d])/g, '$1(?<_3>[1-9]|[12][0-9]|3[01])$2')
             .replace(/(^|[^d])dd($|[^d])/g, '$1(?<_3>0[1-9]|[12][0-9]|3[01])$2')
@@ -148,25 +154,49 @@ const DateMask = {
       .replace(/(^|[^M])M($|[^M])/g, `$1${date.getMonth() + 1}$2`)
       .replace(
         /(^|[^M])MM($|[^M])/g,
-        `$1${date.getMonth() + 1 < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}$2`,
+        `$1${
+          date.getMonth() + 1 < 9
+            ? `0${date.getMonth() + 1}`
+            : date.getMonth() + 1
+        }$2`
       )
       .replace(/(^|[^M])MMM($|[^M])/g, `$1${monthsShort[date.getMonth()]}$2`)
       .replace(/(^|[^M])MMMM($|[^M])/g, `$1${months[date.getMonth()]}$2`)
       .replace(/(^|[^d])d($|[^d])/g, `$1${date.getDate()}$2`)
-      .replace(/(^|[^d])dd($|[^d])/g, `$1${date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate()}$2`)
+      .replace(
+        /(^|[^d])dd($|[^d])/g,
+        `$1${date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate()}$2`
+      )
       .replace(/(^|[^y])yy($|[^y])/g, `$1${date.getFullYear() % 100}$2`)
       .replace(/(^|[^y])yyyy($|[^y])/g, `$1${date.getFullYear()}$2`)
       .replace(/(^|[^m])m($|[^m])/g, `$1${date.getMinutes()}$2`)
-      .replace(/(^|[^m])mm($|[^m])/g, `$1${date.getMinutes() <= 9 ? `0${date.getMinutes()}` : date.getMinutes()}$2`)
+      .replace(
+        /(^|[^m])mm($|[^m])/g,
+        `$1${
+          date.getMinutes() <= 9 ? `0${date.getMinutes()}` : date.getMinutes()
+        }$2`
+      )
       .replace(/(^|[^s])s($|[^s])/g, `$1${date.getSeconds()}$2`)
-      .replace(/(^|[^s])ss($|[^s])/g, `$1${date.getSeconds() <= 9 ? `0${date.getSeconds()}` : date.getSeconds()}$2`)
+      .replace(
+        /(^|[^s])ss($|[^s])/g,
+        `$1${
+          date.getSeconds() <= 9 ? `0${date.getSeconds()}` : date.getSeconds()
+        }$2`
+      )
       .replace(/(^|[^h])h($|[^h])/g, `$1${date.getHours() - 12}$2`)
       .replace(
         /(^|[^h])hh($|[^h])/g,
-        `$1${date.getHours() - 12 < 9 ? `0${date.getHours() - 12}` : date.getHours() - 12}$2`,
+        `$1${
+          date.getHours() - 12 < 9
+            ? `0${date.getHours() - 12}`
+            : date.getHours() - 12
+        }$2`
       )
       .replace(/(^|[^H])H($|[^H])/g, `$1${date.getHours()}$2`)
-      .replace(/(^|[^H])HH($|[^H])/g, `$1${date.getHours() < 9 ? `0${date.getHours()}` : date.getHours()}$2`)
+      .replace(
+        /(^|[^H])HH($|[^H])/g,
+        `$1${date.getHours() < 9 ? `0${date.getHours()}` : date.getHours()}$2`
+      )
       .replace(/(^|[^a])a($|[^a])/g, `$1${date.getHours > 12 ? 'PM' : 'AM'}$2`);
   },
 
@@ -182,7 +212,7 @@ const DateMask = {
   dateTimeJS: (date) => {
     try {
       Date(date);
-    } catch {
+    } catch (error) {
       return false;
     }
     return true;
@@ -202,7 +232,12 @@ const DateMask = {
     const Regexp = RegExp(
       `(^${masks
         .map((mask) => {
-          const check = [...mask.slice(input.length - 1)].findIndex((el) => /[^MdymshHa]/.test(el)) + input.length - 1;
+          const check =
+            [...mask.slice(input.length - 1)].findIndex((el) =>
+              /[^MdymshHa]/.test(el)
+            ) +
+            input.length -
+            1;
           const maskU = regexpEscape(mask);
 
           if (check > input.length) {
@@ -217,9 +252,12 @@ const DateMask = {
             }
             return `(.{${input.length - 1}})[0-9]`;
           }
-          return DateMask.dateTimeRegexpString([maskU.slice(0, check)]).replace(/[$^]/g, '');
+          return DateMask.dateTimeRegexpString([maskU.slice(0, check)]).replace(
+            /[$^]/g,
+            ''
+          );
         })
-        .join('$)|(^')}$)`,
+        .join('$)|(^')}$)`
     );
 
     return Regexp.test(input);

@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import checkboxValueSeparator from '../../helpers/formHelpers/checkboxValueSeparator';
 import compareObjects from '../../helpers/compareObjects';
 import useValueOptions from '../../helpers/getValueOptions';
-import Spinner from '../../Spinner';
 
 function CheckboxGroup(props) {
-  let { valueOptions: options } = props;
+  let { valueOptions: options, renderLoader } = props;
   let [valueOptions, loading] = useValueOptions(options);
 
   function renderCheckbox(
@@ -59,13 +58,13 @@ function CheckboxGroup(props) {
 
   function renderCheckboxes() {
     return (
-      <>
-        {loading ? (
-          <Spinner size={12} />
-        ) : (
-          valueOptions.map((valueOption) => renderCheckbox(valueOption, props))
-        )}
-      </>
+      <Fragment>
+        {loading
+          ? renderLoader(12)
+          : valueOptions.map((valueOption) =>
+              renderCheckbox(valueOption, props)
+            )}
+      </Fragment>
     );
   }
 
@@ -113,6 +112,7 @@ CheckboxGroup.propTypes = {
   onChange: PropTypes.func,
   required: PropTypes.bool,
   attributes: PropTypes.objectOf(PropTypes.string),
+  renderLoader: PropTypes.func,
 };
 
 export default React.memo(CheckboxGroup, compareObjects);
