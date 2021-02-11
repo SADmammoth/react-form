@@ -57,7 +57,7 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}
     >
-      {children || Object.values(inputs)}
+      {children || (inputs && Object.values(inputs))}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </form>
   );
