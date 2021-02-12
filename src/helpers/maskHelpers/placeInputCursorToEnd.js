@@ -1,7 +1,11 @@
 import maskSpecialCharsRegex from './maskSpecialCharsRegex';
 import getValueFromMask from './getValueFromMask';
 
-export default function placeInputCursorToEnd(target, maskArray, maskType = 'default') {
+export default function placeInputCursorToEnd(
+  target,
+  maskArray,
+  maskType = 'default'
+) {
   let { value } = target;
 
   if (maskType === 'default') {
@@ -9,7 +13,11 @@ export default function placeInputCursorToEnd(target, maskArray, maskType = 'def
   }
 
   let firstPlaceholder =
-    value.length - 1 + maskArray.slice(value.length).findIndex((el) => maskSpecialCharsRegex.test(el));
+    value.length -
+    1 +
+    maskArray
+      .slice(value.length)
+      .findIndex((el) => maskSpecialCharsRegex.test(el));
 
   if (firstPlaceholder === value.length - 2) {
     firstPlaceholder = value.length - 1;

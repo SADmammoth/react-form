@@ -27,8 +27,6 @@ export default function createInputProps(
   renderLoader,
   highlightInput
 ) {
-  const higlightInputCallback = () => highlightInput(name);
-
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
       onChange(inputName, value);
@@ -71,7 +69,7 @@ export default function createInputProps(
     minSymbols,
     maxSymbols,
     invalid: !!valuesState[name].invalid,
-    highlightInput: higlightInputCallback,
+    highlightInput,
     validationMessage,
     alwaysShowTip,
     editable,

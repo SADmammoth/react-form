@@ -44,7 +44,7 @@ function Input(props) {
     target: { name: targetName, value: targetValue },
   }) => {
     if (validator && highlightInput && !validator(value)) {
-      highlightInput();
+      onError();
     }
     onChange(targetName, targetValue);
   };
@@ -67,7 +67,8 @@ function Input(props) {
   };
 
   const onError = () => {
-    highlightInput();
+    console.log(validationMessage);
+    highlightInput(name, validationMessage);
   };
 
   function renderInput() {
