@@ -58,7 +58,11 @@ const App = () => {
         )}
         notify={(...args) => console.log(args)}
       />
-      <MarkdownOutput value="ss**ss**ss" />
+      <MarkdownOutput
+        id="markdownOutput"
+        name="markdownOutput"
+        value="ss**ss**ss"
+      />
     </Fragment>
   );
 };

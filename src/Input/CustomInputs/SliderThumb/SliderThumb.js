@@ -73,7 +73,7 @@ function SliderThumb({
 }
 
 SliderThumb.propTypes = {
-  sliderRef: PropTypes.element.isRequired,
+  sliderRef: PropTypes.object.isRequired,
   moveTo: PropTypes.func.isRequired,
   moveToStart: PropTypes.func.isRequired,
   moveToEnd: PropTypes.func.isRequired,
