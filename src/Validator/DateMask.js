@@ -41,6 +41,7 @@ const DateMask = {
    */
 
   dateTimeMessage: 'Invalid date format',
+  dateTimeInPastMessage: 'Invalid past date format',
 
   // Constructs regexp from mask
   // Regexp contains groups, representing month number, day number and so on
@@ -54,38 +55,41 @@ const DateMask = {
       Regexp = `(^${masks
         .map((mask) => {
           return regexpEscape(mask)
-            .replace(/(^|[^M])M($|[^M])/g, '$1(?<_0>[1-9]|1[0-2])$2')
-            .replace(/(^|[^M])MM($|[^M])/g, '$1(?<_0>0[1-9]|1[0-2])$2')
+            .replace(/(^|[^M\\])M($|[^M])/g, '$1(?<_0>[1-9]|1[0-2])$2')
+            .replace(/(^|[^M\\])MM($|[^M])/g, '$1(?<_0>0[1-9]|1[0-2])$2')
 
             .replace(
-              /(^|[^M])MMM($|[^M])/g,
+              /(^|[^M\\])MMM($|[^M])/g,
               `$1(?<_1>${monthsShort.join(')|(')})$2`
             )
 
             .replace(
-              /(^|[^M])MMMM($|[^M])/g,
+              /(^|[^M\\])MMMM($|[^M])/g,
               `$1(?<_2>${months.join(')|(')})$2`
             )
 
-            .replace(/(^|[^d])d($|[^d])/g, '$1(?<_3>[1-9]|[12][0-9]|3[01])$2')
-            .replace(/(^|[^d])dd($|[^d])/g, '$1(?<_3>0[1-9]|[12][0-9]|3[01])$2')
+            .replace(/(^|[^d\\])d($|[^d])/g, '$1(?<_3>[1-9]|[12][0-9]|3[01])$2')
+            .replace(
+              /(^|[^d\\])dd($|[^d])/g,
+              '$1(?<_3>0[1-9]|[12][0-9]|3[01])$2'
+            )
 
-            .replace(/(^|[^y])yy($|[^y])/g, '$1(?<_4>[1-9][0-9])$2')
-            .replace(/(^|[^y])yyyy($|[^y])/g, '$1(?<_4>[1-2][90][0-9]{2})$2')
+            .replace(/(^|[^y\\])yy($|[^y])/g, '$1(?<_4>[1-9][0-9])$2')
+            .replace(/(^|[^y\\])yyyy($|[^y])/g, '$1(?<_4>[1-2][90][0-9]{2})$2')
 
-            .replace(/(^|[^h])h($|[^h])/g, '$1(?<_5>[0-9]|1[0-2])$2')
-            .replace(/(^|[^h])hh($|[^h])/g, '$1(?<_5>0[0-9]|1[0-2])$2')
+            .replace(/(^|[^h\\])h($|[^h])/g, '$1(?<_5>[0-9]|1[0-2])$2')
+            .replace(/(^|[^h\\])hh($|[^h])/g, '$1(?<_5>0[0-9]|1[0-2])$2')
 
-            .replace(/(^|[^H])H($|[^H])/g, '$1(?<_6>[0-9]|1[0-9]|2[0-3])$2')
-            .replace(/(^|[^H])HH($|[^H])/g, '$1(?<_6>0[0-9]|1[0-9]|2[0-3])$2')
+            .replace(/(^|[^H\\])H($|[^H])/g, '$1(?<_6>[0-9]|1[0-9]|2[0-3])$2')
+            .replace(/(^|[^H\\])HH($|[^H])/g, '$1(?<_6>0[0-9]|1[0-9]|2[0-3])$2')
 
-            .replace(/(^|[^m])m($|[^m])/g, '$1(?<_7>0|[1-5][0-9])$2')
-            .replace(/(^|[^m])mm($|[^m])/g, '$1(?<_7>[0-5][0-9])$2')
+            .replace(/(^|[^m\\])m($|[^m])/g, '$1(?<_7>0|[1-5][0-9])$2')
+            .replace(/(^|[^m\\])mm($|[^m])/g, '$1(?<_7>[0-5][0-9])$2')
 
-            .replace(/(^|[^s])s($|[^s])/g, '$1(?<_8>0|[1-5][0-9])$2')
-            .replace(/(^|[^s])ss($|[^s])/g, '$1(?<_8>[0-5][0-9])$2')
+            .replace(/(^|[^s\\])s($|[^s])/g, '$1(?<_8>0|[1-5][0-9])$2')
+            .replace(/(^|[^s\\])ss($|[^s])/g, '$1(?<_8>[0-5][0-9])$2')
 
-            .replace(/(^|[^a])a($|[^a])/g, '$1(?<_9>AM|PM)$2')
+            .replace(/(^|[^a\\])a($|[^a])/g, '$1(?<_9>AM|PM)$2')
 
             .replace('<_0>', '<monthNumber>')
             .replace('<_1>', '<monthShort>')
@@ -99,7 +103,7 @@ const DateMask = {
             .replace('<_9>', '<ampm>');
         })
         .join('$)|(^')}$)`; // concat with OR statement for every date mask}
-
+      console.log(Regexp);
       DateMask.dateTimeLastMasks[masks.join(';')] = Regexp;
     } else {
       Regexp = DateMask.dateTimeLastMasks[masks.join(';')];
@@ -219,7 +223,7 @@ const DateMask = {
   },
 
   // Checks if date string follows mask and represents date in past
-  dateTimeInPast: (input, mask) => {
+  dateTimeInPast: (input, mask = 'MM-dd-yyyy hh:mm:ss') => {
     if (!DateMask.dateTime(input, [mask])) {
       return false;
     }

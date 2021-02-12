@@ -7,6 +7,30 @@
     "label": "Title"
   },
   {
+    "type": "text",
+    "name": "email",
+    "placeholder": "Title",
+    "required": true,
+    "label": "Email",
+    "validator": "email"
+  },
+  {
+    "type": "text",
+    "name": "date",
+    "placeholder": "MM-dd-yyyy hh:mm:ss",
+    "required": true,
+    "label": "Date",
+    "validator": "dateTimeInPast"
+  },
+  {
+    "type": "text",
+    "name": "phone",
+    "placeholder": "+ ___ (__) ___-__-__",
+    "required": true,
+    "label": "Phone",
+    "mask": "+999 (99) 999-99-99"
+  },
+  {
     "type": "textarea",
     "name": "content",
     "placeholder": "Content",

@@ -43,27 +43,35 @@ const formReducer = (
     case actionTypes.HIGHLIGHT_INPUT:
       return {
         ...state,
-        values: { ...state.values, ...highlightInput(values[data.name]) },
+        values: {
+          ...state.values,
+          ...highlightInput(data.name, values[data.name]),
+        },
       };
     case actionTypes.UNHIGHLIGHT_INPUT:
       return {
         ...state,
-        values: { ...state.values, ...highlightInput(values[data.name]) },
+        values: {
+          ...state.values,
+          ...highlightInput(data.name, values[data.name]),
+        },
       };
     default:
       return state;
   }
 };
 
-function highlightInput(input) {
+function highlightInput(name, input) {
   //TODO update inputs
   //TODO unhighlight after 3000ms
-  return { [input.name]: { ...input, invalid: true } };
+
+  console.log(input);
+  return { [name]: { ...input, invalid: true } };
 }
 
-function unhighlightInput(input) {
+function unhighlightInput(name, input) {
   //TODO update inputs
-  return { [input.name]: { ...input, invalid: false } };
+  return { [name]: { ...input, invalid: false } };
 }
 
 export default formReducer;

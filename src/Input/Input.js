@@ -43,7 +43,7 @@ function Input(props) {
   const onChangeHandler = ({
     target: { name: targetName, value: targetValue },
   }) => {
-    if (!validator(value)) {
+    if (validator && highlightInput && !validator(value)) {
       highlightInput();
     }
     onChange(targetName, targetValue);
@@ -289,7 +289,7 @@ Input.publicProps = {
   mask: PropTypes.string,
   maskType: PropTypes.string,
   byCharValidator: PropTypes.func,
-  validator: PropTypes.func,
+  validator: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   validationMessage: PropTypes.string,
   alwaysShowTip: PropTypes.bool,
   editable: PropTypes.bool,

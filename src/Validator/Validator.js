@@ -81,10 +81,14 @@ const Validator = {
     return formattedPhone.join('');
   },
 
+  floatMessage: 'Input must be a number',
+
   float: (number, from, to) => {
     const num = parseFloat(number);
     return num <= to && num >= from;
   },
+
+  numberMessage: 'Input must be an integer number',
 
   number: (number, from, to) => {
     const num = parseInt(number, 10);
@@ -99,9 +103,16 @@ const Validator = {
   },
 
   numericByChar: (input) => {
-    const numericRegexp = /^(?=[^,.]*[,.]?[^,.]*)([0-9,.]+)$/;
+    const numericRegexp = /^[0-9]+$/;
     return numericRegexp.test(input);
   },
+
+  floatByChar: (input) => {
+    const floatRegexp = /^(?=[^,.]*[,.]?[^,.]*)([0-9,.]+)$/;
+    return floatRegexp.test(input);
+  },
+
+  alphanumericMessage: 'Input must contain only alphanumeric symbols',
 
   alphanumeric: (input) => {
     if (/[0-9_]/.test(input[0])) {

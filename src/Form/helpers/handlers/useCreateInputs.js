@@ -3,7 +3,11 @@ import React from 'react';
 import Input from '../../../Input/Input';
 import createInputProps from '../createInputProps';
 
-export default function useCreateInputs(updateValueCallback, renderLoader) {
+export default function useCreateInputs(
+  updateValueCallback,
+  renderLoader,
+  highlightInput
+) {
   return (inputsProps, valuesState, onInputsUpdate) => {
     if (!Object.keys(valuesState).length) {
       return {};
@@ -16,7 +20,8 @@ export default function useCreateInputs(updateValueCallback, renderLoader) {
         props,
         updateValueCallback,
         valuesState,
-        renderLoader
+        renderLoader,
+        highlightInput
       );
       inputsData[props.name] = <Input {...inputProps} />;
       onInputsUpdate(inputsData);

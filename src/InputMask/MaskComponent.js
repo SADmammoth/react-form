@@ -70,7 +70,10 @@ function MaskComponent(input, maskArray) {
   };
 
   const onBlur = (event) => {
-    event.target.value = getValueFromMask(event.target.value);
+    event.target.value = getValueFromMask(
+      event.target.value,
+      maskArray.join('')
+    );
   };
 
   return React.cloneElement(input, {

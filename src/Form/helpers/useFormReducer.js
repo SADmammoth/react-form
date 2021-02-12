@@ -6,11 +6,19 @@ import useCreateValues from './handlers/useCreateValues';
 import useUpdateValue from './handlers/useUpdateValue';
 
 export default function useFormReducer(onInputsUpdate, renderLoader) {
-  const createInputs = useCreateInputs(updateValueCallback, renderLoader);
+  const highlightInput = (name) => {
+    dispatch(actions.highlightInput(name));
+  };
+  const createInputs = useCreateInputs(
+    updateValueCallback,
+    renderLoader,
+    highlightInput
+  );
   const updateInput = useUpdateInput(
     updateValueCallback,
     onInputsUpdate,
-    renderLoader
+    renderLoader,
+    highlightInput
   );
   const createValues = useCreateValues();
   const updateValue = useUpdateValue();

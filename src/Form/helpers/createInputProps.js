@@ -1,3 +1,5 @@
+import validatorsMap from '../../Validator/validatorsMap';
+
 export default function createInputProps(
   {
     type,
@@ -19,11 +21,11 @@ export default function createInputProps(
     onInput,
     alwaysShowTip,
     editable,
-    highlightInput,
   },
   updateValueCallback,
   valuesState,
-  renderLoader
+  renderLoader,
+  highlightInput
 ) {
   const higlightInputCallback = () => highlightInput(name);
 
@@ -43,8 +45,14 @@ export default function createInputProps(
     updateValueCallback(inputName, value);
   };
 
+  if (typeof validator === 'string') {
+    const validatorFromMap = validatorsMap[validator] || {};
+    ({ byCharValidator, validator, validationMessage } = validatorFromMap);
+  }
+
   return {
     id: valuesState[name].id,
+    key: valuesState[name].id,
     type,
     name,
     description,

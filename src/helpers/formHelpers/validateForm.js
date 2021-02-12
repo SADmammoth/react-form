@@ -1,3 +1,4 @@
+import validatorsMap from '../../Validator/validatorsMap';
 import findInputByName from './findInputByName';
 
 export default function checkValidity(inputs, values, onValidationFail) {
@@ -10,7 +11,10 @@ export default function checkValidity(inputs, values, onValidationFail) {
       onValidationFail(input);
       if (!isAnyFailed) isAnyFailed = true;
     }
-    if (input.validator && !input.validator(values[valueName].value)) {
+    if (input && typeof input.validator === 'string') {
+      input = { ...input, ...validatorsMap[input.validator] };
+    }
+    if (input && input.validator && !input.validator(values[valueName].value)) {
       onValidationFail(input);
       if (!isAnyFailed) isAnyFailed = true;
     }
