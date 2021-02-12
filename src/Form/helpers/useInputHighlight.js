@@ -12,7 +12,7 @@ const useInputHighlight = (highlight, unhighlight, timer, notifications) => {
 
   const startTimeout = useCallback(
     (isUnmounted) => {
-      const levels = 0;
+      let levels = 0;
 
       setTimeout(() => {
         if (!isUnmounted.value) {
