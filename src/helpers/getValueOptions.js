@@ -1,25 +1,23 @@
 import { useState, useEffect } from 'react';
+import safeUseEffect from './safeUseEffect';
 
 export default function useValueOptions(fetch) {
   let [valueOptions, setValueOptions] = useState(null);
 
-  useEffect(() => {
-    let isUnmounted = false;
-
-    if (fetch instanceof Function) {
-      fetch().then((options) => {
-        if (!isUnmounted) {
-          setValueOptions(options);
-        }
-      });
-    } else {
-      setValueOptions(fetch);
-    }
-
-    return () => {
-      isUnmounted = true;
-    };
-  }, [fetch, setValueOptions]);
+  safeUseEffect(
+    (isUnmounted) => {
+      if (fetch instanceof Function) {
+        fetch().then((options) => {
+          if (!isUnmounted.value) {
+            setValueOptions(options);
+          }
+        });
+      } else {
+        setValueOptions(fetch);
+      }
+    },
+    [fetch, setValueOptions]
+  );
 
   return [valueOptions, !valueOptions];
 }

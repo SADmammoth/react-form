@@ -53,7 +53,7 @@ const formReducer = (
         ...state,
         values: {
           ...state.values,
-          ...highlightInput(data.name, values[data.name]),
+          ...unhighlightInput(data.name, values[data.name]),
         },
       };
     default:
@@ -62,15 +62,10 @@ const formReducer = (
 };
 
 function highlightInput(name, input) {
-  //TODO update inputs
-  //TODO unhighlight after 3000ms
-
-  console.log(input);
   return { [name]: { ...input, invalid: true } };
 }
 
 function unhighlightInput(name, input) {
-  //TODO update inputs
   return { [name]: { ...input, invalid: false } };
 }
 

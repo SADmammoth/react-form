@@ -16,7 +16,13 @@ const Form = (props) => {
     renderLoader,
   } = props;
 
-  let [state, dispatch, actions] = useFormReducer(onInputsUpdate, renderLoader);
+  const [notifications] = useNotifications({ showNotifications }, notify);
+
+  let [state, dispatch, actions] = useFormReducer(
+    onInputsUpdate,
+    renderLoader,
+    notifications
+  );
 
   useEffect(() => {
     dispatch(actions.createValues(inputsProps));
@@ -29,11 +35,9 @@ const Form = (props) => {
   if (!notify) {
     showNotifications = 'hideAll';
   }
-
-  const [notifications] = useNotifications({ showNotifications }, notify);
-
   function onValidationFail(input) {
     if (input) {
+      console.log(input);
       dispatch(actions.highlightInput(input.name));
       notifications.error(input.validationMessage);
     }
