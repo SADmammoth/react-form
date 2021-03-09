@@ -137,6 +137,17 @@
   position: relative;
   .select-header {
     @include input;
+
+    .select-label {
+      background: none;
+      border: 0;
+
+      &.disabled,
+      &.disabled:active {
+        color: $muted;
+      }
+    }
+
     .form-spoiler {
       position: absolute;
       right: 3%;

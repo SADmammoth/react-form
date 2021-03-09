@@ -144,7 +144,7 @@ function MarkdownText({
   );
 
   return (
-    <div className="markdown-text">
+    <div className='markdown-text'>
       <Menu buttons={buttons} />
       <TriggerButton
         on={() => {
@@ -165,7 +165,6 @@ function MarkdownText({
         name={name}
         onKeyDown={onInputHandler}
         onBlur={() => {
-          console.log(markdown);
           onChange({ target: { name, value: markdown } });
         }}
         onClick={onMouseClick}

@@ -20,17 +20,16 @@ function MarkdownOutput({ id, value, name, markdownFeatures }) {
 
   useEffect(() => {
     if (value !== markdown) {
-      console.log(value);
       setMarkdown(value);
       setHtml(shortcutMd(value, filteredMarkdownMap));
     }
   });
 
   return (
-    <div className="markdown-text">
+    <div className='markdown-text'>
       <div
         id={id}
-        className="markdown-text-output"
+        className='markdown-text-output'
         contentEditable={false}
         name={name}
         dangerouslySetInnerHTML={{ __html: html }}

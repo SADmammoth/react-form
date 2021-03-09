@@ -14,6 +14,7 @@ function CustomNumber(props) {
     onChange,
     required,
     attributes: { min, max, step },
+    renderInput,
   } = props;
 
   let counter = useCallback(
@@ -49,33 +50,35 @@ function CustomNumber(props) {
     }
   };
 
-  let onChangeHandler = () => {
+  let onChangeHandler = (event) => {
     event.target.value = counter(parseFloat(event.target.value));
     onChange(event);
   };
 
+  const InputTag = renderInput;
+
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <div className="form-number">
-      <input
-        type="text"
+    <div className='form-number'>
+      <InputTag
+        type='text'
         name={name}
         onChange={onInputHandler}
         onBlur={onChangeHandler}
         value={currentValue}
-      ></input>
+      ></InputTag>
       <button
-        type="button"
+        type='button'
         name={name}
-        className="form-number-plus"
+        className='form-number-plus'
         onClick={increment}
       >
         &#x25b4;
       </button>
       <button
-        type="button"
+        type='button'
         name={name}
-        className="form-number-minus"
+        className='form-number-minus'
         onClick={decrement}
       >
         &#x25be;
@@ -93,6 +96,7 @@ CustomNumber.defaultProps = {
     min: 0,
     max: 999,
   },
+  renderInput: (props) => <input {...props} />,
 };
 
 CustomNumber.propTypes = {
@@ -107,6 +111,7 @@ CustomNumber.propTypes = {
   }),
   onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func,
+  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 export default React.memo(CustomNumber, compareObjects);

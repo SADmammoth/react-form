@@ -14,6 +14,7 @@ const Form = (props) => {
     showNotifications,
     notify,
     renderLoader,
+    renderInput,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
@@ -21,7 +22,8 @@ const Form = (props) => {
   let [state, dispatch, actions] = useFormReducer(
     onInputsUpdate,
     renderLoader,
-    notifications
+    notifications,
+    renderInput
   );
 
   useEffect(() => {
@@ -37,7 +39,6 @@ const Form = (props) => {
   }
   function onValidationFail(input) {
     if (input) {
-      console.log(input);
       dispatch(actions.highlightInput(input.name));
       notifications.error(input.validationMessage);
     }

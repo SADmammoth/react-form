@@ -6,6 +6,7 @@ import compareObjects from '../../helpers/compareObjects';
 function TextArea(props) {
   const {
     id,
+    type,
     name,
     description,
     onInput,
@@ -17,6 +18,7 @@ function TextArea(props) {
     maxSymbols,
     onError,
     placeholder,
+    renderInput,
   } = props;
 
   let onFocus = (event) => {
@@ -43,9 +45,12 @@ function TextArea(props) {
     }
   };
 
+  const InputTag = renderInput;
+
   return (
-    <textarea
+    <InputTag
       id={id}
+      type={type}
       className={`form-textarea${placeholderOn ? ' placeholdered' : ''}`}
       name={name}
       onChange={onInput}
@@ -56,7 +61,7 @@ function TextArea(props) {
       onFocus={onFocus}
     >
       {description}
-    </textarea>
+    </InputTag>
   );
 }
 
@@ -69,6 +74,7 @@ TextArea.defaultProps = {
   description: null,
   minSymbols: 0,
   maxSymbols: 0,
+  renderInput: (props) => <textarea {...props} />,
 };
 
 TextArea.propTypes = {
@@ -83,6 +89,7 @@ TextArea.propTypes = {
   minSymbols: PropTypes.number,
   maxSymbols: PropTypes.number,
   onError: PropTypes.func.isRequired,
+  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 export default React.memo(TextArea, compareObjects);

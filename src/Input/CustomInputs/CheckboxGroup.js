@@ -6,7 +6,7 @@ import compareObjects from '../../helpers/compareObjects';
 import useValueOptions from '../../helpers/getValueOptions';
 
 function CheckboxGroup(props) {
-  let { valueOptions: options, renderLoader } = props;
+  let { valueOptions: options, renderLoader, renderInput } = props;
   let [valueOptions, loading] = useValueOptions(options);
 
   function renderCheckbox(
@@ -33,9 +33,11 @@ function CheckboxGroup(props) {
       onChange(event);
     };
 
+    const InputTag = renderInput;
+
     return (
-      <div key={id + valueOption.value} className="form-group">
-        <input
+      <div key={id + valueOption.value} className='form-group'>
+        <InputTag
           id={id + valueOption.value}
           name={name}
           type={
@@ -84,6 +86,7 @@ CheckboxGroup.defaultProps = {
   required: false,
   attributes: null,
   description: null,
+  renderInput: (props) => <input {...props} />,
 };
 
 CheckboxGroup.propTypes = {
@@ -113,6 +116,7 @@ CheckboxGroup.propTypes = {
   required: PropTypes.bool,
   attributes: PropTypes.objectOf(PropTypes.string),
   renderLoader: PropTypes.func,
+  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 export default React.memo(CheckboxGroup, compareObjects);

@@ -9,7 +9,8 @@ import useInputHighlight from './useInputHighlight';
 export default function useFormReducer(
   onInputsUpdate,
   renderLoader,
-  notifications
+  notifications,
+  renderInput
 ) {
   const highlightInput = useInputHighlight(
     (...args) => {
@@ -25,13 +26,15 @@ export default function useFormReducer(
   const createInputs = useCreateInputs(
     updateValueCallback,
     renderLoader,
-    highlightInput
+    highlightInput,
+    renderInput
   );
   const updateInput = useUpdateInput(
     updateValueCallback,
     onInputsUpdate,
     renderLoader,
-    highlightInput
+    highlightInput,
+    renderInput
   );
   const createValues = useCreateValues();
   const updateValue = useUpdateValue();

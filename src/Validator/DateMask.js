@@ -103,7 +103,7 @@ const DateMask = {
             .replace('<_9>', '<ampm>');
         })
         .join('$)|(^')}$)`; // concat with OR statement for every date mask}
-      console.log(Regexp);
+
       DateMask.dateTimeLastMasks[masks.join(';')] = Regexp;
     } else {
       Regexp = DateMask.dateTimeLastMasks[masks.join(';')];

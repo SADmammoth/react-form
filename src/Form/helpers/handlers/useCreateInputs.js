@@ -7,7 +7,8 @@ export default function useCreateInputs(
   updateValueCallback,
   renderLoader,
   highlightInput,
-  notifications
+  notifications,
+  renderInput
 ) {
   return (inputsProps, valuesState, onInputsUpdate) => {
     if (!Object.keys(valuesState).length) {
@@ -22,7 +23,9 @@ export default function useCreateInputs(
         updateValueCallback,
         valuesState,
         renderLoader,
-        highlightInput,notifications
+        highlightInput,
+        notifications,
+        renderInput
       );
       inputsData[props.name] = <Input {...inputProps} />;
       onInputsUpdate(inputsData);

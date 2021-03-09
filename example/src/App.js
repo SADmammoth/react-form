@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
 import Form from 'react-form';
+import 'react-form/dist/index.css';
 
 const App = () => {
   const [file, setFile] = useState([]);
@@ -54,12 +55,19 @@ const App = () => {
             <span>Loading...</span>
           </>
         )}
+        renderInput={(props) => {
+          if (props.type === 'textarea') {
+            return <textarea data-custom='custom' {...props} />;
+          } else {
+            return <input data-custom='custom' {...props} />;
+          }
+        }}
         notify={(...args) => console.log(args)}
       />
       <Form.MarkdownOutput
-        id="markdownOutput"
-        name="markdownOutput"
-        value="ss**ss**ss"
+        id='markdownOutput'
+        name='markdownOutput'
+        value='ss**ss**ss'
       />
     </Fragment>
   );

@@ -13,6 +13,8 @@ function Select(props) {
     onChange,
     required,
     renderLoader,
+    renderInput,
+    type,
   } = props;
 
   let [valueOptions, loading] = useValueOptions(options);
@@ -43,6 +45,8 @@ function Select(props) {
 
   let [listShown, showList] = usePopup(false);
 
+  const InputTag = renderInput;
+
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
@@ -50,16 +54,25 @@ function Select(props) {
       name={name}
     >
       <div
-        className="select-header"
+        className='select-header'
         onClick={() => {
           showList(!listShown);
         }}
       >
-        {currentLabel || placeholder || 'Choose option...'}
+        {
+          <InputTag
+            className={`select-label ${currentLabel ? '' : 'disabled'}`}
+            type='text'
+            placeholder={placeholder || 'Choose option...'}
+            value={currentLabel}
+            aria-disabled={!currentLabel ? 'disabled' : null}
+            disabled
+          />
+        }
         <input
-          type="checkbox"
-          className="form-spoiler"
-          name="select-header-button"
+          type='checkbox'
+          className='form-spoiler'
+          name='select-header-button'
           checked={listShown}
           onChange={() => {
             showList(!listShown);
@@ -68,9 +81,9 @@ function Select(props) {
         />
       </div>
       {listShown && (
-        <div className="select-list">
+        <div className='select-list'>
           {loading ? (
-            <div className="option disabled" value="">
+            <div className='option disabled' value=''>
               {renderLoader(14)}
             </div>
           ) : (
@@ -86,6 +99,7 @@ Select.defaultProps = {
   required: false,
   value: null,
   placeholder: null,
+  renderInput: (props) => <input {...props} />,
 };
 
 Select.propTypes = {
@@ -104,6 +118,7 @@ Select.propTypes = {
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
   renderLoader: PropTypes.func,
+  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 export default React.memo(Select, compareObjects);

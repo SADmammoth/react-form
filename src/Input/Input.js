@@ -38,6 +38,7 @@ function Input(props) {
     alwaysShowTip,
     editable,
     renderLoader,
+    renderInput,
   } = props;
 
   const onChangeHandler = ({
@@ -71,7 +72,7 @@ function Input(props) {
     highlightInput(name, validationMessage);
   };
 
-  function renderInput() {
+  function render() {
     if (
       type === 'checkbox' ||
       type === 'radio' ||
@@ -95,6 +96,7 @@ function Input(props) {
           value={value}
           valueOptions={valueOptions}
           renderLoader={renderLoader}
+          renderInput={renderInput}
         />
       );
     }
@@ -133,6 +135,7 @@ function Input(props) {
           attributes={attributes}
           value={value}
           placeholder={placeholder}
+          renderInput={renderInput}
         />
       );
     }
@@ -154,6 +157,7 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           renderLoader={renderLoader}
+          renderInput={renderInput}
         />
       );
     }
@@ -163,6 +167,7 @@ function Input(props) {
         id,
         <TextArea
           id={id}
+          type={type}
           name={name}
           description={description}
           onChange={onChangeHandler}
@@ -174,6 +179,7 @@ function Input(props) {
           minSymbols={minSymbols}
           maxSymbols={maxSymbols}
           placeholder={placeholder}
+          renderInput={renderInput}
         />
       );
     }
@@ -184,6 +190,7 @@ function Input(props) {
         id,
         <Slider
           id={id}
+          type={type}
           name={name}
           description={description}
           onChange={onChangeHandler}
@@ -220,6 +227,10 @@ function Input(props) {
       );
     }
 
+    const defaultRenderInput = (props) => <input {...props} />;
+
+    const InputTag = renderInput || defaultRenderInput;
+
     return LabeledInput(
       label,
       id,
@@ -227,7 +238,7 @@ function Input(props) {
         mask,
         byCharValidator,
         maskType,
-        <input
+        <InputTag
           id={id}
           type={type}
           name={name}
@@ -244,7 +255,7 @@ function Input(props) {
     );
   }
 
-  return renderInput();
+  return render();
 }
 
 Input.defaultProps = {
@@ -302,6 +313,7 @@ Input.propTypes = {
   invalid: PropTypes.bool.isRequired,
   highlightInput: PropTypes.func,
   renderLoader: PropTypes.func,
+  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   ...Input.publicProps,
 };
 
