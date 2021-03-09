@@ -10,6 +10,7 @@ export default function useCreateValues() {
         value: input.defaultValue || input.value,
         required: input.required,
         defaultValue: setFormDefaultValue(valuesState, input),
+        group: input.group,
       };
       if (input.bind && valuesData[input.bind])
         !valuesData[input.bind].bind

@@ -11,7 +11,7 @@ export default function useUpdateInput(
   renderInput
 ) {
   return (inputProps, newValue, inputName, valuesState, inputsState) => {
-    const foundProps = inputProps.find(
+    const { group, ...foundProps } = inputProps.find(
       (inputProp) => inputProp.name === inputName
     );
     const props = createInputProps(
@@ -22,8 +22,23 @@ export default function useUpdateInput(
       highlightInput,
       renderInput
     );
-    const newInput = <Input {...props} />;
-    const newInputsState = { ...inputsState, [inputName]: newInput };
+
+    let newInputsState;
+
+    if (group) {
+      newInputsState = {
+        ...inputsState,
+        [group]: {
+          ...newInputsState[group],
+          [inputName]: <Input {...foundProps} />,
+        },
+      };
+    } else {
+      newInputsState = {
+        ...inputsState,
+        [inputName]: <Input {...foundProps} />,
+      };
+    }
 
     onInputsUpdate(newInputsState);
     return newInputsState;

@@ -63,3 +63,7 @@
 .invalid {
   border-color: red;
 }
+
+.group {
+  @include group;
+}

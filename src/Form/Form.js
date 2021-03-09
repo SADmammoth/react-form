@@ -5,6 +5,7 @@ import validateForm from '../helpers/formHelpers/validateForm';
 import useOnSubmit from './helpers/handlers/useOnSubmit';
 import useNotifications from './helpers/useNotifications';
 import useFormReducer from './helpers/useFormReducer';
+import renderInputs from '../helpers/formHelpers/renderInputs';
 
 const Form = (props) => {
   let {
@@ -62,7 +63,7 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}
     >
-      {children || (inputs && Object.values(inputs))}
+      {children || renderInputs(inputs)}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </form>
   );
@@ -90,6 +91,7 @@ Form.propTypes = {
     PropTypes.shape({
       ...Input.publicProps,
       validationMessage: PropTypes.string,
+      group: PropTypes.string,
     })
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),

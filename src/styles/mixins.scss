@@ -441,6 +441,16 @@
   }
 }
 
+@mixin group {
+  padding: 10px;
+  border: 1px solid $highlight;
+
+  .group-title {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+}
+
 @mixin notPrintedChars {
   color: $muted;
   font-size: 70%;

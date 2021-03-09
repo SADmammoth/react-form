@@ -17,7 +17,7 @@ export default function useCreateInputs(
 
     const inputsData = {};
 
-    inputsProps.forEach((props) => {
+    inputsProps.forEach(({ group, ...props }) => {
       const inputProps = createInputProps(
         props,
         updateValueCallback,
@@ -27,7 +27,16 @@ export default function useCreateInputs(
         notifications,
         renderInput
       );
-      inputsData[props.name] = <Input {...inputProps} />;
+
+      if (group) {
+        inputsData[group] = {
+          ...inputsData[group],
+          [props.name]: <Input {...inputProps} />,
+        };
+      } else {
+        inputsData[props.name] = <Input {...inputProps} />;
+      }
+
       onInputsUpdate(inputsData);
     });
 
