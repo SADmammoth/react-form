@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
-import Form, { MarkdownOutput, Spinner } from 'react-form';
-import 'react-form/dist/index.css';
+import Form from 'react-form';
 
 const App = () => {
   const [file, setFile] = useState([]);
@@ -57,7 +56,7 @@ const App = () => {
         )}
         notify={(...args) => console.log(args)}
       />
-      <MarkdownOutput
+      <Form.MarkdownOutput
         id="markdownOutput"
         name="markdownOutput"
         value="ss**ss**ss"
