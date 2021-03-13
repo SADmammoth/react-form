@@ -37,8 +37,7 @@ function Input(props) {
     validationMessage,
     alwaysShowTip,
     editable,
-    renderLoader,
-    renderInput,
+    render,
   } = props;
 
   const onChangeHandler = ({
@@ -72,7 +71,7 @@ function Input(props) {
     highlightInput(name, validationMessage);
   };
 
-  function render() {
+  function renderInput() {
     if (
       type === 'checkbox' ||
       type === 'radio' ||
@@ -80,6 +79,7 @@ function Input(props) {
       type === 'spoiler'
     ) {
       return LabeledInput(
+        render,
         label,
         id,
         <CheckboxGroup
@@ -95,14 +95,14 @@ function Input(props) {
           attributes={attributes}
           value={value}
           valueOptions={valueOptions}
-          renderLoader={renderLoader}
-          renderInput={renderInput}
+          render={render}
         />
       );
     }
 
     if (type === 'markdown') {
       return LabeledInput(
+        render,
         label,
         id,
         <MarkdownText
@@ -116,12 +116,14 @@ function Input(props) {
           attributes={attributes}
           value={value}
           editable={editable}
+          render={render}
         />
       );
     }
 
     if (type === 'number') {
       return LabeledInput(
+        render,
         label,
         id,
         <CustomNumber
@@ -134,14 +136,14 @@ function Input(props) {
           required={required}
           attributes={attributes}
           value={value}
-          placeholder={placeholder}
-          renderInput={renderInput}
+          render={render}
         />
       );
     }
 
     if (type === 'select') {
       return LabeledInput(
+        render,
         label,
         id,
         <Select
@@ -156,13 +158,13 @@ function Input(props) {
           value={value}
           valueOptions={valueOptions}
           placeholder={placeholder}
-          renderLoader={renderLoader}
-          renderInput={renderInput}
+          render={render}
         />
       );
     }
     if (type === 'textarea') {
       return LabeledInput(
+        render,
         label,
         id,
         <TextArea
@@ -179,13 +181,14 @@ function Input(props) {
           minSymbols={minSymbols}
           maxSymbols={maxSymbols}
           placeholder={placeholder}
-          renderInput={renderInput}
+          render={render}
         />
       );
     }
 
     if (type === 'slider') {
       return LabeledInput(
+        render,
         label,
         id,
         <Slider
@@ -202,12 +205,14 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           alwaysShowTip={alwaysShowTip}
+          render={render}
         />
       );
     }
 
     if (type === 'range') {
       return LabeledInput(
+        render,
         label,
         id,
         <Range
@@ -223,15 +228,17 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           alwaysShowTip={alwaysShowTip}
+          render={render}
         />
       );
     }
 
     const defaultRenderInput = (props) => <input {...props} />;
 
-    const InputTag = renderInput || defaultRenderInput;
+    const InputTag = render.input || defaultRenderInput;
 
     return LabeledInput(
+      render,
       label,
       id,
       MaskedInput(
@@ -255,7 +262,7 @@ function Input(props) {
     );
   }
 
-  return render();
+  return renderInput();
 }
 
 Input.defaultProps = {
@@ -272,7 +279,11 @@ Input.defaultProps = {
   maxSymbols: 1000,
   highlightInput: () => {},
   validationMessage: '',
-  renderLoader: (size, centered) => 'Loading...',
+  render: {
+    loader: (size, centered) => 'Loading...',
+    input: (props) => <input {...props} />,
+    label: (props) => <label {...props} />,
+  },
 };
 
 Input.publicProps = {
@@ -312,8 +323,11 @@ Input.propTypes = {
   required: PropTypes.bool,
   invalid: PropTypes.bool.isRequired,
   highlightInput: PropTypes.func,
-  renderLoader: PropTypes.func,
-  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  render: PropTypes.shape({
+    input: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    loader: PropTypes.func,
+    label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  }),
   ...Input.publicProps,
 };
 

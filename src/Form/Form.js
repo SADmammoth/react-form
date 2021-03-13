@@ -14,17 +14,15 @@ const Form = (props) => {
     onSubmit: onSubmitHandler,
     showNotifications,
     notify,
-    renderLoader,
-    renderInput,
+    render,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
   let [state, dispatch, actions] = useFormReducer(
     onInputsUpdate,
-    renderLoader,
     notifications,
-    renderInput
+    render
   );
 
   useEffect(() => {
@@ -32,7 +30,7 @@ const Form = (props) => {
   }, [inputsProps]);
 
   useEffect(() => {
-    dispatch(actions.createInputs(inputsProps, renderLoader));
+    dispatch(actions.createInputs(inputsProps, render));
   }, [state.values]);
 
   if (!notify) {
@@ -64,7 +62,7 @@ const Form = (props) => {
       onSubmit={onSubmit}
     >
       {children || renderInputs(inputs)}
-      {React.cloneElement(submitButton, { type: 'submit' })}
+      {!submitButton || React.cloneElement(submitButton, { type: 'submit' })}
     </form>
   );
 };

@@ -5,10 +5,9 @@ import createInputProps from '../createInputProps';
 
 export default function useCreateInputs(
   updateValueCallback,
-  renderLoader,
   highlightInput,
   notifications,
-  renderInput
+  render
 ) {
   return (inputsProps, valuesState, onInputsUpdate) => {
     if (!Object.keys(valuesState).length) {
@@ -22,10 +21,9 @@ export default function useCreateInputs(
         props,
         updateValueCallback,
         valuesState,
-        renderLoader,
         highlightInput,
         notifications,
-        renderInput
+        render
       );
 
       if (group) {
