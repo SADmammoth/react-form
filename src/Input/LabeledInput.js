@@ -1,11 +1,14 @@
 import React from 'react';
 
-export default function LabeledInput(label, id, input) {
+export default function LabeledInput(render, label, id, input) {
+  const defaultLabel = (props) => <label {...props} />;
+  const Label = render.label || defaultLabel;
+
   return label ? (
     <div className='form-group'>
-      <label className='form-label' htmlFor={id}>
+      <Label className='form-label' htmlFor={id}>
         {label}
-      </label>
+      </Label>
       {input}
     </div>
   ) : (

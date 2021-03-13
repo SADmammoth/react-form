@@ -6,7 +6,7 @@ import compareObjects from '../../helpers/compareObjects';
 import useValueOptions from '../../helpers/getValueOptions';
 
 function CheckboxGroup(props) {
-  let { valueOptions: options, renderLoader, renderInput } = props;
+  let { valueOptions: options, render } = props;
   let [valueOptions, loading] = useValueOptions(options);
 
   function renderCheckbox(
@@ -33,7 +33,11 @@ function CheckboxGroup(props) {
       onChange(event);
     };
 
-    const InputTag = renderInput;
+    const defaultInput = (props) => <input {...props} />;
+    const InputTag = render.input || defaultInput;
+
+    const defaultLabel = (props) => <label {...props} />;
+    const LabelTag = render.label || defaultLabel;
 
     return (
       <div key={id + valueOption.value} className='form-group'>
@@ -53,7 +57,9 @@ function CheckboxGroup(props) {
             values === valueOption.value || values.includes(valueOption.value)
           }
         />
-        <label htmlFor={id + valueOption.value}>{valueOption.label}</label>
+        <LabelTag htmlFor={id + valueOption.value}>
+          {valueOption.label}
+        </LabelTag>
       </div>
     );
   }
@@ -62,7 +68,9 @@ function CheckboxGroup(props) {
     return (
       <Fragment>
         {loading
-          ? renderLoader(12)
+          ? render.loader
+            ? render.loader(14)
+            : 'Loading...'
           : valueOptions.map((valueOption) =>
               renderCheckbox(valueOption, props)
             )}
@@ -86,7 +94,6 @@ CheckboxGroup.defaultProps = {
   required: false,
   attributes: null,
   description: null,
-  renderInput: (props) => <input {...props} />,
 };
 
 CheckboxGroup.propTypes = {
@@ -115,8 +122,11 @@ CheckboxGroup.propTypes = {
   onChange: PropTypes.func,
   required: PropTypes.bool,
   attributes: PropTypes.objectOf(PropTypes.string),
-  renderLoader: PropTypes.func,
-  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  render: PropTypes.shape({
+    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    loader: PropTypes.func,
+    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  }),
 };
 
 export default React.memo(CheckboxGroup, compareObjects);

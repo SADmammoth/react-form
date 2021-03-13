@@ -6,9 +6,8 @@ import createInputProps from '../createInputProps';
 export default function useUpdateInput(
   updateValueCallback,
   onInputsUpdate,
-  renderLoader,
   highlightInput,
-  renderInput
+  render
 ) {
   return (inputProps, newValue, inputName, valuesState, inputsState) => {
     const foundProps = inputProps.find(
@@ -18,9 +17,8 @@ export default function useUpdateInput(
       foundProps,
       updateValueCallback,
       valuesState,
-      renderLoader,
       highlightInput,
-      renderInput
+      render
     );
     const newInput = <Input {...props} />;
     const newInputsState = { ...inputsState, [inputName]: newInput };

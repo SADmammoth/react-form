@@ -14,7 +14,7 @@ function CustomNumber(props) {
     onChange,
     required,
     attributes: { min, max, step },
-    renderInput,
+    render,
   } = props;
 
   let counter = useCallback(
@@ -55,7 +55,8 @@ function CustomNumber(props) {
     onChange(event);
   };
 
-  const InputTag = renderInput;
+  const defaultInput = (props) => <input {...props} />;
+  const InputTag = render.input || defaultInput;
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
@@ -96,7 +97,6 @@ CustomNumber.defaultProps = {
     min: 0,
     max: 999,
   },
-  renderInput: (props) => <input {...props} />,
 };
 
 CustomNumber.propTypes = {
@@ -111,7 +111,9 @@ CustomNumber.propTypes = {
   }),
   onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func,
-  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  render: PropTypes.shape({
+    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  }),
 };
 
 export default React.memo(CustomNumber, compareObjects);
