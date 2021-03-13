@@ -18,7 +18,7 @@ function TextArea(props) {
     maxSymbols,
     onError,
     placeholder,
-    renderInput,
+    render,
   } = props;
 
   let onFocus = (event) => {
@@ -44,8 +44,8 @@ function TextArea(props) {
       switchPlaceholder(true);
     }
   };
-
-  const InputTag = renderInput;
+  const defaultInput = (props) => <input {...props} />;
+  const InputTag = render.input || defaultInput;
 
   return (
     <InputTag
@@ -74,7 +74,6 @@ TextArea.defaultProps = {
   description: null,
   minSymbols: 0,
   maxSymbols: 0,
-  renderInput: (props) => <textarea {...props} />,
 };
 
 TextArea.propTypes = {
@@ -89,7 +88,9 @@ TextArea.propTypes = {
   minSymbols: PropTypes.number,
   maxSymbols: PropTypes.number,
   onError: PropTypes.func.isRequired,
-  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  render: PropTypes.shape({
+    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  }),
 };
 
 export default React.memo(TextArea, compareObjects);

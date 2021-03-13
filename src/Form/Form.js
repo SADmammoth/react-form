@@ -15,8 +15,7 @@ const Form = (props) => {
     onSubmit: onSubmitHandler,
     showNotifications,
     notify,
-    renderLoader,
-    renderInput,
+    render,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
@@ -31,9 +30,8 @@ const Form = (props) => {
 
   let [state, dispatch, actions] = useFormReducer(
     onInputsUpdateHandler,
-    renderLoader,
     notifications,
-    renderInput
+    render
   );
 
   useEffect(() => {
@@ -41,7 +39,7 @@ const Form = (props) => {
   }, [inputsProps]);
 
   useEffect(() => {
-    dispatch(actions.createInputs(inputsProps, renderLoader));
+    dispatch(actions.createInputs(inputsProps, render));
   }, [state.values]);
 
   if (!notify) {
