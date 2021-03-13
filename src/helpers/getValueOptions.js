@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import compareObjects from './compareObjects';
 import safeUseEffect from './safeUseEffect';
 
 export default function useValueOptions(fetch) {

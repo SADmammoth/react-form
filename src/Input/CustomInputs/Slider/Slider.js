@@ -49,26 +49,26 @@ function Slider(props) {
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
-      draggable="false"
-      className="form-slider"
+      draggable='false'
+      className='form-slider'
       style={{
         '--percent': calcPercent(index, length),
         '--display-tip': alwaysShowTip ? 'unset' : 'none',
       }}
     >
-      <HoldButton name={name} className="form-slider-prev" action={prev}>
+      <HoldButton name={name} className='form-slider-prev' action={prev}>
         -
       </HoldButton>
 
       <div
         ref={slider}
-        className="form-slider-bg"
+        className='form-slider-bg'
         onClick={moveOnBackgroundClick}
-        draggable="false"
+        draggable='false'
       >
         <input
-          draggable="false"
-          type="text"
+          draggable='false'
+          type='text'
           name={name}
           value={valueOptions[index].value}
           required={required}
@@ -85,9 +85,9 @@ function Slider(props) {
       </div>
 
       <HoldButton
-        type="button"
+        type='button'
         name={name}
-        className="form-slider-next"
+        className='form-slider-next'
         action={next}
       >
         +

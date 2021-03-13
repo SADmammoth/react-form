@@ -16,7 +16,7 @@ const formReducer = (
   onInputsUpdate
 ) => (state, { type, data }) => {
   let { inputs, values } = state;
-
+  console.log(type);
   switch (type) {
     case actionTypes.UPDATE_INPUT:
       return {
@@ -36,7 +36,7 @@ const formReducer = (
     case actionTypes.CREATE_INPUTS:
       return {
         ...state,
-        inputs: createInputs(data.inputsProps, values, onInputsUpdate),
+        inputs: createInputs(data.inputsProps, values),
       };
     case actionTypes.CREATE_VALUES:
       return { values: createValues(data.inputsProps, values) };

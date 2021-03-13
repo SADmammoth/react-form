@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import validateForm from '../helpers/formHelpers/validateForm';
@@ -19,23 +25,17 @@ const Form = (props) => {
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
-  let [state, dispatch, actions] = useFormReducer(
-    onInputsUpdate,
-    notifications,
-    render
-  );
+  let [state, dispatch, actions] = useFormReducer(notifications, render);
 
   useEffect(() => {
     dispatch(actions.createValues(inputsProps));
-  }, [inputsProps]);
-
-  useEffect(() => {
     dispatch(actions.createInputs(inputsProps, render));
-  }, [state.values]);
+  }, [JSON.stringify(inputsProps)]);
 
   if (!notify) {
     showNotifications = 'hideAll';
   }
+
   function onValidationFail(input) {
     if (input) {
       dispatch(actions.highlightInput(input.name));
@@ -56,6 +56,11 @@ const Form = (props) => {
   const defaultForm = (props) => <form {...props} />;
   const FormTag = render.form || defaultForm;
 
+  const renderChildren = useMemo(() => {
+    onInputsUpdate(state.inputs);
+    return renderInputs(inputs);
+  }, [inputsProps, Object.keys(state.inputs || {})]);
+
   return (
     <FormTag
       method={method}
@@ -64,7 +69,7 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}
     >
-      {children || renderInputs(inputs)}
+      {children || renderChildren}
       {!submitButton || React.cloneElement(submitButton, { type: 'submit' })}
     </FormTag>
   );

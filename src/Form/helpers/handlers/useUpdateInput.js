@@ -5,7 +5,6 @@ import createInputProps from '../createInputProps';
 
 export default function useUpdateInput(
   updateValueCallback,
-  onInputsUpdate,
   highlightInput,
   render
 ) {
@@ -38,7 +37,6 @@ export default function useUpdateInput(
       };
     }
 
-    onInputsUpdate(newInputsState);
     return newInputsState;
   };
 }

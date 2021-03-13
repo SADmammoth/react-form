@@ -24,7 +24,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/bundlers/webpack-css-modules"
     },
-    "sadmammoth.components/react-form@1.5.8": {
+    "sadmammoth.components/react-form@1.5.9": {
         "files": [
             {
                 "relativePath": "package.json",

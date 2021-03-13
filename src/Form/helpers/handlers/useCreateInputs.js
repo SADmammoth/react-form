@@ -9,7 +9,7 @@ export default function useCreateInputs(
   notifications,
   render
 ) {
-  return (inputsProps, valuesState, onInputsUpdate) => {
+  return (inputsProps, valuesState) => {
     if (!Object.keys(valuesState).length) {
       return {};
     }
@@ -34,8 +34,6 @@ export default function useCreateInputs(
       } else {
         inputsData[props.name] = <Input {...inputProps} />;
       }
-
-      onInputsUpdate(inputsData);
     });
 
     return inputsData;

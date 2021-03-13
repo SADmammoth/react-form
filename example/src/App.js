@@ -70,6 +70,9 @@ const App = () => {
           },
         }}
         notify={(...args) => console.log(args)}
+        onInputsUpdate={(data) => {
+          console.log(data);
+        }}
       />
       <Form.MarkdownOutput
         id='markdownOutput'

@@ -29,7 +29,7 @@ function TextArea(props) {
   let [placeholderOn, switchPlaceholder] = useState(false);
 
   useEffect(() => {
-    if (!value) {
+    if (!value && !placeholderOn) {
       switchPlaceholder(true);
     }
   }, []);
