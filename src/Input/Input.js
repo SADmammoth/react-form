@@ -331,4 +331,4 @@ Input.propTypes = {
   ...Input.publicProps,
 };
 
-export default React.memo(Input, compareObjects);
+export default React.memo(Input);

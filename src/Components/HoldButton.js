@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 function HoldButton({
@@ -12,27 +12,34 @@ function HoldButton({
   const [timer, saveTimer] = useState(null);
   const [interval, saveInterval] = useState(null);
 
-  const onMouseDown = () => {
-    action();
-    saveTimer(
-      setTimeout(() => {
-        saveInterval(
-          setInterval(() => {
-            action();
-          }, holdInterval)
-        );
-      }, firstInterval)
-    );
-  };
+  const onMouseDown = useCallback(() => {
+    if (!timer && !interval) {
+      // action();
+      // saveTimer(
+      //   setTimeout(() => {
+      //     saveInterval(
+      //       setInterval(() => {
+      //         action();
+      //       }, holdInterval)
+      //     );
+      //   }, firstInterval)
+      // );
+    }
+  }, [timer, interval, action]);
 
-  const onMouseUp = () => {
+  const onMouseUp = useCallback(() => {
     clearTimeout(timer);
+    console.log(timer);
     clearInterval(interval);
-  };
+
+    console.log(interval);
+    saveTimer(null);
+    saveInterval(null);
+  }, [timer, interval]);
 
   return (
     <button
-      type="button"
+      type='button'
       name={name}
       className={className}
       onMouseDown={onMouseDown}

@@ -18,7 +18,7 @@ function Select(props) {
 
   let [valueOptions, loading] = useValueOptions(options);
 
-  let [currentLabel, setCurrentLabel] = useState(null);
+  let [currentLabel, setCurrentLabel] = useState('');
 
   function renderOption(valueOption) {
     let isActive;
@@ -97,7 +97,7 @@ function Select(props) {
 
 Select.defaultProps = {
   required: false,
-  value: null,
+  value: '',
   placeholder: null,
 };
 

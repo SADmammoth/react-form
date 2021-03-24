@@ -14,7 +14,7 @@ export default function useUpdateInput(
       (inputProp) => inputProp.name === inputName
     );
     const props = createInputProps(
-      foundProps,
+      { value: newValue, ...foundProps },
       updateValueCallback,
       valuesState,
       highlightInput,

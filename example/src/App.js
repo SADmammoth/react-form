@@ -13,8 +13,6 @@ const App = () => {
     loadFile('./inputs.json');
   }, []);
 
-  console.log(Form);
-
   return (
     <Fragment>
       <Form
