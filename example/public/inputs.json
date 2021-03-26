@@ -19,10 +19,10 @@
   {
     "type": "text",
     "name": "date",
-    "placeholder": "MM-dd-yyyy hh:mm:ss",
+    "placeholder": "MM-dd-yyyy hh:mm",
     "required": true,
     "label": "Date",
-    "validator": "dateTimeInPast"
+    "validator": "dateTimeInPastByCharWithInvisibleMask"
   },
   {
     "type": "text",

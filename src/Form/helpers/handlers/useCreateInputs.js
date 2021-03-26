@@ -7,7 +7,7 @@ export default function useCreateInputs(
   updateValueCallback,
   highlightInput,
   notifications,
-  render
+  inputAdditionalFields
 ) {
   return (inputsProps, valuesState) => {
     if (!Object.keys(valuesState).length) {
@@ -23,7 +23,7 @@ export default function useCreateInputs(
         valuesState,
         highlightInput,
         notifications,
-        render
+        inputAdditionalFields
       );
       inputsData[props.name] = <Input {...inputProps} />;
     });
