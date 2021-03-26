@@ -52,11 +52,8 @@ const Form = (props) => {
 
   const { method, action, className, style, submitButton, children } = props;
 
-  const defaultForm = (props) => <form {...props} />;
-  const FormTag = render.form || defaultForm;
-
   return (
-    <FormTag
+    <form
       method={method}
       action={action}
       className={`form ${className}` || ''}
@@ -65,7 +62,7 @@ const Form = (props) => {
     >
       {children || (inputs && Object.values(inputs))}
       {React.cloneElement(submitButton, { type: 'submit' })}
-    </FormTag>
+    </form>
   );
 };
 
@@ -105,12 +102,6 @@ Form.propTypes = {
     PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object])
   ),
   notify: PropTypes.func,
-  render: PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    loader: PropTypes.func,
-    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  }),
 };
 
 export default Form;
