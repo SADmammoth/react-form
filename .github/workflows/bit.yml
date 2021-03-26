@@ -18,7 +18,7 @@ jobs:
 
       # Install dependencies and build app
       - name: Install Dependencies
-        run: npm install
+        run: npm install -g bit
       - name: Install bit-bin
         run: sudo npm install bit-bin@14.7.6 -g --unsafe-perm
       - name: bit config
