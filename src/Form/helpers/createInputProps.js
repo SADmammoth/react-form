@@ -35,8 +35,6 @@ export default function createInputProps(
     render,
   } = additionalFields;
 
-  console.log(additionalFields);
-
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
       onChange(inputName, value);
@@ -55,7 +53,6 @@ export default function createInputProps(
 
   let validatorFromMap;
   if (typeof validator === 'string') {
-    console.log(dateFormatMask, dateTimeFormatMask);
     validatorsMap.setFormats(
       validationMaskDateFormat,
       validationMaskDateTimeFormat,

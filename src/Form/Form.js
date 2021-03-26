@@ -31,8 +31,6 @@ const Form = (props) => {
     inputsProps,
   ]);
 
-  console.log(dateFormatMask, dateTimeFormatMask);
-
   const inputAdditionalFields = {
     validationMaskDateFormat,
     validationMaskDateTimeFormat,
