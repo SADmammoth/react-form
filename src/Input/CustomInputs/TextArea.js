@@ -44,8 +44,8 @@ function TextArea(props) {
       switchPlaceholder(true);
     }
   };
-  const defaultInput = (props) => <input {...props} />;
-  const InputTag = render.input || defaultInput;
+
+  const InputTag = render.input || 'input';
 
   return (
     <InputTag

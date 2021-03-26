@@ -44,8 +44,7 @@ function Select(props) {
 
   let [listShown, showList] = usePopup(false);
 
-  const defaultInput = (props) => <input {...props} />;
-  const InputTag = render.input || defaultInput;
+  const InputTag = render.input || 'input';
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
@@ -84,7 +83,7 @@ function Select(props) {
         <div className='select-list'>
           {loading ? (
             <div className='option disabled' value=''>
-              {render.loader ? render.loader(14) : 'Loading...'}
+              {render.Loader ? render.Loader(14) : 'Loading...'}
             </div>
           ) : (
             valueOptions.map((value) => renderOption(value))
@@ -117,9 +116,9 @@ Select.propTypes = {
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
   render: PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    loader: PropTypes.func,
+    Label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Loader: PropTypes.func,
   }),
 };
 

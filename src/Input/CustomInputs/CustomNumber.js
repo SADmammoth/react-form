@@ -55,8 +55,7 @@ function CustomNumber(props) {
     onChange(event);
   };
 
-  const defaultInput = (props) => <input {...props} />;
-  const InputTag = render.input || defaultInput;
+  const InputTag = render.input || 'input';
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
@@ -112,7 +111,7 @@ CustomNumber.propTypes = {
   onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func,
   render: PropTypes.shape({
-    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   }),
 };
 

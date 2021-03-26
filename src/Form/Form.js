@@ -85,7 +85,7 @@ const Form = (props) => {
 
   const { method, action, className, style, submitButton, children } = props;
 
-  const FormTag = render.form || 'form';
+  const FormTag = render.Form || 'form';
 
   return (
     <FormTag
@@ -141,11 +141,11 @@ Form.propTypes = {
   showNotifications: PropTypes.oneOf(['all', 'errorsOnly', 'hideAll']),
   notify: PropTypes.func,
   render: PropTypes.shape({
-    group: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    loader: PropTypes.func,
-    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Group: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Loader: PropTypes.func,
+    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   }),
   validationMaskDateFormat: PropTypes.string,
   validationMaskDateTimeFormat: PropTypes.string,

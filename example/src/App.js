@@ -26,8 +26,6 @@ const App = () => {
             name: 'shortText',
             placeholder: 'Short text (5-50 chars)',
             label: 'Short text',
-            minSymbols: 5,
-            maxSymbols: 50,
             required: true,
           },
           {
@@ -44,25 +42,27 @@ const App = () => {
             name: 'dateTime',
             label: 'Date and time',
             placeholder: 'MM-dd-yyyy hh:mm',
-            validator: 'dateTimeInPastByCharWithInvisibleMask',
+            validator: 'dateTimeByCharWithInvisibleMask',
           },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
         render={{
-          loader: (size, centered) => (
+          Loader: (size, centered) => (
             <>
               <span>Loading...</span>
             </>
           ),
-          input: (props) => {
+          Input: (props) => {
             if (props.type === 'textarea') {
-              return <textarea data-custom='custom' {...props} />;
+              return (
+                <textarea key={props.key} data-custom='custom' {...props} />
+              );
             } else {
-              return <input data-custom='custom' {...props} />;
+              return <input key={props.key} data-custom='custom' {...props} />;
             }
           },
-          label: (props) => {
+          Label: (props) => {
             return <label data-custom='custom' {...props} />;
           },
         }}

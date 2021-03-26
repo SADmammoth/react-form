@@ -233,9 +233,7 @@ function Input(props) {
       );
     }
 
-    const defaultRenderInput = (props) => <input {...props} />;
-
-    const InputTag = render.input || defaultRenderInput;
+    const InputTag = render.input || 'input';
 
     return LabeledInput(
       render,
@@ -280,9 +278,9 @@ Input.defaultProps = {
   highlightInput: () => {},
   validationMessage: '',
   render: {
-    loader: (size, centered) => 'Loading...',
+    Loader: (size, centered) => 'Loading...',
     input: (props) => <input {...props} />,
-    label: (props) => <label {...props} />,
+    Label: (props) => <label {...props} />,
   },
 };
 
@@ -325,8 +323,8 @@ Input.propTypes = {
   highlightInput: PropTypes.func,
   render: PropTypes.shape({
     input: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    loader: PropTypes.func,
-    label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    Loader: PropTypes.func,
+    Label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   }),
   ...Input.publicProps,
 };
