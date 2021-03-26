@@ -45,7 +45,7 @@ function TextArea(props) {
     }
   };
 
-  const InputTag = render.input || 'input';
+  const InputTag = render.Input || 'input';
 
   return (
     <InputTag
@@ -89,7 +89,7 @@ TextArea.propTypes = {
   maxSymbols: PropTypes.number,
   onError: PropTypes.func.isRequired,
   render: PropTypes.shape({
-    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   }),
 };
 

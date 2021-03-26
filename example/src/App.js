@@ -42,7 +42,7 @@ const App = () => {
             name: 'dateTime',
             label: 'Date and time',
             placeholder: 'MM-dd-yyyy hh:mm',
-            validator: 'dateTimeByCharWithInvisibleMask',
+            validator: 'dateTimeByChar',
           },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
