@@ -24,7 +24,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/bundlers/webpack-css-modules"
     },
-    "sadmammoth.components/react-form@1.5.6": {
+    "sadmammoth.components/react-form@1.5.8": {
         "files": [
             {
                 "relativePath": "package.json",
@@ -377,6 +377,11 @@
                 "name": "validatorsMap.js"
             },
             {
+                "relativePath": "src/helpers/capitalize.js",
+                "test": false,
+                "name": "capitalize.js"
+            },
+            {
                 "relativePath": "src/helpers/compareObjects.js",
                 "test": false,
                 "name": "compareObjects.js"
@@ -435,6 +440,11 @@
                 "relativePath": "src/helpers/formHelpers/inputsReducer.js",
                 "test": false,
                 "name": "inputsReducer.js"
+            },
+            {
+                "relativePath": "src/helpers/formHelpers/renderInputs.js",
+                "test": false,
+                "name": "renderInputs.js"
             },
             {
                 "relativePath": "src/helpers/formHelpers/replaceAll.js",

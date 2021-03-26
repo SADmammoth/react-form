@@ -1,10 +1,14 @@
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, { Fragment, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import validateForm from '../helpers/formHelpers/validateForm';
 import useOnSubmit from './helpers/handlers/useOnSubmit';
 import useNotifications from './helpers/useNotifications';
 import useFormReducer from './helpers/useFormReducer';
+import mapGroups from '../helpers/formHelpers/mapGroups';
+import renderGroups from '../helpers/formHelpers/renderGroups';
+import _ from 'lodash';
+import useDiff from '../helpers/useDiff';
 
 const Form = (props) => {
   let {
@@ -13,17 +17,27 @@ const Form = (props) => {
     onSubmit: onSubmitHandler,
     showNotifications,
     notify,
-    renderLoader,
-    renderInput,
+    render,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
-  let [state, dispatch, actions] = useFormReducer(
-    onInputsUpdate,
-    renderLoader,
-    notifications,
-    renderInput
+  const mapGroupsCb = useCallback((inputs) => mapGroups(inputs, inputsProps), [
+    inputsProps,
+  ]);
+
+  let [state, dispatch, actions] = useFormReducer(notifications, render);
+
+  useDiff(
+    ([valuesDiff, inputsPropsDiff]) => {
+      if (valuesDiff.value || inputsPropsDiff) {
+        onInputsUpdate({
+          ...mapGroupsCb(state.inputs),
+          $list: [...Object.values(state.inputs)],
+        });
+      }
+    },
+    [state.values, inputsProps]
   );
 
   useEffect(() => {
@@ -31,8 +45,8 @@ const Form = (props) => {
   }, [inputsProps]);
 
   useEffect(() => {
-    dispatch(actions.createInputs(inputsProps, renderLoader));
-  }, [state.values]);
+    dispatch(actions.createInputs(inputsProps, render));
+  }, [state.values, inputsProps]);
 
   if (!notify) {
     showNotifications = 'hideAll';
@@ -47,6 +61,7 @@ const Form = (props) => {
   const { values, inputs } = state;
   const onSubmit = useOnSubmit(
     values,
+    inputsProps,
     () => validateForm(inputsProps, values, onValidationFail),
     onSubmitHandler,
     notifications
@@ -54,17 +69,19 @@ const Form = (props) => {
 
   const { method, action, className, style, submitButton, children } = props;
 
+  const FormTag = render.form || 'form';
+
   return (
-    <form
+    <FormTag
       method={method}
       action={action}
       className={`form ${className}` || ''}
       style={{ ...style }}
       onSubmit={onSubmit}
     >
-      {children || (inputs && Object.values(inputs))}
+      {children || renderGroups(inputs, inputsProps, render.group)}
       {React.cloneElement(submitButton, { type: 'submit' })}
-    </form>
+    </FormTag>
   );
 };
 
@@ -78,7 +95,6 @@ Form.defaultProps = {
   showNotifications: 'all',
   children: null,
   onSubmit: false,
-  defaultValue: null,
 };
 
 Form.propTypes = {
@@ -90,6 +106,10 @@ Form.propTypes = {
     PropTypes.shape({
       ...Input.publicProps,
       validationMessage: PropTypes.string,
+      group: PropTypes.shape({
+        title: PropTypes.string,
+        id: PropTypes.string,
+      }),
     })
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
@@ -99,11 +119,14 @@ Form.propTypes = {
   // Passed in order to get inputs components
   onInputsUpdate: PropTypes.func,
   showNotifications: PropTypes.oneOf(['all', 'errorsOnly', 'hideAll']),
-  // eslint-disable-next-line react/no-unused-prop-types
-  defaultValue: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object])
-  ),
   notify: PropTypes.func,
+  render: PropTypes.shape({
+    group: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    loader: PropTypes.func,
+    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  }),
 };
 
 export default Form;

@@ -13,6 +13,8 @@ const App = () => {
     loadFile('./inputs.json');
   }, []);
 
+  const [inputs, setInputs] = useState([]);
+
   return (
     <Fragment>
       <Form
@@ -50,20 +52,28 @@ const App = () => {
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
-        renderLoader={(size, centered) => (
-          <>
-            <span>Loading...</span>
-          </>
-        )}
-        renderInput={(props) => {
-          if (props.type === 'textarea') {
-            return <textarea data-custom='custom' {...props} />;
-          } else {
-            return <input data-custom='custom' {...props} />;
-          }
+        render={{
+          loader: (size, centered) => (
+            <>
+              <span>Loading...</span>
+            </>
+          ),
+          input: (props) => {
+            if (props.type === 'textarea') {
+              return <textarea data-custom='custom' {...props} />;
+            } else {
+              return <input data-custom='custom' {...props} />;
+            }
+          },
+          label: (props) => {
+            return <label data-custom='custom' {...props} />;
+          },
+        }}
+        onInputsUpdate={(inputs) => {
+          setInputs(inputs);
         }}
         notify={(...args) => console.log(args)}
-      />
+      ></Form>
       <Form.MarkdownOutput
         id='markdownOutput'
         name='markdownOutput'
