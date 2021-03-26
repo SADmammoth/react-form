@@ -9,6 +9,7 @@ import mapGroups from '../helpers/formHelpers/mapGroups';
 import renderGroups from '../helpers/formHelpers/renderGroups';
 import _ from 'lodash';
 import useDiff from '../helpers/useDiff';
+import masks from '../helpers/maskHelpers/masks';
 
 const Form = (props) => {
   let {
@@ -18,6 +19,10 @@ const Form = (props) => {
     showNotifications,
     notify,
     render,
+    validationMaskDateFormat,
+    validationMaskDateTimeFormat,
+    dateFormatMask,
+    dateTimeFormatMask,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
@@ -26,7 +31,20 @@ const Form = (props) => {
     inputsProps,
   ]);
 
-  let [state, dispatch, actions] = useFormReducer(notifications, render);
+  console.log(dateFormatMask, dateTimeFormatMask);
+
+  const inputAdditionalFields = {
+    validationMaskDateFormat,
+    validationMaskDateTimeFormat,
+    dateFormatMask,
+    dateTimeFormatMask,
+    render,
+  };
+
+  let [state, dispatch, actions] = useFormReducer(
+    notifications,
+    inputAdditionalFields
+  );
 
   useDiff(
     ([valuesDiff, inputsPropsDiff]) => {
@@ -95,6 +113,10 @@ Form.defaultProps = {
   showNotifications: 'all',
   children: null,
   onSubmit: false,
+  validationMaskDateFormat: masks.date,
+  validationMaskDateTimeFormat: masks.dateTime,
+  dateFormatMask: masks.dateMask,
+  dateTimeFormatMask: masks.dateTimeMask,
 };
 
 Form.propTypes = {
@@ -127,6 +149,10 @@ Form.propTypes = {
     input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   }),
+  validationMaskDateFormat: PropTypes.string,
+  validationMaskDateTimeFormat: PropTypes.string,
+  dateFormatMask: PropTypes.string,
+  dateTimeFormatMask: PropTypes.string,
 };
 
 export default Form;
