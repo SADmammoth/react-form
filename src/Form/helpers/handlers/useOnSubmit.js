@@ -4,6 +4,7 @@ import formatFormValues from '../../../helpers/formHelpers/formatFormValues';
 
 export default function useOnSubmit(
   values,
+  inputsProps,
   validateForm,
   handler,
   notifications
@@ -24,7 +25,7 @@ export default function useOnSubmit(
 
     if (validateForm()) {
       if (handler) {
-        handler(formatFormValues(values))
+        handler(formatFormValues(values, inputsProps))
           .then(onResponseReceived)
           .catch(onResponseError);
       }

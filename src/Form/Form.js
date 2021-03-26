@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, { Fragment, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import validateForm from '../helpers/formHelpers/validateForm';
 import useOnSubmit from './helpers/handlers/useOnSubmit';
 import useNotifications from './helpers/useNotifications';
 import useFormReducer from './helpers/useFormReducer';
+import mapGroups from '../helpers/formHelpers/mapGroups';
+import renderGroups from '../helpers/formHelpers/renderGroups';
 
 const Form = (props) => {
   let {
@@ -19,8 +21,16 @@ const Form = (props) => {
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
+  const mapGroupsCb = useCallback((inputs) => mapGroups(inputs, inputsProps), [
+    inputsProps,
+  ]);
+
+  const onInputsUpdateHandler = (inputs) => {
+    return onInputsUpdate(mapGroupsCb(inputs));
+  };
+
   let [state, dispatch, actions] = useFormReducer(
-    onInputsUpdate,
+    onInputsUpdateHandler,
     renderLoader,
     notifications,
     renderInput
@@ -47,6 +57,7 @@ const Form = (props) => {
   const { values, inputs } = state;
   const onSubmit = useOnSubmit(
     values,
+    inputsProps,
     () => validateForm(inputsProps, values, onValidationFail),
     onSubmitHandler,
     notifications
@@ -62,7 +73,7 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}
     >
-      {children || (inputs && Object.values(inputs))}
+      {children || renderGroups(inputs, inputsProps)}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </form>
   );
@@ -90,6 +101,7 @@ Form.propTypes = {
     PropTypes.shape({
       ...Input.publicProps,
       validationMessage: PropTypes.string,
+      group: PropTypes.string,
     })
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),

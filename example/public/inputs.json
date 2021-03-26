@@ -4,7 +4,8 @@
     "name": "title",
     "placeholder": "Title",
     "required": true,
-    "label": "Title"
+    "label": "Title",
+    "group": { "id": "group", "title": "Group" }
   },
   {
     "type": "text",
@@ -12,7 +13,8 @@
     "placeholder": "Title",
     "required": true,
     "label": "Email",
-    "validator": "email"
+    "validator": "email",
+    "group": { "id": "group", "title": "Group" }
   },
   {
     "type": "text",

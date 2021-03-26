@@ -62,8 +62,11 @@ const App = () => {
             return <input data-custom='custom' {...props} />;
           }
         }}
+        onInputsUpdate={(inputs) => {
+          console.log(inputs);
+        }}
         notify={(...args) => console.log(args)}
-      />
+      ></Form>
       <Form.MarkdownOutput
         id='markdownOutput'
         name='markdownOutput'
