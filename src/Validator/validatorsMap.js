@@ -62,6 +62,8 @@ const validatorsMap = {
   dateTimeByChar: {
     byCharValidator: (input) =>
       DateMask.dateByChar(input, [globals.dateTimeFormat]),
+    validator: (input) => DateMask.dateTime(input, [globals.dateTimeFormat]),
+    validationMessage: DateMask.dateTimeMessage,
   },
   dateTimeInPast: {
     validator: (input) =>
@@ -90,6 +92,22 @@ const validatorsMap = {
     validator: (input) =>
       DateMask.dateTimeInPast(input, globals.dateTimeFormat),
     validationMessage: DateMask.dateTimeInPastMessage,
+    mask: globals.dateTimeFormatMask,
+    maskType: 'visible',
+  },
+  dateTimeByCharWithInvisibleMask: {
+    byCharValidator: (input) =>
+      DateMask.dateByChar(input, [globals.dateTimeFormat]),
+    validator: (input) => DateMask.dateTime(input, globals.dateTimeFormat),
+    validationMessage: DateMask.dateTimeMessage,
+    mask: globals.dateTimeFormatMask,
+    maskType: 'invisible',
+  },
+  dateTimeByCharWithVisibleMask: {
+    byCharValidator: (input) =>
+      DateMask.dateByChar(input, [globals.dateTimeFormat]),
+    validator: (input) => DateMask.dateTime(input, globals.dateTimeFormat),
+    validationMessage: DateMask.dateTimeMessage,
     mask: globals.dateTimeFormatMask,
     maskType: 'visible',
   },
@@ -127,6 +145,22 @@ const validatorsMap = {
     validator: (input) =>
       DateMask.dateTimeInPast(input, globals.dateTimeFormat),
     validationMessage: DateMask.dateTimeInPastMessage,
+    mask: globals.dateFormatMask,
+    maskType: 'visible',
+  },
+  dateTimeByCharWithInvisibleMask: {
+    byCharValidator: (input) =>
+      DateMask.dateByChar(input, [globals.dateFormat]),
+    validator: (input) => DateMask.dateTime(input, globals.dateFormat),
+    validationMessage: DateMask.dateTimeMessage,
+    mask: globals.dateFormatMask,
+    maskType: 'invisible',
+  },
+  dateTimeByCharWithVisibleMask: {
+    byCharValidator: (input) =>
+      DateMask.dateByChar(input, [globals.dateFormat]),
+    validator: (input) => DateMask.dateTime(input, globals.dateFormat),
+    validationMessage: DateMask.dateTimeMessage,
     mask: globals.dateFormatMask,
     maskType: 'visible',
   },
