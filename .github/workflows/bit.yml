@@ -18,9 +18,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-        
-      - name: Install Dependencies
-        run: npm install
+
       - name: Install bit-bin
         run: sudo npm install bit-bin -g --unsafe-perm
       - name: bit config
