@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 12.x
       - name: Install latest Bit version
-        run: npm i -g yarn && yarn add -g bit
+        run: npm i -g bit
       - name: Set up bit config
         run: |
           bit config set analytics_reporting false
