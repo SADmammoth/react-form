@@ -22,6 +22,7 @@ jobs:
         run: npm i -g bit
       - name: Set up bit config
         run: |
+          bit init
           bit config set analytics_reporting false
           bit config set anonymous_reporting false
           bit config set user.token $BIT_TOKEN
