@@ -6,7 +6,7 @@ import useCreateValues from './handlers/useCreateValues';
 import useUpdateValue from './handlers/useUpdateValue';
 import useInputHighlight from './useInputHighlight';
 
-export default function useFormReducer(onInputsUpdate, notifications, render) {
+export default function useFormReducer(notifications, render) {
   const highlightInput = useInputHighlight(
     (...args) => {
       dispatch(actions.highlightInput(...args));
@@ -25,7 +25,6 @@ export default function useFormReducer(onInputsUpdate, notifications, render) {
   );
   const updateInput = useUpdateInput(
     updateValueCallback,
-    onInputsUpdate,
     highlightInput,
     render
   );
@@ -33,13 +32,7 @@ export default function useFormReducer(onInputsUpdate, notifications, render) {
   const updateValue = useUpdateValue();
 
   const [state, dispatch] = useReducer(
-    formReducer(
-      updateInput,
-      updateValue,
-      createInputs,
-      createValues,
-      onInputsUpdate
-    ),
+    formReducer(updateInput, updateValue, createInputs, createValues),
     init
   );
 

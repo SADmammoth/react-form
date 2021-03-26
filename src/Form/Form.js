@@ -7,6 +7,8 @@ import useNotifications from './helpers/useNotifications';
 import useFormReducer from './helpers/useFormReducer';
 import mapGroups from '../helpers/formHelpers/mapGroups';
 import renderGroups from '../helpers/formHelpers/renderGroups';
+import _ from 'lodash';
+import useDiff from '../helpers/useDiff';
 
 const Form = (props) => {
   let {
@@ -24,14 +26,18 @@ const Form = (props) => {
     inputsProps,
   ]);
 
-  const onInputsUpdateHandler = (inputs) => {
-    return onInputsUpdate(mapGroupsCb(inputs));
-  };
+  let [state, dispatch, actions] = useFormReducer(notifications, render);
 
-  let [state, dispatch, actions] = useFormReducer(
-    onInputsUpdateHandler,
-    notifications,
-    render
+  useDiff(
+    ([valuesDiff, inputsPropsDiff]) => {
+      if (valuesDiff.value || inputsPropsDiff) {
+        onInputsUpdate({
+          ...mapGroupsCb(state.inputs),
+          $list: [...Object.values(state.inputs)],
+        });
+      }
+    },
+    [state.values, inputsProps]
   );
 
   useEffect(() => {
@@ -40,7 +46,7 @@ const Form = (props) => {
 
   useEffect(() => {
     dispatch(actions.createInputs(inputsProps, render));
-  }, [state.values]);
+  }, [state.values, inputsProps]);
 
   if (!notify) {
     showNotifications = 'hideAll';
@@ -101,7 +107,10 @@ Form.propTypes = {
     PropTypes.shape({
       ...Input.publicProps,
       validationMessage: PropTypes.string,
-      group: PropTypes.string,
+      group: PropTypes.shape({
+        title: PropTypes.string,
+        id: PropTypes.string,
+      }),
     })
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
@@ -117,7 +126,7 @@ Form.propTypes = {
   ),
   notify: PropTypes.func,
   render: PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     loader: PropTypes.func,
     input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
