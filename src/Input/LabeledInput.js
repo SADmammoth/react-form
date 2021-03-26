@@ -1,8 +1,7 @@
 import React from 'react';
 
 export default function LabeledInput(render, label, id, input) {
-  const defaultLabel = (props) => <label {...props} />;
-  const Label = render.label || defaultLabel;
+  const Label = render.Label || 'label';
 
   return label ? (
     <div className='form-group'>

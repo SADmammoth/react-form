@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
 import Form from 'react-form';
-import 'react-form/dist/index.css';
 
 const App = () => {
   const [file, setFile] = useState([]);
@@ -14,58 +13,56 @@ const App = () => {
   }, []);
 
   const [inputs, setInputs] = useState([]);
-
+  const NewForm = Form.default;
   return (
     <Fragment>
-      <Form
+      <NewForm
         onSubmit={async (data) => {
           console.log(data);
         }}
         inputs={[
-          ...file,
           {
-            type: 'checkbox',
-            name: 'checkboxes',
-            valueOptions: function () {
-              return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  resolve([{ value: 'val', label: 'label' }]);
-                }, 1000);
-              });
-            },
-            required: false,
-            label: 'Checkboxes',
+            type: 'text',
+            name: 'shortText',
+            placeholder: 'Short text (5-50 chars)',
+            label: 'Short text',
+            required: true,
           },
           {
-            type: 'select',
-            name: 'list',
-            placeholder: 'List',
-            valueOptions: function () {
-              return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  resolve([{ value: 'val', label: 'label' }]);
-                }, 10000);
-              });
-            },
+            type: 'textarea',
+            name: 'fullText',
+            placeholder: 'Full text',
+            label: 'Full text',
+            minSymbols: 5,
+            maxSymbols: 1000,
             required: true,
+          },
+          {
+            type: 'text',
+            name: 'dateTime',
+            label: 'Date and time',
+            placeholder: 'MM-dd-yyyy hh:mm',
+            validator: 'dateTimeByCharWithInvisibleMask',
           },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
         render={{
-          loader: (size, centered) => (
+          Loader: (size, centered) => (
             <>
               <span>Loading...</span>
             </>
           ),
-          input: (props) => {
+          Input: (props) => {
             if (props.type === 'textarea') {
-              return <textarea data-custom='custom' {...props} />;
+              return (
+                <textarea key={props.key} data-custom='custom' {...props} />
+              );
             } else {
-              return <input data-custom='custom' {...props} />;
+              return <input key={props.key} data-custom='custom' {...props} />;
             }
           },
-          label: (props) => {
+          Label: (props) => {
             return <label data-custom='custom' {...props} />;
           },
         }}
@@ -75,7 +72,7 @@ const App = () => {
         notify={(...args) => console.log(args)}
       >
         {inputs.$list}
-      </Form>
+      </NewForm>
       <Form.MarkdownOutput
         id='markdownOutput'
         name='markdownOutput'

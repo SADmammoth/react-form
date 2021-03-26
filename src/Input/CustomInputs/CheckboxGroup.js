@@ -33,11 +33,8 @@ function CheckboxGroup(props) {
       onChange(event);
     };
 
-    const defaultInput = (props) => <input {...props} />;
-    const InputTag = render.input || defaultInput;
-
-    const defaultLabel = (props) => <label {...props} />;
-    const LabelTag = render.label || defaultLabel;
+    const InputTag = render.input || 'input';
+    const LabelTag = render.Label || 'label';
 
     return (
       <div key={id + valueOption.value} className={`${type}-group`}>
@@ -68,8 +65,8 @@ function CheckboxGroup(props) {
     return (
       <Fragment>
         {loading
-          ? render.loader
-            ? render.loader(14)
+          ? render.Loader
+            ? render.Loader(14)
             : 'Loading...'
           : valueOptions.map((valueOption) =>
               renderCheckbox(valueOption, props)
@@ -123,9 +120,9 @@ CheckboxGroup.propTypes = {
   required: PropTypes.bool,
   attributes: PropTypes.objectOf(PropTypes.string),
   render: PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    loader: PropTypes.func,
-    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Loader: PropTypes.func,
+    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   }),
 };
 

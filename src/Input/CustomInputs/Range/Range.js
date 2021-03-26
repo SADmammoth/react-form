@@ -54,23 +54,23 @@ function Range(props) {
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
-      className="form-range"
+      className='form-range'
       style={{
         '--start': calcPercent(leftIndex, length),
         '--percent': calcPercent(rightIndex, length),
         '--display-tip': alwaysShowTip ? 'unset' : 'none',
       }}
     >
-      <div ref={range} className="form-range-bg">
+      <div ref={range} className='form-range-bg'>
         <input
-          type="text"
+          type='text'
           name={name + '-left'}
           value={valueOptions[leftIndex].value}
           required={required}
           readOnly
         ></input>
         <input
-          type="text"
+          type='text'
           name={name + '-right'}
           value={valueOptions[rightIndex].value}
           required={required}

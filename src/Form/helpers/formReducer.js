@@ -13,7 +13,6 @@ const formReducer = (updateInput, updateValue, createInputs, createValues) => (
   { type, data }
 ) => {
   let { inputs, values } = state;
-  console.log(type);
   switch (type) {
     case actionTypes.UPDATE_INPUT:
       return {
