@@ -13,8 +13,6 @@ const App = () => {
     loadFile('./inputs.json');
   }, []);
 
-  console.log(Form);
-
   return (
     <Fragment>
       <Form
@@ -52,22 +50,17 @@ const App = () => {
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
-        render={{
-          loader: (size, centered) => (
-            <>
-              <span>Loading...</span>
-            </>
-          ),
-          input: (props) => {
-            if (props.type === 'textarea') {
-              return <textarea data-custom='custom' {...props} />;
-            } else {
-              return <input data-custom='custom' {...props} />;
-            }
-          },
-          label: (props) => {
-            return <label data-custom='custom' {...props} />;
-          },
+        renderLoader={(size, centered) => (
+          <>
+            <span>Loading...</span>
+          </>
+        )}
+        renderInput={(props) => {
+          if (props.type === 'textarea') {
+            return <textarea data-custom='custom' {...props} />;
+          } else {
+            return <input data-custom='custom' {...props} />;
+          }
         }}
         notify={(...args) => console.log(args)}
       />

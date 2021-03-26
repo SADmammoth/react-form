@@ -5,9 +5,10 @@ import createInputProps from '../createInputProps';
 
 export default function useCreateInputs(
   updateValueCallback,
+  renderLoader,
   highlightInput,
   notifications,
-  render
+  renderInput
 ) {
   return (inputsProps, valuesState, onInputsUpdate) => {
     if (!Object.keys(valuesState).length) {
@@ -21,9 +22,10 @@ export default function useCreateInputs(
         props,
         updateValueCallback,
         valuesState,
+        renderLoader,
         highlightInput,
         notifications,
-        render
+        renderInput
       );
       inputsData[props.name] = <Input {...inputProps} />;
       onInputsUpdate(inputsData);

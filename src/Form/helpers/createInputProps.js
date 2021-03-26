@@ -24,8 +24,9 @@ export default function createInputProps(
   },
   updateValueCallback,
   valuesState,
+  renderLoader,
   highlightInput,
-  render
+  renderInput
 ) {
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
@@ -73,6 +74,7 @@ export default function createInputProps(
     validationMessage,
     alwaysShowTip,
     editable,
-    render,
+    renderLoader,
+    renderInput,
   };
 }

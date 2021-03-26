@@ -12,7 +12,8 @@ function Select(props) {
     placeholder,
     onChange,
     required,
-    render,
+    renderLoader,
+    renderInput,
     type,
   } = props;
 
@@ -44,8 +45,7 @@ function Select(props) {
 
   let [listShown, showList] = usePopup(false);
 
-  const defaultInput = (props) => <input {...props} />;
-  const InputTag = render.input || defaultInput;
+  const InputTag = renderInput;
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
@@ -84,7 +84,7 @@ function Select(props) {
         <div className='select-list'>
           {loading ? (
             <div className='option disabled' value=''>
-              {render.loader ? render.loader(14) : 'Loading...'}
+              {renderLoader(14)}
             </div>
           ) : (
             valueOptions.map((value) => renderOption(value))
@@ -99,6 +99,7 @@ Select.defaultProps = {
   required: false,
   value: null,
   placeholder: null,
+  renderInput: (props) => <input {...props} />,
 };
 
 Select.propTypes = {
@@ -116,11 +117,8 @@ Select.propTypes = {
     PropTypes.func,
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
-  render: PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    loader: PropTypes.func,
-  }),
+  renderLoader: PropTypes.func,
+  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 export default React.memo(Select, compareObjects);

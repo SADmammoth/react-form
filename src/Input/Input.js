@@ -37,7 +37,8 @@ function Input(props) {
     validationMessage,
     alwaysShowTip,
     editable,
-    render,
+    renderLoader,
+    renderInput,
   } = props;
 
   const onChangeHandler = ({
@@ -71,7 +72,7 @@ function Input(props) {
     highlightInput(name, validationMessage);
   };
 
-  function renderInput() {
+  function render() {
     if (
       type === 'checkbox' ||
       type === 'radio' ||
@@ -79,7 +80,6 @@ function Input(props) {
       type === 'spoiler'
     ) {
       return LabeledInput(
-        render,
         label,
         id,
         <CheckboxGroup
@@ -95,14 +95,14 @@ function Input(props) {
           attributes={attributes}
           value={value}
           valueOptions={valueOptions}
-          render={render}
+          renderLoader={renderLoader}
+          renderInput={renderInput}
         />
       );
     }
 
     if (type === 'markdown') {
       return LabeledInput(
-        render,
         label,
         id,
         <MarkdownText
@@ -116,14 +116,12 @@ function Input(props) {
           attributes={attributes}
           value={value}
           editable={editable}
-          render={render}
         />
       );
     }
 
     if (type === 'number') {
       return LabeledInput(
-        render,
         label,
         id,
         <CustomNumber
@@ -136,14 +134,14 @@ function Input(props) {
           required={required}
           attributes={attributes}
           value={value}
-          render={render}
+          placeholder={placeholder}
+          renderInput={renderInput}
         />
       );
     }
 
     if (type === 'select') {
       return LabeledInput(
-        render,
         label,
         id,
         <Select
@@ -158,13 +156,13 @@ function Input(props) {
           value={value}
           valueOptions={valueOptions}
           placeholder={placeholder}
-          render={render}
+          renderLoader={renderLoader}
+          renderInput={renderInput}
         />
       );
     }
     if (type === 'textarea') {
       return LabeledInput(
-        render,
         label,
         id,
         <TextArea
@@ -181,14 +179,13 @@ function Input(props) {
           minSymbols={minSymbols}
           maxSymbols={maxSymbols}
           placeholder={placeholder}
-          render={render}
+          renderInput={renderInput}
         />
       );
     }
 
     if (type === 'slider') {
       return LabeledInput(
-        render,
         label,
         id,
         <Slider
@@ -205,14 +202,12 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           alwaysShowTip={alwaysShowTip}
-          render={render}
         />
       );
     }
 
     if (type === 'range') {
       return LabeledInput(
-        render,
         label,
         id,
         <Range
@@ -228,17 +223,15 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           alwaysShowTip={alwaysShowTip}
-          render={render}
         />
       );
     }
 
     const defaultRenderInput = (props) => <input {...props} />;
 
-    const InputTag = render.input || defaultRenderInput;
+    const InputTag = renderInput || defaultRenderInput;
 
     return LabeledInput(
-      render,
       label,
       id,
       MaskedInput(
@@ -262,7 +255,7 @@ function Input(props) {
     );
   }
 
-  return renderInput();
+  return render();
 }
 
 Input.defaultProps = {
@@ -279,11 +272,7 @@ Input.defaultProps = {
   maxSymbols: 1000,
   highlightInput: () => {},
   validationMessage: '',
-  render: {
-    loader: (size, centered) => 'Loading...',
-    input: (props) => <input {...props} />,
-    label: (props) => <label {...props} />,
-  },
+  renderLoader: (size, centered) => 'Loading...',
 };
 
 Input.publicProps = {
@@ -323,11 +312,8 @@ Input.propTypes = {
   required: PropTypes.bool,
   invalid: PropTypes.bool.isRequired,
   highlightInput: PropTypes.func,
-  render: PropTypes.shape({
-    input: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    loader: PropTypes.func,
-    label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  }),
+  renderLoader: PropTypes.func,
+  renderInput: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   ...Input.publicProps,
 };
 
