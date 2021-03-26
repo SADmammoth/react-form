@@ -73,9 +73,7 @@ const App = () => {
           setInputs(inputs);
         }}
         notify={(...args) => console.log(args)}
-      >
-        {inputs.$list}
-      </Form>
+      ></Form>
       <Form.MarkdownOutput
         id='markdownOutput'
         name='markdownOutput'

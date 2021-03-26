@@ -79,7 +79,7 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}
     >
-      {children || renderGroups(inputs, inputsProps)}
+      {children || renderGroups(inputs, inputsProps, render.group)}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </FormTag>
   );
@@ -95,7 +95,6 @@ Form.defaultProps = {
   showNotifications: 'all',
   children: null,
   onSubmit: false,
-  defaultValue: null,
 };
 
 Form.propTypes = {
@@ -120,12 +119,9 @@ Form.propTypes = {
   // Passed in order to get inputs components
   onInputsUpdate: PropTypes.func,
   showNotifications: PropTypes.oneOf(['all', 'errorsOnly', 'hideAll']),
-  // eslint-disable-next-line react/no-unused-prop-types
-  defaultValue: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object])
-  ),
   notify: PropTypes.func,
   render: PropTypes.shape({
+    group: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     loader: PropTypes.func,
     input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),

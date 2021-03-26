@@ -1,7 +1,8 @@
 import React from 'react';
+import Group from '../../Form/Group';
 import mapGroups from './mapGroups';
 
-export default function useRenderGroups(inputs, inputsProps) {
+export default function renderGroups(inputs, inputsProps, groupTag) {
   if (!inputs) return inputs;
   const mapped = mapGroups(inputs, inputsProps);
   return Object.entries(mapped).map(([name, inputData]) => {
@@ -9,11 +10,11 @@ export default function useRenderGroups(inputs, inputsProps) {
       return inputData;
     } else {
       const { $title, ...input } = inputData;
+      const GroupTag = groupTag || Group;
       return (
-        <div key={'group-' + name} className='group'>
-          <p className='group-title'>{$title}</p>
+        <GroupTag key={'group-' + name} name={name} title={$title}>
           {Object.values(input)}
-        </div>
+        </GroupTag>
       );
     }
   });
