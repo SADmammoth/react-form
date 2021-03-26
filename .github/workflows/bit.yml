@@ -30,10 +30,10 @@ jobs:
       - name: bit import
         run: |
           bit -v && bit import
-      - name: |
+      - name: bit export
+        run: |
           bit tag -a
           bit export
-        run: bit export
       - name: Commit changes made to .bitmap
         run: |
           git config --global user.name '${{ github.actor }}'
