@@ -5,9 +5,6 @@ import validateForm from '../helpers/formHelpers/validateForm';
 import useOnSubmit from './helpers/handlers/useOnSubmit';
 import useNotifications from './helpers/useNotifications';
 import useFormReducer from './helpers/useFormReducer';
-import renderInputs from '../helpers/formHelpers/renderInputs';
-import useDiff from '../helpers/useDiff';
-import hasfield from '../helpers/hasfield';
 
 const Form = (props) => {
   let {
@@ -109,7 +106,7 @@ Form.propTypes = {
   ),
   notify: PropTypes.func,
   render: PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     loader: PropTypes.func,
     input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),

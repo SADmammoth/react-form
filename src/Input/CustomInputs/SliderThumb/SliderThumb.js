@@ -12,13 +12,13 @@ function SliderThumb({
 }) {
   const [dragging, setDragging] = useState(false);
   const [sliderRectParams, setSliderRectParams] = useState({});
-  const sliderPartLength = calcSliderPart(sliderRef.current, sliderValuesCount);
+  const sliderPartLength = calcSliderPart(sliderRef, sliderValuesCount);
 
   useEffect(() => {
-    if (!_.isEmpty(sliderRef.current)) {
-      setSliderRectParams(sliderRef.current.getBoundingClientRect());
+    if (!_.isEmpty(sliderRef)) {
+      setSliderRectParams(sliderRef.getBoundingClientRect());
     }
-  }, [sliderRef.current]);
+  }, [sliderRef]);
 
   const mouseMove = useCallback(
     (event) => {
@@ -63,8 +63,8 @@ function SliderThumb({
 
   return (
     <div
-      draggable='false'
-      className='form-slider-thumb'
+      draggable="false"
+      className="form-slider-thumb"
       onMouseDown={() => {
         setDragging(true);
       }}

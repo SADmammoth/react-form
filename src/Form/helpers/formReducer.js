@@ -8,10 +8,13 @@ const actionTypes = {
   UNHIGHLIGHT_INPUT: 'UNHIGHLIGHT_INPUT',
 };
 
-const formReducer = (updateInput, updateValue, createInputs, createValues) => (
-  state,
-  { type, data }
-) => {
+const formReducer = (
+  updateInput,
+  updateValue,
+  createInputs,
+  createValues,
+  onInputsUpdate
+) => (state, { type, data }) => {
   let { inputs, values } = state;
 
   switch (type) {
@@ -19,13 +22,7 @@ const formReducer = (updateInput, updateValue, createInputs, createValues) => (
       return {
         ...state,
         inputs: {
-          ...updateInput(
-            data.inputsProps,
-            data.value,
-            data.name,
-            values,
-            inputs
-          ),
+          ...updateInput(data.inputsProps, data.name, values, inputs),
         },
       };
     case actionTypes.UPDATE_VALUE:
@@ -75,9 +72,9 @@ function unhighlightInput(name, input) {
 export default formReducer;
 
 const actions = {
-  updateInput: (inputsProps, name, value) => ({
+  updateInput: (name, value) => ({
     type: actionTypes.UPDATE_INPUT,
-    data: { inputsProps, name, value },
+    data: { name, value },
   }),
   updateValue: (name, value) => ({
     type: actionTypes.UPDATE_VALUE,

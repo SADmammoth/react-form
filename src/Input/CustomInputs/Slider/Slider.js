@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../../helpers/compareObjects';
 import SliderThumb from '../SliderThumb';
@@ -20,29 +20,30 @@ function Slider(props) {
     alwaysShowTip,
   } = props;
 
-  let [index, setIndex] = useIndex(currentValue, valueOptions);
+  let value = currentValue || valueOptions[0].value;
+
+  let currentIndex = valueOptions.findIndex((el) => el.value === value);
+  currentIndex = currentIndex < 0 ? 0 : currentIndex;
+
+  let length = valueOptions.length;
+
+  let [index, setIndex] = useIndex(currentIndex, length);
   const slider = useRef({});
 
-  const length = valueOptions.length;
-
-  const modifyIndex = useCallback(
-    (newIndex) => {
-      console.log(valueOptions[setIndex(newIndex)].value);
-      onChange(createEvent(name, valueOptions[setIndex(newIndex)].value));
-    },
-    [onChange, setIndex]
-  );
+  useEffect(() => {
+    onChange(createEvent(name, valueOptions[index].value));
+  }, [index]);
 
   let prev = () => {
-    modifyIndex((i) => i - 1);
+    setIndex((i) => i - 1);
   };
 
   let next = () => {
-    modifyIndex((i) => i + 1);
+    setIndex((i) => i + 1);
   };
 
   let moveOnBackgroundClick = ({ clientX }) => {
-    modifyIndex(calcSliderIndex(slider.current, clientX, length));
+    setIndex(calcSliderIndex(slider, clientX, length));
   };
 
   return (
@@ -75,11 +76,11 @@ function Slider(props) {
         />
 
         <SliderThumb
-          sliderRef={slider}
+          sliderRef={slider.current}
           sliderValuesCount={length}
-          moveTo={modifyIndex}
-          moveToStart={() => modifyIndex(0)}
-          moveToEnd={() => modifyIndex(length - 1)}
+          moveTo={setIndex}
+          moveToStart={() => setIndex(0)}
+          moveToEnd={() => setIndex(length - 1)}
         />
       </div>
 

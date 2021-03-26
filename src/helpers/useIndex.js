@@ -1,33 +1,30 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-export default function useIndex(currentValue, valueOptions) {
-  const index = useMemo(() => {
-    console.log(currentValue);
-    let value = currentValue || valueOptions[0].value;
+export default function useIndex(init, max) {
+  let [index, setIndex] = useState(init);
 
-    let currentIndex = valueOptions.findIndex((el) => el.value === value);
-    currentIndex = currentIndex < 0 ? 0 : currentIndex;
+  useEffect(() => {
+    setIndex(init);
+  }, [init]);
 
-    return currentIndex;
-  }, [currentValue]);
-
-  const max = useMemo(() => {
-    return valueOptions.length;
-  });
-
-  const setIndex = useCallback(
+  const setIndexExport = useCallback(
     (newIndex) => {
       if (typeof newIndex === 'function') {
-        const indexToSave = newIndex(index);
-        return indexToSave >= 0 && indexToSave <= max - 1 ? indexToSave : index;
+        setIndex((index) => {
+          const indexToSave = newIndex(index);
+          return indexToSave >= 0 && indexToSave <= max - 1
+            ? indexToSave
+            : index;
+        });
+        return;
       }
 
       if (newIndex >= 0 && newIndex <= max - 1) {
-        return newIndex;
+        setIndex(newIndex);
       }
     },
-    [max, index]
+    [max]
   );
 
-  return [index, setIndex];
+  return [index, setIndexExport];
 }
