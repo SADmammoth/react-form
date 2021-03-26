@@ -40,7 +40,7 @@ function CheckboxGroup(props) {
     const LabelTag = render.label || defaultLabel;
 
     return (
-      <div key={id + valueOption.value} className='form-group'>
+      <div key={id + valueOption.value} className={`${type}-group`}>
         <InputTag
           id={id + valueOption.value}
           name={name}

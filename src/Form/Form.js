@@ -1,17 +1,15 @@
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import React, { Fragment, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import validateForm from '../helpers/formHelpers/validateForm';
 import useOnSubmit from './helpers/handlers/useOnSubmit';
 import useNotifications from './helpers/useNotifications';
 import useFormReducer from './helpers/useFormReducer';
-import renderInputs from '../helpers/formHelpers/renderInputs';
+import mapGroups from '../helpers/formHelpers/mapGroups';
+import renderGroups from '../helpers/formHelpers/renderGroups';
+import _ from 'lodash';
+import useDiff from '../helpers/useDiff';
+import masks from '../helpers/maskHelpers/masks';
 
 const Form = (props) => {
   let {
@@ -21,16 +19,50 @@ const Form = (props) => {
     showNotifications,
     notify,
     render,
+    validationMaskDateFormat,
+    validationMaskDateTimeFormat,
+    dateFormatMask,
+    dateTimeFormatMask,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
-  let [state, dispatch, actions] = useFormReducer(notifications, render);
+  const mapGroupsCb = useCallback((inputs) => mapGroups(inputs, inputsProps), [
+    inputsProps,
+  ]);
+
+  const inputAdditionalFields = {
+    validationMaskDateFormat,
+    validationMaskDateTimeFormat,
+    dateFormatMask,
+    dateTimeFormatMask,
+    render,
+  };
+
+  let [state, dispatch, actions] = useFormReducer(
+    notifications,
+    inputAdditionalFields
+  );
+
+  useDiff(
+    ([valuesDiff, inputsPropsDiff]) => {
+      if (valuesDiff.value || inputsPropsDiff) {
+        onInputsUpdate({
+          ...mapGroupsCb(state.inputs),
+          $list: [...Object.values(state.inputs)],
+        });
+      }
+    },
+    [state.values, inputsProps]
+  );
 
   useEffect(() => {
     dispatch(actions.createValues(inputsProps));
+  }, [inputsProps]);
+
+  useEffect(() => {
     dispatch(actions.createInputs(inputsProps, render));
-  }, [JSON.stringify(inputsProps)]);
+  }, [state.values, inputsProps]);
 
   if (!notify) {
     showNotifications = 'hideAll';
@@ -46,6 +78,7 @@ const Form = (props) => {
   const { values, inputs } = state;
   const onSubmit = useOnSubmit(
     values,
+    inputsProps,
     () => validateForm(inputsProps, values, onValidationFail),
     onSubmitHandler,
     notifications
@@ -53,13 +86,7 @@ const Form = (props) => {
 
   const { method, action, className, style, submitButton, children } = props;
 
-  const defaultForm = (props) => <form {...props} />;
-  const FormTag = render.form || defaultForm;
-
-  const renderChildren = useMemo(() => {
-    onInputsUpdate(state.inputs);
-    return renderInputs(inputs);
-  }, [inputsProps, Object.keys(state.inputs || {})]);
+  const FormTag = render.form || 'form';
 
   return (
     <FormTag
@@ -69,8 +96,8 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}
     >
-      {children || renderChildren}
-      {!submitButton || React.cloneElement(submitButton, { type: 'submit' })}
+      {children || renderGroups(inputs, inputsProps, render.group)}
+      {React.cloneElement(submitButton, { type: 'submit' })}
     </FormTag>
   );
 };
@@ -85,7 +112,10 @@ Form.defaultProps = {
   showNotifications: 'all',
   children: null,
   onSubmit: false,
-  defaultValue: null,
+  validationMaskDateFormat: masks.date,
+  validationMaskDateTimeFormat: masks.dateTime,
+  dateFormatMask: masks.dateMask,
+  dateTimeFormatMask: masks.dateTimeMask,
 };
 
 Form.propTypes = {
@@ -97,7 +127,10 @@ Form.propTypes = {
     PropTypes.shape({
       ...Input.publicProps,
       validationMessage: PropTypes.string,
-      group: PropTypes.string,
+      group: PropTypes.shape({
+        title: PropTypes.string,
+        id: PropTypes.string,
+      }),
     })
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
@@ -107,17 +140,18 @@ Form.propTypes = {
   // Passed in order to get inputs components
   onInputsUpdate: PropTypes.func,
   showNotifications: PropTypes.oneOf(['all', 'errorsOnly', 'hideAll']),
-  // eslint-disable-next-line react/no-unused-prop-types
-  defaultValue: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object])
-  ),
   notify: PropTypes.func,
   render: PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    group: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     loader: PropTypes.func,
     input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   }),
+  validationMaskDateFormat: PropTypes.string,
+  validationMaskDateTimeFormat: PropTypes.string,
+  dateFormatMask: PropTypes.string,
+  dateTimeFormatMask: PropTypes.string,
 };
 
 export default Form;

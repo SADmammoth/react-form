@@ -5,7 +5,7 @@
     "placeholder": "Title",
     "required": true,
     "label": "Title",
-    "group": "group"
+    "group": { "id": "group", "title": "Group" }
   },
   {
     "type": "text",
@@ -14,15 +14,15 @@
     "required": true,
     "label": "Email",
     "validator": "email",
-    "group": "group"
+    "group": { "id": "group", "title": "Group" }
   },
   {
     "type": "text",
     "name": "date",
-    "placeholder": "MM-dd-yyyy hh:mm:ss",
+    "placeholder": "MM-dd-yyyy hh:mm",
     "required": true,
     "label": "Date",
-    "validator": "dateTimeInPast"
+    "validator": "dateTimeInPastByCharWithInvisibleMask"
   },
   {
     "type": "text",

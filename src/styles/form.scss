@@ -65,5 +65,20 @@
 }
 
 .group {
-  @include group;
+  .group-title {
+    padding: 0;
+    margin: 0;
+  }
+  padding: 5%;
+  width: 110%;
+  margin-left: -5%;
+  border: 1px solid $highlight;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
 }

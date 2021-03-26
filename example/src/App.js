@@ -13,7 +13,7 @@ const App = () => {
     loadFile('./inputs.json');
   }, []);
 
-  console.log(Form);
+  const [inputs, setInputs] = useState([]);
 
   return (
     <Fragment>
@@ -69,11 +69,13 @@ const App = () => {
             return <label data-custom='custom' {...props} />;
           },
         }}
-        notify={(...args) => console.log(args)}
-        onInputsUpdate={(data) => {
-          console.log(data);
+        onInputsUpdate={(inputs) => {
+          setInputs(inputs);
         }}
-      />
+        notify={(...args) => console.log(args)}
+      >
+        {inputs.$list}
+      </Form>
       <Form.MarkdownOutput
         id='markdownOutput'
         name='markdownOutput'

@@ -64,7 +64,7 @@ function Select(props) {
             className={`select-label ${currentLabel ? '' : 'disabled'}`}
             type='text'
             placeholder={placeholder || 'Choose option...'}
-            value={currentLabel}
+            value={currentLabel || ''}
             aria-disabled={!currentLabel ? 'disabled' : null}
             disabled
           />
@@ -97,7 +97,7 @@ function Select(props) {
 
 Select.defaultProps = {
   required: false,
-  value: null,
+  value: '',
   placeholder: null,
 };
 

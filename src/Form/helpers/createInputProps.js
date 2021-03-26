@@ -25,8 +25,16 @@ export default function createInputProps(
   updateValueCallback,
   valuesState,
   highlightInput,
-  render
+  additionalFields
 ) {
+  const {
+    validationMaskDateFormat,
+    validationMaskDateTimeFormat,
+    dateFormatMask,
+    dateTimeFormatMask,
+    render,
+  } = additionalFields;
+
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
       onChange(inputName, value);
@@ -43,9 +51,15 @@ export default function createInputProps(
     updateValueCallback(inputName, value);
   };
 
+  let validatorFromMap;
   if (typeof validator === 'string') {
-    const validatorFromMap = validatorsMap[validator] || {};
-    ({ byCharValidator, validator, validationMessage } = validatorFromMap);
+    validatorsMap.setFormats(
+      validationMaskDateFormat,
+      validationMaskDateTimeFormat,
+      dateFormatMask,
+      dateTimeFormatMask
+    );
+    validatorFromMap = validatorsMap[validator] || {};
   }
 
   return {
@@ -60,6 +74,7 @@ export default function createInputProps(
     maskType,
     validator,
     byCharValidator,
+    ...validatorFromMap,
     required,
     label,
     placeholder,

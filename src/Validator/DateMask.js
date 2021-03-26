@@ -248,6 +248,9 @@ const DateMask = {
             return `(.{${input.length - 1}})[0-9]`;
           }
           if (check === input.length - 1) {
+            if (maskU[check] === '\\' && maskU[check - 1] !== '\\') {
+              return DateMask.dateTimeRegexpString([maskU.slice(0, check + 2)]);
+            }
             return DateMask.dateTimeRegexpString([maskU.slice(0, check + 1)]);
           }
           if (input.length - check >= 2) {
