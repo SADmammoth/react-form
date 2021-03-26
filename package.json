@@ -56,8 +56,5 @@
     },
     "componentsDefaultDirectory": "components/{name}",
     "packageManager": "yarn"
-  },
-  "dependencies": {
-    "@bit/sadmammoth.components.bundlers.webpack-css-modules": "file:./components/bundlers/webpack-css-modules"
   }
 }
