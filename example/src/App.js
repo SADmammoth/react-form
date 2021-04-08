@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
 import Form from 'react-form';
+import 'react-form/dist/index.css';
 
 const App = () => {
   const [file, setFile] = useState([]);
@@ -12,11 +13,10 @@ const App = () => {
     loadFile('./inputs.json');
   }, []);
 
-  const [inputs, setInputs] = useState([]);
-  const NewForm = Form.default;
+  const [inputs, setInputs] = useState({});
   return (
     <Fragment>
-      <NewForm
+      <Form
         onSubmit={async (data) => {
           console.log(data);
         }}
@@ -55,11 +55,9 @@ const App = () => {
           ),
           Input: (props) => {
             if (props.type === 'textarea') {
-              return (
-                <textarea key={props.key} data-custom='custom' {...props} />
-              );
+              return <textarea data-custom='custom' {...props} />;
             } else {
-              return <input key={props.key} data-custom='custom' {...props} />;
+              return <input data-custom='custom' {...props} />;
             }
           },
           Label: (props) => {
@@ -67,12 +65,14 @@ const App = () => {
           },
         }}
         onInputsUpdate={(inputs) => {
+          console.log(inputs);
           setInputs(inputs);
         }}
         notify={(...args) => console.log(args)}
       >
         {inputs.$list}
-      </NewForm>
+      </Form>
+
       <Form.MarkdownOutput
         id='markdownOutput'
         name='markdownOutput'

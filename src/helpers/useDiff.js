@@ -3,10 +3,16 @@ import _ from 'lodash';
 import compareObjects from './compareObjects';
 
 export default function useDiff(callback, values) {
-  const [savedValues, setSavedValues] = useState(values);
+  const [savedValues, setSavedValues] = useState(null);
 
   useEffect(() => {
-    if (!compareObjects(savedValues, values)) {
+    if (!savedValues) {
+      callback(savedValues);
+      setSavedValues(values);
+      return;
+    }
+    console.log(savedValues, values);
+    if (!values.every((value, i) => compareObjects(savedValues[i], value))) {
       callback(difference(values, savedValues), values, savedValues);
       setSavedValues(values);
     }

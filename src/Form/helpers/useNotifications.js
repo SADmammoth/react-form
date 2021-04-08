@@ -12,8 +12,6 @@ export default function useNotifications(initConfig, notify) {
         }
       },
       error: (error) => {
-        console.trace();
-
         if (config.showNotifications !== 'hideAll') {
           notify(statuses.error, error);
         }

@@ -31,6 +31,14 @@ const Form = (props) => {
     inputsProps,
   ]);
 
+  useEffect(() => {
+    console.log('Form mount');
+  }, []);
+
+  useEffect(() => {
+    console.log('Form rerender', props);
+  });
+
   const inputAdditionalFields = {
     validationMaskDateFormat,
     validationMaskDateTimeFormat,
@@ -44,25 +52,31 @@ const Form = (props) => {
     inputAdditionalFields
   );
 
+  useDiff(() => {
+    dispatch(actions.createValues(inputsProps));
+  }, [inputsProps]);
+
   useDiff(
-    ([valuesDiff, inputsPropsDiff]) => {
-      if (valuesDiff.value || inputsPropsDiff) {
-        onInputsUpdate({
-          ...mapGroupsCb(state.inputs),
-          $list: [...Object.values(state.inputs)],
-        });
-      }
+    (diff, inputs) => {
+      dispatch(actions.createInputs(inputsProps, render));
+      console.log(inputs);
     },
     [state.values, inputsProps]
   );
 
-  useEffect(() => {
-    dispatch(actions.createValues(inputsProps));
-  }, [inputsProps]);
-
-  useEffect(() => {
-    dispatch(actions.createInputs(inputsProps, render));
-  }, [state.values, inputsProps]);
+  useDiff(
+    (diff, values) => {
+      if (values) {
+        const [inputs] = values;
+        console.log(inputs);
+        onInputsUpdate({
+          ...mapGroupsCb(inputs),
+          $list: [...Object.values(inputs || {})],
+        });
+      }
+    },
+    [state.inputs, state.values]
+  );
 
   if (!notify) {
     showNotifications = 'hideAll';

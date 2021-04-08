@@ -52,7 +52,7 @@
   ],
   "bit": {
     "env": {
-      "compiler": "sadmammoth.components/bundlers/webpack-css-modules@4.0.12"
+      "compiler": "bit.envs/compilers/react@2.0.0"
     },
     "componentsDefaultDirectory": "components/{name}",
     "packageManager": "yarn"

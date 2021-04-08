@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import checkCharsCount from '../../helpers/formHelpers/checkCharsCount';
 import compareObjects from '../../helpers/compareObjects';
@@ -21,31 +21,40 @@ function TextArea(props) {
     render,
   } = props;
 
-  let onFocus = (event) => {
-    switchPlaceholder(false);
-    event.target.value = value;
-  };
-
   let [placeholderOn, switchPlaceholder] = useState(false);
 
+  let onFocus = useCallback(
+    (event) => {
+      if (placeholderOn) {
+        switchPlaceholder(false);
+      }
+    },
+    [value, placeholderOn]
+  );
+
   useEffect(() => {
+    console.log('mount');
     if (!value && !placeholderOn) {
       switchPlaceholder(true);
     }
   }, []);
 
-  const onChangeHandler = (event) => {
-    if (checkCharsCount(event.target.value, minSymbols, maxSymbols)) {
-      onChange(event);
-    } else {
-      onError(event);
-    }
-    if (!value) {
-      switchPlaceholder(true);
-    }
-  };
+  const onChangeHandler = useCallback(
+    (event) => {
+      console.log('blur');
+      if (checkCharsCount(event.target.value, minSymbols, maxSymbols)) {
+        onChange(event);
+      } else {
+        onError(event);
+      }
+      if (!value) {
+        switchPlaceholder(true);
+      }
+    },
+    [value]
+  );
 
-  const InputTag = render.Input || 'input';
+  const InputTag = render.Input || 'textarea';
 
   return (
     <InputTag
@@ -59,9 +68,7 @@ function TextArea(props) {
       {...attributes}
       value={placeholderOn ? placeholder : value}
       onFocus={onFocus}
-    >
-      {description}
-    </InputTag>
+    />
   );
 }
 
