@@ -32,7 +32,7 @@ function HoldButton({
 
   return (
     <button
-      type="button"
+      type='button'
       name={name}
       className={className}
       onMouseDown={onMouseDown}
@@ -52,7 +52,7 @@ HoldButton.propTypes = {
   action: PropTypes.func.isRequired,
   className: PropTypes.string,
   name: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  children: PropTypes.any,
   firstInterval: PropTypes.number,
   holdInterval: PropTypes.number,
 };

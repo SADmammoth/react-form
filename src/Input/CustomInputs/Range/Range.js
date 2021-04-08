@@ -34,6 +34,11 @@ function Range(props) {
   );
 
   useEffect(() => {
+    setLeftIndex(from);
+    setRightIndex(to);
+  }, [from, to]);
+
+  useEffect(() => {
     onChange(
       createEvent(name, {
         ...valueOptions.slice(leftIndex, rightIndex + 1),

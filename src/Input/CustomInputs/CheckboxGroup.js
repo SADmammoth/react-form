@@ -120,9 +120,9 @@ CheckboxGroup.propTypes = {
   required: PropTypes.bool,
   attributes: PropTypes.objectOf(PropTypes.string),
   render: PropTypes.shape({
-    Label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Label: PropTypes.any,
     Loader: PropTypes.func,
-    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Input: PropTypes.any,
   }),
 };
 

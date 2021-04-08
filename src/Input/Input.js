@@ -38,6 +38,7 @@ function Input(props) {
     alwaysShowTip,
     editable,
     render,
+    markdownFeatures,
   } = props;
 
   const onChangeHandler = ({
@@ -117,6 +118,7 @@ function Input(props) {
           value={value}
           editable={editable}
           render={render}
+          markdownFeatures={markdownFeatures}
         />
       );
     }
@@ -279,7 +281,7 @@ Input.defaultProps = {
   validationMessage: '',
   render: {
     Loader: (size, centered) => 'Loading...',
-    input: (props) => <input {...props} />,
+    Input: (props) => <input {...props} />,
     Label: (props) => <label {...props} />,
   },
 };
@@ -314,6 +316,7 @@ Input.publicProps = {
   validationMessage: PropTypes.string,
   alwaysShowTip: PropTypes.bool,
   editable: PropTypes.bool,
+  markdownFeatures: PropTypes.object,
 };
 
 Input.propTypes = {
@@ -322,9 +325,9 @@ Input.propTypes = {
   invalid: PropTypes.bool.isRequired,
   highlightInput: PropTypes.func,
   render: PropTypes.shape({
-    input: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    Input: PropTypes.any,
     Loader: PropTypes.func,
-    Label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    Label: PropTypes.any,
   }),
   ...Input.publicProps,
 };

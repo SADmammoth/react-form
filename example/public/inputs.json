@@ -79,7 +79,6 @@
     "required": false,
     "label": "Spoilers"
   },
-  { "type": "select", "name": "list", "placeholder": "List", "required": true },
   {
     "type": "number",
     "name": "duration",

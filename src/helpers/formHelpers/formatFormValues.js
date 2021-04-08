@@ -15,5 +15,5 @@ export default function formatFormValues(stateValues, inputsProps) {
       values[`${name}_default`] = valueItem.defaultValue;
     }
   });
-  return mapGroups(values, inputsProps);
+  return mapGroups(values, inputsProps, false);
 }

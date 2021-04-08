@@ -13,7 +13,7 @@ function Group({ name, title, children }) {
 Group.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  children: PropTypes.any,
 };
 
 export default Group;

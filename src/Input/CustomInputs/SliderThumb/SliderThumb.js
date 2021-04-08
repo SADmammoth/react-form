@@ -63,8 +63,8 @@ function SliderThumb({
 
   return (
     <div
-      draggable="false"
-      className="form-slider-thumb"
+      draggable='false'
+      className='form-slider-thumb'
       onMouseDown={() => {
         setDragging(true);
       }}

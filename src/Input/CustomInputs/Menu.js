@@ -9,18 +9,18 @@ function Menu({ buttons, commonButtonMode }) {
     return (
       <li key={key}>
         {mode === 'trigger' ? (
-          <TriggerButton type="button" on={button.on} off={button.off}>
+          <TriggerButton type='button' on={button.on} off={button.off}>
             {content}
           </TriggerButton>
         ) : (
-          <Button type="button" onClick={button.onClick}>
+          <Button type='button' onClick={button.onClick}>
             {content}
           </Button>
         )}
       </li>
     );
   };
-  return <ul className="menu">{buttons.map(renderButton)}</ul>;
+  return <ul className='menu'>{buttons.map(renderButton)}</ul>;
 }
 
 Menu.propTypes = {
@@ -31,15 +31,13 @@ Menu.propTypes = {
         mode: PropTypes.oneOf(['trigger']).isRequired,
         on: PropTypes.func.isRequired,
         off: PropTypes.func.isRequired,
-        content: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
-          .isRequired,
+        content: PropTypes.any.isRequired,
       }),
       PropTypes.shape({
         key: PropTypes.string.isRequired,
         mode: PropTypes.oneOf(['button']).isRequired,
         onClick: PropTypes.func.isRequired,
-        content: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
-          .isRequired,
+        content: PropTypes.any.isRequired,
       }),
     ])
   ).isRequired,

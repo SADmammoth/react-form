@@ -1,8 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import compareObjects from '../../helpers/compareObjects';
 import Validator from '../../Validator/Validator';
 import getCounter from '../../helpers/formHelpers/getCounter';
+import HoldButton from '../../Components/HoldButton';
+import createEvent from '../../helpers/createEvent';
 
 function CustomNumber(props) {
   const {
@@ -17,30 +19,35 @@ function CustomNumber(props) {
     render,
   } = props;
 
-  let counter = useCallback(
+  const counter = useCallback(
     (value) => {
       return getCounter(value, min, max, step);
     },
     [min, max, step]
   );
 
+  const [value, setValue] = useState(currentValue);
   useEffect(() => {
-    if (currentValue !== counter(currentValue)) {
-      onChange({ target: { name, value: counter(currentValue) } });
-    }
-  }, [currentValue, onChange]);
+    setValue(currentValue);
+  }, [currentValue]);
 
-  let increment = async (event) => {
-    event.target.value = counter(parseFloat(currentValue) + step);
-    onChange(event);
+  const increment = () => {
+    setValue((value) => {
+      const newValue = counter(parseFloat(value) + step);
+      onChange(createEvent(name, newValue));
+      return newValue;
+    });
   };
 
-  let decrement = async () => {
-    event.target.value = counter(parseFloat(currentValue) - step);
-    onChange(event);
+  const decrement = () => {
+    setValue((value) => {
+      const newValue = counter(parseFloat(value) + step);
+      onChange(createEvent(name, newValue));
+      return newValue;
+    });
   };
 
-  let onInputHandler = (event) => {
+  const onInputHandler = (event) => {
     if (event.target.value === '') {
       return;
     }
@@ -50,9 +57,8 @@ function CustomNumber(props) {
     }
   };
 
-  let onChangeHandler = (event) => {
-    event.target.value = counter(parseFloat(event.target.value));
-    onChange(event);
+  const onChangeHandler = (event) => {
+    onChange(createEvent(name, counter(parseFloat(event.target.value))));
   };
 
   const InputTag = render.input || 'input';
@@ -65,24 +71,14 @@ function CustomNumber(props) {
         name={name}
         onChange={onInputHandler}
         onBlur={onChangeHandler}
-        value={currentValue}
+        value={value}
       ></InputTag>
-      <button
-        type='button'
-        name={name}
-        className='form-number-plus'
-        onClick={increment}
-      >
+      <HoldButton name={name} className='form-number-plus' action={increment}>
         &#x25b4;
-      </button>
-      <button
-        type='button'
-        name={name}
-        className='form-number-minus'
-        onClick={decrement}
-      >
+      </HoldButton>
+      <HoldButton name={name} className='form-number-minus' action={decrement}>
         &#x25be;
-      </button>
+      </HoldButton>
     </div>
   );
 }
@@ -111,7 +107,7 @@ CustomNumber.propTypes = {
   onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func,
   render: PropTypes.shape({
-    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Input: PropTypes.any,
   }),
 };
 

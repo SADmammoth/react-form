@@ -138,18 +138,18 @@ Form.propTypes = {
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   submitButton: PropTypes.element,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  children: PropTypes.any,
 
   // Passed in order to get inputs components
   onInputsUpdate: PropTypes.func,
   showNotifications: PropTypes.oneOf(['all', 'errorsOnly', 'hideAll']),
   notify: PropTypes.func,
   render: PropTypes.shape({
-    Group: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    Label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Group: PropTypes.any,
+    Label: PropTypes.any,
     Loader: PropTypes.func,
-    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    Form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Input: PropTypes.any,
+    Form: PropTypes.any,
   }),
   validationMaskDateFormat: PropTypes.string,
   validationMaskDateTimeFormat: PropTypes.string,

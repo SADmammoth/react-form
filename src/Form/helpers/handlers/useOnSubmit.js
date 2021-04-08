@@ -24,6 +24,7 @@ export default function useOnSubmit(
     }
 
     if (validateForm()) {
+      console.log(handler, values);
       if (handler) {
         handler(formatFormValues(values, inputsProps))
           .then(onResponseReceived)

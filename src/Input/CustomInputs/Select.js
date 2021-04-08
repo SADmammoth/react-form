@@ -116,8 +116,8 @@ Select.propTypes = {
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
   render: PropTypes.shape({
-    Label: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Label: PropTypes.any,
+    Input: PropTypes.any,
     Loader: PropTypes.func,
   }),
 };

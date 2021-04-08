@@ -33,6 +33,10 @@ function TextArea(props) {
   );
 
   useEffect(() => {
+    if (value) switchPlaceholder(false);
+  }, [value]);
+
+  useEffect(() => {
     if (!value && !placeholderOn) {
       switchPlaceholder(true);
     }
@@ -94,7 +98,7 @@ TextArea.propTypes = {
   maxSymbols: PropTypes.number,
   onError: PropTypes.func.isRequired,
   render: PropTypes.shape({
-    Input: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    Input: PropTypes.any,
   }),
 };
 

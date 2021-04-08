@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Input from '../../Input/Input';
 
-export default function mapGroups(inputs, inputsProps) {
+export default function mapGroups(inputs, inputsProps, render = true) {
   const inputsGroups = {};
   if (!inputs || _.isEmpty(inputs)) return inputs;
   inputsProps.forEach((input) => {
@@ -10,15 +10,25 @@ export default function mapGroups(inputs, inputsProps) {
       if (!inputsGroups[input.group.id]) {
         inputsGroups[input.group.id] = {
           $title: input.group.title,
-          [input.name]: <Input {...inputs[input.name]} />,
+          [input.name]: render ? (
+            <Input {...inputs[input.name]} />
+          ) : (
+            inputs[input.name]
+          ),
         };
       } else {
-        inputsGroups[input.group.id][input.name] = (
+        inputsGroups[input.group.id][input.name] = render ? (
           <Input {...inputs[input.name]} />
+        ) : (
+          inputs[input.name]
         );
       }
     } else {
-      inputsGroups[input.name] = <Input {...inputs[input.name]} />;
+      inputsGroups[input.name] = render ? (
+        <Input {...inputs[input.name]} />
+      ) : (
+        inputs[input.name]
+      );
     }
   });
 
