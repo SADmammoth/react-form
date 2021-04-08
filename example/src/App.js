@@ -47,8 +47,9 @@ const App = () => {
             name: 'dateTime',
             label: 'Date and time',
             placeholder: 'MM-dd-yyyy hh:mm',
-            validator: 'dateTimeByChar',
+            validator: 'dateTimeByCharWithInvisibleMask',
           },
+          ...file,
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
@@ -64,11 +65,12 @@ const App = () => {
           },
         }}
         onInputsUpdate={(inputs) => {
-          console.log(inputs);
           setInputs(inputs);
         }}
         notify={(...args) => console.log(args)}
-      />
+      >
+        {inputs.$list}
+      </Form>
 
       <Form.MarkdownOutput
         id='markdownOutput'
