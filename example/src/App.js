@@ -1,6 +1,8 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
 import Form from 'react-form';
+import Input from './Input';
+
 import 'react-form/dist/index.css';
 
 const App = () => {
@@ -22,6 +24,7 @@ const App = () => {
         }}
         inputs={[
           {
+            id: 'shortText',
             type: 'text',
             name: 'shortText',
             placeholder: 'Short text (5-50 chars)',
@@ -29,6 +32,7 @@ const App = () => {
             required: true,
           },
           {
+            id: 'fullText',
             type: 'textarea',
             name: 'fullText',
             placeholder: 'Full text',
@@ -38,6 +42,7 @@ const App = () => {
             required: true,
           },
           {
+            id: 'dateTime',
             type: 'text',
             name: 'dateTime',
             label: 'Date and time',
@@ -53,13 +58,7 @@ const App = () => {
               <span>Loading...</span>
             </>
           ),
-          Input: (props) => {
-            if (props.type === 'textarea') {
-              return <textarea data-custom='custom' {...props} />;
-            } else {
-              return <input data-custom='custom' {...props} />;
-            }
-          },
+          Input,
           Label: (props) => {
             return <label data-custom='custom' {...props} />;
           },
@@ -69,9 +68,7 @@ const App = () => {
           setInputs(inputs);
         }}
         notify={(...args) => console.log(args)}
-      >
-        {inputs.$list}
-      </Form>
+      />
 
       <Form.MarkdownOutput
         id='markdownOutput'

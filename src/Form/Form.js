@@ -31,14 +31,6 @@ const Form = (props) => {
     inputsProps,
   ]);
 
-  useEffect(() => {
-    console.log('Form mount');
-  }, []);
-
-  useEffect(() => {
-    console.log('Form rerender', props);
-  });
-
   const inputAdditionalFields = {
     validationMaskDateFormat,
     validationMaskDateTimeFormat,
@@ -56,19 +48,14 @@ const Form = (props) => {
     dispatch(actions.createValues(inputsProps));
   }, [inputsProps]);
 
-  useDiff(
-    (diff, inputs) => {
-      dispatch(actions.createInputs(inputsProps, render));
-      console.log(inputs);
-    },
-    [state.values, inputsProps]
-  );
+  useDiff(() => {
+    dispatch(actions.createInputs(inputsProps, render));
+  }, [state.values, inputsProps]);
 
   useDiff(
     (diff, values) => {
       if (values) {
         const [inputs] = values;
-        console.log(inputs);
         onInputsUpdate({
           ...mapGroupsCb(inputs),
           $list: [...Object.values(inputs || {})].map((props) => (

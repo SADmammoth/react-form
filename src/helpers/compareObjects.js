@@ -1,7 +1,6 @@
 import isReactElement from './isReactElement';
 
 export default function compareObjects(leftObject, rightObject, maxDepth = 3) {
-  console.log(maxDepth);
   if (leftObject === rightObject || !maxDepth) {
     return true;
   }

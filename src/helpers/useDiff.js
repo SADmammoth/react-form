@@ -11,7 +11,7 @@ export default function useDiff(callback, values) {
       setSavedValues(values);
       return;
     }
-    console.log(savedValues, values);
+
     if (!values.every((value, i) => compareObjects(savedValues[i], value))) {
       callback(difference(values, savedValues), values, savedValues);
       setSavedValues(values);

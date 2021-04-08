@@ -33,7 +33,6 @@ function TextArea(props) {
   );
 
   useEffect(() => {
-    console.log('mount');
     if (!value && !placeholderOn) {
       switchPlaceholder(true);
     }
@@ -41,7 +40,6 @@ function TextArea(props) {
 
   const onChangeHandler = useCallback(
     (event) => {
-      console.log('blur');
       if (checkCharsCount(event.target.value, minSymbols, maxSymbols)) {
         onChange(event);
       } else {
