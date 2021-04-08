@@ -1,3 +1,6 @@
+import React from 'react';
+import Input from '../../Input/Input';
+
 export default function mapGroups(inputs, inputsProps) {
   const inputsGroups = {};
   if (!inputs) return inputs;
@@ -6,13 +9,15 @@ export default function mapGroups(inputs, inputsProps) {
       if (!inputsGroups[input.group.id]) {
         inputsGroups[input.group.id] = {
           $title: input.group.title,
-          [input.name]: inputs[input.name],
+          [input.name]: <Input {...inputs[input.name]} />,
         };
       } else {
-        inputsGroups[input.group.id][input.name] = inputs[input.name];
+        inputsGroups[input.group.id][input.name] = (
+          <Input {...inputs[input.name]} />
+        );
       }
     } else {
-      inputsGroups[input.name] = inputs[input.name];
+      inputsGroups[input.name] = <Input {...inputs[input.name]} />;
     }
   });
 

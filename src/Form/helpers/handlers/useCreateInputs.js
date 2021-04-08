@@ -25,7 +25,7 @@ export default function useCreateInputs(
         notifications,
         inputAdditionalFields
       );
-      inputsData[props.name] = <Input {...inputProps} />;
+      inputsData[props.name] = inputProps;
     });
 
     return inputsData;

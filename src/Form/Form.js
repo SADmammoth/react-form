@@ -71,7 +71,9 @@ const Form = (props) => {
         console.log(inputs);
         onInputsUpdate({
           ...mapGroupsCb(inputs),
-          $list: [...Object.values(inputs || {})],
+          $list: [...Object.values(inputs || {})].map((props) => (
+            <Input {...props} />
+          )),
         });
       }
     },

@@ -10,8 +10,7 @@ export default function useUpdateInput() {
     );
 
     const props = { value: newValue, ...foundProps };
-    const newInput = <Input {...props} />;
-    const newInputsState = { ...inputsState, [inputName]: newInput };
+    const newInputsState = { ...inputsState, [inputName]: props };
     return newInputsState;
   };
 }
