@@ -1,4 +1,5 @@
 import regexpEscape from './regexpEscape';
+import toArray from '../helpers/toArray';
 
 const months = [
   'January',
@@ -237,7 +238,7 @@ const DateMask = {
       `(^${masks
         .map((mask) => {
           const check =
-            [...mask.slice(input.length - 1)].findIndex((el) =>
+            toArray(mask.slice(input.length - 1)).findIndex((el) =>
               /[^MdymshHa]/.test(el)
             ) +
             input.length -

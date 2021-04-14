@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import calcLength from './helpers/indexHelpers/calcLength';
+import toArray from '../../../helpers/toArray';
 
 let actionTypes = {
   input: 'input',
@@ -72,7 +73,7 @@ export default function useCaret(
 }
 
 function input(text, index, data, getIndex, onTextChange) {
-  let textArray = [...text];
+  let textArray = toArray(text);
   let realIndex = getIndex(text, index);
   textArray.splice(realIndex, 0, data);
   let newText =
@@ -90,7 +91,7 @@ function input(text, index, data, getIndex, onTextChange) {
 }
 
 function newLine(text, index, data, getIndex, onTextChange) {
-  let textArray = [...text];
+  let textArray = toArray(text);
   textArray.splice(getIndex(text, index) + 1, 0, data);
   let newText = onTextChange(textArray.join(''));
 
@@ -101,7 +102,7 @@ function newLine(text, index, data, getIndex, onTextChange) {
 }
 
 function wrap(text, index, data, getIndex, onTextChange) {
-  let textArray = [...text];
+  let textArray = toArray(text);
   let from = getIndex(text, data.from);
   let to = getIndex(text, data.to);
   textArray.splice(
@@ -120,7 +121,7 @@ function backspace(text, index, data, getIndex, onTextChange) {
   if (index <= 0) {
     return { text, index };
   }
-  let textArray = [...text];
+  let textArray = toArray(text);
   textArray.splice(getIndex(text, index - 1), 1);
 
   return {
@@ -133,7 +134,7 @@ function deleteAction(text, index, data, getIndex, onTextChange) {
   if (index > text.length - 1) {
     return { text, index };
   }
-  let textArray = [...text];
+  let textArray = toArray(text);
   textArray.splice(getIndex(text, index), 1);
 
   return {

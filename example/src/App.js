@@ -42,12 +42,13 @@ const App = () => {
             required: true,
           },
           {
-            id: 'dateTime',
+            id: 'time',
             type: 'text',
-            name: 'dateTime',
+            name: 'time',
             label: 'Date and time',
-            placeholder: 'MM-dd-yyyy hh:mm',
+            placeholder: 'dd-MM-yyyy hh:mm',
             validator: 'dateTimeByCharWithInvisibleMask',
+            value: undefined,
           },
           {
             type: 'slider',
