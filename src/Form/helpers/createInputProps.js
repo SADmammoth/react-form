@@ -22,6 +22,7 @@ export default function createInputProps(
     alwaysShowTip,
     editable,
     markdownFeatures,
+    allowScroll,
   },
   updateValueCallback,
   valuesState,
@@ -91,5 +92,6 @@ export default function createInputProps(
     editable,
     render,
     markdownFeatures,
+    allowScroll,
   };
 }

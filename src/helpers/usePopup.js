@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
 
-export default function usePopup(shownDefault = false) {
+export default function usePopup(shownDefault = false, except) {
   let [shown, setShow] = useState(shownDefault);
 
   useEffect(() => {
-    function eventListener() {
-      setShow(false);
-      document.removeEventListener('click', eventListener);
+    function eventListener(event) {
+      if (!except.includes(event.target)) {
+        setShow(false);
+        document.removeEventListener('click', eventListener);
+      }
     }
 
     if (shown) {
-      setShow(true);
+      document.removeEventListener('click', eventListener);
       document.addEventListener('click', eventListener);
     } else {
-      setShow(false);
+      document.removeEventListener('click', eventListener);
     }
   }, [shown]);
 

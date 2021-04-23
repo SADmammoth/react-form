@@ -164,6 +164,11 @@
     box-sizing: border-box;
 
     z-index: 999999;
+
+    &.scroll {
+      max-height: 100px;
+      overflow-y: auto;
+    }
   }
 
   .option {
@@ -173,6 +178,23 @@
 
     & :nth-child(n + 2) {
       margin-left: 5px;
+    }
+  }
+
+  .search-input {
+    z-index: 999999;
+  }
+
+  .search-option {
+    & :nth-child(n + 2) {
+      margin-left: 0;
+    }
+
+    .text {
+      margin: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 

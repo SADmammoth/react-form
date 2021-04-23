@@ -10,6 +10,7 @@ import CustomNumber from './CustomInputs/CustomNumber';
 import Slider from './CustomInputs/Slider';
 import Range from './CustomInputs/Range';
 import MarkdownText from './CustomInputs/MarkdownText';
+import Search from './CustomInputs/Search';
 
 function Input(props) {
   const {
@@ -39,6 +40,7 @@ function Input(props) {
     editable,
     render,
     markdownFeatures,
+    allowScroll,
   } = props;
 
   const onChangeHandler = ({
@@ -235,6 +237,28 @@ function Input(props) {
       );
     }
 
+    if (type === 'search') {
+      return LabeledInput(
+        render,
+        label,
+        id,
+        <Search
+          id={id}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+          allowScroll={allowScroll}
+        />
+      );
+    }
+
     const InputTag = render.input || 'input';
 
     return LabeledInput(
@@ -317,6 +341,7 @@ Input.publicProps = {
   alwaysShowTip: PropTypes.bool,
   editable: PropTypes.bool,
   markdownFeatures: PropTypes.object,
+  allowScroll: PropTypes.bool,
 };
 
 Input.propTypes = {
@@ -328,6 +353,7 @@ Input.propTypes = {
     Input: PropTypes.any,
     Loader: PropTypes.func,
     Label: PropTypes.any,
+    Option: PropTypes.any,
   }),
   ...Input.publicProps,
 };
