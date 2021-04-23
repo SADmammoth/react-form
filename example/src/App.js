@@ -33,6 +33,14 @@ const App = () => {
             allowScroll: true,
             value: 'AX',
           },
+          {
+            type: 'select',
+            name: 'select',
+            id: 'select',
+            valueOptions: countries,
+            allowScroll: true,
+            value: 'AX',
+          },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
