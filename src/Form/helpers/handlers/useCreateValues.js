@@ -5,7 +5,10 @@ export default function useCreateValues() {
   return (inputsProps, valuesState) => {
     const valuesData = {};
     inputsProps.forEach((input) => {
-      let convertersFromMap = input.converters;
+      let convertersFromMap = input.converters || {
+        in: (a) => a,
+        out: (b) => b,
+      };
 
       if (typeof input.converters === 'string') {
         convertersFromMap = convertersMap[input.converters];

@@ -32,6 +32,12 @@ const App = () => {
             validator: 'dateTimeByCharWithVisibleMask',
             converters: 'dateTime',
           },
+          {
+            type: 'text',
+            name: 'date',
+            id: 'date',
+            validator: 'dateTimeByCharWithVisibleMask',
+          },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
