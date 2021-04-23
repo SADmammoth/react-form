@@ -1,4 +1,5 @@
 import validatorsMap from '../../Validator/validatorsMap';
+import convertersMap from '../../Validator/convertersMap';
 
 export default function createInputProps(
   {
@@ -23,19 +24,14 @@ export default function createInputProps(
     editable,
     markdownFeatures,
     allowScroll,
+    converters,
   },
   updateValueCallback,
   valuesState,
   highlightInput,
   additionalFields
 ) {
-  const {
-    validationMaskDateFormat,
-    validationMaskDateTimeFormat,
-    dateFormatMask,
-    dateTimeFormatMask,
-    render,
-  } = additionalFields;
+  const { render } = additionalFields;
 
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
@@ -55,13 +51,13 @@ export default function createInputProps(
 
   let validatorFromMap;
   if (typeof validator === 'string') {
-    validatorsMap.setFormats(
-      validationMaskDateFormat,
-      validationMaskDateTimeFormat,
-      dateFormatMask,
-      dateTimeFormatMask
-    );
     validatorFromMap = validatorsMap[validator] || {};
+  }
+
+  let convertersFromMap;
+
+  if (typeof converters === 'string') {
+    convertersFromMap = convertersMap[converters];
   }
 
   return {
@@ -93,5 +89,6 @@ export default function createInputProps(
     render,
     markdownFeatures,
     allowScroll,
+    converters: convertersFromMap || converters,
   };
 }

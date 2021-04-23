@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
-import Form from 'react-form';
+import Form, { Validator, DateMaskConverters } from 'react-form';
 import Input from './Input';
 import Option from './Option';
 
@@ -26,20 +26,11 @@ const App = () => {
         }}
         inputs={[
           {
-            type: 'search',
-            name: 'search',
-            id: 'search',
-            valueOptions: countries,
-            allowScroll: true,
-            value: 'AX',
-          },
-          {
-            type: 'select',
-            name: 'select',
-            id: 'select',
-            valueOptions: countries,
-            allowScroll: true,
-            value: 'AX',
+            type: 'text',
+            name: 'date',
+            id: 'date',
+            validator: 'dateTimeByCharWithVisibleMask',
+            converters: 'dateTime',
           },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}

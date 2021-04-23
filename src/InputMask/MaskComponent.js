@@ -56,6 +56,9 @@ function MaskComponent(input, maskArray) {
       Validator.maskByChar(
         getValueFromMask(event.target.value) + event.key,
         maskArray.join('')
+      ) &&
+      input.props.byCharValidator(
+        getValueFromMask(event.target.value) + event.key
       )
     ) {
       event.target.value = addMask(

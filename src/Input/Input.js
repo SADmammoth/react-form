@@ -259,7 +259,7 @@ function Input(props) {
       );
     }
 
-    const InputTag = render.input || 'input';
+    const InputTag = render.Input || 'input';
 
     return LabeledInput(
       render,
@@ -279,6 +279,8 @@ function Input(props) {
           onKeyPress={onKeyPressHandler}
           onChange={onInputHandler}
           onBlur={onChangeHandler}
+          validator={validator}
+          byCharValidator={byCharValidator}
           {...attributes}
           value={value}
         />
@@ -289,10 +291,7 @@ function Input(props) {
   return renderInput();
 }
 
-Input.defaultProps = {
-  onInput: () => {},
-  onChange: () => {},
-  required: false,
+Input.publicDefaults = {
   label: false,
   placeholder: null,
   attributes: {},
@@ -301,13 +300,25 @@ Input.defaultProps = {
   validator: () => true,
   minSymbols: 0,
   maxSymbols: 1000,
-  highlightInput: () => {},
   validationMessage: '',
+  allowScroll: false,
+  converters: {
+    in: (inOut) => inOut,
+    out: (outIn) => outIn,
+  },
+};
+
+Input.defaultProps = {
+  onInput: () => {},
+  onChange: () => {},
+  required: false,
+  highlightInput: () => {},
   render: {
     Loader: (size, centered) => 'Loading...',
     Input: (props) => <input {...props} />,
     Label: (props) => <label {...props} />,
   },
+  ...Input.publicDefaults,
 };
 
 Input.publicProps = {
@@ -342,6 +353,10 @@ Input.publicProps = {
   editable: PropTypes.bool,
   markdownFeatures: PropTypes.object,
   allowScroll: PropTypes.bool,
+  converters: {
+    in: PropTypes.func,
+    out: PropTypes.func,
+  },
 };
 
 Input.propTypes = {

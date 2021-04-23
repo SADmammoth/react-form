@@ -55,6 +55,10 @@ const validatorsMap = {
     globals.dateTimeFormatMask = dateTimeFormatMask;
   },
 
+  getFormats: () => {
+    return { ...globals };
+  },
+
   dateTime: {
     validator: (input) => DateMask.dateTime(input, [globals.dateTimeFormat]),
     validationMessage: DateMask.dateTimeMessage,
@@ -132,34 +136,32 @@ const validatorsMap = {
   },
   dateInPastByCharWithInvisibleMask: {
     byCharValidator: (input) =>
-      DateMask.dateByChar(input, [globals.dateTimeFormat]),
-    validator: (input) =>
-      DateMask.dateTimeInPast(input, globals.dateTimeFormat),
-    validationMessage: DateMask.dateTimeInPastMessage,
+      DateMask.dateByChar(input, [globals.dateFormat]),
+    validator: (input) => DateMask.dateTimeInPast(input, globals.dateFormat),
+    validationMessage: DateMask.dateInPastMessage,
     mask: globals.dateFormatMask,
     maskType: 'invisible',
   },
   dateInPastByCharWithVisibleMask: {
     byCharValidator: (input) =>
-      DateMask.dateByChar(input, [globals.dateTimeFormat]),
-    validator: (input) =>
-      DateMask.dateTimeInPast(input, globals.dateTimeFormat),
+      DateMask.dateByChar(input, [globals.dateFormat]),
+    validator: (input) => DateMask.dateTimeInPast(input, globals.dateFormat),
     validationMessage: DateMask.dateTimeInPastMessage,
     mask: globals.dateFormatMask,
     maskType: 'visible',
   },
-  dateTimeByCharWithInvisibleMask: {
+  dateByCharWithInvisibleMask: {
     byCharValidator: (input) =>
-      DateMask.dateByChar(input, [globals.dateTimeFormat]),
-    validator: (input) => DateMask.dateTime(input, [globals.dateTimeFormat]),
+      DateMask.dateByChar(input, [globals.dateFormat]),
+    validator: (input) => DateMask.dateTime(input, [globals.dateFormat]),
     validationMessage: DateMask.dateTimeMessage,
     mask: globals.dateFormatMask,
     maskType: 'invisible',
   },
-  dateTimeByCharWithVisibleMask: {
+  dateByCharWithVisibleMask: {
     byCharValidator: (input) =>
-      DateMask.dateByChar(input, [globals.dateTimeFormat]),
-    validator: (input) => DateMask.dateTime(input, [globals.dateTimeFormat]),
+      DateMask.dateByChar(input, [globals.dateFormat]),
+    validator: (input) => DateMask.dateTime(input, [globals.dateFormat]),
     validationMessage: DateMask.dateTimeMessage,
     mask: globals.dateFormatMask,
     maskType: 'visible',

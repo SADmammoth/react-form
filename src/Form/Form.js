@@ -10,6 +10,7 @@ import renderGroups from '../helpers/formHelpers/renderGroups';
 import _ from 'lodash';
 import useDiff from '../helpers/useDiff';
 import masks from '../helpers/maskHelpers/masks';
+import validatorsMap from '../Validator/validatorsMap';
 
 const Form = (props) => {
   let {
@@ -32,10 +33,6 @@ const Form = (props) => {
   ]);
 
   const inputAdditionalFields = {
-    validationMaskDateFormat,
-    validationMaskDateTimeFormat,
-    dateFormatMask,
-    dateTimeFormatMask,
     render,
   };
 
@@ -77,6 +74,20 @@ const Form = (props) => {
       notifications.error(input.validationMessage);
     }
   }
+
+  useEffect(() => {
+    validatorsMap.setFormats(
+      validationMaskDateFormat,
+      validationMaskDateTimeFormat,
+      dateFormatMask,
+      dateTimeFormatMask
+    );
+  }, [
+    validationMaskDateFormat,
+    validationMaskDateTimeFormat,
+    dateFormatMask,
+    dateTimeFormatMask,
+  ]);
 
   const { values, inputs } = state;
   const onSubmit = useOnSubmit(
