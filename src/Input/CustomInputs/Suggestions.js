@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import DefaultOption from './Search/Option';
 import usePopup from '../../helpers/usePopup';
 import PropTypes from 'prop-types';
@@ -26,10 +26,10 @@ function Suggestions({
   ]);
 
   const numberHiddenOption = allowScroll ||
-    !filteredValueOptions ||
-    filteredValueOptions.length <= showNumber || (
+    !valueOptions ||
+    valueOptions.length <= showNumber || (
       <div className='option disabled' value=''>
-        {filteredValueOptions.length - 10} more
+        {valueOptions.length - 10} more
       </div>
     );
 
@@ -57,6 +57,10 @@ function Suggestions({
     );
   }
 
+  useEffect(() => {
+    console.log(valueOptions);
+  }, [valueOptions]);
+  console.log(valueOptions);
   return (
     <div
       className={`form-select${!currentValue ? ' placeholdered' : ''}`}
@@ -74,6 +78,7 @@ function Suggestions({
         setCurrentLabel={setCurrentLabel}
         render={render}
         onBlur={onBlur}
+        listShow={listShown}
       />
 
       {listShown && (

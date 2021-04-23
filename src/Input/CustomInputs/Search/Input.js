@@ -4,6 +4,7 @@ export default function Input({
   placeholder,
   currentLabel,
   preventShowPopup,
+  listShown,
   showList,
   setCurrentLabel,
   render,

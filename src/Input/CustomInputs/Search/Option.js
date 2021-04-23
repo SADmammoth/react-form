@@ -5,7 +5,8 @@ function Option({ active, label, value, groups, onClick }) {
   let toShow = label;
   if (groups) {
     toShow = groups.map((group, i) => {
-      return !(i % 2) ? <b>{group}</b> : group;
+      if (!group) return group;
+      return i % 2 ? <pre className='bold'>{group}</pre> : <pre>{group}</pre>;
     });
   }
 

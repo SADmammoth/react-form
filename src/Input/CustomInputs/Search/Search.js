@@ -25,6 +25,7 @@ function Search({
   let [currentLabel, setCurrentLabel] = useState(null);
 
   const filteredValueOptions = useMemo(() => {
+    console.log(currentLabel);
     return FilterOptions(currentLabel, valueOptions);
   }, [currentLabel, valueOptions]);
 
@@ -58,7 +59,6 @@ function Search({
       showNumber={showNumber}
       Input={Input}
       name={name}
-      valueOptions={valueOptions}
       setCurrentLabel={setCurrentLabel}
       onChange={onChange}
       currentValue={currentValue}

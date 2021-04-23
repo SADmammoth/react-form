@@ -133,6 +133,14 @@
   }
 }
 
+.bold {
+  font-weight: bold;
+}
+
+pre {
+  margin: 0;
+}
+
 @mixin select {
   position: relative;
   .select-header {
@@ -179,6 +187,11 @@
     & :nth-child(n + 2) {
       margin-left: 5px;
     }
+
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .input-wrapper {
@@ -189,11 +202,6 @@
     & :nth-child(n + 2) {
       margin-left: 0;
     }
-
-    margin: 0;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
   }
 
   .option.disabled {
