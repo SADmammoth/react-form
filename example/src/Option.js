@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function Option({ active, label, value, groups, onClick }) {
+export default function Option({ active, label, value, groups, onClick }) {
   let toShow = label;
   if (groups) {
     toShow = groups.map((group, i) => {
@@ -15,10 +14,7 @@ function Option({ active, label, value, groups, onClick }) {
       onClick={onClick}
     >
       {toShow}
+      <div style={{ margin: '0 5px', background: 'lightgray' }}>{value}</div>
     </pre>
   );
 }
-
-Option.propTypes = {};
-
-export default Option;

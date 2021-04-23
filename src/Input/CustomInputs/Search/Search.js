@@ -35,17 +35,16 @@ function Search({
       isActive = false;
     }
     return (
-      <div
-        className={`option search-option${isActive ? ' active' : ''}`}
+      <Option
         key={name + valueOption.value}
         onClick={() => {
           showList(false);
           setCurrentLabel(valueOption.label);
           onChange({ target: { name, value: valueOption.value } });
         }}
-      >
-        <Option {...valueOption} />
-      </div>
+        active={isActive}
+        {...valueOption}
+      />
     );
   }
 
@@ -61,7 +60,7 @@ function Search({
     setCurrentLabel(
       filteredValueOptions?.find(({ value }) => value === currentValue)?.label
     );
-  }, [currentValue]);
+  }, [currentValue, valueOptions]);
 
   const showNumber = 10;
 

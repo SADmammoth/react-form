@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 
 import Form from 'react-form';
 import Input from './Input';
+import Option from './Option';
 
 import 'react-form/dist/index.css';
 import countries from './countries';
@@ -30,6 +31,7 @@ const App = () => {
             id: 'search',
             valueOptions: countries,
             allowScroll: true,
+            value: 'AX',
           },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
@@ -44,6 +46,7 @@ const App = () => {
           Label: (props) => {
             return <label data-custom='custom' {...props} />;
           },
+          Option,
         }}
         onInputsUpdate={(inputs) => {
           setInputs(inputs);

@@ -190,12 +190,10 @@
       margin-left: 0;
     }
 
-    .text {
-      margin: 0;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .option.disabled {
