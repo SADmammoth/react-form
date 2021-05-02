@@ -1,17 +1,13 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-
+import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'lodash';
 
-import Input from './Input';
-
-import createEvent from '../../../helpers/createEvent';
 import useValueOptions from '../../../helpers/getValueOptions';
-import PropTypes from 'prop-types';
-import compareObjects from '../../../helpers/compareObjects';
-import FilterOptions from './FilterOptions';
+import FilterOptions from '../MultipleSearch/FilterOptions';
 import Suggestions from '../Suggestions';
+import Input from '../MultipleSearch/Input';
+import createEvent from '../../../helpers/createEvent';
 
-function Search({
+function MultipleSearch({
   type,
   name,
   onChange,
@@ -38,31 +34,38 @@ function Search({
 
   const showNumber = 10;
 
-  const onBlur = () => {
-    if (currentLabel && filteredValueOptions && filteredValueOptions.length) {
-      setCurrentLabel(filteredValueOptions[0].label);
-      onChange(createEvent(name, filteredValueOptions[0].value));
+  const onBlur = () => {};
+
+  const onChangeHandler = ({ target: { name, value } }) => {
+    console.log(value);
+    const label = valueOptions.find((candidate) => {
+      return candidate === valueOptions.find(({ label }) => label === value);
+    });
+    if (label) {
+      value = label.value;
     }
-    if (!currentLabel && currentValue && required) {
-      setCurrentLabel(
-        filteredValueOptions.find(({ value }) => _.isEqual(value, currentValue))
-          .label
+    console.log(value);
+
+    if (_.includes(currentValue, value)) {
+      return onChange(
+        createEvent(
+          name,
+          currentValue.filter((candidate) => !_.isEqual(candidate, value))
+        )
       );
     }
-    if (!currentLabel && currentValue) {
-      setCurrentLabel('');
-      onChange(createEvent(name, ''));
-    }
+    onChange(createEvent(name, [...currentValue, value]));
   };
 
   return (
     <Suggestions
       filteredValueOptions={filteredValueOptions}
+      valueOptions={valueOptions}
       showNumber={showNumber}
       Input={Input}
       name={name}
       setCurrentLabel={setCurrentLabel}
-      onChange={onChange}
+      onChange={onChangeHandler}
       currentValue={currentValue}
       allowScroll={allowScroll}
       showNumber={showNumber}
@@ -75,6 +78,6 @@ function Search({
   );
 }
 
-Search.propTypes = {};
+MultipleSearch.propTypes = {};
 
-export default React.memo(Search, compareObjects);
+export default React.memo(MultipleSearch, compareObjects);

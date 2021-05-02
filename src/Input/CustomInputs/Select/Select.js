@@ -32,7 +32,7 @@ function Select(props) {
 
   return (
     <Suggestions
-      valueOptions={valueOptions}
+      filteredValueOptions={valueOptions}
       showNumber={showNumber}
       Input={Input}
       name={name}

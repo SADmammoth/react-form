@@ -44,6 +44,12 @@ const App = () => {
             id: 'countries',
             valueOptions: countries,
           },
+          {
+            type: 'search-multiple',
+            name: 'countries',
+            id: 'countries',
+            valueOptions: countries,
+          },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}

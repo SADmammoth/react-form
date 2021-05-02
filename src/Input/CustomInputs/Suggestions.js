@@ -9,6 +9,7 @@ function Suggestions({
   showNumber,
   Input,
   name,
+  filteredValueOptions,
   valueOptions,
   setCurrentLabel,
   onChange,
@@ -25,10 +26,10 @@ function Suggestions({
   let [listShown, showList] = useState(false);
 
   const numberHiddenOption = allowScroll ||
-    !valueOptions ||
-    valueOptions.length <= showNumber || (
+    !filteredValueOptions ||
+    filteredValueOptions.length <= showNumber || (
       <div className='option disabled' value=''>
-        {valueOptions.length - 10} more
+        {filteredValueOptions.length - 10} more
       </div>
     );
 
@@ -82,6 +83,8 @@ function Suggestions({
         onBlur={onBlur}
         listShow={listShown}
         onChange={onChange}
+        currentValue={currentValue}
+        valueOptions={valueOptions}
       />
 
       {listShown && (
@@ -92,8 +95,8 @@ function Suggestions({
             </div>
           ) : (
             (allowScroll
-              ? valueOptions
-              : valueOptions.slice(0, showNumber)
+              ? filteredValueOptions
+              : filteredValueOptions.slice(0, showNumber)
             ).map((value) => renderOption(value))
           )}
           {numberHiddenOption}

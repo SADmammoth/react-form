@@ -12,7 +12,8 @@ import Range from './CustomInputs/Range';
 import MarkdownText from './CustomInputs/MarkdownText';
 import Search from './CustomInputs/Search';
 import Tag from '../Components/Tag';
-import MultipleSelect from './CustomInputs/MultipleSelect/MultipleSelect';
+import MultipleSelect from './CustomInputs/MultipleSelect';
+import MultipleSearch from './CustomInputs/MultipleSearch';
 
 function Input(props) {
   const {
@@ -175,6 +176,28 @@ function Input(props) {
         label,
         id,
         <MultipleSelect
+          id={id}
+          type={type}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+        />
+      );
+    }
+
+    if (type === 'search-multiple') {
+      return LabeledInput(
+        render,
+        label,
+        id,
+        <MultipleSearch
           id={id}
           type={type}
           name={name}
