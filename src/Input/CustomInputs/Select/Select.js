@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+
 import compareObjects from '../../helpers/compareObjects';
 import useValueOptions from '../../helpers/getValueOptions';
 import Input from './Input';
@@ -22,7 +24,7 @@ function Select(props) {
   let [currentLabel, setCurrentLabel] = useState(null);
   useEffect(() => {
     setCurrentLabel(
-      valueOptions?.find(({ value }) => value === currentValue)?.label
+      valueOptions?.find(({ value }) => _.isEqual(value, currentValue))?.label
     );
   }, [currentValue, valueOptions]);
 

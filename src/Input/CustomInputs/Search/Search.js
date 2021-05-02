@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
+import _ from 'lodash';
+
 import Input from './Input';
 
 import createEvent from '../../../helpers/createEvent';
@@ -44,7 +46,8 @@ function Search({
     }
     if (!currentLabel && currentValue && required) {
       setCurrentLabel(
-        filteredValueOptions.find(({ value }) => value === currentValue).label
+        filteredValueOptions.find(({ value }) => _.isEqual(value, currentValue))
+          .label
       );
     }
     if (!currentLabel && currentValue) {

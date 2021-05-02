@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import checkboxValueSeparator from '../../helpers/formHelpers/checkboxValueSeparator';
 import compareObjects from '../../helpers/compareObjects';
 import useValueOptions from '../../helpers/getValueOptions';
@@ -51,7 +52,8 @@ function CheckboxGroup(props) {
           onChange={onChangeHandler}
           {...attributes}
           checked={
-            values === valueOption.value || values.includes(valueOption.value)
+            _.isEqual(value, values === valueOption.value) ||
+            _.includes(valueOption.value, values)
           }
         />
         <LabelTag htmlFor={id + valueOption.value}>
