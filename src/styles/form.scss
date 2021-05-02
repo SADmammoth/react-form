@@ -82,3 +82,52 @@
   display: flex;
   flex-direction: column;
 }
+
+.tag {
+  border-radius: 20px;
+  border: $border-width solid $muted;
+  padding: 5px;
+  .remove-button {
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+  }
+  .remove-button::before {
+    content: 'x';
+    cursor: pointer;
+  }
+}
+
+.select-header {
+  position: relative;
+  z-index: 2;
+}
+
+.select-list {
+  position: relative;
+  z-index: 3;
+}
+
+.popup-backdrop {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+
+.tag-stack {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  & > * {
+    margin: 2px;
+  }
+}
+
+.select-placeholder {
+  cursor: pointer;
+}

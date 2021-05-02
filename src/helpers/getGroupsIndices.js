@@ -23,7 +23,6 @@ export default function getGroupsIndices(input, regex) {
   indices = [];
 
   result.forEach((x, i) => {
-    console.log(x, i, j);
     if (!(i % 2)) {
       indices.push([j, j + x.length]);
     }

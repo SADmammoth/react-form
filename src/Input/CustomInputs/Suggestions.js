@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DefaultOption from './Search/Option';
 import usePopup from '../../helpers/usePopup';
 import PropTypes from 'prop-types';
@@ -18,12 +18,11 @@ function Suggestions({
   currentLabel,
   render,
   onBlur,
+  hideListOnChoice = true,
 }) {
   const input = useRef({});
 
-  let [listShown, showList, preventShowPopup] = usePopup(false, [
-    input.current,
-  ]);
+  let [listShown, showList] = useState(false);
 
   const numberHiddenOption = allowScroll ||
     !valueOptions ||
@@ -37,7 +36,11 @@ function Suggestions({
 
   function renderOption(valueOption) {
     let isActive;
-    if (currentValue === valueOption.value && !isActive) {
+    if (
+      (_.isEqual(currentValue, valueOption.value) ||
+        _.includes(currentValue, valueOption.value)) &&
+      !isActive
+    ) {
       isActive = true;
     } else {
       isActive = false;
@@ -46,10 +49,14 @@ function Suggestions({
       <Option
         name={name}
         key={name + valueOption.value}
-        onClick={() => {
-          showList(false);
+        onClick={(event) => {
           setCurrentLabel(valueOption.label);
           onChange({ target: { name, value: valueOption.value } });
+          if (hideListOnChoice) {
+            showList(false);
+          } else {
+            showList(true);
+          }
         }}
         active={isActive}
         {...valueOption}
@@ -57,28 +64,24 @@ function Suggestions({
     );
   }
 
-  useEffect(() => {
-    console.log(valueOptions);
-  }, [valueOptions]);
-  console.log(valueOptions);
   return (
     <div
       className={`form-select${!currentValue ? ' placeholdered' : ''}`}
       name={name}
     >
       <Input
+        name={name}
         ref={input}
         listShown={listShown}
         showList={showList}
-        preventShowPopup={preventShowPopup}
         placeholder={placeholder}
         currentLabel={currentLabel}
-        preventShowPopup={preventShowPopup}
         showList={showList}
         setCurrentLabel={setCurrentLabel}
         render={render}
         onBlur={onBlur}
         listShow={listShown}
+        onChange={onChange}
       />
 
       {listShown && (
@@ -96,6 +99,14 @@ function Suggestions({
           {numberHiddenOption}
         </div>
       )}
+      {listShown ? (
+        <div
+          className='popup-backdrop'
+          onClick={() => {
+            showList(false);
+          }}
+        ></div>
+      ) : null}
     </div>
   );
 }

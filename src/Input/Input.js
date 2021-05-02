@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CheckboxGroup from './CustomInputs/CheckboxGroup';
-import Select from './Select/Select';
+import Select from './CustomInputs/Select';
 import TextArea from './CustomInputs/TextArea';
 import compareObjects from '../helpers/compareObjects';
 import MaskedInput from './MaskedInput';
@@ -11,6 +11,8 @@ import Slider from './CustomInputs/Slider';
 import Range from './CustomInputs/Range';
 import MarkdownText from './CustomInputs/MarkdownText';
 import Search from './CustomInputs/Search';
+import Tag from '../Components/Tag';
+import MultipleSelect from './CustomInputs/MultipleSelect/MultipleSelect';
 
 function Input(props) {
   const {
@@ -166,6 +168,29 @@ function Input(props) {
         />
       );
     }
+
+    if (type === 'select-multiple') {
+      return LabeledInput(
+        render,
+        label,
+        id,
+        <MultipleSelect
+          id={id}
+          type={type}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+        />
+      );
+    }
+
     if (type === 'textarea') {
       return LabeledInput(
         render,
@@ -317,6 +342,7 @@ Input.defaultProps = {
     Loader: (size, centered) => 'Loading...',
     Input: (props) => <input {...props} />,
     Label: (props) => <label {...props} />,
+    Tag: (props) => <Tag {...props} />,
   },
   ...Input.publicDefaults,
 };
@@ -369,6 +395,7 @@ Input.propTypes = {
     Loader: PropTypes.func,
     Label: PropTypes.any,
     Option: PropTypes.any,
+    Tag: PropTypes.any,
   }),
   ...Input.publicProps,
 };

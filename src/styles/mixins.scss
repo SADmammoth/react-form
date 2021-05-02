@@ -32,6 +32,7 @@
   margin: 0;
   margin-right: 10px;
   margin-bottom: 1px;
+  cursor: pointer;
 
   &::before {
     content: '';
@@ -79,6 +80,7 @@
   margin: 0;
   margin-right: 10px;
   margin-bottom: -2px;
+  cursor: pointer;
 
   &::before {
     content: '';
@@ -123,6 +125,7 @@
   margin: 0;
   margin-right: 5px;
   margin-bottom: -2px;
+  cursor: pointer;
 
   &::before {
     content: '\25BC';
@@ -161,6 +164,9 @@ pre {
       right: 3%;
       top: 50%;
       transform: translateY(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -170,8 +176,6 @@ pre {
     position: absolute;
     width: 100%;
     box-sizing: border-box;
-
-    z-index: 999999;
 
     &.scroll {
       max-height: 100px;
@@ -194,10 +198,6 @@ pre {
     white-space: nowrap;
   }
 
-  .input-wrapper {
-    z-index: 999999;
-  }
-
   .search-option {
     & :nth-child(n + 2) {
       margin-left: 0;
@@ -214,9 +214,6 @@ pre {
   .option.active {
     color: $highlight;
     background-color: $muted;
-    width: calc(106% - #{$border-width} * 2);
-    margin-left: calc(#{$border-width} - 3%);
-    box-sizing: border-box;
     padding: 3%;
     cursor: auto;
 

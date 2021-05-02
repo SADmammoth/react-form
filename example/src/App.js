@@ -38,6 +38,12 @@ const App = () => {
             id: 'date',
             validator: 'dateTimeByCharWithVisibleMask',
           },
+          {
+            type: 'select-multiple',
+            name: 'countries',
+            id: 'countries',
+            valueOptions: countries,
+          },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}

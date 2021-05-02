@@ -3,7 +3,6 @@ import React from 'react';
 export default function Input({
   placeholder,
   currentLabel,
-  preventShowPopup,
   showList,
   listShown,
   setCurrentLabel,
@@ -34,7 +33,6 @@ export default function Input({
         checked={listShown}
         onChange={() => {
           showList(!listShown);
-          preventShowPopup();
         }}
         style={{ fontSize: '10px', marginBottom: '0px' }}
       />

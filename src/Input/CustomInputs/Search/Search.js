@@ -27,7 +27,6 @@ function Search({
   let [currentLabel, setCurrentLabel] = useState(null);
 
   const filteredValueOptions = useMemo(() => {
-    console.log(currentLabel);
     return FilterOptions(currentLabel, valueOptions);
   }, [currentLabel, valueOptions]);
 

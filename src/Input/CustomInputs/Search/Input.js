@@ -3,7 +3,6 @@ import React from 'react';
 export default function Input({
   placeholder,
   currentLabel,
-  preventShowPopup,
   listShown,
   showList,
   setCurrentLabel,
@@ -24,7 +23,6 @@ export default function Input({
         }}
         onFocus={(event) => {
           showList(true);
-          preventShowPopup();
         }}
         onBlur={onBlur}
       />

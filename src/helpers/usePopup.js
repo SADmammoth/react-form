@@ -7,6 +7,7 @@ export default function usePopup(shownDefault = false, except) {
   const eventListener = useCallback(
     (event) => {
       document.removeEventListener('click', eventListener);
+      console.log(event.target, prevent);
       if (prevent) {
         setPrevent(false);
         return;
@@ -19,13 +20,18 @@ export default function usePopup(shownDefault = false, except) {
   );
 
   useEffect(() => {
+    if (prevent) {
+      document.removeEventListener('click', eventListener);
+      setPrevent(false);
+      return;
+    }
     if (shown) {
       document.removeEventListener('click', eventListener);
       document.addEventListener('click', eventListener);
     } else {
       document.removeEventListener('click', eventListener);
     }
-  }, [shown, eventListener]);
+  }, [shown, eventListener, prevent]);
 
   return [shown, setShow, () => setPrevent(true)];
 }

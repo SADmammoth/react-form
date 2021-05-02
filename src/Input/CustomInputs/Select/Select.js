@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import compareObjects from '../../helpers/compareObjects';
-import useValueOptions from '../../helpers/getValueOptions';
+import compareObjects from '../../../helpers/compareObjects';
+import useValueOptions from '../../../helpers/getValueOptions';
 import Input from './Input';
-import Suggestions from '../CustomInputs/Suggestions';
+import Suggestions from '../Suggestions';
 
 function Select(props) {
   const {
