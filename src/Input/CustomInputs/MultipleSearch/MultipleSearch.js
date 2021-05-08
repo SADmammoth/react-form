@@ -37,14 +37,12 @@ function MultipleSearch({
   const onBlur = () => {};
 
   const onChangeHandler = ({ target: { name, value } }) => {
-    console.log(value);
     const label = valueOptions.find((candidate) => {
       return candidate === valueOptions.find(({ label }) => label === value);
     });
     if (label) {
       value = label.value;
     }
-    console.log(value);
 
     if (_.includes(currentValue, value)) {
       return onChange(

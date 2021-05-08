@@ -33,10 +33,8 @@ const DateMaskConverters = {
 
     if (matchedInput.hours12) {
       if (matchedInput.ampm && matchedInput.ampm.match(/PM/i)) {
-        console.log(hourNum);
         hourNum = parseInt(matchedInput.hours12, 10) + 12;
       } else {
-        console.log(hourNum);
         hourNum = parseInt(matchedInput.hours12, 10);
       }
     }

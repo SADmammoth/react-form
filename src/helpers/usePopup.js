@@ -7,7 +7,6 @@ export default function usePopup(shownDefault = false, except) {
   const eventListener = useCallback(
     (event) => {
       document.removeEventListener('click', eventListener);
-      console.log(event.target, prevent);
       if (prevent) {
         setPrevent(false);
         return;

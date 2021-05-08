@@ -125,7 +125,6 @@ const DateMask = {
 
   // Checks if current date input follows the mask
   dateByChar: (input, masks = ['MM-dd-yyyy hh:mm:ss']) => {
-    console.log(masks);
     const Regexp = RegExp(
       `(^${masks
         .map((mask) => {

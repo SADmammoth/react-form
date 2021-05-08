@@ -8,13 +8,11 @@ export default function formatFormValues(stateValues, inputsProps) {
     const converter = valueItem.converters.out;
 
     if (group) {
-      console.log(valueItem, name, converter(valueItem.value));
       values[group.id] = {
         $title: group.title,
         ...values[group.id],
         [name]: converter(valueItem.value),
       };
-      console.log(values[group.id]);
     } else {
       values[name] = converter(valueItem.value);
     }
