@@ -7,13 +7,18 @@ export default function useOnSubmit(
   inputsProps,
   validateForm,
   handler,
-  notifications
+  notifications,
+  resetOnSubmit
 ) {
   const [onResponseReceived, onResponseError] = useResponseProcessor(
     notifications
   );
 
   return (event) => {
+    if (resetOnSubmit) {
+      event.target.reset();
+    }
+
     if (handler === null) {
       event.preventDefault();
       return;

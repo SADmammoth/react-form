@@ -44,7 +44,7 @@ const App = () => {
             },
           },
           {
-            type: 'select',
+            type: 'search',
             name: 'countries',
             id: 'countries',
             valueOptions: countries,
@@ -75,6 +75,7 @@ const App = () => {
           bold: true,
           italic: true,
         }}
+        resetOnSubmit
       ></Form>
       {inputs.$list}
 

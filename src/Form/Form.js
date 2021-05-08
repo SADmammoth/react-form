@@ -24,6 +24,7 @@ const Form = (props) => {
     validationMaskDateTimeFormat,
     dateFormatMask,
     dateTimeFormatMask,
+    resetOnSubmit,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
@@ -94,8 +95,15 @@ const Form = (props) => {
     values,
     inputsProps,
     () => validateForm(inputsProps, values, onValidationFail),
-    onSubmitHandler,
-    notifications
+    (data) => {
+      return onSubmitHandler(data).then(() => {
+        if (resetOnSubmit) {
+          dispatch(actions.resetForm(inputsProps));
+        }
+      });
+    },
+    notifications,
+    resetOnSubmit
   );
 
   const { method, action, className, style, submitButton, children } = props;
@@ -130,6 +138,7 @@ Form.defaultProps = {
   validationMaskDateTimeFormat: masks.dateTime,
   dateFormatMask: masks.dateMask,
   dateTimeFormatMask: masks.dateTimeMask,
+  resetOnSubmit: false,
 };
 
 Form.propTypes = {
@@ -166,6 +175,8 @@ Form.propTypes = {
   validationMaskDateTimeFormat: PropTypes.string,
   dateFormatMask: PropTypes.string,
   dateTimeFormatMask: PropTypes.string,
+
+  resetOnSubmit: PropTypes.bool,
 };
 
 export default Form;

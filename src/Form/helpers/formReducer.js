@@ -6,6 +6,7 @@ const actionTypes = {
   CREATE_VALUES: 'CREATE_VALUES',
   HIGHLIGHT_INPUT: 'HIGHLIGHT_INPUT',
   UNHIGHLIGHT_INPUT: 'UNHIGHLIGHT_INPUT',
+  RESET_FORM: 'RESET_FORM',
 };
 
 const formReducer = (updateInput, updateValue, createInputs, createValues) => (
@@ -58,6 +59,8 @@ const formReducer = (updateInput, updateValue, createInputs, createValues) => (
           ...unhighlightInput(data.name, values[data.name]),
         },
       };
+    case actionTypes.RESET_FORM:
+      return reset(data.inputsProps, values, inputs);
     default:
       return state;
   }
@@ -69,6 +72,39 @@ function highlightInput(name, input) {
 
 function unhighlightInput(name, input) {
   return { [name]: { ...input, invalid: false } };
+}
+
+const findProp = (props, name) => {
+  return props.find(({ name: candidate }) => name === candidate);
+};
+
+function reset(inputsProps, values, inputs) {
+  return {
+    values: Object.fromEntries(
+      Object.entries(values).map(([name, { value, ...rest }]) => {
+        const prop = findProp(inputsProps, name);
+        return [
+          name,
+          {
+            value: prop.defaultValue || prop.value,
+            ...rest,
+          },
+        ];
+      })
+    ),
+    inputs: Object.fromEntries(
+      Object.entries(inputs).map(([name, { value, ...rest }]) => {
+        const prop = findProp(inputsProps, name);
+        return [
+          name,
+          {
+            value: prop.defaultValue || prop.value,
+            ...rest,
+          },
+        ];
+      })
+    ),
+  };
 }
 
 export default formReducer;
@@ -97,6 +133,10 @@ const actions = {
   unhighlightInput: (name) => ({
     type: actionTypes.UNHIGHLIGHT_INPUT,
     data: { name },
+  }),
+  resetForm: (inputsProps) => ({
+    type: actionTypes.RESET_FORM,
+    data: { inputsProps },
   }),
 };
 
