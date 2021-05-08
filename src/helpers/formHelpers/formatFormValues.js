@@ -8,7 +8,13 @@ export default function formatFormValues(stateValues, inputsProps) {
     const converter = valueItem.converters.out;
 
     if (group) {
-      values[group] = { ...values[group], [name]: converter(valueItem.value) };
+      console.log(valueItem, name, converter(valueItem.value));
+      values[group.id] = {
+        $title: group.title,
+        ...values[group.id],
+        [name]: converter(valueItem.value),
+      };
+      console.log(values[group.id]);
     } else {
       values[name] = converter(valueItem.value);
     }
@@ -17,5 +23,5 @@ export default function formatFormValues(stateValues, inputsProps) {
       values[`${name}_default`] = converter(valueItem.defaultValue);
     }
   });
-  return mapGroups(values, inputsProps, false);
+  return values;
 }

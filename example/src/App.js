@@ -29,23 +29,22 @@ const App = () => {
             type: 'text',
             name: 'date',
             id: 'date',
-            validator: 'dateTimeByCharWithVisibleMask',
-            converters: 'dateTime',
+            group: {
+              title: 'group',
+              id: 'group',
+            },
           },
           {
             type: 'text',
-            name: 'date',
-            id: 'date',
-            validator: 'dateTimeByCharWithVisibleMask',
+            name: 'date2',
+            id: 'date2',
+            group: {
+              title: 'group',
+              id: 'group',
+            },
           },
           {
-            type: 'select-multiple',
-            name: 'countries',
-            id: 'countries',
-            valueOptions: countries,
-          },
-          {
-            type: 'search-multiple',
+            type: 'select',
             name: 'countries',
             id: 'countries',
             valueOptions: countries,
@@ -66,6 +65,7 @@ const App = () => {
           Option,
         }}
         onInputsUpdate={(inputs) => {
+          console.log(inputs);
           setInputs(inputs);
         }}
         notify={(...args) => console.log(args)}
