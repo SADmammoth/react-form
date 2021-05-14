@@ -1,34 +1,37 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import _ from 'lodash';
 
-import useValueOptions from '../../../helpers/getValueOptions';
-import FilterOptions from '../MultipleSearch/FilterOptions';
-import Suggestions from '../Suggestions';
-import Input from '../MultipleSearch/Input';
+import { includes, isEqual } from 'lodash-es';
+
+import compareObjects from '../../../helpers/compareObjects';
 import createEvent from '../../../helpers/createEvent';
+import useValueOptions from '../../../helpers/getValueOptions';
+import Suggestions from '../Suggestions';
+import FilterOptions from './FilterOptions';
+import Input from './Input';
 
 function MultipleSearch({
-  type,
+  // type,
   name,
   onChange,
-  onInput,
+  // onInput,
   value: currentValue,
   valueOptions: options,
   placeholder,
   render,
-  required,
+  // required,
   allowScroll,
 }) {
-  let [valueOptions, loading] = useValueOptions(options);
-  let [currentLabel, setCurrentLabel] = useState(null);
+  const [valueOptions, loading] = useValueOptions(options);
+  const [currentLabel, setCurrentLabel] = useState(null);
 
-  const filteredValueOptions = useMemo(() => {
-    return FilterOptions(currentLabel, valueOptions);
-  }, [currentLabel, valueOptions]);
+  const filteredValueOptions = useMemo(
+    () => FilterOptions(currentLabel, valueOptions),
+    [currentLabel, valueOptions],
+  );
 
   useEffect(() => {
     setCurrentLabel(
-      valueOptions?.find(({ value }) => value === currentValue)?.label
+      valueOptions?.find(({ value }) => value === currentValue)?.label,
     );
   }, [currentValue, valueOptions]);
 
@@ -36,21 +39,24 @@ function MultipleSearch({
 
   const onBlur = () => {};
 
-  const onChangeHandler = ({ target: { name, value } }) => {
-    const label = valueOptions.find((candidate) => {
-      return candidate === valueOptions.find(({ label }) => label === value);
-    });
+  const onChangeHandler = ({ target: { value } }) => {
+    const label = valueOptions.find(
+      (candidate) =>
+        candidate ===
+        valueOptions.find(({ label: optionLabel }) => optionLabel === value),
+    );
     if (label) {
       value = label.value;
     }
 
-    if (_.includes(currentValue, value)) {
-      return onChange(
+    if (includes(currentValue, value)) {
+      onChange(
         createEvent(
           name,
-          currentValue.filter((candidate) => !_.isEqual(candidate, value))
-        )
+          currentValue.filter((candidate) => !isEqual(candidate, value)),
+        ),
       );
+      return;
     }
     onChange(createEvent(name, [...currentValue, value]));
   };
@@ -66,7 +72,6 @@ function MultipleSearch({
       onChange={onChangeHandler}
       currentValue={currentValue}
       allowScroll={allowScroll}
-      showNumber={showNumber}
       loading={loading}
       placeholder={placeholder}
       currentLabel={currentLabel}

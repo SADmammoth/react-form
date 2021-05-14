@@ -1,11 +1,11 @@
 export default function filterMarkdownMap(
   markdownMap,
   specialButtons,
-  markdownFeatures
+  markdownFeatures,
 ) {
-  let newMarkdownMap = {};
-  let newSpecialButtons = {};
-  let { headings, bold, italic, links } = markdownFeatures;
+  const newMarkdownMap = {};
+  const newSpecialButtons = {};
+  const { headings, bold, italic, links } = markdownFeatures;
   if (markdownMap && headings) {
     newMarkdownMap.H1 = markdownMap.H1;
     newMarkdownMap.H2 = markdownMap.H2;

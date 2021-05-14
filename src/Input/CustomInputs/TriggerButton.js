@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+
 import PropTypes from 'prop-types';
+
 import Button from './Button';
 
 function TriggerButton({ children, init, on, off }) {
-  let [state, setState] = useState(init);
-  let trigger = () => {
+  const [state, setState] = useState(init);
+  const trigger = () => {
     if (state) {
       off();
     } else {

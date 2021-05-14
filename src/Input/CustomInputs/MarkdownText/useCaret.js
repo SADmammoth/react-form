@@ -1,8 +1,9 @@
 import { useReducer } from 'react';
-import calcLength from './helpers/indexHelpers/calcLength';
-import toArray from '../../../helpers/toArray';
 
-let actionTypes = {
+import toArray from '../../../helpers/toArray';
+import calcLength from './helpers/indexHelpers/calcLength';
+
+const actionTypes = {
   input: 'input',
   newLine: 'new_line',
   set: 'set',
@@ -17,10 +18,10 @@ let actionTypes = {
 export default function useCaret(
   init,
   getIndex,
-  onTextChange = (text) => text
+  onTextChange = (text) => text,
 ) {
-  let reducer = (state, { type, data }) => {
-    let { text, index } = state;
+  const reducer = (state, { type, data }) => {
+    const { text, index } = state;
 
     switch (type) {
       case actionTypes.input: {
@@ -73,10 +74,10 @@ export default function useCaret(
 }
 
 function input(text, index, data, getIndex, onTextChange) {
-  let textArray = toArray(text);
-  let realIndex = getIndex(text, index);
+  const textArray = toArray(text);
+  const realIndex = getIndex(text, index);
   textArray.splice(realIndex, 0, data);
-  let newText =
+  const newText =
     onTextChange(textArray.slice(0, realIndex + 1).join('')) +
     textArray.slice(realIndex + 1, -1).join('');
 
@@ -91,9 +92,9 @@ function input(text, index, data, getIndex, onTextChange) {
 }
 
 function newLine(text, index, data, getIndex, onTextChange) {
-  let textArray = toArray(text);
+  const textArray = toArray(text);
   textArray.splice(getIndex(text, index) + 1, 0, data);
-  let newText = onTextChange(textArray.join(''));
+  const newText = onTextChange(textArray.join(''));
 
   return {
     text: newText,
@@ -102,13 +103,13 @@ function newLine(text, index, data, getIndex, onTextChange) {
 }
 
 function wrap(text, index, data, getIndex, onTextChange) {
-  let textArray = toArray(text);
-  let from = getIndex(text, data.from);
-  let to = getIndex(text, data.to);
+  const textArray = toArray(text);
+  const from = getIndex(text, data.from);
+  const to = getIndex(text, data.to);
   textArray.splice(
     from,
     to - from,
-    data.leftWrap + textArray.slice(from, to).join('') + data.rightWrap
+    data.leftWrap + textArray.slice(from, to).join('') + data.rightWrap,
   );
 
   return {
@@ -121,7 +122,7 @@ function backspace(text, index, data, getIndex, onTextChange) {
   if (index <= 0) {
     return { text, index };
   }
-  let textArray = toArray(text);
+  const textArray = toArray(text);
   textArray.splice(getIndex(text, index - 1), 1);
 
   return {
@@ -134,7 +135,7 @@ function deleteAction(text, index, data, getIndex, onTextChange) {
   if (index > text.length - 1) {
     return { text, index };
   }
-  let textArray = toArray(text);
+  const textArray = toArray(text);
   textArray.splice(getIndex(text, index), 1);
 
   return {
@@ -153,7 +154,7 @@ function left(text, index, data, getIndex, onTextChange) {
 
 function right(text, index, data, getIndex, onTextChange) {
   if (index > text.length - 1) {
-    return state;
+    // return state;
   }
 
   return { text, index: index + 1 };

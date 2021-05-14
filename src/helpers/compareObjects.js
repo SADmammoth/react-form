@@ -56,8 +56,4 @@ export default function compareObjects(leftObject, rightObject, maxDepth = 3) {
   return response;
 }
 
-function JSONCompare(left, right) {
-  return JSON.stringify(left) === JSON.stringify(right);
-}
-
 window.compareObjects = compareObjects;

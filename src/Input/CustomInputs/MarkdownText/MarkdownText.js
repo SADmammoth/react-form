@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useRef, useMemo, Fragment } from 'react';
+
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+
+import compareObjects from '../../../helpers/compareObjects';
 import Menu from '../Menu';
-import markdownMap, { specialButtons } from './helpers/markdownMap';
+import TriggerButton from '../TriggerButton';
+import MarkdownOutput from './MarkdownOutput';
+import calculateCaretIndex from './helpers/calculateCaretIndex';
+import createMdShortcutsButtons from './helpers/createMdShortcutsButtons';
+import filterMarkdownMap from './helpers/filterMarkdownMap';
 import getHtmlIndex from './helpers/indexHelpers/getHtmlIndex';
 import getMarkdownIndex from './helpers/indexHelpers/getMarkdownIndex';
+import isMarkdownElement from './helpers/isMarkdownElement';
+import markdownMap, { specialButtons } from './helpers/markdownMap';
+import setCaret from './helpers/setCaret';
+import shortcutMd from './helpers/shortcutMd';
 import useCaret, { actionTypes } from './useCaret';
 import useMd from './useOTGMdShortcuts';
-import isMarkdownElement from './helpers/isMarkdownElement';
-import createMdShortcutsButtons from './helpers/createMdShortcutsButtons';
-import setCaret from './helpers/setCaret';
-import calculateCaretIndex from './helpers/calculateCaretIndex';
-import TriggerButton from '../TriggerButton';
-import compareObjects from '../../../helpers/compareObjects';
-import filterMarkdownMap from './helpers/filterMarkdownMap';
-import shortcutMd from './helpers/shortcutMd';
-import MarkdownOutput from './MarkdownOutput';
 
 function MarkdownText({
   id,
@@ -39,28 +41,28 @@ function MarkdownText({
 
   const input = useRef({});
 
-  let [filteredMarkdownMap] = filterMarkdownMap(
+  const [filteredMarkdownMap] = filterMarkdownMap(
     markdownMap,
     undefined,
-    markdownFeatures
+    markdownFeatures,
   );
 
-  let update = useMd(filteredMarkdownMap);
+  const update = useMd(filteredMarkdownMap);
 
-  let [htmlI, html, htmlDispatch] = useCaret(
+  const [htmlI, html, htmlDispatch] = useCaret(
     shortcutMd(value, filteredMarkdownMap),
     getHtmlIndex,
-    update
+    update,
   );
 
   function getMdIndex(text, index) {
     return getMarkdownIndex(text, index, filteredMarkdownMap);
   }
 
-  let [mdI, markdown, mdDispatch] = useCaret(value, getMdIndex);
-  let [portals, setPortals] = useState({});
+  const [mdI, markdown, mdDispatch] = useCaret(value, getMdIndex);
+  const [portals, setPortals] = useState({});
 
-  let [showNotPrintable, setShowNotPrintable] = useState(false);
+  const [showNotPrintable, setShowNotPrintable] = useState(false);
 
   useEffect(() => {
     if (Object.entries(portals).length) {
@@ -75,12 +77,12 @@ function MarkdownText({
     setCaret(input.current, htmlI);
   }, [htmlI, html]);
 
-  let dispatchBoth = (args) => {
+  const dispatchBoth = (args) => {
     htmlDispatch(args);
     mdDispatch(args);
   };
 
-  let onInputHandler = (event) => {
+  const onInputHandler = (event) => {
     if (isMarkdownElement(event.target)) {
       event.preventDefault();
       if (event.key === 'Backspace') {
@@ -106,15 +108,15 @@ function MarkdownText({
     }
   };
 
-  let onMouseClick = (event) => {
+  const onMouseClick = (event) => {
     if (isMarkdownElement(event.target)) {
-      let i = calculateCaretIndex(input.current);
+      const i = calculateCaretIndex(input.current);
       htmlDispatch({ type: actionTypes.moveIndex, data: i });
       mdDispatch({ type: actionTypes.moveIndex, data: i });
     }
   };
 
-  let [, filteredSpecialButtons] = filterMarkdownMap(
+  const [, filteredSpecialButtons] = filterMarkdownMap(
     undefined,
     specialButtons(
       htmlDispatch,
@@ -122,12 +124,12 @@ function MarkdownText({
       mdDispatch,
       actionTypes,
       portals,
-      setPortals
+      setPortals,
     ),
-    markdownFeatures
+    markdownFeatures,
   );
 
-  let buttons = useMemo(
+  const buttons = useMemo(
     () =>
       createMdShortcutsButtons(
         htmlDispatch,
@@ -138,13 +140,13 @@ function MarkdownText({
           input.current.focus();
         },
         filteredSpecialButtons,
-        filteredMarkdownMap
+        filteredMarkdownMap,
       ),
-    [onInput]
+    [onInput],
   );
 
   return (
-    <div className='markdown-text'>
+    <div className="markdown-text">
       <Menu buttons={buttons} />
       <TriggerButton
         on={() => {
@@ -152,8 +154,7 @@ function MarkdownText({
         }}
         off={() => {
           setShowNotPrintable(false);
-        }}
-      >
+        }}>
         Show not printable
       </TriggerButton>
       <div
@@ -161,7 +162,7 @@ function MarkdownText({
           showNotPrintable ? ' show-not-printable' : ''
         }`}
         ref={input}
-        contentEditable={true}
+        contentEditable
         name={name}
         onKeyDown={onInputHandler}
         onBlur={() => {
@@ -169,7 +170,7 @@ function MarkdownText({
         }}
         onClick={onMouseClick}
         dangerouslySetInnerHTML={{ __html: html }}
-      ></div>
+      />
     </div>
   );
 }

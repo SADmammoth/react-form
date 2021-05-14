@@ -1,58 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import Input from './Input';
-import _ from 'lodash';
+
+import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
+
+import compareObjects from '../../../helpers/compareObjects';
 import createEvent from '../../../helpers/createEvent';
-import Suggestions from '../Suggestions';
 import useValueOptions from '../../../helpers/getValueOptions';
+import Suggestions from '../Suggestions';
+import Input from './Input';
 
 function MultipleSelect(props) {
   const {
+    // type,
     valueOptions: options,
     name,
     value: currentValue,
     placeholder,
     onChange,
-    required,
+    // required,
     render,
-    type,
   } = props;
 
-  let [valueOptions, loading] = useValueOptions(options);
+  const [valueOptions, loading] = useValueOptions(options);
 
-  let [currentLabel, setCurrentLabel] = useState([]);
+  const [currentLabel, setCurrentLabel] = useState([]);
+
   useEffect(() => {
     setCurrentLabel(
       valueOptions
-        ?.filter(({ value }) => _.includes(currentValue, value))
-        .map(({ label }) => label)
+        ?.filter(({ value }) => includes(currentValue, value))
+        .map(({ label }) => label),
     );
   }, [currentValue, valueOptions]);
 
   const showNumber = 10;
 
-  const onChangeHandler = ({ target: { name, value } }) => {
-    const label = valueOptions.find((candidate) => {
-      return candidate === valueOptions.find(({ label }) => label === value);
-    });
+  const onChangeHandler = ({ target: { value } }) => {
+    const label = valueOptions.find(
+      (candidate) =>
+        candidate ===
+        valueOptions.find(({ label: optionLabel }) => optionLabel === value),
+    );
     if (label) {
       value = label.value;
     }
-    if (_.includes(currentValue, value)) {
-      return onChange(
+    if (includes(currentValue, value)) {
+      onChange(
         createEvent(
           name,
-          currentValue.filter((candidate) => !_.isEqual(candidate, value))
-        )
+          currentValue.filter((candidate) => !isEqual(candidate, value)),
+        ),
       );
+      return;
     }
     onChange(createEvent(name, [...currentValue, value]));
   };
 
   const addValue = (value) => {
     setCurrentLabel((current) => {
-      if (_.includes(current, value)) {
-        return current.filter((candidate) => _.isEqual(candidate, value));
+      if (includes(current, value)) {
+        return current.filter((candidate) => isEqual(candidate, value));
       }
       return [...current, value];
     });
@@ -68,8 +75,7 @@ function MultipleSelect(props) {
       setCurrentLabel={addValue}
       onChange={onChangeHandler}
       currentValue={currentValue}
-      allowScroll={true}
-      showNumber={showNumber}
+      allowScroll
       loading={loading}
       placeholder={placeholder}
       currentLabel={currentLabel}
@@ -80,7 +86,7 @@ function MultipleSelect(props) {
 }
 
 MultipleSelect.defaultProps = {
-  required: false,
+  // required: false,
   value: [],
   placeholder: null,
 };
@@ -88,14 +94,14 @@ MultipleSelect.defaultProps = {
 MultipleSelect.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
-  required: PropTypes.bool,
+  // required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   valueOptions: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
-      })
+      }),
     ),
     PropTypes.func,
   ]).isRequired,

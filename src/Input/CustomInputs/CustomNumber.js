@@ -1,29 +1,29 @@
 import React, { useEffect, useCallback, useState } from 'react';
+
 import PropTypes from 'prop-types';
-import compareObjects from '../../helpers/compareObjects';
-import Validator from '../../Validator/Validator';
-import getCounter from '../../helpers/formHelpers/getCounter';
+
 import HoldButton from '../../Components/HoldButton';
+import Validator from '../../Validator/Validator';
+import compareObjects from '../../helpers/compareObjects';
 import createEvent from '../../helpers/createEvent';
+import getCounter from '../../helpers/formHelpers/getCounter';
 
 function CustomNumber(props) {
   const {
+    // type,
     name,
-    type,
     value: currentValue,
-    placeholder,
+    // placeholder,
     onInput,
     onChange,
-    required,
+    // required,
     attributes: { min, max, step },
     render,
   } = props;
 
   const counter = useCallback(
-    (value) => {
-      return getCounter(value, min, max, step);
-    },
-    [min, max, step]
+    (value) => getCounter(value, min, max, step),
+    [min, max, step],
   );
 
   const [value, setValue] = useState(currentValue);
@@ -32,16 +32,16 @@ function CustomNumber(props) {
   }, [currentValue]);
 
   const increment = () => {
-    setValue((value) => {
-      const newValue = counter(parseFloat(value) + step);
+    setValue((passedValue) => {
+      const newValue = counter(parseFloat(passedValue) + step);
       onChange(createEvent(name, newValue));
       return newValue;
     });
   };
 
   const decrement = () => {
-    setValue((value) => {
-      const newValue = counter(parseFloat(value) + step);
+    setValue((passedValue) => {
+      const newValue = counter(parseFloat(passedValue) + step);
       onChange(createEvent(name, newValue));
       return newValue;
     });
@@ -65,18 +65,18 @@ function CustomNumber(props) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <div className='form-number'>
+    <div className="form-number">
       <InputTag
-        type='text'
+        type="text"
         name={name}
         onChange={onInputHandler}
         onBlur={onChangeHandler}
         value={value}
-      ></InputTag>
-      <HoldButton name={name} className='form-number-plus' action={increment}>
+      />
+      <HoldButton name={name} className="form-number-plus" action={increment}>
         &#x25b4;
       </HoldButton>
-      <HoldButton name={name} className='form-number-minus' action={decrement}>
+      <HoldButton name={name} className="form-number-minus" action={decrement}>
         &#x25be;
       </HoldButton>
     </div>
@@ -84,9 +84,9 @@ function CustomNumber(props) {
 }
 
 CustomNumber.defaultProps = {
-  required: false,
+  // required: false,
   value: null,
-  placeholder: null,
+  // placeholder: null,
   attributes: {
     step: 1,
     min: 0,
@@ -96,8 +96,8 @@ CustomNumber.defaultProps = {
 
 CustomNumber.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  placeholder: PropTypes.string,
-  required: PropTypes.bool,
+  // placeholder: PropTypes.string,
+  // required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   attributes: PropTypes.shape({
     min: PropTypes.number,

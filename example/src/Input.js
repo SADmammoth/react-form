@@ -1,6 +1,6 @@
 import React from 'react';
 
-import _ from 'lodash';
+import {isEqual} from 'lodash-es';
 
 function Input(props) {
   if (props.type === 'textarea') {
@@ -10,4 +10,4 @@ function Input(props) {
   }
 }
 
-export default React.memo(Input, _.isEqual);
+export default React.memo(Input, isEqual);

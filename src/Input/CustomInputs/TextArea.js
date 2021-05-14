@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
+
 import PropTypes from 'prop-types';
-import checkCharsCount from '../../helpers/formHelpers/checkCharsCount';
+
 import compareObjects from '../../helpers/compareObjects';
+import checkCharsCount from '../../helpers/formHelpers/checkCharsCount';
 
 function TextArea(props) {
   const {
     id,
     type,
     name,
-    description,
+    // description,
     onInput,
     onChange,
     required,
@@ -21,16 +23,13 @@ function TextArea(props) {
     render,
   } = props;
 
-  let [placeholderOn, switchPlaceholder] = useState(false);
+  const [placeholderOn, switchPlaceholder] = useState(false);
 
-  let onFocus = useCallback(
-    (event) => {
-      if (placeholderOn) {
-        switchPlaceholder(false);
-      }
-    },
-    [value, placeholderOn]
-  );
+  const onFocus = useCallback(() => {
+    if (placeholderOn) {
+      switchPlaceholder(false);
+    }
+  }, [value, placeholderOn]);
 
   useEffect(() => {
     if (value) switchPlaceholder(false);
@@ -53,7 +52,7 @@ function TextArea(props) {
         switchPlaceholder(true);
       }
     },
-    [value]
+    [value],
   );
 
   const InputTag = render.Input || 'textarea';

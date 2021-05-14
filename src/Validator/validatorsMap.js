@@ -47,7 +47,7 @@ const validatorsMap = {
     dateFormat,
     dateTimeFormat,
     dateFormatMask,
-    dateTimeFormatMask
+    dateTimeFormatMask,
   ) => {
     globals.dateFormat = dateFormat;
     globals.dateTimeFormat = dateTimeFormat;
@@ -55,9 +55,7 @@ const validatorsMap = {
     globals.dateTimeFormatMask = dateTimeFormatMask;
   },
 
-  getFormats: () => {
-    return { ...globals };
-  },
+  getFormats: () => ({ ...globals }),
 
   dateTime: {
     validator: (input) => DateMask.dateTime(input, [globals.dateTimeFormat]),

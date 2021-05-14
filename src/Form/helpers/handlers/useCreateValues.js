@@ -1,5 +1,5 @@
-import setFormDefaultValue from '../../../helpers/formHelpers/setFormDefaultValue';
 import convertersMap from '../../../Validator/convertersMap';
+import setFormDefaultValue from '../../../helpers/formHelpers/setFormDefaultValue';
 
 export default function useCreateValues() {
   return (inputsProps, valuesState) => {
@@ -23,10 +23,13 @@ export default function useCreateValues() {
         group: input.group,
         converters: convertersFromMap,
       };
-      if (input.bind && valuesData[input.bind])
-        !valuesData[input.bind].bind
-          ? (valuesData[input.bind].bind = [input.name])
-          : valuesData[input.bind].bind.push(input.name);
+      if (input.bind && valuesData[input.bind]) {
+        if (!valuesData[input.bind].bind) {
+          valuesData[input.bind].bind = [input.name];
+        } else {
+          valuesData[input.bind].bind.push(input.name);
+        }
+      }
     });
 
     return { ...valuesState, ...valuesData };

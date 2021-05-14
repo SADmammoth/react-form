@@ -1,26 +1,28 @@
-import React, { useReducer } from 'react';
+import React from 'react';
+
 import PropTypes from 'prop-types';
+
 import Button from './Button';
 import TriggerButton from './TriggerButton';
 
-function Menu({ buttons, commonButtonMode }) {
-  let renderButton = (button) => {
-    let { key, mode, content } = button;
+function Menu({ buttons }) {
+  const renderButton = (button) => {
+    const { key, mode, content } = button;
     return (
       <li key={key}>
         {mode === 'trigger' ? (
-          <TriggerButton type='button' on={button.on} off={button.off}>
+          <TriggerButton type="button" on={button.on} off={button.off}>
             {content}
           </TriggerButton>
         ) : (
-          <Button type='button' onClick={button.onClick}>
+          <Button type="button" onClick={button.onClick}>
             {content}
           </Button>
         )}
       </li>
     );
   };
-  return <ul className='menu'>{buttons.map(renderButton)}</ul>;
+  return <ul className="menu">{buttons.map(renderButton)}</ul>;
 }
 
 Menu.propTypes = {
@@ -39,7 +41,7 @@ Menu.propTypes = {
         onClick: PropTypes.func.isRequired,
         content: PropTypes.any.isRequired,
       }),
-    ])
+    ]),
   ).isRequired,
 };
 

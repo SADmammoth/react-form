@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import safeUseEffect from '../../helpers/safeUseEffect';
 
 const useInputHighlight = (highlight, unhighlight, timer, notifications) => {
@@ -19,12 +20,12 @@ const useInputHighlight = (highlight, unhighlight, timer, notifications) => {
           unhighlight(...highlightedData);
           setHighlighted(null);
         } else if (levels < 5) {
-          levels++;
+          levels += 1;
           startTimeout(isUnmounted);
         }
       }, timer);
     },
-    [timer, unhighlight]
+    [timer, unhighlight],
   );
 
   safeUseEffect(
@@ -33,7 +34,7 @@ const useInputHighlight = (highlight, unhighlight, timer, notifications) => {
         startTimeout(isUnmounted);
       }
     },
-    [highlightedData]
+    [highlightedData],
   );
 
   return highlightInput;

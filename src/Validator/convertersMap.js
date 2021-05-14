@@ -6,24 +6,24 @@ const convertersMap = {
     in: (input) =>
       DateMaskConverters.fromDateToMask(
         input,
-        validatorsMap.getFormats().dateFormat
+        validatorsMap.getFormats().dateFormat,
       ),
     out: (date) =>
       DateMaskConverters.parseDateByMask(
         date,
-        validatorsMap.getFormats().dateFormat
+        validatorsMap.getFormats().dateFormat,
       ),
   },
   dateTime: {
     in: (input) =>
       DateMaskConverters.fromDateToMask(
         input,
-        validatorsMap.getFormats().dateTimeFormat
+        validatorsMap.getFormats().dateTimeFormat,
       ),
     out: (date) =>
       DateMaskConverters.parseDateByMask(
         date,
-        validatorsMap.getFormats().dateTimeFormat
+        validatorsMap.getFormats().dateTimeFormat,
       ),
   },
 };

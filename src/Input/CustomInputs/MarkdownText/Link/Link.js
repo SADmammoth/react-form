@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
+
+// import PropTypes from 'prop-types';
 import EditLink from './EditLink';
 
 function Link({ setMd }) {
-  let [link, setLink] = useState('');
-  let [text, setText] = useState('');
+  const [link, setLink] = useState('');
+  const [text, setText] = useState('');
 
-  let [show, setShow] = useState(true);
+  const [show, setShow] = useState(true);
 
   return (
     <Fragment>
@@ -26,7 +27,7 @@ function Link({ setMd }) {
             onClick={() => {
               setShow(false);
             }}
-          ></div>
+          />
         </Fragment>
       ) : (
         <a
@@ -40,8 +41,7 @@ function Link({ setMd }) {
               document.location.href = link;
             }
           }}
-          data-input="true"
-        >
+          data-input="true">
           {text}
         </a>
       )}

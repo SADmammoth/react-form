@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export default function usePopup(shownDefault = false, except) {
-  let [shown, setShow] = useState(shownDefault);
-  let [prevent, setPrevent] = useState(false);
+  const [shown, setShow] = useState(shownDefault);
+  const [prevent, setPrevent] = useState(false);
 
   const eventListener = useCallback(
     (event) => {
@@ -15,7 +15,7 @@ export default function usePopup(shownDefault = false, except) {
         setShow(false);
       }
     },
-    [prevent]
+    [prevent],
   );
 
   useEffect(() => {

@@ -1,17 +1,18 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
+
 // import Form from '../../../../Form';
-import Button from '../../Button';
 
 function EditLink({ setData, close, textDefault, linkDefault }) {
   return (
     <div className="modal" data-input="true">
       <button
+        type="button"
         className="close-icon"
         onClick={() => {
           close();
-        }}
-      >
+        }}>
         x
       </button>
       {/* <Form

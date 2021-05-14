@@ -1,10 +1,8 @@
-import mapGroups from './mapGroups';
-
-export default function formatFormValues(stateValues, inputsProps) {
+export default function formatFormValues(stateValues) {
   const values = {};
 
   Object.entries(stateValues).forEach(([name, valueItem]) => {
-    const group = valueItem.group;
+    const { group } = valueItem;
     const converter = valueItem.converters.out;
 
     if (group) {

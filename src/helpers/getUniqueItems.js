@@ -1,5 +1,3 @@
 export default function getUniqueItems(array) {
-  return array.filter((el, i, arr) => {
-    return arr.slice(i + 1).indexOf(el) < 0;
-  });
+  return array.filter((el, i, arr) => arr.slice(i + 1).indexOf(el) < 0);
 }

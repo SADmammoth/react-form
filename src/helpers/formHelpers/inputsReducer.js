@@ -1,3 +1,11 @@
+function update(data) {
+  return { ...data };
+}
+
+function updateAction(data) {
+  return { type: 'update', data };
+}
+
 export default function inputsReducer(state, action) {
   switch (action.type) {
     case 'update':
@@ -5,14 +13,6 @@ export default function inputsReducer(state, action) {
     default:
       throw new Error('Unexpected action type');
   }
-}
-
-function update(data) {
-  return { ...data };
-}
-
-function updateAction(data) {
-  return { type: 'update', data };
 }
 
 export { updateAction };

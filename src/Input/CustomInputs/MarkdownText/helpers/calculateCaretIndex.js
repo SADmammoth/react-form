@@ -1,8 +1,8 @@
 import createChildrenArray from './createChildrenArray';
 
 export default function calculateCaretIndex(input) {
-  let { endOffset, endContainer } = window.getSelection().getRangeAt(0);
-  let toLookUp = createChildrenArray(input);
+  const { endOffset, endContainer } = window.getSelection().getRangeAt(0);
+  const toLookUp = createChildrenArray(input);
 
   let i = 0;
   for (let j = 0; j < toLookUp.length; j++) {

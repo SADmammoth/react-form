@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 
 export default function useOTGMdShortcuts(markdownMap) {
-  let tagList = useMemo(
+  const tagList = useMemo(
     () =>
       Object.values(markdownMap)
         .map(([, open, close]) => {
@@ -15,58 +15,59 @@ export default function useOTGMdShortcuts(markdownMap) {
                 close: true,
               },
             ];
-          } else {
-            return {
-              id: open,
-              tag: open,
-            };
           }
+          return {
+            id: open,
+            tag: open,
+          };
         })
         .flat(),
-    [markdownMap]
+    [markdownMap],
   );
 
-  let reset = (opened = []) => {
-    return {
-      index: 1,
-      candidates: tagList,
-      opened,
-    };
-  };
+  const reset = (opened = []) => ({
+    index: 1,
+    candidates: tagList,
+    opened,
+  });
 
-  let [state, setState] = useState(reset());
+  const [state, setState] = useState(reset());
 
-  let getNewCandidates = (candidates, index, searched, isOpened) =>
+  const getNewCandidates = (candidates, index, searched, isOpened) =>
     candidates.filter((tagItem) => {
-      let { tag, close } = tagItem;
+      const { tag, close } = tagItem;
       if (tag.slice(0, index) === searched && close && isOpened(tag)) {
         return true;
-      } else if (tag.slice(0, index) === searched && !close && !isOpened(tag)) {
+      }
+      if (tag.slice(0, index) === searched && !close && !isOpened(tag)) {
         return true;
       }
     });
 
-  let checkCandidates = ({ index, candidates, opened }, text) => {
-    let newOpened = [...opened];
+  const checkCandidates = ({ index, candidates, opened }, text) => {
+    const newOpened = [...opened];
 
-    let searched = text.slice(-index);
-    let isOpened = (tag) => {
-      return opened.includes(tag);
-    };
+    const searched = text.slice(-index);
+    const isOpened = (tag) => opened.includes(tag);
 
-    let newCandidates = getNewCandidates(candidates, index, searched, isOpened);
-    let newText = text.split('');
+    const newCandidates = getNewCandidates(
+      candidates,
+      index,
+      searched,
+      isOpened,
+    );
+    const newText = text.split('');
 
     if (!newCandidates.length && candidates.length) {
-      let fullMatches = candidates.filter(({ tag }) => {
-        return tag === text.slice(-index, -1);
-      });
+      const fullMatches = candidates.filter(
+        ({ tag }) => tag === text.slice(-index, -1),
+      );
       let candidate;
 
       if (fullMatches.length) {
         fullMatches.sort(
           ({ tag: tagA, close: closeA }, { tag: tagB, close: closeB }) =>
-            opened.indexOf(tagA) + closeA > opened.indexOf(tagB) + closeB
+            opened.indexOf(tagA) + closeA > opened.indexOf(tagB) + closeB,
         );
         candidate = fullMatches[0];
       } else {
@@ -78,20 +79,19 @@ export default function useOTGMdShortcuts(markdownMap) {
         return newText.join('');
       }
 
-      let found = Object.values(markdownMap).find(([, md, close]) => {
-        return (
+      const found = Object.values(markdownMap).find(
+        ([, md, close]) =>
           md === candidate.tag ||
           (isOpened(candidate.tag) &&
             close === candidate.tag &&
-            candidate.close)
-        );
-      });
+            candidate.close),
+      );
 
       if (found) {
         if (isOpened) {
           newOpened.splice(
             tagList.findIndex((tagId) => tagId === found[1]),
-            1
+            1,
           );
         } else if (!found[2]) {
           newText.splice(newText.length - index, index - 1, `<${found[0]}/>`);
@@ -107,24 +107,23 @@ export default function useOTGMdShortcuts(markdownMap) {
     }
 
     if (newCandidates.length === 1) {
-      let candidate = newCandidates[0];
+      const candidate = newCandidates[0];
 
       if (candidate.tag === searched) {
-        let found = Object.values(markdownMap).find(([, md, close]) => {
-          return (
+        const found = Object.values(markdownMap).find(
+          ([, md, close]) =>
             md === candidate.tag ||
             (close &&
               isOpened(candidate.tag) &&
               close === candidate.tag &&
-              candidate.close)
-          );
-        });
+              candidate.close),
+        );
 
         if (found) {
           if (isOpened(found[1])) {
             newOpened.splice(
               tagList.findIndex((tagItem) => tagItem === found[1]),
-              1
+              1,
             );
             newText.splice(newText.length - index, index, `</${found[0]}>`);
           } else if (!found[2]) {
@@ -150,19 +149,19 @@ export default function useOTGMdShortcuts(markdownMap) {
     return newText.join('');
   };
 
-  let [text, setText] = useState('');
-  let [returnText, setReturnText] = useState('');
+  const [text, setText] = useState('');
+  const [returnText, setReturnText] = useState('');
 
-  let callback = useCallback(
+  const callback = useCallback(
     (newText) => {
       if (text !== newText) {
-        let diff = newText.length - text.length;
+        const diff = newText.length - text.length;
         setText(newText);
 
         setState({ ...state, index: state.index + diff - 1 });
-        let updatedText = checkCandidates(
+        const updatedText = checkCandidates(
           { ...state, index: state.index + diff - 1 },
-          newText
+          newText,
         );
 
         setReturnText(updatedText);
@@ -170,7 +169,7 @@ export default function useOTGMdShortcuts(markdownMap) {
       }
       return returnText;
     },
-    [text]
+    [text],
   );
 
   return callback;

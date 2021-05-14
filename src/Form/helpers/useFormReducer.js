@@ -1,8 +1,10 @@
+/* eslint-disable no-use-before-define */
 import { useReducer } from 'react';
+
 import formReducer, { init, actions } from './formReducer';
 import useCreateInputs from './handlers/useCreateInputs';
-import useUpdateInput from './handlers/useUpdateInput';
 import useCreateValues from './handlers/useCreateValues';
+import useUpdateInput from './handlers/useUpdateInput';
 import useUpdateValue from './handlers/useUpdateValue';
 import useInputHighlight from './useInputHighlight';
 
@@ -15,13 +17,13 @@ export default function useFormReducer(notifications, inputAdditionalFields) {
       dispatch(actions.unhighlightInput(...args));
     },
     2000,
-    notifications
+    notifications,
   );
 
   const createInputs = useCreateInputs(
     updateValueCallback,
     highlightInput,
-    inputAdditionalFields
+    inputAdditionalFields,
   );
   const updateInput = useUpdateInput();
   const createValues = useCreateValues();
@@ -29,7 +31,7 @@ export default function useFormReducer(notifications, inputAdditionalFields) {
 
   const [state, dispatch] = useReducer(
     formReducer(updateInput, updateValue, createInputs, createValues),
-    init
+    init,
   );
 
   function updateValueCallback(name, value) {

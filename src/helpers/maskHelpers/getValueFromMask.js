@@ -3,7 +3,7 @@ export default function getValueFromMask(maskWithValue, emptyMask) {
 
   const value = maskWithValue.slice(
     0,
-    firstPlaceholder < 0 ? maskWithValue.length : firstPlaceholder
+    firstPlaceholder < 0 ? maskWithValue.length : firstPlaceholder,
   );
 
   if (emptyMask && emptyMask.startsWith(value)) {

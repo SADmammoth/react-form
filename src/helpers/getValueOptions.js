@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import compareObjects from './compareObjects';
+import { useState } from 'react';
+
 import safeUseEffect from './safeUseEffect';
 
 export default function useValueOptions(fetch) {
-  let [valueOptions, setValueOptions] = useState(null);
+  const [valueOptions, setValueOptions] = useState(null);
 
   safeUseEffect(
     (isUnmounted) => {
@@ -17,7 +17,7 @@ export default function useValueOptions(fetch) {
         setValueOptions(fetch);
       }
     },
-    [fetch, setValueOptions]
+    [fetch, setValueOptions],
   );
 
   return [valueOptions, !valueOptions];

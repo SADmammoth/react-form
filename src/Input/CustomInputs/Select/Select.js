@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
+
+import { isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import compareObjects from '../../../helpers/compareObjects';
 import useValueOptions from '../../../helpers/getValueOptions';
-import Input from './Input';
 import Suggestions from '../Suggestions';
+import Input from './Input';
 
 function Select(props) {
   const {
+    // type,
     valueOptions: options,
     name,
     value: currentValue,
     placeholder,
     onChange,
-    required,
+    // required,
     render,
-    type,
   } = props;
 
-  let [valueOptions, loading] = useValueOptions(options);
+  const [valueOptions, loading] = useValueOptions(options);
 
-  let [currentLabel, setCurrentLabel] = useState(null);
+  const [currentLabel, setCurrentLabel] = useState(null);
+
   useEffect(() => {
     setCurrentLabel(
-      valueOptions?.find(({ value }) => _.isEqual(value, currentValue))?.label
+      valueOptions?.find(({ value }) => isEqual(value, currentValue))?.label,
     );
   }, [currentValue, valueOptions]);
 
@@ -40,8 +42,7 @@ function Select(props) {
       setCurrentLabel={setCurrentLabel}
       onChange={onChange}
       currentValue={currentValue}
-      allowScroll={true}
-      showNumber={showNumber}
+      allowScroll
       loading={loading}
       placeholder={placeholder}
       currentLabel={currentLabel}
@@ -51,7 +52,7 @@ function Select(props) {
 }
 
 Select.defaultProps = {
-  required: false,
+  // required: false,
   value: '',
   placeholder: null,
 };
@@ -59,14 +60,14 @@ Select.defaultProps = {
 Select.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
-  required: PropTypes.bool,
+  // required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   valueOptions: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
-      })
+      }),
     ),
     PropTypes.func,
   ]).isRequired,

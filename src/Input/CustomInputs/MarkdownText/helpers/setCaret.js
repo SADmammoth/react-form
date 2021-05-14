@@ -2,8 +2,8 @@ import createChildrenArray from './createChildrenArray';
 
 export default function setCaret(input, caretIndex) {
   let range;
-  let selection = window.getSelection();
-  let toLookUp = createChildrenArray(input);
+  const selection = window.getSelection();
+  const toLookUp = createChildrenArray(input);
 
   function setRange(node, index) {
     range = document.createRange();
@@ -28,7 +28,7 @@ export default function setCaret(input, caretIndex) {
   if (toLookUp.length && j === toLookUp.length) {
     setRange(
       toLookUp[toLookUp.length - 1],
-      toLookUp[toLookUp.length - 1].length
+      toLookUp[toLookUp.length - 1].length,
     );
   }
 }

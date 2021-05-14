@@ -8,7 +8,7 @@ export default function checkValidity(inputs, values, onValidationFail) {
     input = findInputByName(inputs, valueName);
 
     if (values[valueName].required && !values[valueName].value) {
-      input.validationMessage = input.name + ' is required';
+      input.validationMessage = `${input.name} is required`;
       onValidationFail(input);
       if (!isAnyFailed) isAnyFailed = true;
     }

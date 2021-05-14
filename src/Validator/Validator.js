@@ -1,3 +1,4 @@
+import AddNotContains from './AddNotContains';
 import regexpEscapeArray from './regexpEscapeArray';
 
 const Validator = {
@@ -6,7 +7,8 @@ const Validator = {
   emailMessage: 'Email is not valid',
 
   email: (email) => {
-    const emailRegex = /^[a-zA-Z][a-zA-Z0-9_.-]*@(?:(?!.*(?:-{2,}))[\w-]{2,255})\.(?:[a-zа-я]{2,10})$/;
+    const emailRegex =
+      /^[a-zA-Z][a-zA-Z0-9_.-]*@(?:(?!.*(?:-{2,}))[\w-]{2,255})\.(?:[a-zа-я]{2,10})$/;
     return emailRegex.test(email);
   },
 
@@ -20,12 +22,12 @@ const Validator = {
 
     Validator.userNameMessage = `${Validator.userNameMessage.replace(
       / and not contain: .*/,
-      ''
+      '',
     )} and not contain: "${notContainsUnescaped.join('","')}"`;
 
     const baseUserNameRegex = '^[a-zA-Z_0-9]{6,64}$';
     return AddNotContains(baseUserNameRegex, notContainsUnescaped).test(
-      userName
+      userName,
     );
   },
 
@@ -39,7 +41,7 @@ const Validator = {
 
     Validator.passwordMessage = `${Validator.passwordMessage.replace(
       / Mustn't contain: .*/,
-      ''
+      '',
     )} Mustn't contain: "${notContains.join('","')}"`;
 
     const basePasswordRegex =
@@ -62,7 +64,7 @@ const Validator = {
       '$)';
 
     return AddNotContains(basePasswordRegex, notContainsUnescaped).test(
-      userName
+      userName,
     );
   },
 
@@ -122,16 +124,5 @@ const Validator = {
     return alphanumericRegexp.test(input);
   },
 };
-
-function AddNotContains(regexp, notContains) {
-  return RegExp(
-    `${
-      notContains.length
-        ? `
-        (?!(.*((${notContains.join(')|(')})).*))`
-        : ''
-    }${regexp}`
-  );
-}
 
 export default Validator;

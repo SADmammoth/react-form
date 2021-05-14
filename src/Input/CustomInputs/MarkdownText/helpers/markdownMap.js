@@ -16,7 +16,7 @@ function specialButtons(
   mdDispatch,
   actionTypes,
   portals,
-  setPortals
+  setPortals,
 ) {
   return {
     Link: () =>
@@ -26,7 +26,7 @@ function specialButtons(
         mdDispatch,
         actionTypes,
         portals,
-        setPortals
+        setPortals,
       ),
   };
 }

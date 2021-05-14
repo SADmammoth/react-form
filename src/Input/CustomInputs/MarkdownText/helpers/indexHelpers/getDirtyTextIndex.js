@@ -1,5 +1,5 @@
 export default function getDirtyTextIndex(regexp, text, caretIndex) {
-  let matches = text.matchAll(regexp);
+  const matches = text.matchAll(regexp);
 
   let nextMatch = matches.next();
   if (nextMatch.done) {

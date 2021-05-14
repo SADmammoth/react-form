@@ -1,6 +1,6 @@
-import regexpEscape from './regexpEscape';
 import toArray from '../helpers/toArray';
 import { months, monthsShort } from './months';
+import regexpEscape from './regexpEscape';
 
 const DateMask = {
   /* *
@@ -38,25 +38,25 @@ const DateMask = {
     let Regexp;
     if (!DateMask.dateTimeLastMasks[masks.join(';')]) {
       Regexp = `(^${masks
-        .map((mask) => {
-          return regexpEscape(mask)
+        .map((mask) =>
+          regexpEscape(mask)
             .replace(/(^|[^M\\])M($|[^M])/g, '$1(?<_0>[1-9]|1[0-2])$2')
             .replace(/(^|[^M\\])MM($|[^M])/g, '$1(?<_0>0[1-9]|1[0-2])$2')
 
             .replace(
               /(^|[^M\\])MMM($|[^M])/g,
-              `$1(?<_1>${monthsShort.join(')|(')})$2`
+              `$1(?<_1>${monthsShort.join(')|(')})$2`,
             )
 
             .replace(
               /(^|[^M\\])MMMM($|[^M])/g,
-              `$1(?<_2>${months.join(')|(')})$2`
+              `$1(?<_2>${months.join(')|(')})$2`,
             )
 
             .replace(/(^|[^d\\])d($|[^d])/g, '$1(?<_3>[1-9]|[12][0-9]|3[01])$2')
             .replace(
               /(^|[^d\\])dd($|[^d])/g,
-              '$1(?<_3>0[1-9]|[12][0-9]|3[01])$2'
+              '$1(?<_3>0[1-9]|[12][0-9]|3[01])$2',
             )
 
             .replace(/(^|[^y\\])yy($|[^y])/g, '$1(?<_4>[1-9][0-9])$2')
@@ -85,8 +85,8 @@ const DateMask = {
             .replace('<_6>', '<hours>')
             .replace('<_7>', '<minutes>')
             .replace('<_8>', '<seconds>')
-            .replace('<_9>', '<ampm>');
-        })
+            .replace('<_9>', '<ampm>'),
+        )
         .join('$)|(^')}$)`; // concat with OR statement for every date mask}
 
       DateMask.dateTimeLastMasks[masks.join(';')] = Regexp;
@@ -130,7 +130,7 @@ const DateMask = {
         .map((mask) => {
           const check =
             toArray(mask.slice(input.length - 1)).findIndex((el) =>
-              /[^MdymshHa]/.test(el)
+              /[^MdymshHa]/.test(el),
             ) +
             input.length -
             1;
@@ -153,10 +153,10 @@ const DateMask = {
           }
           return DateMask.dateTimeRegexpString([maskU.slice(0, check)]).replace(
             /[$^]/g,
-            ''
+            '',
           );
         })
-        .join('$)|(^')}$)`
+        .join('$)|(^')}$)`,
     );
 
     return Regexp.test(input);

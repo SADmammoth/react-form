@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
+
 import PropTypes from 'prop-types';
-import markdownMap from './helpers/markdownMap';
+
 import compareObjects from '../../../helpers/compareObjects';
 import filterMarkdownMap from './helpers/filterMarkdownMap';
+import markdownMap from './helpers/markdownMap';
 import shortcutMd from './helpers/shortcutMd';
 
 function MarkdownOutput({ id, value, name, markdownFeatures }) {
-  let [filteredMarkdownMap] = filterMarkdownMap(
+  const [filteredMarkdownMap] = filterMarkdownMap(
     markdownMap,
     undefined,
-    markdownFeatures
+    markdownFeatures,
   );
 
   // let update = useMd(filteredMarkdownMap);
 
-  let [html, setHtml] = useState(shortcutMd(value, filteredMarkdownMap));
+  const [html, setHtml] = useState(shortcutMd(value, filteredMarkdownMap));
 
-  let [markdown, setMarkdown] = useState(value);
+  const [markdown, setMarkdown] = useState(value);
 
   useEffect(() => {
     if (value !== markdown) {
@@ -26,14 +28,14 @@ function MarkdownOutput({ id, value, name, markdownFeatures }) {
   });
 
   return (
-    <div className='markdown-text'>
+    <div className="markdown-text">
       <div
         id={id}
-        className='markdown-text-output'
+        className="markdown-text-output"
         contentEditable={false}
         name={name}
         dangerouslySetInnerHTML={{ __html: html }}
-      ></div>
+      />
     </div>
   );
 }

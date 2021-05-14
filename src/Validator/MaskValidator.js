@@ -1,5 +1,5 @@
-import regexpEscape from './regexpEscape';
 import maskEscapedCharsOrEmptyRegex from '../helpers/maskHelpers/maskEscapedCharsOrEmptyRegex';
+import regexpEscape from './regexpEscape';
 
 const MaskValidator = {
   /* *
@@ -39,7 +39,9 @@ const MaskValidator = {
   lastMask: {},
 
   maskByChar: (input, mask) => {
-    const maskArray = mask.split(maskEscapedCharsOrEmptyRegex).filter((el) => !!el);
+    const maskArray = mask
+      .split(maskEscapedCharsOrEmptyRegex)
+      .filter((el) => !!el);
 
     const currMaskEl = maskArray[input.length - 1];
 

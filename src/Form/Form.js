@@ -1,23 +1,24 @@
 import React, { Fragment, useEffect, useCallback } from 'react';
+
 import PropTypes from 'prop-types';
+
 import Input from '../Input';
-import validateForm from '../helpers/formHelpers/validateForm';
-import useOnSubmit from './helpers/handlers/useOnSubmit';
-import useNotifications from './helpers/useNotifications';
-import useFormReducer from './helpers/useFormReducer';
+import validatorsMap from '../Validator/validatorsMap';
 import mapGroups from '../helpers/formHelpers/mapGroups';
 import renderGroups from '../helpers/formHelpers/renderGroups';
-import _ from 'lodash';
-import useDiff from '../helpers/useDiff';
+import validateForm from '../helpers/formHelpers/validateForm';
 import masks from '../helpers/maskHelpers/masks';
-import validatorsMap from '../Validator/validatorsMap';
+import useDiff from '../helpers/useDiff';
+import useOnSubmit from './helpers/handlers/useOnSubmit';
+import useFormReducer from './helpers/useFormReducer';
+import useNotifications from './helpers/useNotifications';
 
 const Form = (props) => {
-  let {
+  let { showNotifications } = props;
+  const {
     inputs: inputsProps,
     onInputsUpdate,
     onSubmit: onSubmitHandler,
-    showNotifications,
     notify,
     render,
     validationMaskDateFormat,
@@ -29,17 +30,18 @@ const Form = (props) => {
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
-  const mapGroupsCb = useCallback((inputs) => mapGroups(inputs, inputsProps), [
-    inputsProps,
-  ]);
+  const mapGroupsCb = useCallback(
+    (inputs) => mapGroups(inputs, inputsProps),
+    [inputsProps],
+  );
 
   const inputAdditionalFields = {
     render,
   };
 
-  let [state, dispatch, actions] = useFormReducer(
+  const [state, dispatch, actions] = useFormReducer(
     notifications,
-    inputAdditionalFields
+    inputAdditionalFields,
   );
 
   useDiff(() => {
@@ -56,13 +58,13 @@ const Form = (props) => {
         const [inputs] = values;
         onInputsUpdate({
           ...mapGroupsCb(inputs),
-          $list: [...Object.values(inputs || {})].map((props) => (
-            <Input {...props} />
+          $list: [...Object.values(inputs || {})].map((inputprops) => (
+            <Input {...inputprops} />
           )),
         });
       }
     },
-    [state.inputs, state.values]
+    [state.inputs, state.values],
   );
 
   if (!notify) {
@@ -81,7 +83,7 @@ const Form = (props) => {
       validationMaskDateFormat,
       validationMaskDateTimeFormat,
       dateFormatMask,
-      dateTimeFormatMask
+      dateTimeFormatMask,
     );
   }, [
     validationMaskDateFormat,
@@ -95,15 +97,14 @@ const Form = (props) => {
     values,
     inputsProps,
     () => validateForm(inputsProps, values, onValidationFail),
-    (data) => {
-      return onSubmitHandler(data).then(() => {
+    (data) =>
+      onSubmitHandler(data).then(() => {
         if (resetOnSubmit) {
           dispatch(actions.resetForm(inputsProps));
         }
-      });
-    },
+      }),
     notifications,
-    resetOnSubmit
+    resetOnSubmit,
   );
 
   const { method, action, className, style, submitButton, children } = props;
@@ -116,8 +117,7 @@ const Form = (props) => {
       action={action}
       className={`form ${className}` || ''}
       style={{ ...style }}
-      onSubmit={onSubmit}
-    >
+      onSubmit={onSubmit}>
       {children || renderGroups(inputs, inputsProps, render.group)}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </FormTag>
@@ -129,7 +129,7 @@ Form.defaultProps = {
   action: '/',
   className: '',
   style: {},
-  submitButton: <Fragment></Fragment>,
+  submitButton: <Fragment />,
   onInputsUpdate: (inputs) => inputs,
   showNotifications: 'all',
   children: null,
@@ -139,6 +139,7 @@ Form.defaultProps = {
   dateFormatMask: masks.dateMask,
   dateTimeFormatMask: masks.dateTimeMask,
   resetOnSubmit: false,
+  render: {},
 };
 
 Form.propTypes = {
@@ -154,7 +155,7 @@ Form.propTypes = {
         title: PropTypes.string,
         id: PropTypes.string,
       }),
-    })
+    }),
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   submitButton: PropTypes.element,
@@ -163,6 +164,7 @@ Form.propTypes = {
   // Passed in order to get inputs components
   onInputsUpdate: PropTypes.func,
   showNotifications: PropTypes.oneOf(['all', 'errorsOnly', 'hideAll']),
+  // eslint-disable-next-line react/require-default-props
   notify: PropTypes.func,
   render: PropTypes.shape({
     Group: PropTypes.any,

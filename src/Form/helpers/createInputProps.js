@@ -1,5 +1,5 @@
-import validatorsMap from '../../Validator/validatorsMap';
 import convertersMap from '../../Validator/convertersMap';
+import validatorsMap from '../../Validator/validatorsMap';
 
 export default function createInputProps(
   {
@@ -29,7 +29,7 @@ export default function createInputProps(
   updateValueCallback,
   valuesState,
   highlightInput,
-  additionalFields
+  additionalFields,
 ) {
   const { render } = additionalFields;
 

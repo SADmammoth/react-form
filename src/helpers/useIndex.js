@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export default function useIndex(init, max) {
-  let [index, setIndex] = useState(init);
+  const [index, setIndex] = useState(init);
 
   useEffect(() => {
     setIndex(init);
@@ -10,11 +10,11 @@ export default function useIndex(init, max) {
   const setIndexExport = useCallback(
     (newIndex) => {
       if (typeof newIndex === 'function') {
-        setIndex((index) => {
+        setIndex((currentIndex) => {
           const indexToSave = newIndex(index);
           return indexToSave >= 0 && indexToSave <= max - 1
             ? indexToSave
-            : index;
+            : currentIndex;
         });
         return;
       }
@@ -23,7 +23,7 @@ export default function useIndex(init, max) {
         setIndex(newIndex);
       }
     },
-    [max]
+    [max],
   );
 
   return [index, setIndexExport];

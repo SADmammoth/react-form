@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+
 import PropTypes from 'prop-types';
+
 import compareObjects from '../../../helpers/compareObjects';
-import SliderThumb from '../SliderThumb';
+import createEvent from '../../../helpers/createEvent';
 import calcPercent from '../../../helpers/formHelpers/calcPercent';
 import useRange from '../../../helpers/useRange';
-import createEvent from '../../../helpers/createEvent';
+import SliderThumb from '../SliderThumb';
 
 function Range(props) {
   const {
+    // type,
     name,
-    type,
     value: currentValue,
     onChange,
     required,
@@ -18,7 +20,7 @@ function Range(props) {
   } = props;
 
   let { from, to } = currentValue;
-  const length = valueOptions.length;
+  const { length } = valueOptions;
 
   const range = useRef({});
 
@@ -30,7 +32,7 @@ function Range(props) {
   const [leftIndex, rightIndex, setLeftIndex, setRightIndex] = useRange(
     from,
     to,
-    length
+    length,
   );
 
   useEffect(() => {
@@ -44,7 +46,7 @@ function Range(props) {
         ...valueOptions.slice(leftIndex, rightIndex + 1),
         from: leftIndex,
         to: rightIndex,
-      })
+      }),
     );
   }, [leftIndex, rightIndex]);
 
@@ -59,28 +61,27 @@ function Range(props) {
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div
-      className='form-range'
+      className="form-range"
       style={{
         '--start': calcPercent(leftIndex, length),
         '--percent': calcPercent(rightIndex, length),
         '--display-tip': alwaysShowTip ? 'unset' : 'none',
-      }}
-    >
-      <div ref={range} className='form-range-bg'>
+      }}>
+      <div ref={range} className="form-range-bg">
         <input
-          type='text'
-          name={name + '-left'}
+          type="text"
+          name={`${name}-left`}
           value={valueOptions[leftIndex].value}
           required={required}
           readOnly
-        ></input>
+        />
         <input
-          type='text'
-          name={name + '-right'}
+          type="text"
+          name={`${name}-right`}
           value={valueOptions[rightIndex].value}
           required={required}
           readOnly
-        ></input>
+        />
 
         <SliderThumb
           sliderRef={range.current}
@@ -105,12 +106,12 @@ function Range(props) {
 Range.defaultProps = {
   required: false,
   value: null,
-  placeholder: null,
-  attributes: {
-    step: 1,
-    min: 0,
-    max: 999,
-  },
+  // placeholder: null,
+  // attributes: {
+  //   step: 1,
+  //   min: 0,
+  //   max: 999,
+  // },
 };
 
 Range.propTypes = {
@@ -121,7 +122,8 @@ Range.propTypes = {
     }),
     PropTypes.string,
   ]),
-  placeholder: PropTypes.string,
+  // placeholder: PropTypes.string,
+  // attributes: PropTypes.object,
   required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -130,7 +132,7 @@ Range.propTypes = {
       PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
-      })
+      }),
     ),
   ]).isRequired,
   alwaysShowTip: PropTypes.bool,

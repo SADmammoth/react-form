@@ -1,10 +1,10 @@
-import maskSpecialCharsRegex from './maskSpecialCharsRegex';
 import getValueFromMask from './getValueFromMask';
+import maskSpecialCharsRegex from './maskSpecialCharsRegex';
 
 export default function placeInputCursorToEnd(
   target,
   maskArray,
-  maskType = 'default'
+  maskType = 'default',
 ) {
   let { value } = target;
 

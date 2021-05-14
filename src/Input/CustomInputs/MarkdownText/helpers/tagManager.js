@@ -1,24 +1,24 @@
 const tagManager = {
-  open: function (
+  open(
     value,
     html,
     name,
     tagName,
     markdownEquiv,
     selectedText,
-    onChange = () => {}
+    onChange = () => {},
   ) {
     onChange(value + markdownEquiv);
     return `${html}<${tagName}>`;
   },
-  close: function (
+  close(
     value,
     html,
     name,
     tagName,
     markdownEquiv,
     selectedText,
-    onChange = () => {}
+    onChange = () => {},
   ) {
     onChange(value + markdownEquiv);
     return `${html}</${tagName}>`;

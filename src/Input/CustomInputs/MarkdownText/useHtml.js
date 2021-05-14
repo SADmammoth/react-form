@@ -1,11 +1,12 @@
 import { useState, useMemo, useReducer } from 'react';
-import safeHtml from './helpers/safeHtml';
+
 import regexpEscape from '../../../Validator/regexpEscape';
+import safeHtml from './helpers/safeHtml';
 
 export default function useHtml(init, markdownMap) {
-  let mdMap = useMemo(() => Object.values(markdownMap));
+  const mdMap = useMemo(() => Object.values(markdownMap));
 
-  let [html, setHtml] = useState(safeHtml(init));
+  const [html, setHtml] = useState(safeHtml(init));
   const [state, dispatch] = useReducer((state, { type, data }) => {
     switch (type) {
       case 'remove':
@@ -18,12 +19,12 @@ export default function useHtml(init, markdownMap) {
     }
   }, []);
 
-  let setNewHtml = (html) => {
+  const setNewHtml = (html) => {
     let newHtml = html;
     mdMap.forEach(([tag, md]) => {
-      let reg = new RegExp(`^(.*)${regexpEscape(md)}$`);
+      const reg = new RegExp(`^(.*)${regexpEscape(md)}$`);
 
-      let includes = state.includes(md);
+      const includes = state.includes(md);
       if (reg.test(html) && !includes) {
         newHtml = newHtml.replace(reg, `$1<${tag}>`);
         dispatch({ type: 'push', data: md });

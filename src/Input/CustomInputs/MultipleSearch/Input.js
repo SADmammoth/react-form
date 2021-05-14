@@ -1,4 +1,8 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback } from 'react';
+
 import DefaultTag from '../../../Components/Tag';
 import createEvent from '../../../helpers/createEvent';
 
@@ -10,7 +14,6 @@ export default function Input({
   listShown,
   setCurrentLabel,
   render,
-  onBlur,
   onChange,
   currentValue,
   valueOptions,
@@ -21,57 +24,56 @@ export default function Input({
   const mapCurrentValue = useCallback(
     (value) => {
       const valueOption = valueOptions.find(
-        ({ value: candidateValue }) => candidateValue === value
+        ({ value: candidateValue }) => candidateValue === value,
       );
-      if (!valueOption) return;
+      if (!valueOption) return null;
+
       return (
         <Tag
           onDelete={() => {
-            onChange(createEvent(name, label));
-          }}
-        >
+            onChange(createEvent(name, valueOption.label));
+          }}>
           {valueOption.label}
         </Tag>
       );
     },
-    [valueOptions, currentValue]
+    [valueOptions, currentValue],
   );
 
   return (
-    <div className='select-header'>
-      <div className='input-wrapper'>
+    <div className="select-header">
+      <div className="input-wrapper">
         <InputTag
-          type='text'
-          className='search-input'
+          type="text"
+          className="search-input"
           placeholder={placeholder || 'Start typing to see options...'}
           value={currentLabel || ''}
           aria-disabled={!currentLabel ? 'disabled' : null}
           onInput={(event) => {
             setCurrentLabel(event.target.value);
           }}
-          onFocus={(event) => {
+          onFocus={() => {
             showList(true);
           }}
         />
       </div>
-      <div className='tag-stack'>
+      <div className="tag-stack">
         {currentValue && currentValue.length ? (
           currentValue.map(mapCurrentValue)
         ) : (
           <div
-            className='select-placeholder'
+            className="select-placeholder"
             onClick={() => {
               showList(!listShown);
-            }}
-          >
+            }}>
             {placeholder || 'Choose option...'}
           </div>
         )}
       </div>
       <input
-        type='checkbox'
-        className='form-spoiler'
-        name='select-header-button'
+        type="checkbox"
+        className="form-spoiler"
+        name="select-header-button"
         checked={listShown}
         onChange={() => {
           showList(!listShown);

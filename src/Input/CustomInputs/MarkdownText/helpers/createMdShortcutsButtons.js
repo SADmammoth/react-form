@@ -4,7 +4,7 @@ export default function createMdShortcutsButtons(
   actionTypes,
   onInput,
   specialButtons,
-  markdownMap
+  markdownMap,
 ) {
   return [
     ...Object.entries(markdownMap).map(([btnName, [tag, md, mdClose]]) => ({
@@ -12,7 +12,7 @@ export default function createMdShortcutsButtons(
       key: btnName,
       content: btnName,
       on: () => {
-        let { endOffset, startOffset } = window.getSelection().getRangeAt(0);
+        const { endOffset, startOffset } = window.getSelection().getRangeAt(0);
         if (endOffset === startOffset) {
           htmlDispatch({ type: actionTypes.input, data: md });
           mdDispatch({ type: actionTypes.input, data: md });

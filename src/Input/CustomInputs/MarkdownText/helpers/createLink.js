@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Link from '../Link/Link';
 
 export default function createLink(
@@ -7,7 +8,7 @@ export default function createLink(
   mdDispatch,
   actionTypes,
   portals,
-  setPortals
+  setPortals,
 ) {
   htmlDispatch({
     type: actionTypes.input,
@@ -24,7 +25,7 @@ export default function createLink(
             data: md,
           });
         }}
-      ></Link>
+      />
     ),
   });
 }

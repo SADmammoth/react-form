@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import Validator from '../Validator';
-import getValueFromMask from '../helpers/maskHelpers/getValueFromMask';
 
-import addMask from '../helpers/maskHelpers/addMask';
-import placeInputCursorToEnd from '../helpers/maskHelpers/placeInputCursorToEnd';
-import maskNotSpecialCharsRegex from '../helpers/maskHelpers/maskNotSpecialCharsRegex';
-import getUniqueItems from '../helpers/getUniqueItems';
+import Validator from '../Validator';
 import regexpEscape from '../Validator/regexpEscape';
 import replaceAll from '../helpers/formHelpers/replaceAll';
+import getUniqueItems from '../helpers/getUniqueItems';
+import addMask from '../helpers/maskHelpers/addMask';
+import getValueFromMask from '../helpers/maskHelpers/getValueFromMask';
+import maskNotSpecialCharsRegex from '../helpers/maskHelpers/maskNotSpecialCharsRegex';
+import placeInputCursorToEnd from '../helpers/maskHelpers/placeInputCursorToEnd';
 
 function MaskComponent(input, maskArray) {
   if (maskArray[input.props.value.length]) {
@@ -25,10 +25,10 @@ function MaskComponent(input, maskArray) {
 
     const charsToDelete = regexpEscape(
       getUniqueItems(
-        maskArray.filter((maskElement) => {
-          return maskElement.match(maskNotSpecialCharsRegex);
-        })
-      ).join('')
+        maskArray.filter((maskElement) =>
+          maskElement.match(maskNotSpecialCharsRegex),
+        ),
+      ).join(''),
     );
 
     const charsToDeleteRegex = new RegExp(`[^${charsToDelete}]`, 'g');
@@ -55,15 +55,15 @@ function MaskComponent(input, maskArray) {
     if (
       Validator.maskByChar(
         getValueFromMask(event.target.value) + event.key,
-        maskArray.join('')
+        maskArray.join(''),
       ) &&
       input.props.byCharValidator(
-        getValueFromMask(event.target.value) + event.key
+        getValueFromMask(event.target.value) + event.key,
       )
     ) {
       event.target.value = addMask(
         getValueFromMask(event.target.value) + event.key,
-        maskArray
+        maskArray,
       );
       input.props.onChange(event);
       placeInputCursorToEnd(event.target, maskArray);
@@ -75,7 +75,7 @@ function MaskComponent(input, maskArray) {
   const onBlur = (event) => {
     event.target.value = getValueFromMask(
       event.target.value,
-      maskArray.join('')
+      maskArray.join(''),
     );
   };
 

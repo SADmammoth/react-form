@@ -1,18 +1,20 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { Fragment } from 'react';
+import React from 'react';
+
+import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import checkboxValueSeparator from '../../helpers/formHelpers/checkboxValueSeparator';
+
 import compareObjects from '../../helpers/compareObjects';
+import checkboxValueSeparator from '../../helpers/formHelpers/checkboxValueSeparator';
 import useValueOptions from '../../helpers/getValueOptions';
 
 function CheckboxGroup(props) {
-  let { valueOptions: options, render } = props;
-  let [valueOptions, loading] = useValueOptions(options);
+  const { valueOptions: options, render, required } = props;
+  const [valueOptions, loading] = useValueOptions(options);
 
   function renderCheckbox(
     valueOption,
-    { value: commonValue, id, type, name, onChange, attributes }
+    { value: commonValue, id, type, name, onChange, attributes },
   ) {
     //* 'valueOption' variable is 'value' property of current checkbox
     /*
@@ -52,8 +54,8 @@ function CheckboxGroup(props) {
           onChange={onChangeHandler}
           {...attributes}
           checked={
-            _.isEqual(value, values === valueOption.value) ||
-            _.includes(valueOption.value, values)
+            isEqual(valueOption.value, values === valueOption.value) ||
+            includes(valueOption.value, values)
           }
         />
         <LabelTag htmlFor={id + valueOption.value}>
@@ -64,20 +66,20 @@ function CheckboxGroup(props) {
   }
 
   function renderCheckboxes() {
-    return (
-      <Fragment>
-        {loading
-          ? render.Loader
-            ? render.Loader(14)
-            : 'Loading...'
-          : valueOptions.map((valueOption) =>
-              renderCheckbox(valueOption, props)
-            )}
-      </Fragment>
+    if (loading) {
+      if (render.Loader) {
+        return render.Loader(14);
+      }
+
+      return 'Loading...';
+    }
+
+    return valueOptions.map((valueOption) =>
+      renderCheckbox(valueOption, props),
     );
   }
 
-  const { type, id, required } = props;
+  const { type, id } = props;
 
   return (
     <div id={id + type} className={`${type}-group`}>
@@ -112,7 +114,7 @@ CheckboxGroup.propTypes = {
       PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
-      })
+      }),
     ),
     PropTypes.func,
   ]).isRequired,

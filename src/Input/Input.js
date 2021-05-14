@@ -1,19 +1,21 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
-import CheckboxGroup from './CustomInputs/CheckboxGroup';
-import Select from './CustomInputs/Select';
-import TextArea from './CustomInputs/TextArea';
-import compareObjects from '../helpers/compareObjects';
-import MaskedInput from './MaskedInput';
-import LabeledInput from './LabeledInput';
-import CustomNumber from './CustomInputs/CustomNumber';
-import Slider from './CustomInputs/Slider';
-import Range from './CustomInputs/Range';
-import MarkdownText from './CustomInputs/MarkdownText';
-import Search from './CustomInputs/Search';
+
 import Tag from '../Components/Tag';
-import MultipleSelect from './CustomInputs/MultipleSelect';
+import compareObjects from '../helpers/compareObjects';
+import CheckboxGroup from './CustomInputs/CheckboxGroup';
+import CustomNumber from './CustomInputs/CustomNumber';
+import MarkdownText from './CustomInputs/MarkdownText';
 import MultipleSearch from './CustomInputs/MultipleSearch';
+import MultipleSelect from './CustomInputs/MultipleSelect';
+import Range from './CustomInputs/Range';
+import Search from './CustomInputs/Search';
+import Select from './CustomInputs/Select';
+import Slider from './CustomInputs/Slider';
+import TextArea from './CustomInputs/TextArea';
+import LabeledInput from './LabeledInput';
+import MaskedInput from './MaskedInput';
 
 function Input(props) {
   const {
@@ -46,6 +48,11 @@ function Input(props) {
     allowScroll,
   } = props;
 
+  const onError = () => {
+    console.log(validationMessage);
+    highlightInput(name, validationMessage);
+  };
+
   const onChangeHandler = ({
     target: { name: targetName, value: targetValue },
   }) => {
@@ -70,11 +77,6 @@ function Input(props) {
     if (!byCharValidator(targetValue + key)) {
       event.preventDefault();
     }
-  };
-
-  const onError = () => {
-    console.log(validationMessage);
-    highlightInput(name, validationMessage);
   };
 
   function renderInput() {
@@ -102,7 +104,7 @@ function Input(props) {
           value={value}
           valueOptions={valueOptions}
           render={render}
-        />
+        />,
       );
     }
 
@@ -124,7 +126,7 @@ function Input(props) {
           editable={editable}
           render={render}
           markdownFeatures={markdownFeatures}
-        />
+        />,
       );
     }
 
@@ -144,7 +146,7 @@ function Input(props) {
           attributes={attributes}
           value={value}
           render={render}
-        />
+        />,
       );
     }
 
@@ -166,7 +168,7 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           render={render}
-        />
+        />,
       );
     }
 
@@ -188,7 +190,7 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           render={render}
-        />
+        />,
       );
     }
 
@@ -210,7 +212,7 @@ function Input(props) {
           valueOptions={valueOptions}
           placeholder={placeholder}
           render={render}
-        />
+        />,
       );
     }
 
@@ -234,7 +236,7 @@ function Input(props) {
           maxSymbols={maxSymbols}
           placeholder={placeholder}
           render={render}
-        />
+        />,
       );
     }
 
@@ -258,7 +260,7 @@ function Input(props) {
           placeholder={placeholder}
           alwaysShowTip={alwaysShowTip}
           render={render}
-        />
+        />,
       );
     }
 
@@ -281,7 +283,7 @@ function Input(props) {
           placeholder={placeholder}
           alwaysShowTip={alwaysShowTip}
           render={render}
-        />
+        />,
       );
     }
 
@@ -303,7 +305,7 @@ function Input(props) {
           placeholder={placeholder}
           render={render}
           allowScroll={allowScroll}
-        />
+        />,
       );
     }
 
@@ -331,8 +333,8 @@ function Input(props) {
           byCharValidator={byCharValidator}
           {...attributes}
           value={value}
-        />
-      )
+        />,
+      ),
     );
   }
 
@@ -362,8 +364,10 @@ Input.defaultProps = {
   required: false,
   highlightInput: () => {},
   render: {
+    // eslint-disable-next-line no-unused-vars
     Loader: (size, centered) => 'Loading...',
     Input: (props) => <input {...props} />,
+    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     Label: (props) => <label {...props} />,
     Tag: (props) => <Tag {...props} />,
   },
@@ -379,7 +383,7 @@ Input.publicProps = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   placeholder: PropTypes.string,
   attributes: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ),
   value: PropTypes.any,
   valueOptions: PropTypes.oneOfType([
@@ -387,7 +391,7 @@ Input.publicProps = {
       PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
-      })
+      }),
     ),
     PropTypes.func,
   ]),

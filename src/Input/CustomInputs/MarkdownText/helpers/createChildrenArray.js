@@ -1,5 +1,5 @@
 export default function createChildrenArray(root) {
-  let children = [];
+  const children = [];
 
   function step(node) {
     if (node.nodeType === Node.TEXT_NODE) {

@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 
-import placeInputCursorToEnd from '../helpers/maskHelpers/placeInputCursorToEnd';
+import replaceSubstring from '../helpers/formHelpers/replaceSubstring';
 import getMaskCharsBeforePlaceholder from '../helpers/maskHelpers/getMaskCharsBeforePlaceholder';
 import invisibleMaskOnInputValue from '../helpers/maskHelpers/invisibleMaskOnInputValue';
-import replaceSubstring from '../helpers/formHelpers/replaceSubstring';
+import placeInputCursorToEnd from '../helpers/maskHelpers/placeInputCursorToEnd';
 
 function InvisibleMaskComponent(input, maskArray) {
   const {
@@ -40,7 +40,7 @@ function InvisibleMaskComponent(input, maskArray) {
 
   const onChange = (event) => {
     inputOnChange(
-      invisibleMaskOnInputValue(name, event.target.value, maskArray)
+      invisibleMaskOnInputValue(name, event.target.value, maskArray),
     );
     inputOnKeyPress(event);
   };

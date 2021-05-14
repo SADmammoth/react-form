@@ -6,7 +6,8 @@ export default function invisibleMaskOnInputValue(name, value, maskArray) {
     target: {
       name,
       value:
-        maskArray[value.length] && !RegExp(maskSpecialCharsRegex.source, '').test(maskArray[value.length])
+        maskArray[value.length] &&
+        !RegExp(maskSpecialCharsRegex.source, '').test(maskArray[value.length])
           ? value + maskArray[value.length].replace(maskEscapedCharsRegex, '$1')
           : value,
     },

@@ -1,16 +1,15 @@
 export default function useUpdateValue() {
   return (name, valuesState, newValue) => {
-    let valueItem = valuesState[name];
+    const valueItem = valuesState[name];
 
     if (valueItem && valueItem.bind) {
-      let newValues = { [name]: { ...valueItem, value: newValue } };
-      valueItem.bind.forEach(
-        (name) =>
-          (newValues[name] = {
-            ...valuesState[name],
-            value: valueItem.converters.in(newValue),
-          })
-      );
+      const newValues = { [name]: { ...valueItem, value: newValue } };
+      valueItem.bind.forEach((valueName) => {
+        newValues[valueName] = {
+          ...valuesState[valueName],
+          value: valueItem.converters.in(newValue),
+        };
+      });
 
       return newValues;
     }

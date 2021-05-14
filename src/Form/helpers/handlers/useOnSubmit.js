@@ -1,6 +1,5 @@
-import useResponseProcessor from '../useResponseProcessor';
-
 import formatFormValues from '../../../helpers/formHelpers/formatFormValues';
+import useResponseProcessor from '../useResponseProcessor';
 
 export default function useOnSubmit(
   values,
@@ -8,11 +7,10 @@ export default function useOnSubmit(
   validateForm,
   handler,
   notifications,
-  resetOnSubmit
+  resetOnSubmit,
 ) {
-  const [onResponseReceived, onResponseError] = useResponseProcessor(
-    notifications
-  );
+  const [onResponseReceived, onResponseError] =
+    useResponseProcessor(notifications);
 
   return (event) => {
     if (resetOnSubmit) {

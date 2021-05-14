@@ -14,5 +14,5 @@ export const months = [
 ];
 
 export const monthsShort = months.map((month) =>
-  [...month].slice(0, 3).join('')
+  [...month].slice(0, 3).join(''),
 );

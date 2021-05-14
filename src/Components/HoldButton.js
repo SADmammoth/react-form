@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import PropTypes from 'prop-types';
 
 function HoldButton({
@@ -19,9 +20,9 @@ function HoldButton({
         saveInterval(
           setInterval(() => {
             action();
-          }, holdInterval)
+          }, holdInterval),
         );
-      }, firstInterval)
+      }, firstInterval),
     );
   };
 
@@ -32,12 +33,11 @@ function HoldButton({
 
   return (
     <button
-      type='button'
+      type="button"
       name={name}
       className={className}
       onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-    >
+      onMouseUp={onMouseUp}>
       {children}
     </button>
   );

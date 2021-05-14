@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 const init = { inputs: {}, values: {} };
 const actionTypes = {
   UPDATE_INPUT: 'UPDATE_INPUT',
@@ -9,62 +10,61 @@ const actionTypes = {
   RESET_FORM: 'RESET_FORM',
 };
 
-const formReducer = (updateInput, updateValue, createInputs, createValues) => (
-  state,
-  { type, data }
-) => {
-  let { inputs, values } = state;
-  switch (type) {
-    case actionTypes.UPDATE_INPUT:
-      return {
-        ...state,
-        inputs: {
-          ...updateInput(
-            data.inputsProps,
-            data.value,
-            data.name,
-            values,
-            inputs
-          ),
-        },
-      };
-    case actionTypes.UPDATE_VALUE:
-      return {
-        ...state,
-        values: {
-          ...values,
-          ...updateValue(data.name, values, data.value),
-        },
-      };
-    case actionTypes.CREATE_INPUTS:
-      return {
-        ...state,
-        inputs: createInputs(data.inputsProps, values),
-      };
-    case actionTypes.CREATE_VALUES:
-      return { values: createValues(data.inputsProps, values) };
-    case actionTypes.HIGHLIGHT_INPUT:
-      return {
-        ...state,
-        values: {
-          ...state.values,
-          ...highlightInput(data.name, values[data.name]),
-        },
-      };
-    case actionTypes.UNHIGHLIGHT_INPUT:
-      return {
-        ...state,
-        values: {
-          ...state.values,
-          ...unhighlightInput(data.name, values[data.name]),
-        },
-      };
-    case actionTypes.RESET_FORM:
-      return reset(data.inputsProps, values, inputs);
-    default:
-      return state;
-  }
-};
+const formReducer =
+  (updateInput, updateValue, createInputs, createValues) =>
+  (state, { type, data }) => {
+    const { inputs, values } = state;
+    switch (type) {
+      case actionTypes.UPDATE_INPUT:
+        return {
+          ...state,
+          inputs: {
+            ...updateInput(
+              data.inputsProps,
+              data.value,
+              data.name,
+              values,
+              inputs,
+            ),
+          },
+        };
+      case actionTypes.UPDATE_VALUE:
+        return {
+          ...state,
+          values: {
+            ...values,
+            ...updateValue(data.name, values, data.value),
+          },
+        };
+      case actionTypes.CREATE_INPUTS:
+        return {
+          ...state,
+          inputs: createInputs(data.inputsProps, values),
+        };
+      case actionTypes.CREATE_VALUES:
+        return { values: createValues(data.inputsProps, values) };
+      case actionTypes.HIGHLIGHT_INPUT:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            ...highlightInput(data.name, values[data.name]),
+          },
+        };
+      case actionTypes.UNHIGHLIGHT_INPUT:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            ...unhighlightInput(data.name, values[data.name]),
+          },
+        };
+      case actionTypes.RESET_FORM:
+        return reset(data.inputsProps, values, inputs);
+      default:
+        return state;
+    }
+  };
 
 function highlightInput(name, input) {
   return { [name]: { ...input, invalid: true } };
@@ -74,9 +74,8 @@ function unhighlightInput(name, input) {
   return { [name]: { ...input, invalid: false } };
 }
 
-const findProp = (props, name) => {
-  return props.find(({ name: candidate }) => name === candidate);
-};
+const findProp = (props, name) =>
+  props.find(({ name: candidate }) => name === candidate);
 
 function reset(inputsProps, values, inputs) {
   return {
@@ -90,7 +89,7 @@ function reset(inputsProps, values, inputs) {
             ...rest,
           },
         ];
-      })
+      }),
     ),
     inputs: Object.fromEntries(
       Object.entries(inputs).map(([name, { value, ...rest }]) => {
@@ -102,7 +101,7 @@ function reset(inputsProps, values, inputs) {
             ...rest,
           },
         ];
-      })
+      }),
     ),
   };
 }

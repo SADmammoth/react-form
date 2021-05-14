@@ -1,13 +1,10 @@
-import React from 'react';
-
-import Input from '../../../Input/Input';
 import createInputProps from '../createInputProps';
 
 export default function useCreateInputs(
   updateValueCallback,
   highlightInput,
   notifications,
-  inputAdditionalFields
+  inputAdditionalFields,
 ) {
   return (inputsProps, valuesState) => {
     if (!Object.keys(valuesState).length) {
@@ -23,7 +20,7 @@ export default function useCreateInputs(
         valuesState,
         highlightInput,
         notifications,
-        inputAdditionalFields
+        inputAdditionalFields,
       );
       inputsData[props.name] = inputProps;
     });

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export default function safeUseEffect(callback, deps) {
   useEffect(() => {
-    let isUnmounted = { value: false };
+    const isUnmounted = { value: false };
 
     callback(isUnmounted);
 

@@ -1,21 +1,20 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import _ from 'lodash';
+import { isEqual } from 'lodash-es';
 
-import Input from './Input';
-
+// import PropTypes from 'prop-types';
+import compareObjects from '../../../helpers/compareObjects';
 import createEvent from '../../../helpers/createEvent';
 import useValueOptions from '../../../helpers/getValueOptions';
-import PropTypes from 'prop-types';
-import compareObjects from '../../../helpers/compareObjects';
-import FilterOptions from './FilterOptions';
 import Suggestions from '../Suggestions';
+import FilterOptions from './FilterOptions';
+import Input from './Input';
 
 function Search({
-  type,
+  // type,
   name,
   onChange,
-  onInput,
+  // onInput,
   value: currentValue,
   valueOptions: options,
   placeholder,
@@ -23,16 +22,17 @@ function Search({
   required,
   allowScroll,
 }) {
-  let [valueOptions, loading] = useValueOptions(options);
-  let [currentLabel, setCurrentLabel] = useState(null);
+  const [valueOptions, loading] = useValueOptions(options);
+  const [currentLabel, setCurrentLabel] = useState(null);
 
-  const filteredValueOptions = useMemo(() => {
-    return FilterOptions(currentLabel, valueOptions);
-  }, [currentLabel, valueOptions]);
+  const filteredValueOptions = useMemo(
+    () => FilterOptions(currentLabel, valueOptions),
+    [currentLabel, valueOptions],
+  );
 
   useEffect(() => {
     setCurrentLabel(
-      valueOptions?.find(({ value }) => value === currentValue)?.label
+      valueOptions?.find(({ value }) => value === currentValue)?.label,
     );
   }, [currentValue, valueOptions]);
 
@@ -45,8 +45,8 @@ function Search({
     }
     if (!currentLabel && currentValue && required) {
       setCurrentLabel(
-        filteredValueOptions.find(({ value }) => _.isEqual(value, currentValue))
-          .label
+        filteredValueOptions.find(({ value }) => isEqual(value, currentValue))
+          .label,
       );
     }
     if (!currentLabel && currentValue) {
@@ -65,7 +65,6 @@ function Search({
       onChange={onChange}
       currentValue={currentValue}
       allowScroll={allowScroll}
-      showNumber={showNumber}
       loading={loading}
       placeholder={placeholder}
       currentLabel={currentLabel}

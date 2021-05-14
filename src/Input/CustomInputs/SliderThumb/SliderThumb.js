@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect, useCallback } from 'react';
+
+import { isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+
 import calcSliderPart from '../../../helpers/formHelpers/calcSliderPart';
 
 function SliderThumb({
@@ -15,7 +18,7 @@ function SliderThumb({
   const sliderPartLength = calcSliderPart(sliderRef, sliderValuesCount);
 
   useEffect(() => {
-    if (!_.isEmpty(sliderRef)) {
+    if (!isEmpty(sliderRef)) {
       setSliderRectParams(sliderRef.getBoundingClientRect());
     }
   }, [sliderRef]);
@@ -42,7 +45,7 @@ function SliderThumb({
         }
       }
     },
-    [dragging, JSON.stringify(sliderRectParams), sliderPartLength]
+    [dragging, JSON.stringify(sliderRectParams), sliderPartLength],
   );
 
   const endMove = () => setDragging(false);
@@ -63,12 +66,12 @@ function SliderThumb({
 
   return (
     <div
-      draggable='false'
-      className='form-slider-thumb'
+      draggable="false"
+      className="form-slider-thumb"
       onMouseDown={() => {
         setDragging(true);
       }}
-    ></div>
+    />
   );
 }
 
