@@ -9,6 +9,7 @@ import CustomNumber from './CustomInputs/CustomNumber';
 import MarkdownText from './CustomInputs/MarkdownText';
 import MultipleSearch from './CustomInputs/MultipleSearch';
 import MultipleSelect from './CustomInputs/MultipleSelect';
+import Password from './CustomInputs/Password';
 import Range from './CustomInputs/Range';
 import Search from './CustomInputs/Search';
 import Select from './CustomInputs/Select';
@@ -293,6 +294,28 @@ function Input(props) {
         label,
         id,
         <Search
+          id={id}
+          name={name}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+          allowScroll={allowScroll}
+        />,
+      );
+    }
+
+    if (type === 'password') {
+      return LabeledInput(
+        render,
+        label,
+        id,
+        <Password
           id={id}
           name={name}
           description={description}

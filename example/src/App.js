@@ -26,29 +26,25 @@ const App = () => {
         }}
         inputs={[
           {
-            type: 'text',
+            type: 'password',
             name: 'date',
             id: 'date',
-            group: {
-              title: 'group',
-              id: 'group',
-            },
           },
-          {
-            type: 'text',
-            name: 'date2',
-            id: 'date2',
-            group: {
-              title: 'group',
-              id: 'group',
-            },
-          },
-          {
-            type: 'search',
-            name: 'countries',
-            id: 'countries',
-            valueOptions: countries,
-          },
+          // {
+          //   type: 'text',
+          //   name: 'date2',
+          //   id: 'date2',
+          //   group: {
+          //     title: 'group',
+          //     id: 'group',
+          //   },
+          // },
+          // {
+          //   type: 'search',
+          //   name: 'countries',
+          //   id: 'countries',
+          //   valueOptions: countries,
+          // },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
