@@ -26,15 +26,22 @@ const App = () => {
         }}
         inputs={[
           {
-            type: 'file',
+            type: 'file-multiple',
             name: 'date',
             id: 'date',
             accept: 'images/png',
-            value: {
-              url: 'blob:http://localhost:3000/ccb344d7-fb32-47e4-b4e1-cf19169927e2',
-              fileName: 'Filename',
-              fileSize: 112122,
-            },
+            value: [
+              {
+                url: 'blob:http://localhost:3000/ccb344d7-fb32-47e4-b4e1-cf19169927e2',
+                fileName: 'Filename',
+                fileSize: 112122,
+              },
+              {
+                url: 'blob:http://localhost:3000/ccb344d7-fb32-47e4-b4e1-cf19169927e2',
+                fileName: 'Filename2',
+                fileSize: 112122,
+              },
+            ],
           },
           // {
           //   type: 'text',

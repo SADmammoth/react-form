@@ -8,6 +8,7 @@ import CheckboxGroup from './CustomInputs/CheckboxGroup';
 import CustomNumber from './CustomInputs/CustomNumber';
 import File from './CustomInputs/File';
 import MarkdownText from './CustomInputs/MarkdownText';
+import MultipleFiles from './CustomInputs/MultipleFiles';
 import MultipleSearch from './CustomInputs/MultipleSearch';
 import MultipleSelect from './CustomInputs/MultipleSelect';
 import Password from './CustomInputs/Password';
@@ -337,6 +338,27 @@ function Input(props) {
     if (type === 'file') {
       return (
         <File
+          id={id}
+          name={name}
+          accept={accept}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+          allowScroll={allowScroll}
+          label={label}
+        />
+      );
+    }
+
+    if (type === 'file-multiple') {
+      return (
+        <MultipleFiles
           id={id}
           name={name}
           accept={accept}
