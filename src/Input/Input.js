@@ -393,6 +393,7 @@ Input.defaultProps = {
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     Label: (props) => <label {...props} />,
     Tag: (props) => <Tag {...props} />,
+    passwordBullet: '\u2022',
   },
   ...Input.publicDefaults,
 };
@@ -446,6 +447,7 @@ Input.propTypes = {
     Label: PropTypes.any,
     Option: PropTypes.any,
     Tag: PropTypes.any,
+    passwordBullet: PropTypes.string,
   }),
   ...Input.publicProps,
 };

@@ -8,7 +8,9 @@ import Input from '../Input';
 
 function Password({ name, value, onChange, onInput, render, ...props }) {
   const hidePassword = (value) => {
-    return times(value.length, () => '*').join('');
+    return times(value.length, () => render.passwordBullet || '\u2022').join(
+      '',
+    );
   };
 
   const [state, setState] = useState(value);
