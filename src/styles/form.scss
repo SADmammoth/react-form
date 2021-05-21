@@ -156,27 +156,41 @@
   display: flex;
   padding: 5px;
   position: relative;
-  .file_name {
-    font-weight: bold;
-    margin: 0;
-    margin-right: 5px;
-  }
-  .file_size {
-    margin: 0;
-    margin-right: 5px;
-  }
-  .close_button {
-    background: 0;
-    border: none;
-    outline: none;
-    height: '5px';
-    width: '5px';
+}
 
-    color: black;
-    cursor: pointer;
-    position: absolute;
-    right: 5px;
-  }
+.image-file {
+  display: block;
+  width: 200px;
+  border: 1px solid $highlight;
+  padding: 5px;
+}
+
+.image-caption {
+  display: flex;
+  padding-top: 5px;
+  position: relative;
+}
+
+.file_name {
+  font-weight: bold;
+  margin: 0;
+  margin-right: 5px;
+}
+.file_size {
+  margin: 0;
+  margin-right: 5px;
+}
+.close_button {
+  background: 0;
+  border: none;
+  outline: none;
+  height: 5px;
+  width: 5px;
+
+  color: black;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
 }
 
 .file_input {
@@ -193,5 +207,14 @@
 
   & > file_input:not([value='']) {
     display: none;
+  }
+}
+
+.form-image {
+  .image {
+    height: 200px;
+    width: 200px;
+    object-fit: contain;
+    border: 2px;
   }
 }

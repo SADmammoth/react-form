@@ -7,6 +7,7 @@ import compareObjects from '../helpers/compareObjects';
 import CheckboxGroup from './CustomInputs/CheckboxGroup';
 import CustomNumber from './CustomInputs/CustomNumber';
 import File from './CustomInputs/File';
+import Image from './CustomInputs/Image';
 import MarkdownText from './CustomInputs/MarkdownText';
 import MultipleFiles from './CustomInputs/MultipleFiles';
 import MultipleSearch from './CustomInputs/MultipleSearch';
@@ -359,6 +360,27 @@ function Input(props) {
     if (type === 'file-multiple') {
       return (
         <MultipleFiles
+          id={id}
+          name={name}
+          accept={accept}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+          allowScroll={allowScroll}
+          label={label}
+        />
+      );
+    }
+
+    if (type === 'image') {
+      return (
+        <Image
           id={id}
           name={name}
           accept={accept}
