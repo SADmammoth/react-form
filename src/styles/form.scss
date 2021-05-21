@@ -175,6 +175,8 @@
   font-weight: bold;
   margin: 0;
   margin-right: 5px;
+  text-overflow: ellipsis;
+  width: 100px;
 }
 .file_size {
   margin: 0;
@@ -198,6 +200,11 @@
 }
 
 .file_label {
+  display: flex;
+  max-height: 100px;
+  overflow-y: auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
   & .button {
     display: inline-block;
     border: 1px solid $highlight;
@@ -216,5 +223,16 @@
     width: 200px;
     object-fit: contain;
     border: 2px;
+    margin-right: 5px;
+  }
+  .file_label {
+    overflow-y: initial;
+    max-height: none;
+    max-width: 700px;
+  }
+  .selected-images {
+    overflow-x: auto;
+    flex-direction: row;
+    display: flex;
   }
 }

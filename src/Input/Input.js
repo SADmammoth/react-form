@@ -10,6 +10,7 @@ import File from './CustomInputs/File';
 import Image from './CustomInputs/Image';
 import MarkdownText from './CustomInputs/MarkdownText';
 import MultipleFiles from './CustomInputs/MultipleFiles';
+import MultipleImages from './CustomInputs/MultipleImages';
 import MultipleSearch from './CustomInputs/MultipleSearch';
 import MultipleSelect from './CustomInputs/MultipleSelect';
 import Password from './CustomInputs/Password';
@@ -381,6 +382,27 @@ function Input(props) {
     if (type === 'image') {
       return (
         <Image
+          id={id}
+          name={name}
+          accept={accept}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+          allowScroll={allowScroll}
+          label={label}
+        />
+      );
+    }
+
+    if (type === 'image-multiple') {
+      return (
+        <MultipleImages
           id={id}
           name={name}
           accept={accept}

@@ -13,6 +13,9 @@ function Image({ id, accept, render, label, value, onChange, name }) {
   return (
     <div className="form-image">
       <Label className="form-label file_label" htmlFor={id}>
+        {label}
+        {!!value || <div className="button">{'Add file'}</div>}
+
         {!value || (
           <picture className="image-file">
             <img className="image" src={value.url} alt={value.fileName} />
@@ -31,8 +34,6 @@ function Image({ id, accept, render, label, value, onChange, name }) {
             </caption>
           </picture>
         )}
-        {label}
-        {!!value || <div className="button">{'Add file'}</div>}
       </Label>
 
       <InputTag

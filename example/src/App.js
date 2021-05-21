@@ -26,7 +26,12 @@ const App = () => {
         }}
         inputs={[
           {
-            type: 'image',
+            type: 'file-multiple',
+            name: 'date2',
+            id: 'date2',
+          },
+          {
+            type: 'image-multiple',
             name: 'date',
             id: 'date',
           },
