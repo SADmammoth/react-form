@@ -1,10 +1,10 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
 import Form, { Validator, DateMaskConverters } from 'react-form';
+import 'react-form/dist/index.css';
+
 import Input from './Input';
 import Option from './Option';
-
-import 'react-form/dist/index.css';
 import countries from './countries';
 
 const App = () => {
@@ -26,9 +26,15 @@ const App = () => {
         }}
         inputs={[
           {
-            type: 'password',
+            type: 'file',
             name: 'date',
             id: 'date',
+            accept: 'images/png',
+            value: {
+              url: 'blob:http://localhost:3000/ccb344d7-fb32-47e4-b4e1-cf19169927e2',
+              fileName: 'Filename',
+              fileSize: 112122,
+            },
           },
           // {
           //   type: 'text',
@@ -56,7 +62,7 @@ const App = () => {
           ),
           Input,
           Label: (props) => {
-            return <label data-custom='custom' {...props} />;
+            return <label data-custom="custom" {...props} />;
           },
           Option,
         }}
@@ -70,15 +76,13 @@ const App = () => {
           links: true,
           bold: true,
           italic: true,
-        }}
-        resetOnSubmit
-      ></Form>
+        }}></Form>
       {inputs.$list}
 
       <Form.MarkdownOutput
-        id='markdownOutput'
-        name='markdownOutput'
-        value='ss**ss**ss'
+        id="markdownOutput"
+        name="markdownOutput"
+        value="ss**ss**ss"
       />
     </Fragment>
   );

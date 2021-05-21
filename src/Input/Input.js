@@ -6,6 +6,7 @@ import Tag from '../Components/Tag';
 import compareObjects from '../helpers/compareObjects';
 import CheckboxGroup from './CustomInputs/CheckboxGroup';
 import CustomNumber from './CustomInputs/CustomNumber';
+import File from './CustomInputs/File';
 import MarkdownText from './CustomInputs/MarkdownText';
 import MultipleSearch from './CustomInputs/MultipleSearch';
 import MultipleSelect from './CustomInputs/MultipleSelect';
@@ -47,6 +48,7 @@ function Input(props) {
     render,
     markdownFeatures,
     allowScroll,
+    accept,
   } = props;
 
   const onError = () => {
@@ -332,6 +334,27 @@ function Input(props) {
       );
     }
 
+    if (type === 'file') {
+      return (
+        <File
+          id={id}
+          name={name}
+          accept={accept}
+          description={description}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
+          required={required}
+          attributes={attributes}
+          value={value}
+          valueOptions={valueOptions}
+          placeholder={placeholder}
+          render={render}
+          allowScroll={allowScroll}
+          label={label}
+        />
+      );
+    }
+
     const InputTag = render.Input || 'input';
 
     return LabeledInput(
@@ -434,6 +457,7 @@ Input.publicProps = {
     in: PropTypes.func,
     out: PropTypes.func,
   },
+  accept: PropTypes.string,
 };
 
 Input.propTypes = {

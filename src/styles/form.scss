@@ -150,3 +150,48 @@
     background: none;
   }
 }
+
+.file {
+  border: 1px solid $highlight;
+  display: flex;
+  padding: 5px;
+  position: relative;
+  .file_name {
+    font-weight: bold;
+    margin: 0;
+    margin-right: 5px;
+  }
+  .file_size {
+    margin: 0;
+    margin-right: 5px;
+  }
+  .close_button {
+    background: 0;
+    border: none;
+    outline: none;
+    height: '5px';
+    width: '5px';
+
+    color: black;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+  }
+}
+
+.file_input {
+  display: none;
+}
+
+.file_label {
+  & .button {
+    display: inline-block;
+    border: 1px solid $highlight;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+
+  & > file_input:not([value='']) {
+    display: none;
+  }
+}

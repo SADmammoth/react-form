@@ -25,6 +25,7 @@ export default function createInputProps(
     markdownFeatures,
     allowScroll,
     converters,
+    accept,
   },
   updateValueCallback,
   valuesState,
@@ -90,5 +91,6 @@ export default function createInputProps(
     markdownFeatures,
     allowScroll,
     converters: convertersFromMap || converters,
+    accept,
   };
 }

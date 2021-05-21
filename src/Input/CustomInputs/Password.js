@@ -104,6 +104,7 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
     <React.Fragment>
       <InputTag
         className={'password'}
+        name={name}
         ref={input}
         type="text"
         value={showPassword ? state : hidePassword(state)}
