@@ -14,7 +14,6 @@
   "scripts": {
     "build": "microbundle-crl --production",
     "start": "microbundle-crl watch --no-compress --format modern,cjs --css-modules false",
-    "prepare": "run-s build",
     "format": "prettier ./src --loglevel=error --write"
   },
   "peerDependencies": {
