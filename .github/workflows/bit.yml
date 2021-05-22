@@ -32,7 +32,7 @@ jobs:
         run: |
           bit -v && bit import
       - name: calculate version
-        run: echo "VERSION=cat package.json \ grep version \ head -1 \ awk '{ print $2 }' \ sed 's/[\",]//g'" >> $GITHUB_ENV
+        run: echo "VERSION=$(cat package.json \ grep version \ head -1 \ awk '{ print $2 }' \ sed 's/[\",]//g')" >> $GITHUB_ENV
       - name: bit export
         run: |
           bit add ./src
