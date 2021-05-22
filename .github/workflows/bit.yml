@@ -32,19 +32,15 @@ jobs:
         run: |
           bit -v && bit import
       - name: calculate version
-        run: |
-          $VERSION=cat package.json \
-          | grep version \
-          | head -1 \
-          | awk -F: '{ print $2 }' \
-          | sed 's/[",]//g'
+        run: echo "VERSION=cat package.json \ grep version \ head -1 \ awk -F: '{ print $2 }' \ sed 's/[\",]//g'" >> $GITHUB_ENV
       - name: bit export
         run: |
+          bit add ./src
           bit tag -a $VERSION
           bit export
       - name: Commit changes made to .bitmap
         run: |
-          git config --global user.name '${{ github.actor }}'
+          git config --global user.name '${{ github.actor }}' 
           git config --global user.email '${{ github.actor }}@users.noreply.github.com'
           git add .bitmap
           git commit -m "auto: update .bitmap with new component versions. "
