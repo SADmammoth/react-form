@@ -1,5 +1,6 @@
 export default function useUpdateValue() {
   return (name, valuesState, newValue) => {
+    console.log(name, valuesState);
     const valueItem = valuesState[name];
 
     if (valueItem && valueItem.bind) {

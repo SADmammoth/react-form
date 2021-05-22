@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Tag from '../Components/Tag';
 import compareObjects from '../helpers/compareObjects';
+import createEvent from '../helpers/createEvent';
 import ActionButtonInput from './ActionButtonInput';
 import CheckboxGroup from './CustomInputs/CheckboxGroup';
 import CustomNumber from './CustomInputs/CustomNumber';
@@ -20,6 +21,7 @@ import Search from './CustomInputs/Search';
 import Select from './CustomInputs/Select';
 import Slider from './CustomInputs/Slider';
 import TextArea from './CustomInputs/TextArea';
+import TextInput from './CustomInputs/TextInput';
 import LabeledInput from './LabeledInput';
 import MaskedInput from './MaskedInput';
 
@@ -53,12 +55,15 @@ function Input(props) {
     markdownFeatures,
     allowScroll,
     accept,
-    actionButton
+    actionButton,
+    min,
+    max,
+    step,
   } = props;
 
-  const onError = () => {
+  const onError = (overriddenValidationMessage) => {
     console.log(validationMessage);
-    highlightInput(name, validationMessage);
+    highlightInput(name, overriddenValidationMessage || validationMessage);
   };
 
   const onChangeHandler = ({
@@ -77,13 +82,19 @@ function Input(props) {
   };
 
   const onKeyPressHandler = (event) => {
+    console.log(event);
     const {
       target: { value: targetValue },
       key,
     } = event;
 
     if (!byCharValidator(targetValue + key)) {
-      event.preventDefault();
+      if (event.preventDefault) {
+        event.preventDefault();
+        return;
+      }
+      console.log(event.target.name);
+      onInput(event.target.name, targetValue);
     }
   };
 
@@ -154,6 +165,9 @@ function Input(props) {
           attributes={attributes}
           value={value}
           render={render}
+          min={min}
+          max={max}
+          step={step}
         />,
       );
     }
@@ -440,11 +454,10 @@ function Input(props) {
           mask,
           byCharValidator,
           maskType,
-          <InputTag
+          <TextInput
             id={id}
             type={type}
             name={name}
-            className={`form-control${invalid ? ' invalid' : ''}`}
             placeholder={placeholder}
             required={required && 'required'}
             onKeyPress={onKeyPressHandler}
@@ -452,8 +465,9 @@ function Input(props) {
             onBlur={onChangeHandler}
             validator={validator}
             byCharValidator={byCharValidator}
-            {...attributes}
             value={value}
+            render={render}
+            invalid={invalid}
           />,
         ),
       ),
@@ -535,6 +549,9 @@ Input.publicProps = {
   },
   accept: PropTypes.string,
   actionButton: { label: PropTypes.node, action: PropTypes.func },
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
 };
 
 Input.propTypes = {

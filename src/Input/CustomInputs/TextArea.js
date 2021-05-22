@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
+import Validator from '../../Validator';
 import compareObjects from '../../helpers/compareObjects';
 import checkCharsCount from '../../helpers/formHelpers/checkCharsCount';
 
@@ -41,9 +42,19 @@ function TextArea(props) {
     }
   }, []);
 
+  const onInputHandler = (event) => {
+    if (!Validator.charCountValidator(event.target.value, maxSymbols)) {
+      event.preventDefault();
+      return;
+    }
+    onInput(event);
+  };
+
   const onChangeHandler = useCallback(
     (event) => {
-      if (checkCharsCount(event.target.value, minSymbols, maxSymbols)) {
+      if (
+        Validator.charCountValidator(event.target.value, maxSymbols, minSymbols)
+      ) {
         onChange(event);
       } else {
         onError(event);
@@ -63,7 +74,7 @@ function TextArea(props) {
       type={type}
       className={`form-textarea${placeholderOn ? ' placeholdered' : ''}`}
       name={name}
-      onChange={onInput}
+      onChange={onInputHandler}
       onBlur={onChangeHandler}
       required={required && 'required'}
       {...attributes}

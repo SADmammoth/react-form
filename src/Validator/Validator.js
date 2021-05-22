@@ -1,3 +1,4 @@
+import checkCharsCount from '../helpers/formHelpers/checkCharsCount';
 import AddNotContains from './AddNotContains';
 import regexpEscapeArray from './regexpEscapeArray';
 
@@ -7,6 +8,7 @@ const Validator = {
   emailMessage: 'Email is not valid',
 
   email: (email) => {
+    if (!email) return true;
     const emailRegex =
       /^[a-zA-Z][a-zA-Z0-9_.-]*@(?:(?!.*(?:-{2,}))[\w-]{2,255})\.(?:[a-zа-я]{2,10})$/;
     return emailRegex.test(email);
@@ -18,6 +20,7 @@ const Validator = {
     'Username must contain from 6 to 64 alphanumeric characters and underscore',
 
   userName: (userName, notContains) => {
+    if (!userName) return true;
     const notContainsUnescaped = regexpEscapeArray(notContains);
 
     Validator.userNameMessage = `${Validator.userNameMessage.replace(
@@ -36,7 +39,8 @@ const Validator = {
   passwordMessage:
     'Password must contain at least: <ul><li>8 chars;</li><li>one uppercase and one lowercase letter;</li><li>any special character.</li></ul> Must use only alphanumeric and special characters.',
 
-  password: (userName, notContains = []) => {
+  password: (password, notContains = []) => {
+    if (!password) return true;
     const notContainsUnescaped = regexpEscapeArray(notContains);
 
     Validator.passwordMessage = `${Validator.passwordMessage.replace(
@@ -64,13 +68,14 @@ const Validator = {
       '$)';
 
     return AddNotContains(basePasswordRegex, notContainsUnescaped).test(
-      userName,
+      password,
     );
   },
 
   //
 
   parsePhoneByMask: (phone, mask) => {
+    if (!phone) return true;
     const formattedPhone = mask.split('');
     const phoneNumbers = phone.replace(/[^0-9]/g, '').split('');
     let phoneIndex = 0;
@@ -86,6 +91,7 @@ const Validator = {
   floatMessage: 'Input must be a number',
 
   float: (number, from, to) => {
+    if (!input) return true;
     const num = parseFloat(number);
     return num <= to && num >= from;
   },
@@ -93,23 +99,32 @@ const Validator = {
   numberMessage: 'Input must be an integer number',
 
   number: (number, from, to) => {
+    if (!input) return true;
     const num = parseInt(number, 10);
     return num <= to && num >= from;
   },
 
   //* By char validators
 
+  charCountValidator: (input, max, min) => {
+    return checkCharsCount(input, min || 0, max);
+  },
+
   text: (input) => {
+    if (!input) return true;
     const textRegexp = /^[a-zA-Z]+$/;
     return textRegexp.test(input);
   },
 
   numericByChar: (input) => {
-    const numericRegexp = /^[0-9]+$/;
+    console.log(input);
+    if (!input) return true;
+    const numericRegexp = /^0$|^[1-9][0-9]*$/;
     return numericRegexp.test(input);
   },
 
   floatByChar: (input) => {
+    if (!input) return true;
     const floatRegexp = /^(?=[^,.]*[,.]?[^,.]*)([0-9,.]+)$/;
     return floatRegexp.test(input);
   },
@@ -117,6 +132,7 @@ const Validator = {
   alphanumericMessage: 'Input must contain only alphanumeric symbols',
 
   alphanumeric: (input) => {
+    if (!input) return true;
     if (/[0-9_]/.test(input[0])) {
       return false;
     }

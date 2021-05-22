@@ -7,8 +7,12 @@ export default function checkValidity(inputs, values, onValidationFail) {
   Object.keys(values).forEach((valueName) => {
     input = findInputByName(inputs, valueName);
 
-    if (values[valueName].required && !values[valueName].value) {
-      input.validationMessage = `${input.name} is required`;
+    if (
+      values[valueName].required &&
+      !values[valueName].value &&
+      values[valueName].value !== 0
+    ) {
+      input.validationMessage = `${input.label || input.name} is required`;
       onValidationFail(input);
       if (!isAnyFailed) isAnyFailed = true;
     }

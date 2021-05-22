@@ -17,7 +17,9 @@ function CustomNumber(props) {
     onInput,
     onChange,
     // required,
-    attributes: { min, max, step },
+    min,
+    max,
+    step,
     render,
   } = props;
 
@@ -30,28 +32,28 @@ function CustomNumber(props) {
   useEffect(() => {
     setValue(currentValue);
   }, [currentValue]);
+  useEffect(() => {
+    onChange(createEvent(name, value));
+  }, [value]);
 
   const increment = () => {
     setValue((passedValue) => {
+      console.log(passedValue);
+      if (!passedValue && passedValue !== 0) return min;
       const newValue = counter(parseFloat(passedValue) + step);
-      onChange(createEvent(name, newValue));
       return newValue;
     });
   };
 
   const decrement = () => {
     setValue((passedValue) => {
-      const newValue = counter(parseFloat(passedValue) + step);
-      onChange(createEvent(name, newValue));
+      if (!passedValue && passedValue !== 0) return max;
+      const newValue = counter(parseFloat(passedValue) - step);
       return newValue;
     });
   };
 
   const onInputHandler = (event) => {
-    if (event.target.value === '') {
-      return;
-    }
-
     if (Validator.numericByChar(event.target.value)) {
       onInput(event);
     }
@@ -87,11 +89,9 @@ CustomNumber.defaultProps = {
   // required: false,
   value: null,
   // placeholder: null,
-  attributes: {
-    step: 1,
-    min: 0,
-    max: 999,
-  },
+  step: 1,
+  min: 0,
+  max: 999,
 };
 
 CustomNumber.propTypes = {
@@ -99,11 +99,9 @@ CustomNumber.propTypes = {
   // placeholder: PropTypes.string,
   // required: PropTypes.bool,
   name: PropTypes.string.isRequired,
-  attributes: PropTypes.shape({
-    min: PropTypes.number,
-    max: PropTypes.number,
-    step: PropTypes.number,
-  }),
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func,
   render: PropTypes.shape({

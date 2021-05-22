@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
+import _ from 'lodash-es';
 import Form, { Validator, DateMaskConverters } from 'react-form';
 import 'react-form/dist/index.css';
 
@@ -29,25 +30,27 @@ const App = () => {
             type: 'text',
             name: 'date2',
             id: 'date2',
+            validator: 'dateByCharWithInvisibleMask',
             actionButton: {
               label: 'Clear',
               action: async (name, value) => {
                 return '';
               },
             },
+            required: true,
           },
-          {
-            type: 'image-multiple',
-            name: 'date',
-            id: 'date',
-            value: [
-              {
-                url: 'blob:http://localhost:3000/972a0940-ad65-4b62-b498-34242d6923c0',
-                fileName: 'coffee2_2.tif',
-                fileSize: 28415188,
-              },
-            ],
-          },
+          // {
+          //   type: 'image-multiple',
+          //   name: 'date',
+          //   id: 'date',
+          //   value: [
+          //     {
+          //       url: 'blob:http://localhost:3000/972a0940-ad65-4b62-b498-34242d6923c0',
+          //       fileName: 'coffee2_2.tif',
+          //       fileSize: 28415188,
+          //     },
+          //   ],
+          // },
           // {
           //   type: 'text',
           //   name: 'date2',
