@@ -17,7 +17,7 @@ export default function useCreateValues() {
       valuesData[input.name] = {
         ...valuesData[input.name],
         id: input.name,
-        value: convertersFromMap.in(input.defaultValue || input.value),
+        value: input.defaultValue || input.value,
         required: input.required,
         defaultValue: setFormDefaultValue(valuesState, input),
         group: input.group,

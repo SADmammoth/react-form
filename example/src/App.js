@@ -30,7 +30,13 @@ const App = () => {
             type: 'text',
             name: 'date2',
             id: 'date2',
-            validator: 'dateByCharWithInvisibleMask',
+
+            converters: {
+              in: (e) => e?.text,
+              out: (value) => {
+                return { text: value };
+              },
+            },
             actionButton: {
               label: 'Clear',
               action: async (name, value) => {

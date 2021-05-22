@@ -81,23 +81,6 @@ function Input(props) {
     onInput(targetName, targetValue);
   };
 
-  const onKeyPressHandler = (event) => {
-    console.log(event);
-    const {
-      target: { value: targetValue },
-      key,
-    } = event;
-
-    if (!byCharValidator(targetValue + key)) {
-      if (event.preventDefault) {
-        event.preventDefault();
-        return;
-      }
-      console.log(event.target.name);
-      onInput(event.target.name, targetValue);
-    }
-  };
-
   function renderInput() {
     if (
       type === 'checkbox' ||
@@ -441,8 +424,6 @@ function Input(props) {
       );
     }
 
-    const InputTag = render.Input || 'input';
-
     return LabeledInput(
       render,
       label,
@@ -460,7 +441,6 @@ function Input(props) {
             name={name}
             placeholder={placeholder}
             required={required && 'required'}
-            onKeyPress={onKeyPressHandler}
             onChange={onInputHandler}
             onBlur={onChangeHandler}
             validator={validator}

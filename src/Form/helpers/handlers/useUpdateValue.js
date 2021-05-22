@@ -8,14 +8,14 @@ export default function useUpdateValue() {
       valueItem.bind.forEach((valueName) => {
         newValues[valueName] = {
           ...valuesState[valueName],
-          value: valueItem.converters.in(newValue),
+          value: newValue,
         };
       });
 
       return newValues;
     }
     return {
-      [name]: { ...valueItem, value: valueItem.converters.in(newValue) },
+      [name]: { ...valueItem, value: newValue },
     };
   };
 }

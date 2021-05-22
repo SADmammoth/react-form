@@ -11,6 +11,7 @@ function TextInput({
   attributes,
   onChange,
   onBlur,
+  byCharValidator,
   ...props
 }) {
   const InputTag = render.Input || 'input';
@@ -21,21 +22,26 @@ function TextInput({
 
   return (
     <InputTag
+      {...props}
       name={name}
       type={type}
       className={`form-control${invalid ? ' invalid' : ''}`}
       value={value}
-      onBlur={() => {}}
       onBlur={(event) => {
         setValue(event.target.value);
         onBlur(event);
       }}
       onChange={(event) => {
         setValue(event.target.value);
+        console.log(onChange);
         onChange(event);
       }}
+      onKeyPress={(event) => {
+        if (!byCharValidator(event.target.value + event.key)) {
+          event.preventDefault();
+        }
+      }}
       {...attributes}
-      {...props}
     />
   );
 }
