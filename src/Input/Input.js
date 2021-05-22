@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Tag from '../Components/Tag';
 import compareObjects from '../helpers/compareObjects';
+import ActionButtonInput from './ActionButtonInput';
 import CheckboxGroup from './CustomInputs/CheckboxGroup';
 import CustomNumber from './CustomInputs/CustomNumber';
 import File from './CustomInputs/File';
@@ -52,6 +53,7 @@ function Input(props) {
     markdownFeatures,
     allowScroll,
     accept,
+    actionButton
   } = props;
 
   const onError = () => {
@@ -227,22 +229,26 @@ function Input(props) {
         render,
         label,
         id,
-        <TextArea
-          id={id}
-          type={type}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          onError={onError}
-          required={required}
-          attributes={attributes}
-          value={value}
-          minSymbols={minSymbols}
-          maxSymbols={maxSymbols}
-          placeholder={placeholder}
-          render={render}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <TextArea
+            id={id}
+            type={type}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            onError={onError}
+            required={required}
+            attributes={attributes}
+            value={value}
+            minSymbols={minSymbols}
+            maxSymbols={maxSymbols}
+            placeholder={placeholder}
+            render={render}
+          />,
+        ),
       );
     }
 
@@ -427,25 +433,29 @@ function Input(props) {
       render,
       label,
       id,
-      MaskedInput(
-        mask,
-        byCharValidator,
-        maskType,
-        <InputTag
-          id={id}
-          type={type}
-          name={name}
-          className={`form-control${invalid ? ' invalid' : ''}`}
-          placeholder={placeholder}
-          required={required && 'required'}
-          onKeyPress={onKeyPressHandler}
-          onChange={onInputHandler}
-          onBlur={onChangeHandler}
-          validator={validator}
-          byCharValidator={byCharValidator}
-          {...attributes}
-          value={value}
-        />,
+      ActionButtonInput(
+        actionButton,
+        id,
+        MaskedInput(
+          mask,
+          byCharValidator,
+          maskType,
+          <InputTag
+            id={id}
+            type={type}
+            name={name}
+            className={`form-control${invalid ? ' invalid' : ''}`}
+            placeholder={placeholder}
+            required={required && 'required'}
+            onKeyPress={onKeyPressHandler}
+            onChange={onInputHandler}
+            onBlur={onChangeHandler}
+            validator={validator}
+            byCharValidator={byCharValidator}
+            {...attributes}
+            value={value}
+          />,
+        ),
       ),
     );
   }
@@ -524,6 +534,7 @@ Input.publicProps = {
     out: PropTypes.func,
   },
   accept: PropTypes.string,
+  actionButton: { label: PropTypes.node, action: PropTypes.func },
 };
 
 Input.propTypes = {

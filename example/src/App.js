@@ -26,14 +26,27 @@ const App = () => {
         }}
         inputs={[
           {
-            type: 'file-multiple',
+            type: 'text',
             name: 'date2',
             id: 'date2',
+            actionButton: {
+              label: 'Clear',
+              action: async (name, value) => {
+                return '';
+              },
+            },
           },
           {
             type: 'image-multiple',
             name: 'date',
             id: 'date',
+            value: [
+              {
+                url: 'blob:http://localhost:3000/972a0940-ad65-4b62-b498-34242d6923c0',
+                fileName: 'coffee2_2.tif',
+                fileSize: 28415188,
+              },
+            ],
           },
           // {
           //   type: 'text',

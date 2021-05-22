@@ -26,6 +26,7 @@ export default function createInputProps(
     allowScroll,
     converters,
     accept,
+    actionButton,
   },
   updateValueCallback,
   valuesState,
@@ -92,5 +93,6 @@ export default function createInputProps(
     allowScroll,
     converters: convertersFromMap || converters,
     accept,
+    actionButton,
   };
 }
