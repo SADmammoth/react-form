@@ -31,9 +31,16 @@ jobs:
       - name: bit import
         run: |
           bit -v && bit import
+      - name: calculate version
+        run: |
+          $VERSION=cat package.json \
+          | grep version \
+          | head -1 \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[",]//g'
       - name: bit export
         run: |
-          bit tag -a
+          bit tag -a $VERSION
           bit export
       - name: Commit changes made to .bitmap
         run: |
