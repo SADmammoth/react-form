@@ -13,11 +13,11 @@ export default function useCreateValues() {
       if (typeof input.converters === 'string') {
         convertersFromMap = convertersMap[input.converters];
       }
-
+      console.log(convertersFromMap.in(input.defaultValue || input.value));
       valuesData[input.name] = {
         ...valuesData[input.name],
         id: input.name,
-        value: input.defaultValue || input.value,
+        value: convertersFromMap.in(input.defaultValue || input.value),
         required: input.required,
         defaultValue: setFormDefaultValue(valuesState, input),
         group: input.group,

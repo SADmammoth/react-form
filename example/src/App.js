@@ -26,25 +26,25 @@ const App = () => {
           console.log(data);
         }}
         inputs={[
-          // {
-          //   type: 'text',
-          //   name: 'date2',
-          //   id: 'date2',
+          {
+            type: 'text',
+            name: 'date2',
+            id: 'date2',
 
-          //   converters: {
-          //     in: (e) => e?.text,
-          //     out: (value) => {
-          //       return { text: value };
-          //     },
-          //   },
-          //   actionButton: {
-          //     label: 'Clear',
-          //     action: async (name, value) => {
-          //       return '';
-          //     },
-          //   },
-          //   required: true,
-          // },
+            converters: {
+              in: (e) => e?.text,
+              out: (value) => {
+                return { text: value };
+              },
+            },
+            actionButton: {
+              label: 'Clear',
+              action: async (name, value) => {
+                return '';
+              },
+            },
+            required: true,
+          },
           // {
           //   type: 'image-multiple',
           //   name: 'date',
@@ -66,19 +66,19 @@ const App = () => {
           //     id: 'group',
           //   },
           // },
-          {
-            type: 'text',
-            name: 'countries',
-            id: 'countries',
-            value: undefined,
-          },
-          {
-            type: 'select-multiple',
-            name: 'countries2',
-            id: 'countries2',
-            valueOptions: countries,
-            value: '',
-          },
+          // {
+          //   type: 'text',
+          //   name: 'countries',
+          //   id: 'countries',
+          //   value: undefined,
+          // },
+          // {
+          //   type: 'select-multiple',
+          //   name: 'countries2',
+          //   id: 'countries2',
+          //   valueOptions: countries,
+          //   value: '',
+          // },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
