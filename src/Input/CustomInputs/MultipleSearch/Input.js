@@ -23,6 +23,7 @@ export default function Input({
 
   const mapCurrentValue = useCallback(
     (value) => {
+      console.log(valueOptions);
       const valueOption = valueOptions.find(
         ({ value: candidateValue }) => candidateValue === value,
       );

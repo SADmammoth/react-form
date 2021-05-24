@@ -64,7 +64,7 @@ function MultipleSearch({
   return (
     <Suggestions
       filteredValueOptions={filteredValueOptions}
-      valueOptions={valueOptions}
+      valueOptions={valueOptions || []}
       showNumber={showNumber}
       Input={Input}
       name={name}
