@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash-es';
 import createEvent from '../helpers/createEvent';
 
 export default function ActionButtonInput(actionButton, id, input) {
-  if (!actionButton || isEmpty(actionButton)) return;
+  if (!actionButton || isEmpty(actionButton)) return input;
   const [value, setValue] = useState(input.props.value);
   useEffect(() => {
     setValue(input.props.value);

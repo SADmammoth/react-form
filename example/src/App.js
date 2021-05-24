@@ -67,18 +67,17 @@ const App = () => {
           //   },
           // },
           {
-            type: 'search-multiple',
+            type: 'text',
             name: 'countries',
             id: 'countries',
-            valueOptions: countries,
-            value: ['AF', 'BY'],
+            value: undefined,
           },
           {
             type: 'select-multiple',
             name: 'countries2',
             id: 'countries2',
             valueOptions: countries,
-            value: ['AF', 'BY'],
+            value: '',
           },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}

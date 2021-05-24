@@ -21,7 +21,7 @@ function TextInput({
   }, [currentValue]);
 
   return (
-    <InputTag
+    <input
       {...props}
       name={name}
       type={type}
