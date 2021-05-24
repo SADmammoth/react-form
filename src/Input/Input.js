@@ -137,21 +137,25 @@ function Input(props) {
         render,
         label,
         id,
-        <CustomNumber
-          id={id}
-          type={type}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          render={render}
-          min={min}
-          max={max}
-          step={step}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <CustomNumber
+            id={id}
+            type={type}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            required={required}
+            attributes={attributes}
+            value={value}
+            render={render}
+            min={min}
+            max={max}
+            step={step}
+          />,
+        ),
       );
     }
 
@@ -160,20 +164,24 @@ function Input(props) {
         render,
         label,
         id,
-        <Select
-          id={id}
-          type={type}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          valueOptions={valueOptions}
-          placeholder={placeholder}
-          render={render}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <Select
+            id={id}
+            type={type}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            required={required}
+            attributes={attributes}
+            value={value}
+            valueOptions={valueOptions}
+            placeholder={placeholder}
+            render={render}
+          />,
+        ),
       );
     }
 
@@ -182,20 +190,24 @@ function Input(props) {
         render,
         label,
         id,
-        <MultipleSelect
-          id={id}
-          type={type}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          valueOptions={valueOptions}
-          placeholder={placeholder}
-          render={render}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <MultipleSelect
+            id={id}
+            type={type}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            required={required}
+            attributes={attributes}
+            value={value}
+            valueOptions={valueOptions}
+            placeholder={placeholder}
+            render={render}
+          />,
+        ),
       );
     }
 
@@ -204,20 +216,24 @@ function Input(props) {
         render,
         label,
         id,
-        <MultipleSearch
-          id={id}
-          type={type}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          valueOptions={valueOptions}
-          placeholder={placeholder}
-          render={render}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <MultipleSearch
+            id={id}
+            type={type}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            required={required}
+            attributes={attributes}
+            value={value}
+            valueOptions={valueOptions}
+            placeholder={placeholder}
+            render={render}
+          />,
+        ),
       );
     }
 
@@ -254,22 +270,26 @@ function Input(props) {
         render,
         label,
         id,
-        <Slider
-          id={id}
-          type={type}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          valueSet={valueSet}
-          valueOptions={valueOptions}
-          placeholder={placeholder}
-          alwaysShowTip={alwaysShowTip}
-          render={render}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <Slider
+            id={id}
+            type={type}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            required={required}
+            attributes={attributes}
+            value={value}
+            valueSet={valueSet}
+            valueOptions={valueOptions}
+            placeholder={placeholder}
+            alwaysShowTip={alwaysShowTip}
+            render={render}
+          />,
+        ),
       );
     }
 
@@ -278,21 +298,25 @@ function Input(props) {
         render,
         label,
         id,
-        <Range
-          id={id}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          valueSet={valueSet}
-          valueOptions={valueOptions}
-          placeholder={placeholder}
-          alwaysShowTip={alwaysShowTip}
-          render={render}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <Range
+            id={id}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            required={required}
+            attributes={attributes}
+            value={value}
+            valueSet={valueSet}
+            valueOptions={valueOptions}
+            placeholder={placeholder}
+            alwaysShowTip={alwaysShowTip}
+            render={render}
+          />,
+        ),
       );
     }
 
@@ -301,20 +325,24 @@ function Input(props) {
         render,
         label,
         id,
-        <Search
-          id={id}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          valueOptions={valueOptions}
-          placeholder={placeholder}
-          render={render}
-          allowScroll={allowScroll}
-        />,
+        ActionButtonInput(
+          actionButton,
+          id,
+          <Search
+            id={id}
+            name={name}
+            description={description}
+            onChange={onChangeHandler}
+            onInput={onInputHandler}
+            required={required}
+            attributes={attributes}
+            value={value}
+            valueOptions={valueOptions}
+            placeholder={placeholder}
+            render={render}
+            allowScroll={allowScroll}
+          />,
+        ),
       );
     }
 
