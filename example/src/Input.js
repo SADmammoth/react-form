@@ -1,12 +1,12 @@
 import React from 'react';
 
-import {isEqual} from 'lodash-es';
+import { isEqual } from 'lodash-es';
 
 function Input(props) {
   if (props.type === 'textarea') {
-    return <textarea data-custom='custom' {...props} />;
+    return <textarea data-custom="custom" {...props} />;
   } else {
-    return <input data-custom='custom' {...props} />;
+    return <input data-custom="custom" {...props} />;
   }
 }
 

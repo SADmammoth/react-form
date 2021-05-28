@@ -18,14 +18,15 @@ function MultipleImages({ id, accept, render, label, value, onChange, name }) {
         <div className="selected-images">
           {!value ||
             value.map((image) => {
+              if (!image) return;
+              const { name: fileName, size } = image;
+              const url = URL.createObjectURL(image);
               return (
                 <picture className="image-file">
-                  <img className="image" src={image.url} alt={image.fileName} />
+                  <img className="image" src={url} alt={fileName} />
                   <caption className="image-caption">
-                    <p className="file_name">{image.fileName}</p>
-                    <p className="file_size">
-                      {formatFileSize(image.fileSize)}
-                    </p>
+                    <p className="file_name">{fileName}</p>
+                    <p className="file_size">{formatFileSize(size)}</p>
                     <button
                       type="button"
                       className="close_button"
@@ -54,12 +55,7 @@ function MultipleImages({ id, accept, render, label, value, onChange, name }) {
         accept={'image/' + (accept || '*')}
         onChange={(event) => {
           const newValue = Array.from(event.target.files).map((file) => {
-            const url = URL.createObjectURL(file);
-            return {
-              url,
-              fileName: file.name,
-              fileSize: file.size,
-            };
+            return file;
           });
           newValue.unshift(...value);
 

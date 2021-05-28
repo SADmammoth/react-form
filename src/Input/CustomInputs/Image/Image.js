@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -10,6 +10,18 @@ function Image({ id, accept, render, label, value, onChange, name }) {
   const InputTag = render.Input || 'input';
   const Label = render.label || 'label';
   const input = useRef({});
+
+  const [currentValue, setCurrentValue] = useState({});
+  useEffect(() => {
+    if (value) {
+      const { name: fileName, size } = value;
+      setCurrentValue({ fileName, size, url: URL.createObjectURL(value) });
+    }
+
+    return () => {
+      URL.revokeObjectURL(currentValue.url);
+    };
+  }, [value]);
   return (
     <div className="form-image">
       <Label className="form-label file_label" htmlFor={id}>
@@ -18,10 +30,14 @@ function Image({ id, accept, render, label, value, onChange, name }) {
 
         {!value || (
           <picture className="image-file">
-            <img className="image" src={value.url} alt={value.fileName} />
+            <img
+              className="image"
+              src={currentValue.url}
+              alt={currentValue.fileName}
+            />
             <caption className="image-caption">
-              <p className="file_name">{value.fileName}</p>
-              <p className="file_size">{formatFileSize(value.fileSize)}</p>{' '}
+              <p className="file_name">{currentValue.fileName}</p>
+              <p className="file_size">{formatFileSize(currentValue.size)}</p>
               <button
                 type="button"
                 className="close_button"
@@ -45,14 +61,8 @@ function Image({ id, accept, render, label, value, onChange, name }) {
         name={name}
         accept={'image/' + (accept || '*')}
         onChange={(event) => {
-          const url = URL.createObjectURL(event.target.files[0]);
-          onChange(
-            createEvent(name, {
-              url,
-              fileName: event.target.files[0].name,
-              fileSize: event.target.files[0].size,
-            }),
-          );
+          const file = event.target.files[0];
+          onChange(createEvent(name, file));
         }}
       />
     </div>

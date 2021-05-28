@@ -19,10 +19,14 @@ function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
       {!value || (
         <div className="selected-file">
           {value.map((file, index) => {
+            if (!file) return;
+            const { name: fileName, size } = file;
+            const url = URL.createObjectURL(file);
+
             return (
               <div className="file">
-                <p className="file_name">{file.fileName}</p>
-                <p className="file_size">{formatFileSize(file.fileSize)}</p>
+                <p className="file_name">{fileName}</p>
+                <p className="file_size">{formatFileSize(size)}</p>
                 <button
                   type="button"
                   className="close_button"
@@ -49,12 +53,7 @@ function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
         accept={accept}
         onChange={(event) => {
           const newValue = Array.from(event.target.files).map((file) => {
-            const url = URL.createObjectURL(file);
-            return {
-              url,
-              fileName: file.name,
-              fileSize: file.size,
-            };
+            return file;
           });
           newValue.unshift(...value);
 
