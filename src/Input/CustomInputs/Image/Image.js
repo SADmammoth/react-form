@@ -8,7 +8,7 @@ import Button from '../Button';
 
 function Image({ id, accept, render, label, value, onChange, name }) {
   const InputTag = render.Input || 'input';
-  const Label = render.label || 'label';
+  const Label = render.Label || 'label';
   const input = useRef({});
 
   const [currentValue, setCurrentValue] = useState({});
