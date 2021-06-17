@@ -15,7 +15,11 @@ function Image({ id, accept, render, label, value, onChange, name }) {
   useEffect(() => {
     if (value) {
       const { name: fileName, size } = value;
-      setCurrentValue({ fileName, size, url: URL.createObjectURL(value) });
+      setCurrentValue({
+        fileName,
+        size,
+        url: value instanceof File ? URL.createObjectURL(value) : value,
+      });
     }
 
     return () => {
