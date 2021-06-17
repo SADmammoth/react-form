@@ -25,9 +25,9 @@ const App = () => {
       <Form
         onSubmit={async (data) => {
           console.log(data);
-          await request
-            .post('http://localhost:1337/avatar')
-            .attach('avatar', data.avatar);
+          // await request
+          //   .post('http://localhost:1337/avatar')
+          //   .attach('avatar', data.avatar);
         }}
         inputs={[
           // {
@@ -53,29 +53,31 @@ const App = () => {
             type: 'image',
             name: 'avatar',
             id: 'avatar',
+            label: 'Avatar',
+            value: 'https://cdn.fakercloud.com/avatars/aaronkwhite_128.jpg',
           },
-          // {
-          //   type: 'text',
-          //   name: 'date2',
-          //   id: 'date2',
-          //   group: {
-          //     title: 'group',
-          //     id: 'group',
-          //   },
-          // },
+          {
+            type: 'text',
+            name: 'date2',
+            id: 'date2',
+            group: {
+              title: 'group',
+              id: 'group',
+            },
+          },
           // {
           //   type: 'text',
           //   name: 'countries',
           //   id: 'countries',
           //   value: undefined,
           // },
-          // {
-          //   type: 'select-multiple',
-          //   name: 'countries2',
-          //   id: 'countries2',
-          //   valueOptions: countries,
-          //   value: '',
-          // },
+          {
+            type: 'search-multiple',
+            name: 'countries2',
+            id: 'countries2',
+            valueOptions: countries,
+            value: '',
+          },
         ]}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
