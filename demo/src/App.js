@@ -1,23 +1,12 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment } from 'react';
 
-import _ from 'lodash-es';
-import Form, { Validator, DateMaskConverters } from 'react-form';
-import 'react-form/dist/index.css';
-import request from 'superagent';
-
+import Form, { Validator, DateMaskConverters } from '../../src';
 import Input from './Input';
 import Option from './Option';
 import countries from './countries';
 
 const App = () => {
   const [file, setFile] = useState([]);
-  useEffect(() => {
-    async function loadFile(name) {
-      setFile(await (await fetch(name)).json());
-    }
-
-    loadFile('./inputs.json');
-  }, []);
 
   const [inputs, setInputs] = useState({});
   return (
@@ -25,9 +14,6 @@ const App = () => {
       <Form
         onSubmit={async (data) => {
           console.log(data);
-          // await request
-          //   .post('http://localhost:1337/avatar')
-          //   .attach('avatar', data.avatar);
         }}
         inputs={[
           // {

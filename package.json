@@ -1,54 +1,46 @@
 {
   "name": "@sadmammoth/react-form",
-  "version": "1.6.27",
-  "description": "Made with create-react-library",
+  "version": "1.7.0",
   "author": "SADmammoth",
   "license": "MIT",
   "repository": "SADmammoth/react-form",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "source": "src/index.js",
   "engines": {
     "node": ">=10"
   },
+  "files": [
+    "css",
+    "es",
+    "lib",
+    "umd"
+  ],
   "scripts": {
-    "build": "microbundle-crl --production",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs --css-modules false",
-    "format": "prettier ./src --loglevel=error --write"
+    "build": "nwb build-react-component",
+    "clean": "nwb clean-module && nwb clean-demo",
+    "prepublishOnly": "npm run build",
+    "start": "nwb serve-react-demo"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "prop-types": "^15.7.2"
+    "react": "16.x"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^2.0.2",
     "babel-eslint": "^10.0.3",
-    "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.23.0",
-    "gh-pages": "^2.2.0",
-    "microbundle-crl": "^0.13.10",
-    "node-sass": "^5.0.0",
-    "npm-run-all": "^4.1.5",
+    "node-sass": "^4.14.1",
+    "nwb": "0.25.x",
+    "nwb-sass": "^0.10.2",
     "prettier": "^2.3.0",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
-    "sass": "^1.32.8"
-  },
-  "files": [
-    "dist"
-  ],
-  "bit": {
-    "env": {
-      "compiler": "bit.envs/compilers/react@2.0.0"
-    },
-    "componentsDefaultDirectory": "components/{name}",
-    "packageManager": "yarn"
-  },
-  "dependencies": {
-    "lodash-es": "^4.17.21",
-    "react": "^16.14.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "webpack": "^4.46.0"
   }
 }
