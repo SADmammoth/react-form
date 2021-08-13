@@ -1,8 +1,8 @@
 module.exports = {
   type: 'react-component',
   npm: {
-    cjs: false,
-    esModules: false,
+    cjs: true,
+    esModules: true,
     umd: 'ReactForm',
   },
 };
