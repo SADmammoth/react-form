@@ -1,6 +1,6 @@
-import toArray from '../helpers/toArray';
-import { months, monthsShort } from './months';
-import regexpEscape from './regexpEscape';
+import { months, monthsShort } from './helpers/months';
+import regexpEscape from './helpers/regexpEscape';
+import toArray from './helpers/toArray';
 
 const DateMask = {
   /* *

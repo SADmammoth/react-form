@@ -1,6 +1,6 @@
-import checkCharsCount from '../helpers/formHelpers/checkCharsCount';
-import AddNotContains from './AddNotContains';
-import regexpEscapeArray from './regexpEscapeArray';
+import AddNotContains from './helpers/addNotContains';
+import checkCharsCount from './helpers/checkCharsCount';
+import regexpEscapeArray from './helpers/regexpEscapeArray';
 
 const Validator = {
   //* Input validators

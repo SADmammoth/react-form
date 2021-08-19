@@ -1,8 +1,8 @@
-import Form from './Form';
-import MultiStepForm from './Form/MultiStepForm';
-import { MarkdownOutput } from './Input/CustomInputs/MarkdownText';
-import Validator from './Validator';
-import DateMaskConverters from './Validator/DateMaskConverters';
+import Validator from '@/Validator';
+import DateMaskConverters from '@/Validator/DateMaskConverters';
+import Form from '@/basic/Form';
+import MultiStepForm from '@/basic/MultiStepForm';
+import { MarkdownOutput } from '@/basic/customInputs/MarkdownText';
 
 Form.MarkdownOutput = MarkdownOutput;
 Form.Validator = Validator;

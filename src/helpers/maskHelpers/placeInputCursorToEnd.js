@@ -1,5 +1,5 @@
 import getValueFromMask from './getValueFromMask';
-import maskSpecialCharsRegex from './maskSpecialCharsRegex';
+import maskSpecialCharsRegex from './regexps/maskSpecialCharsRegex';
 
 export default function placeInputCursorToEnd(
   target,

@@ -1,5 +1,7 @@
-import maskEscapedCharsOrEmptyRegex from '../helpers/maskHelpers/maskEscapedCharsOrEmptyRegex';
-import regexpEscape from './regexpEscape';
+import regexpEscape from './helpers/regexpEscape';
+
+const maskEscapedCharsOrEmptyRegex =
+  /(a\\(?!\\))|(h\\(?!\\))|(#\\(?!\\))|(9\\(?!\\))|(\\\\)|()/;
 
 const MaskValidator = {
   /* *

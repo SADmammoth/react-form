@@ -1,6 +1,6 @@
 import DateMask from './DateMask';
-import { months, monthsShort } from './months';
-import regexpEscape from './regexpEscape';
+import { months, monthsShort } from './helpers/months';
+import regexpEscape from './helpers/regexpEscape';
 
 function hours12(hours) {
   return hours > 12 ? hours - 12 : hours;

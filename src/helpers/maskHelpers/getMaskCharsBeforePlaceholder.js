@@ -1,5 +1,5 @@
-import maskEscapedCharsRegex from './maskEscapedCharsRegex';
-import maskSpecialCharsRegex from './maskSpecialCharsRegex';
+import maskEscapedCharsRegex from './regexps/maskEscapedCharsRegex';
+import maskSpecialCharsRegex from './regexps/maskSpecialCharsRegex';
 
 export default function getMaskCharsBeforePlaceholder(maskArray) {
   const firstPlaceholder = maskArray.findIndex((el) =>

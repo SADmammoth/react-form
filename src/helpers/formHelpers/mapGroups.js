@@ -2,7 +2,7 @@ import React from 'react';
 
 import { isEmpty } from 'lodash-es';
 
-import Input from '../../Input/Input';
+import Input from '@/basic/Input';
 
 export default function mapGroups(inputs, inputsProps) {
   const inputsGroups = {};
