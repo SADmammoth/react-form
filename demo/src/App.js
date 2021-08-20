@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 
 import Form, { Validator, DateMaskConverters } from '../../src';
+import Button from './Button';
 import Input from './Input';
 import Option from './Option';
 import inputsProps from './inputs';
@@ -27,6 +28,7 @@ const App = () => {
             return <label data-custom="custom" {...props} />;
           },
           Option,
+          Button,
         }}
         onInputsUpdate={(inputs) => {
           console.log(inputs);

@@ -140,6 +140,7 @@ function Input(props) {
         ActionButton(
           actionButton,
           id,
+          render,
           <CustomNumber
             id={id}
             type={type}
@@ -193,6 +194,7 @@ function Input(props) {
         ActionButton(
           actionButton,
           id,
+          render,
           <MultipleSelect
             id={id}
             type={type}
@@ -219,6 +221,7 @@ function Input(props) {
         ActionButton(
           actionButton,
           id,
+          render,
           <MultipleSearch
             id={id}
             type={type}
@@ -245,6 +248,7 @@ function Input(props) {
         ActionButton(
           actionButton,
           id,
+          render,
           <TextArea
             id={id}
             type={type}
@@ -273,6 +277,7 @@ function Input(props) {
         ActionButton(
           actionButton,
           id,
+          render,
           <Slider
             id={id}
             type={type}
@@ -301,6 +306,7 @@ function Input(props) {
         ActionButton(
           actionButton,
           id,
+          render,
           <Range
             id={id}
             name={name}
@@ -328,6 +334,7 @@ function Input(props) {
         ActionButton(
           actionButton,
           id,
+          render,
           <Search
             id={id}
             name={name}
@@ -459,6 +466,7 @@ function Input(props) {
       ActionButton(
         actionButton,
         id,
+        render,
         MaskedInput(
           mask,
           byCharValidator,

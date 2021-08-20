@@ -2,16 +2,17 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-function Button({ type, children, className, onClick }) {
+function Button({ type, variant, children, className, onClick }) {
   return (
     <button
       // eslint-disable-next-line react/button-has-type
-      type={type || 'button'}
+      type={type}
       className={className}
       onClick={(event) => {
         event.preventDefault();
         onClick(event);
-      }}>
+      }}
+      data-variant={variant}>
       {children}
     </button>
   );

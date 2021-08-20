@@ -62,6 +62,19 @@ const inputs = [
     label: 'Textarea',
     minSymbols: 3,
     maxSymbols: 10,
+
+    converters: {
+      in: (e) => e?.text,
+      out: (value) => {
+        return { text: value };
+      },
+    },
+    actionButton: {
+      label: 'Clear',
+      action: async (name, value) => {
+        return '';
+      },
+    },
   },
   {
     type: 'number',

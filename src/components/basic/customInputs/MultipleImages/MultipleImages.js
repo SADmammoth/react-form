@@ -10,11 +10,19 @@ function MultipleImages({ id, accept, render, label, value, onChange, name }) {
   const InputTag = render.Input || 'input';
   const Label = render.label || 'label';
   const input = useRef({});
+
+  const ButtonTag = render.Button || Button;
+
   return (
     <div className="form-image">
       <Label className="form-label file_label" htmlFor={id}>
         {label}
-        <div className="button">{'Add file'}</div>
+        <ButtonTag
+          variant={value.length > 0 ? 'appendFile' : 'addFile'}
+          className="button"
+          onClick={() => {}}>
+          Add file
+        </ButtonTag>
         <div className="selected-images">
           {!value ||
             value.map((image) => {

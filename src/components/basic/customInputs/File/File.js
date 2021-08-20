@@ -23,11 +23,17 @@ function File({ id, accept, render, label, value, onChange, name }) {
     };
   }, [value]);
 
+  const ButtonTag = render.Button || Button;
+
   return (
     <div className="form-group">
       <Label className="form-label file_label" htmlFor={id}>
         {label}
-        {!!value || <div className="button">{'Add file'}</div>}
+        {!!value || (
+          <ButtonTag variant="addFile" className="button" onClick={() => {}}>
+            Add file
+          </ButtonTag>
+        )}
       </Label>
       {!value || (
         <div className="selected-file">

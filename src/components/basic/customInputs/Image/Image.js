@@ -26,11 +26,18 @@ function Image({ id, accept, render, label, value, onChange, name }) {
       URL.revokeObjectURL(currentValue.url);
     };
   }, [value]);
+
+  const ButtonTag = render.Button || Button;
+
   return (
     <div className="form-image">
       <Label className="form-label file_label" htmlFor={id}>
         {label}
-        {!!value || <div className="button">{'Add file'}</div>}
+        {!!value || (
+          <ButtonTag variant="addFile" className="button" onClick={() => {}}>
+            Add file
+          </ButtonTag>
+        )}
 
         {!value || (
           <picture className="image-file">
