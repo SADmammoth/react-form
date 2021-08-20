@@ -8,12 +8,12 @@ export default function Field({
   render,
   onBlur,
 }) {
-  const FieldTag = render.Field || 'field';
+  const InputTag = render.Input || 'input';
   return (
-    <div className="field-wrapper">
-      <FieldTag
+    <div className="input-wrapper">
+      <InputTag
         type="text"
-        className="search-field"
+        className="search-input"
         placeholder={placeholder || 'Start typing to see options...'}
         value={currentLabel || ''}
         aria-disabled={!currentLabel ? 'disabled' : null}

@@ -38,7 +38,6 @@ function CustomNumber(props) {
 
   const increment = () => {
     setValue((passedValue) => {
-      console.log(passedValue);
       if (!passedValue && passedValue !== 0) return min;
       const newValue = counter(parseFloat(passedValue) + step);
       return newValue;

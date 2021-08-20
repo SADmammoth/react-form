@@ -41,15 +41,10 @@ function Suggestions({
 
   function renderOption(valueOption) {
     let isActive;
-    if (
+    isActive =
       (isEqual(currentValue, valueOption.value) ||
         includes(currentValue, valueOption.value)) &&
-      !isActive
-    ) {
-      isActive = true;
-    } else {
-      isActive = false;
-    }
+      !isActive;
     return (
       <Option
         name={name}

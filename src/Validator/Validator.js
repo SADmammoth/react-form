@@ -117,7 +117,6 @@ const Validator = {
   },
 
   numericByChar: (input) => {
-    console.log(input);
     if (!input) return true;
     const numericRegexp = /^0$|^[1-9][0-9]*$/;
     return numericRegexp.test(input);

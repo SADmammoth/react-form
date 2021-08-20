@@ -14,7 +14,7 @@ function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
     <div className="form-group">
       <Label className="form-label file_label" htmlFor={id}>
         {label}
-        <Button>{'Add file'}</Button>
+        <div className="button">{'Add file'}</div>
       </Label>
       {!value || (
         <div className="selected-file">

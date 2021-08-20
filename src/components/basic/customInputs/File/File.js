@@ -27,7 +27,7 @@ function File({ id, accept, render, label, value, onChange, name }) {
     <div className="form-group">
       <Label className="form-label file_label" htmlFor={id}>
         {label}
-        {!!value || <Button>{'Add file'}</Button>}
+        {!!value || <div className="button">{'Add file'}</div>}
       </Label>
       {!value || (
         <div className="selected-file">

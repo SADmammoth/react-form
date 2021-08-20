@@ -30,7 +30,7 @@ function Image({ id, accept, render, label, value, onChange, name }) {
     <div className="form-image">
       <Label className="form-label file_label" htmlFor={id}>
         {label}
-        {!!value || <Button>{'Add file'}</Button>}
+        {!!value || <div className="button">{'Add file'}</div>}
 
         {!value || (
           <picture className="image-file">

@@ -10,7 +10,7 @@ export default function Field({
   listShown,
   render,
 }) {
-  const FieldTag = render.Field || 'field';
+  const InputTag = render.Input || 'input';
 
   return (
     <div
@@ -18,7 +18,7 @@ export default function Field({
       onClick={() => {
         showList(!listShown);
       }}>
-      <FieldTag
+      <InputTag
         className={`select-label ${currentLabel ? '' : 'disabled'}`}
         type="text"
         placeholder={placeholder || 'Choose option...'}
@@ -26,7 +26,7 @@ export default function Field({
         aria-disabled={!currentLabel ? 'disabled' : null}
         disabled
       />
-      <field
+      <input
         type="checkbox"
         className="form-spoiler"
         name="select-header-button"

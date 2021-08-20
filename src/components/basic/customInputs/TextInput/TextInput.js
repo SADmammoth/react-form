@@ -33,7 +33,6 @@ function TextInput({
       }}
       onChange={(event) => {
         setValue(event.target.value);
-        console.log(onChange);
         onChange(event);
       }}
       onKeyPress={(event) => {

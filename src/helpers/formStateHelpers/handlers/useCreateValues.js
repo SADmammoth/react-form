@@ -13,7 +13,6 @@ export default function useCreateValues() {
       if (typeof input.converters === 'string') {
         convertersFromMap = convertersMap[input.converters];
       }
-      console.log(convertersFromMap.in(input.defaultValue || input.value));
       valuesData[input.name] = {
         ...valuesData[input.name],
         id: input.name,

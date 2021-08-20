@@ -81,7 +81,6 @@ function CustomTextArea({
       return;
     }
     if (event.key === keys.ArrowLeft) {
-      console.log(event.shiftKey);
       !event.shiftKey
         ? dispatch(actions.left())
         : dispatch(

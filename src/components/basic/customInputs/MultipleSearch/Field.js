@@ -18,12 +18,11 @@ export default function Field({
   currentValue,
   valueOptions,
 }) {
-  const FieldTag = render.Field || 'field';
+  const InputTag = render.Input || 'input';
   const Tag = render.Tag || DefaultTag;
 
   const mapCurrentValue = useCallback(
     (value) => {
-      console.log(valueOptions);
       const valueOption = valueOptions.find(
         ({ value: candidateValue }) => candidateValue === value,
       );
@@ -43,14 +42,14 @@ export default function Field({
 
   return (
     <div className="select-header">
-      <div className="field-wrapper">
-        <FieldTag
+      <div className="input-wrapper">
+        <InputTag
           type="text"
-          className="search-field"
+          className="search-input"
           placeholder={placeholder || 'Start typing to see options...'}
           value={currentLabel || ''}
           aria-disabled={!currentLabel ? 'disabled' : null}
-          onField={(event) => {
+          onInput={(event) => {
             setCurrentLabel(event.target.value);
           }}
           onFocus={() => {
@@ -71,7 +70,7 @@ export default function Field({
           </div>
         )}
       </div>
-      <field
+      <input
         type="checkbox"
         className="form-spoiler"
         name="select-header-button"

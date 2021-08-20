@@ -14,7 +14,7 @@ function MultipleImages({ id, accept, render, label, value, onChange, name }) {
     <div className="form-image">
       <Label className="form-label file_label" htmlFor={id}>
         {label}
-        <Button>{'Add file'}</Button>
+        <div className="button">{'Add file'}</div>
         <div className="selected-images">
           {!value ||
             value.map((image) => {

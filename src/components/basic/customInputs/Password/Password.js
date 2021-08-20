@@ -24,7 +24,6 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
   }, [value]);
 
   useEffect(() => {
-    console.log(showPassword);
     input.current.value = showPassword ? state : hidePassword(state);
   }, [showPassword, state]);
 
@@ -53,7 +52,6 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
 
   const onInputHandler = useCallback(
     async (event) => {
-      console.log('wef', event.target.value);
       setState(event.target.value);
       onInput(createEvent(name, event.target.value));
     },

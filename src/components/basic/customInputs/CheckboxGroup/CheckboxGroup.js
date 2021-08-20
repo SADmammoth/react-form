@@ -55,7 +55,7 @@ function CheckboxGroup(props) {
           {...attributes}
           checked={
             isEqual(valueOption.value, values === valueOption.value) ||
-            includes(valueOption.value, values)
+            includes(values, valueOption.value)
           }
         />
         <LabelTag htmlFor={id + valueOption.value}>
