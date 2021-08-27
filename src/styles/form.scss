@@ -68,14 +68,18 @@
   .group-title {
     padding: 0;
     margin: 0;
+    font-weight: bold;
+    font-size: 1.05rem;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $muted;
   }
-  padding: 5%;
-  width: 110%;
-  margin-left: -5%;
-  border: 1px solid $highlight;
+  border-bottom: 1px solid $muted;
+  padding-top: 5px;
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 10px 0;
 }
 
 .form-group {
@@ -216,5 +220,11 @@
     overflow-x: auto;
     flex-direction: row;
     display: flex;
+  }
+}
+
+.search-input {
+  &::placeholder {
+    color: $muted;
   }
 }

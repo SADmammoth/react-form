@@ -7,6 +7,18 @@ const inputs = [
     name: 'text',
     label: 'Text',
     placeholder: 'ABCD',
+    converters: {
+      in: (e) => e?.text,
+      out: (value) => {
+        return { text: value };
+      },
+    },
+    actionButton: {
+      label: 'Clear',
+      action: async (name, value) => {
+        return '';
+      },
+    },
   },
   {
     type: 'text',
@@ -61,7 +73,7 @@ const inputs = [
     name: 'textarea',
     label: 'Textarea',
     minSymbols: 3,
-    maxSymbols: 10,
+    maxSymbols: 30,
 
     converters: {
       in: (e) => e?.text,

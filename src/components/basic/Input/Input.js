@@ -23,7 +23,7 @@ import {
 } from '../customInputs';
 import Tag from '@/generic/Tag';
 import compareObjects from '@/helpers/compareObjects';
-import LabeledInput from '@/wrappers/LabelledInput';
+import LabelledInput from '@/wrappers/LabelledInput';
 import MaskedInput from '@/wrappers/MaskedInput';
 
 function Input(props) {
@@ -89,7 +89,7 @@ function Input(props) {
       type === 'toggle' ||
       type === 'spoiler'
     ) {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -111,7 +111,7 @@ function Input(props) {
     }
 
     if (type === 'markdown') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -133,7 +133,7 @@ function Input(props) {
     }
 
     if (type === 'number') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -161,13 +161,14 @@ function Input(props) {
     }
 
     if (type === 'select') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
         ActionButton(
           actionButton,
           id,
+          render,
           <Select
             id={id}
             type={type}
@@ -187,7 +188,7 @@ function Input(props) {
     }
 
     if (type === 'select-multiple') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -214,7 +215,7 @@ function Input(props) {
     }
 
     if (type === 'search-multiple') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -241,7 +242,7 @@ function Input(props) {
     }
 
     if (type === 'textarea') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -270,7 +271,7 @@ function Input(props) {
     }
 
     if (type === 'slider') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -299,7 +300,7 @@ function Input(props) {
     }
 
     if (type === 'range') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -327,7 +328,7 @@ function Input(props) {
     }
 
     if (type === 'search') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -354,7 +355,7 @@ function Input(props) {
     }
 
     if (type === 'password') {
-      return LabeledInput(
+      return LabelledInput(
         render,
         label,
         id,
@@ -459,7 +460,7 @@ function Input(props) {
       );
     }
 
-    return LabeledInput(
+    return LabelledInput(
       render,
       label,
       id,

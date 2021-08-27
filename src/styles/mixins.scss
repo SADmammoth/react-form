@@ -146,10 +146,18 @@ pre {
 
 @mixin select {
   position: relative;
+
+  &.placeholdered .select-placeholder {
+    color: $muted;
+  }
+
   .select-header {
     @include input;
 
     .select-label {
+      &::placeholder {
+        color: $muted;
+      }
       background: none;
       border: 0;
 
@@ -222,16 +230,15 @@ pre {
       margin-bottom: calc(#{$border-width} - 3%);
     }
   }
-
-  &.placeholdered > .select-header {
-    color: $muted;
-  }
 }
 
 @mixin number {
   position: relative;
   input {
+    border: $border-width solid $common;
+    box-sizing: border-box;
     width: 100%;
+    padding: 2%;
   }
   &-minus,
   &-plus {
@@ -249,8 +256,8 @@ pre {
     text-align: center;
     line-height: 0.1;
     height: 8px;
-    top: 0px;
-    right: -4px;
+    top: 2px;
+    right: 1px;
     margin: 0;
   }
 
@@ -260,8 +267,8 @@ pre {
     height: 8px;
     text-align: center;
     line-height: 0.1;
-    bottom: 0px;
-    right: -4px;
+    bottom: 2px;
+    right: 1px;
     margin: 0;
   }
 }
@@ -468,7 +475,6 @@ pre {
 
 @mixin group {
   padding: 10px;
-  border: 1px solid $highlight;
 
   .group-title {
     margin: 0;
@@ -488,4 +494,25 @@ pre {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.action-button-wrapper {
+  position: relative;
+  input,
+  textarea {
+    width: 100%;
+    padding-right: 50px;
+    box-sizing: border-box;
+  }
+  .actionButton,
+  .showPassword {
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    position: absolute;
+    padding: 2px;
+    font-size: 0.7rem;
+    right: 2px;
+    top: 2px;
+  }
 }

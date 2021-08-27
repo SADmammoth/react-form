@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { times } from 'lodash-es';
 import PropTypes from 'prop-types';
 
-import Button from '../../../generic/Button/Button';
 import createEvent from '@/formHelpers/createEvent';
+import Button from '@/generic/Button';
 
 function Password({ name, value, onChange, onInput, render, ...props }) {
   const hidePassword = (value) => {
@@ -100,9 +100,9 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
   const ButtonTag = render.Button || Button;
 
   return (
-    <React.Fragment>
+    <div className="action-button-wrapper">
       <InputTag
-        className={'password'}
+        className="password form-control"
         name={name}
         ref={input}
         type="text"
@@ -117,13 +117,14 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
         onCut={onCopy}
         {...props}
       />
+
       <ButtonTag
         variant="showPassword"
         className="show_password-checkbox"
         onClick={() => setShowPassword((state) => !state)}>
         {showPassword ? 'hide' : 'show'}
       </ButtonTag>
-    </React.Fragment>
+    </div>
   );
 }
 

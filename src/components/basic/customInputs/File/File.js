@@ -30,7 +30,11 @@ function File({ id, accept, render, label, value, onChange, name }) {
       <Label className="form-label file_label" htmlFor={id}>
         {label}
         {!!value || (
-          <ButtonTag variant="addFile" className="button" onClick={() => {}}>
+          <ButtonTag
+            variant="addFile"
+            className="button"
+            onClick={() => {}}
+            style={{ 'pointer-events': 'none' }}>
             Add file
           </ButtonTag>
         )}
