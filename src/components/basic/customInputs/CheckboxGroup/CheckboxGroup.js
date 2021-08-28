@@ -1,14 +1,23 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 
+import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
+import theme from '../../../../styles/theme';
 import checkboxValueSeparator from '@/formHelpers/checkboxValueSeparator';
 import useValueOptions from '@/formHelpers/getValueOptions';
 import compareObjects from '@/helpers/compareObjects';
 
+import styles from './CheckboxGroup.styles';
+
+const useStyles = createUseStyles(styles);
+
 function CheckboxGroup(props) {
+  const classes = useStyles(theme);
+
   const { valueOptions: options, render, required } = props;
   const [valueOptions, loading] = useValueOptions(options);
 
@@ -40,7 +49,7 @@ function CheckboxGroup(props) {
     const LabelTag = render.Label || 'label';
 
     return (
-      <div key={id + valueOption.value} className={`${type}-group`}>
+      <div key={id + valueOption.value} className={classes[`${type}Fieldset`]}>
         <InputTag
           id={id + valueOption.value}
           name={name}
@@ -49,7 +58,9 @@ function CheckboxGroup(props) {
               ? 'checkbox'
               : 'radio'
           }
-          className={`form-${type}${required ? ' required' : ''}`}
+          className={classNames(classes[type], {
+            [classes.required]: required,
+          })}
           value={valueOption.value}
           onChange={onChangeHandler}
           {...attributes}
@@ -82,7 +93,7 @@ function CheckboxGroup(props) {
   const { type, id } = props;
 
   return (
-    <div id={id + type} className={`${type}-group`}>
+    <div id={id + type} className={classes[`${type}Group`]}>
       {renderCheckboxes()}
     </div>
   );

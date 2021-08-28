@@ -19,26 +19,6 @@
   @include select;
 }
 
-.form-checkbox {
-  @include checkbox;
-}
-
-.form-radio {
-  @include radiobutton;
-}
-
-.form-toggle {
-  @include toggle;
-}
-
-.form-spoiler {
-  @include spoiler;
-}
-
-.form-number {
-  @include number;
-}
-
 .form-slider {
   @include slider;
 }
