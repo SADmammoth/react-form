@@ -16,6 +16,26 @@ const styles = {
   showPassword: {
     ...commonButton,
   },
+  close: {
+    background: 0,
+    border: 'none',
+    outline: 'none',
+    height: 5,
+    width: 5,
+
+    cursor: 'pointer',
+    close: {
+      background: 'none',
+      border: 'none',
+      outline: 'none',
+      cursor: 'pointer',
+      '&::before': {
+        content: "'\\00d7'",
+        color: (theme) => theme.commonColor,
+        fontSize: '1rem',
+      },
+    },
+  },
 };
 
 export default styles;

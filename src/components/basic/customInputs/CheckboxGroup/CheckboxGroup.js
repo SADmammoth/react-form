@@ -6,10 +6,10 @@ import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
-import theme from '../../../../styles/theme';
 import checkboxValueSeparator from '@/formHelpers/checkboxValueSeparator';
 import useValueOptions from '@/formHelpers/getValueOptions';
 import compareObjects from '@/helpers/compareObjects';
+import theme from '@/styles/theme';
 
 import styles from './CheckboxGroup.styles';
 

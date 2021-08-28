@@ -16,6 +16,24 @@ const styles = {
   showPassword: {
     ...commonButton,
   },
+  addFile: {
+    display: 'inline-block',
+    border: '1px solid black',
+    padding: '6px 12px',
+    cursor: 'pointer',
+  },
+  close: {
+    background: 'none',
+    border: 'none',
+    outline: 'none',
+
+    cursor: 'pointer',
+    '&::before': {
+      content: "'\\00d7'",
+      color: 'black',
+      fontSize: '1rem',
+    },
+  },
 };
 
 export default styles;
