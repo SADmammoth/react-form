@@ -1,12 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import { size } from 'lodash';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import Button from '@/generic/Button';
-import formatFileSize from '@/helpers/formatFileSize';
+import SelectedImage from '@/generic/SelectedImage';
+import theme from '@/styles/theme';
+
+import styles from './Image.styles';
+
+const useStyles = createUseStyles(styles);
 
 function Image({ id, accept, render, label, value, onChange, name }) {
+  const classes = useStyles(theme);
+
   const InputTag = render.Input || 'input';
   const Label = render.Label || 'label';
   const input = useRef({});
@@ -29,14 +38,19 @@ function Image({ id, accept, render, label, value, onChange, name }) {
 
   const ButtonTag = render.Button || Button;
 
+  const onClose = () => {
+    onChange(createEvent(name, ''));
+    input.current.value = '';
+  };
+
   return (
-    <div className="form-image">
-      <Label className="form-label file_label" htmlFor={id}>
+    <div>
+      <Label className={classes.label} htmlFor={id}>
         {label}
         {!!value || (
           <ButtonTag
             variant="addFile"
-            className="button"
+            className={classes.button}
             onClick={() => {}}
             style={{ 'pointer-events': 'none' }}>
             Add file
@@ -44,33 +58,20 @@ function Image({ id, accept, render, label, value, onChange, name }) {
         )}
 
         {!value || (
-          <picture className="image-file">
-            <img
-              className="image"
-              src={currentValue.url}
-              alt={currentValue.fileName}
-            />
-            <caption className="image-caption">
-              <p className="file_name">{currentValue.fileName}</p>
-              <p className="file_size">{formatFileSize(currentValue.size)}</p>
-              <button
-                type="button"
-                className="close_button"
-                onClick={() => {
-                  onChange(createEvent(name, ''));
-                  input.current.value = '';
-                }}>
-                x
-              </button>
-            </caption>
-          </picture>
+          <SelectedImage
+            url={currentValue.url}
+            fileName={currentValue.fileName}
+            size={currentValue.size}
+            onClose={onClose}
+            ButtonTag={ButtonTag}
+          />
         )}
       </Label>
 
       <InputTag
         id={id}
         ref={input}
-        className="file_input"
+        className={classes.input}
         type="file"
         {...(value ? {} : { value: '' })}
         name={name}

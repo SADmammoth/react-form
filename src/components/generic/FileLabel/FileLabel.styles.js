@@ -1,6 +1,5 @@
 const styles = {
   file: {
-    border: (theme) => `1px solid ${theme.highlightColor}`,
     display: 'flex',
     padding: 5,
     position: 'relative',

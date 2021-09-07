@@ -8,13 +8,14 @@ import FileLabel from '../../../generic/FileLabel/FileLabel';
 import createEvent from '@/formHelpers/createEvent';
 import Button from '@/generic/Button';
 import getFileHash from '@/helpers/getFileHash';
+import theme from '@/styles/theme';
 
 import styles from './MultipleFiles.styles';
 
 const useStyles = createUseStyles(styles);
 
 function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
-  const classes = useStyles();
+  const classes = useStyles(theme);
 
   const InputTag = render.Input || 'input';
   const Label = render.label || 'label';
@@ -32,12 +33,14 @@ function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
       };
 
       return (
-        <FileLabel
-          name={fileName}
-          size={size}
-          onClose={onClose}
-          ButtonTag={ButtonTag}
-        />
+        <div className={classes.selectedFile}>
+          <FileLabel
+            name={fileName}
+            size={size}
+            onClose={onClose}
+            ButtonTag={ButtonTag}
+          />
+        </div>
       );
     });
   };

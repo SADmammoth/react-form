@@ -6,6 +6,9 @@ const styles = {
     flexDirection: 'column',
     flexWrap: 'nowrap',
   },
+  selectedFile: {
+    border: (theme) => `1px solid ${theme.highlightColor}`,
+  },
 };
 
 export default styles;
