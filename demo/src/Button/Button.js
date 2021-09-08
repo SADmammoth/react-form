@@ -32,6 +32,7 @@ Button.propTypes = {
   variant: PropTypes.oneOf([
     'actionButton',
     'showPassword',
+    'hidePassword',
     'addFile',
     'close',
   ]),

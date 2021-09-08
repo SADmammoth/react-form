@@ -1,12 +1,21 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import classNames from 'classnames';
 import { times } from 'lodash-es';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import Button from '@/generic/Button';
+import theme from '@/styles/theme';
+
+import styles from './Password.styles';
+
+const useStyles = createUseStyles(styles);
 
 function Password({ name, value, onChange, onInput, render, ...props }) {
+  const classes = useStyles(theme);
+
   const hidePassword = (value) => {
     return times(value.length, () => render.passwordBullet || '\u2022').join(
       '',
@@ -76,8 +85,9 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
     const pos = event.target.selectionStart;
     newText = newText.replace(/\r?\n/g, ' ');
     let el = event.target;
-    let cursorPosStart = el.selectionStart;
-    let cursorPosEnd = el.selectionEnd;
+    let cursorPosStart = event.target.selectionStart;
+    let cursorPosEnd = event.target.selectionEnd;
+    console.log(cursorPosStart, cursorPosEnd);
     let v = el.value;
     let textBefore = v.substring(0, cursorPosStart);
     let textAfter = v.substring(cursorPosEnd, v.length);
@@ -92,7 +102,21 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
   };
 
   const onCopy = useCallback(
-    (event) => event.clipboardData.setData('text', state),
+    (event) => {
+      event.clipboardData.setData('text/plain', state);
+      hideValue(event);
+      event.preventDefault();
+    },
+    [state],
+  );
+
+  const onCut = useCallback(
+    (event) => {
+      event.clipboardData.setData('text/plain', state);
+      setState('');
+      onInput(createEvent(name, ''));
+      event.preventDefault();
+    },
     [state],
   );
 
@@ -100,9 +124,9 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
   const ButtonTag = render.Button || Button;
 
   return (
-    <div className="action-button-wrapper">
+    <div className={classes.actionButtonWrapper}>
       <InputTag
-        className="password form-control"
+        className={classes.password}
         name={name}
         ref={input}
         type="text"
@@ -114,14 +138,17 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
         autocomplete="off"
         onPaste={onPaste}
         onCopy={onCopy}
-        onCut={onCopy}
+        onCut={onCut}
         {...props}
       />
 
       <ButtonTag
-        variant="showPassword"
-        className="show_password-checkbox"
-        onClick={() => setShowPassword((state) => !state)}>
+        variant={showPassword ? 'hidePassword' : 'showPassword'}
+        className={classes.passwordButton}
+        onClick={() => {
+          setShowPassword((state) => !state);
+          input.current.focus();
+        }}>
         {showPassword ? 'hide' : 'show'}
       </ButtonTag>
     </div>

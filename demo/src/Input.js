@@ -2,12 +2,12 @@ import React from 'react';
 
 import { isEqual } from 'lodash-es';
 
-function Input(props) {
+const Input = React.forwardRef((props, ref) => {
   if (props.type === 'textarea') {
-    return <textarea data-custom="custom" {...props} />;
+    return <textarea ref={ref} data-custom="custom" {...props} />;
   } else {
-    return <input data-custom="custom" {...props} />;
+    return <input ref={ref} data-custom="custom" {...props} />;
   }
-}
+});
 
 export default React.memo(Input, isEqual);

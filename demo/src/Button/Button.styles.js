@@ -9,6 +9,15 @@ const commonButton = {
   top: 2,
 };
 
+const passwordButton = {
+  color: 'transparent',
+  fontSize: 0,
+  background: 'none',
+  border: 'none',
+  outline: 'none',
+  cursor: 'pointer',
+};
+
 const styles = {
   actionButton: {
     ...commonButton,
@@ -32,6 +41,24 @@ const styles = {
       content: "'\\00d7'",
       color: 'black',
       fontSize: '1rem',
+    },
+  },
+  showPassword: {
+    ...passwordButton,
+    '&::before': {
+      content: '"\\1f441"',
+      fontSize: '1rem',
+      color: 'black',
+    },
+  },
+  hidePassword: {
+    ...passwordButton,
+    '&::before': {
+      content: '"\\1f441"',
+      fontSize: '1rem',
+      color: 'black',
+      background:
+        'linear-gradient(to left top, transparent 45%, currentColor 50%, currentColor 50%, transparent 53%)',
     },
   },
 };
