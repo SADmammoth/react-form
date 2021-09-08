@@ -1,12 +1,18 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import calcPercent from '@/formHelpers/slider/calcPercent';
 import SliderThumb from '@/generic/SliderThumb';
 import compareObjects from '@/helpers/compareObjects';
 import useRange from '@/hooks/useRange';
+import theme from '@/styles/theme';
+
+import styles from './Range.styles';
+
+const useStyles = createUseStyles(styles);
 
 function Range(props) {
   const {
@@ -35,6 +41,12 @@ function Range(props) {
     length,
   );
 
+  const classes = useStyles({
+    ...theme,
+    from: calcPercent(leftIndex, length),
+    to: calcPercent(rightIndex, length),
+  });
+
   useEffect(() => {
     setLeftIndex(from);
     setRightIndex(to);
@@ -60,43 +72,33 @@ function Range(props) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <div
-      className="form-range"
-      style={{
-        '--start': calcPercent(leftIndex, length),
-        '--percent': calcPercent(rightIndex, length),
-        '--display-tip': alwaysShowTip ? 'unset' : 'none',
-      }}>
-      <div ref={range} className="form-range-bg">
-        <input
-          type="text"
-          name={`${name}-left`}
-          value={valueOptions[leftIndex].value}
-          required={required}
-          readOnly
-        />
-        <input
-          type="text"
-          name={`${name}-right`}
-          value={valueOptions[rightIndex].value}
-          required={required}
-          readOnly
-        />
-
+    <div className="form-range">
+      <div ref={range} className={classes.background}>
         <SliderThumb
+          type="left"
           sliderRef={range.current}
           sliderValuesCount={length}
           moveTo={setLeftIndex}
           moveToStart={() => setLeftIndex(0)}
           moveToEnd={moveEndLeft}
+          value={valueOptions[leftIndex].value}
+          required={required}
+          position={calcPercent(leftIndex, length)}
+          showTip={alwaysShowTip}
         />
 
         <SliderThumb
+          type="right"
+          className={classes.right}
           sliderRef={range.current}
           sliderValuesCount={length}
           moveTo={setRightIndex}
           moveToStart={moveStartRight}
           moveToEnd={() => setRightIndex(length - 1)}
+          value={valueOptions[rightIndex].value}
+          required={required}
+          position={calcPercent(rightIndex, length)}
+          showTip={alwaysShowTip}
         />
       </div>
     </div>

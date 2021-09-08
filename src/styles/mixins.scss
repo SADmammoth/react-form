@@ -215,37 +215,37 @@ pre {
     display: inline-block;
   }
 
-  input[name$='left'] {
-    width: 100px;
-    height: 25px;
-    top: -25px;
-    text-align: center;
-    border: none;
-    position: absolute;
-    left: calc(var(--start) * 1% - 50px);
-    display: var(--display-tip);
-    background: none;
-    outline: none;
-    pointer-events: none;
-  }
+  // input[name$='left'] {
+  //   width: 100px;
+  //   height: 25px;
+  //   top: -25px;
+  //   text-align: center;
+  //   border: none;
+  //   position: absolute;
+  //   left: calc(var(--start) * 1% - 50px);
+  //   display: var(--display-tip);
+  //   background: none;
+  //   outline: none;
+  //   pointer-events: none;
+  // }
 
-  input[name$='right'] {
-    width: 100px;
-    height: 25px;
-    top: -25px;
-    text-align: center;
-    border: none;
-    position: absolute;
-    left: calc(var(--percent) * 1% - 50px);
-    display: var(--display-tip);
-    background: none;
-    outline: none;
-    pointer-events: none;
-  }
+  // input[name$='right'] {
+  //   width: 100px;
+  //   height: 25px;
+  //   top: -25px;
+  //   text-align: center;
+  //   border: none;
+  //   position: absolute;
+  //   left: calc(var(--percent) * 1% - 50px);
+  //   display: var(--display-tip);
+  //   background: none;
+  //   outline: none;
+  //   pointer-events: none;
+  // }
 
-  &:hover input {
-    display: unset;
-  }
+  // &:hover input {
+  //   display: unset;
+  // }
 
   &-bg {
     display: inline-block;
