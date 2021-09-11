@@ -16,6 +16,7 @@ const useStyles = createUseStyles(styles);
 
 function Range(props) {
   const {
+    className,
     // type,
     name,
     value: currentValue,
@@ -72,7 +73,7 @@ function Range(props) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <div className="form-range">
+    <div className={className}>
       <div ref={range} className={classes.background}>
         <SliderThumb
           type="left"
@@ -106,6 +107,7 @@ function Range(props) {
 }
 
 Range.defaultProps = {
+  className: '',
   required: false,
   value: null,
   // placeholder: null,
@@ -117,6 +119,7 @@ Range.defaultProps = {
 };
 
 Range.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.shape({
       from: PropTypes.number.isRequired,

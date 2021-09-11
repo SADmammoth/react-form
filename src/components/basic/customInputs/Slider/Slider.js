@@ -21,6 +21,7 @@ const useStyles = createUseStyles(styles);
 
 function Slider(props) {
   const {
+    className,
     // type,
     name,
     value: currentValue,
@@ -60,7 +61,7 @@ function Slider(props) {
   };
 
   return (
-    <div draggable="false">
+    <div className={className} draggable="false">
       <HoldButton name={name} className={classes.button} action={prev}>
         -
       </HoldButton>
@@ -96,6 +97,7 @@ function Slider(props) {
 }
 
 Slider.defaultProps = {
+  className: '',
   required: false,
   value: null,
   // placeholder: null,
@@ -107,6 +109,7 @@ Slider.defaultProps = {
 };
 
 Slider.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.string,
   // placeholder: PropTypes.string,
   required: PropTypes.bool,

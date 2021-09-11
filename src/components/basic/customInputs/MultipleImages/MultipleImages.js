@@ -12,7 +12,16 @@ import styles from './MultipleImages.styles';
 
 const useStyles = createUseStyles(styles);
 
-function MultipleImages({ id, accept, render, label, value, onChange, name }) {
+function MultipleImages({
+  className,
+  id,
+  accept,
+  render,
+  label,
+  value,
+  onChange,
+  name,
+}) {
   const classes = useStyles(theme);
 
   const InputTag = render.Input || 'input';
@@ -22,7 +31,7 @@ function MultipleImages({ id, accept, render, label, value, onChange, name }) {
   const ButtonTag = render.Button || Button;
 
   return (
-    <div>
+    <div className={className}>
       <Label className={classes.label} htmlFor={id}>
         {label}
         <ButtonTag

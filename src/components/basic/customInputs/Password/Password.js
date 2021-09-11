@@ -13,7 +13,15 @@ import styles from './Password.styles';
 
 const useStyles = createUseStyles(styles);
 
-function Password({ name, value, onChange, onInput, render, ...props }) {
+function Password({
+  className,
+  name,
+  value,
+  onChange,
+  onInput,
+  render,
+  ...props
+}) {
   const classes = useStyles(theme);
 
   const hidePassword = (value) => {
@@ -124,7 +132,7 @@ function Password({ name, value, onChange, onInput, render, ...props }) {
   const ButtonTag = render.Button || Button;
 
   return (
-    <div className={classes.actionButtonWrapper}>
+    <div className={classNames(className, classes.actionButtonWrapper)}>
       <InputTag
         className={classes.password}
         name={name}

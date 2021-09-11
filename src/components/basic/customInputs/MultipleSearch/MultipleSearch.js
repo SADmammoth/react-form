@@ -16,6 +16,7 @@ import styles from './MultipleSearch.styles';
 const useStyles = createUseStyles(styles);
 
 function MultipleSearch({
+  className,
   // type,
   name,
   onChange,
@@ -71,6 +72,7 @@ function MultipleSearch({
 
   return (
     <Suggestions
+      className={className}
       inputClasses={classes}
       filteredValueOptions={filteredValueOptions}
       valueOptions={valueOptions || []}

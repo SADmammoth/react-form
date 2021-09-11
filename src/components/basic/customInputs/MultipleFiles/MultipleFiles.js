@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 
+import classNames from 'classnames';
 import { differenceBy } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
@@ -14,7 +15,16 @@ import styles from './MultipleFiles.styles';
 
 const useStyles = createUseStyles(styles);
 
-function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
+function MultipleFiles({
+  className,
+  id,
+  accept,
+  render,
+  label,
+  value,
+  onChange,
+  name,
+}) {
   const classes = useStyles(theme);
 
   const InputTag = render.Input || 'input';
@@ -49,7 +59,7 @@ function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
 
   return (
     <div>
-      <Label className={classes.label} htmlFor={id}>
+      <Label className={classNames(classes.label, className)} htmlFor={id}>
         {label}
         <ButtonTag
           variant={value.length > 0 ? 'appendFile' : 'addFile'}

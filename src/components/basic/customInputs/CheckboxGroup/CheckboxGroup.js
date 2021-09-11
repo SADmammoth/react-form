@@ -18,12 +18,7 @@ const useStyles = createUseStyles(styles);
 function CheckboxGroup(props) {
   const classes = useStyles(theme);
 
-  const {
-    valueOptions: options,
-    render,
-    required,
-    className /*FIXME*/,
-  } = props;
+  const { valueOptions: options, render, required, className } = props;
   const [valueOptions, loading] = useValueOptions(options);
 
   function renderCheckbox(
@@ -107,6 +102,7 @@ function CheckboxGroup(props) {
 }
 
 CheckboxGroup.defaultProps = {
+  className: '',
   value: null,
   onInput: () => {},
   onChange: () => {},
@@ -116,6 +112,7 @@ CheckboxGroup.defaultProps = {
 };
 
 CheckboxGroup.propTypes = {
+  className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['radio', 'checkbox', 'toggle', 'spoiler']).isRequired,

@@ -18,6 +18,7 @@ function Select(props) {
   const classes = useStyles(theme);
 
   const {
+    className,
     // type,
     valueOptions: options,
     name,
@@ -42,6 +43,7 @@ function Select(props) {
 
   return (
     <Suggestions
+      className={className}
       inputClasses={classes}
       filteredValueOptions={valueOptions}
       showNumber={showNumber}
@@ -61,12 +63,14 @@ function Select(props) {
 }
 
 Select.defaultProps = {
+  className: '',
   // required: false,
   value: '',
   placeholder: null,
 };
 
 Select.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
   // required: PropTypes.bool,

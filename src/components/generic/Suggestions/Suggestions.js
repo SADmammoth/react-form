@@ -16,6 +16,7 @@ import styles from './Suggestions.styles';
 const useStyles = createUseStyles(styles);
 
 function Suggestions({
+  className,
   inputClasses,
   allowScroll,
   showNumber,
@@ -83,7 +84,7 @@ function Suggestions({
 
   return (
     <div
-      className={classNames(classes.select, {
+      className={classNames(className, classes.select, {
         [classes.placeholdered]: !currentValue,
       })}
       name={name}>

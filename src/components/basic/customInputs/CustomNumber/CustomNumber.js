@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
@@ -18,6 +19,7 @@ function CustomNumber(props) {
   const classes = useStyles(theme);
 
   const {
+    className,
     // type,
     name,
     value: currentValue,
@@ -74,7 +76,7 @@ function CustomNumber(props) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <div className={classes.number}>
+    <div className={classNames(className, classes.number)}>
       <InputTag
         className={classes.input}
         type="text"
@@ -97,6 +99,7 @@ function CustomNumber(props) {
 }
 
 CustomNumber.defaultProps = {
+  className: '',
   // required: false,
   value: null,
   // placeholder: null,
@@ -106,6 +109,7 @@ CustomNumber.defaultProps = {
 };
 
 CustomNumber.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // placeholder: PropTypes.string,
   // required: PropTypes.bool,

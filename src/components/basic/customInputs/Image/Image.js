@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import classNames from 'classnames';
 import { size } from 'lodash';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
@@ -13,7 +14,16 @@ import styles from './Image.styles';
 
 const useStyles = createUseStyles(styles);
 
-function Image({ id, accept, render, label, value, onChange, name }) {
+function Image({
+  className,
+  id,
+  accept,
+  render,
+  label,
+  value,
+  onChange,
+  name,
+}) {
   const classes = useStyles(theme);
 
   const InputTag = render.Input || 'input';
@@ -44,7 +54,7 @@ function Image({ id, accept, render, label, value, onChange, name }) {
   };
 
   return (
-    <div>
+    <div className={className}>
       <Label className={classes.label} htmlFor={id}>
         {label}
         {!!value || (

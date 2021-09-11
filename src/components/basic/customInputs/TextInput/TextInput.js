@@ -11,6 +11,7 @@ import styles from './TextInput.styles';
 const useStyles = createUseStyles(styles);
 
 function TextInput({
+  className,
   name,
   type,
   invalid,
@@ -35,7 +36,7 @@ function TextInput({
       {...props}
       name={name}
       type={type}
-      className={classNames(classes.input, {
+      className={classNames(className, classes.input, {
         [classes.invalid]: invalid,
       })}
       value={value}

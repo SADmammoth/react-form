@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
@@ -12,7 +13,7 @@ import styles from './File.styles';
 
 const useStyles = createUseStyles(styles);
 
-function File({ id, accept, render, label, value, onChange, name }) {
+function File({ className, id, accept, render, label, value, onChange, name }) {
   const classes = useStyles(theme);
 
   const InputTag = render.Input || 'input';
@@ -39,8 +40,8 @@ function File({ id, accept, render, label, value, onChange, name }) {
   const ButtonTag = render.Button || Button;
 
   return (
-    <div>
-      <Label className={classes.label} htmlFor={id}>
+    <div className={className}>
+      <Label className={classNames(className, classes.label)} htmlFor={id}>
         {label}
         {!!value || (
           <ButtonTag

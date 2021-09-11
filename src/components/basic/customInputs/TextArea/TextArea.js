@@ -16,6 +16,7 @@ function TextArea(props) {
   const classes = useStyles(theme);
 
   const {
+    className,
     id,
     type,
     name,
@@ -95,6 +96,7 @@ function TextArea(props) {
 }
 
 TextArea.defaultProps = {
+  className: '',
   onInput: () => {},
   onChange: () => {},
   value: '',
@@ -106,6 +108,7 @@ TextArea.defaultProps = {
 };
 
 TextArea.propTypes = {
+  className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string,

@@ -17,6 +17,7 @@ import styles from './Search.styles';
 const useStyles = createUseStyles(styles);
 
 function Search({
+  className,
   // type,
   name,
   onChange,
@@ -65,6 +66,7 @@ function Search({
 
   return (
     <Suggestions
+      className={className}
       inputClasses={classes}
       filteredValueOptions={filteredValueOptions}
       showNumber={showNumber}
