@@ -3,7 +3,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
+import classNames from 'classnames';
+
+import CheckboxGroup from '../CheckboxGroup/CheckboxGroup';
+
 export default function Field({
+  classes,
   placeholder,
   currentLabel,
   showList,
@@ -14,27 +19,30 @@ export default function Field({
 
   return (
     <div
-      className="select-header"
+      className={classes.header}
       onClick={() => {
         showList(!listShown);
       }}>
       <InputTag
-        className={`select-label ${currentLabel ? '' : 'disabled'}`}
+        className={classNames(classes.label, {
+          [classes.disabledSelect]: !currentLabel,
+        })}
         type="text"
         placeholder={placeholder || 'Choose option...'}
         value={currentLabel || ''}
         aria-disabled={!currentLabel ? 'disabled' : null}
         disabled
       />
-      <input
-        type="checkbox"
-        className="form-spoiler"
+      <CheckboxGroup
+        type="spoiler"
+        className={classes.spoiler}
         name="select-header-button"
-        checked={listShown}
+        value={[listShown]}
+        valueOptions={[{ label: '', value: true }]}
         onChange={() => {
           showList(!listShown);
         }}
-        style={{ fontSize: '10px', marginBottom: '0px' }}
+        render={render}
       />
     </div>
   );

@@ -1,12 +1,29 @@
 import React, { useRef } from 'react';
 
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import Button from '@/generic/Button';
-import formatFileSize from '@/helpers/formatFileSize';
+import SelectedImage from '@/generic/SelectedImage';
+import theme from '@/styles/theme';
 
-function MultipleImages({ id, accept, render, label, value, onChange, name }) {
+import styles from './MultipleImages.styles';
+
+const useStyles = createUseStyles(styles);
+
+function MultipleImages({
+  className,
+  id,
+  accept,
+  render,
+  label,
+  value,
+  onChange,
+  name,
+}) {
+  const classes = useStyles(theme);
+
   const InputTag = render.Input || 'input';
   const Label = render.label || 'label';
   const input = useRef({});
@@ -14,40 +31,35 @@ function MultipleImages({ id, accept, render, label, value, onChange, name }) {
   const ButtonTag = render.Button || Button;
 
   return (
-    <div className="form-image">
-      <Label className="form-label file_label" htmlFor={id}>
+    <div className={className}>
+      <Label className={classes.label} htmlFor={id}>
         {label}
         <ButtonTag
-          variant={value.length > 0 ? 'appendFile' : 'addFile'}
-          className="button"
+          variant="addFile"
+          className={classes.button}
           onClick={() => {}}
           style={{ 'pointer-events': 'none' }}>
           Add file
         </ButtonTag>
-        <div className="selected-images">
+        <div className={classes.gallery}>
           {!value ||
             value.map((image) => {
               if (!image) return;
               const { name: fileName, size } = image;
               const url = URL.createObjectURL(image);
+              const onClose = () => {
+                const copy = [...image];
+                copy.splice(index, 1);
+                onChange(createEvent(name, copy));
+              };
               return (
-                <picture className="image-file">
-                  <img className="image" src={url} alt={fileName} />
-                  <caption className="image-caption">
-                    <p className="file_name">{fileName}</p>
-                    <p className="file_size">{formatFileSize(size)}</p>
-                    <button
-                      type="button"
-                      className="close_button"
-                      onClick={() => {
-                        const copy = [...image];
-                        copy.splice(index, 1);
-                        onChange(createEvent(name, copy));
-                      }}>
-                      x
-                    </button>
-                  </caption>
-                </picture>
+                <SelectedImage
+                  url={url}
+                  fileName={fileName}
+                  size={size}
+                  onClose={onClose}
+                  ButtonTag={ButtonTag}
+                />
               );
             })}
         </div>
@@ -57,7 +69,7 @@ function MultipleImages({ id, accept, render, label, value, onChange, name }) {
         multiple
         id={id}
         ref={input}
-        className="file_input"
+        className={classes.input}
         type="file"
         {...(value ? {} : { value: '' })}
         name={name}

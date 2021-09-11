@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { isEqual } from 'lodash-es';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import Field from './Field';
 import FilterOptions from './FilterOptions';
@@ -9,8 +10,14 @@ import useValueOptions from '@/formHelpers/getValueOptions';
 import Suggestions from '@/generic/Suggestions';
 // import PropTypes from 'prop-types';
 import compareObjects from '@/helpers/compareObjects';
+import theme from '@/styles/theme';
+
+import styles from './Search.styles';
+
+const useStyles = createUseStyles(styles);
 
 function Search({
+  className,
   // type,
   name,
   onChange,
@@ -22,6 +29,8 @@ function Search({
   required,
   allowScroll,
 }) {
+  const classes = useStyles(theme);
+
   const [valueOptions, loading] = useValueOptions(options);
   const [currentLabel, setCurrentLabel] = useState(null);
 
@@ -57,6 +66,8 @@ function Search({
 
   return (
     <Suggestions
+      className={className}
+      inputClasses={classes}
       filteredValueOptions={filteredValueOptions}
       showNumber={showNumber}
       Input={Field}

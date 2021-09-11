@@ -2,14 +2,23 @@ import React, { useEffect, useState } from 'react';
 
 import { isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import Field from './Field';
 import useValueOptions from '@/formHelpers/getValueOptions';
 import Suggestions from '@/generic/Suggestions';
 import compareObjects from '@/helpers/compareObjects';
+import theme from '@/styles/theme';
+
+import styles from './Select.styles';
+
+const useStyles = createUseStyles(styles);
 
 function Select(props) {
+  const classes = useStyles(theme);
+
   const {
+    className,
     // type,
     valueOptions: options,
     name,
@@ -34,6 +43,8 @@ function Select(props) {
 
   return (
     <Suggestions
+      className={className}
+      inputClasses={classes}
       filteredValueOptions={valueOptions}
       showNumber={showNumber}
       Input={Field}
@@ -52,12 +63,14 @@ function Select(props) {
 }
 
 Select.defaultProps = {
+  className: '',
   // required: false,
   value: '',
   placeholder: null,
 };
 
 Select.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
   // required: PropTypes.bool,

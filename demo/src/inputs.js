@@ -74,6 +74,7 @@ const inputs = [
     label: 'Textarea',
     minSymbols: 3,
     maxSymbols: 30,
+    placeholder: 'Text (3-30 chars)',
 
     converters: {
       in: (e) => e?.text,

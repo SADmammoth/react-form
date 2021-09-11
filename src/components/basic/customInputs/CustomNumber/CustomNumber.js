@@ -1,15 +1,25 @@
 import React, { useEffect, useCallback, useState } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import Validator from '@/Validator/Validator';
 import createEvent from '@/formHelpers/createEvent';
 import getCounter from '@/formHelpers/getCounter';
 import HoldButton from '@/generic/HoldButton';
 import compareObjects from '@/helpers/compareObjects';
+import theme from '@/styles/theme';
+
+import styles from './CustomNumber.styles';
+
+const useStyles = createUseStyles(styles);
 
 function CustomNumber(props) {
+  const classes = useStyles(theme);
+
   const {
+    className,
     // type,
     name,
     value: currentValue,
@@ -66,18 +76,22 @@ function CustomNumber(props) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <div className="form-number">
+    <div className={classNames(className, classes.number)}>
       <InputTag
+        className={classes.input}
         type="text"
         name={name}
         onChange={onInputHandler}
         onBlur={onChangeHandler}
         value={value}
       />
-      <HoldButton name={name} className="form-number-plus" action={increment}>
+      <HoldButton name={name} className={classes.plusButton} action={increment}>
         &#x25b4;
       </HoldButton>
-      <HoldButton name={name} className="form-number-minus" action={decrement}>
+      <HoldButton
+        name={name}
+        className={classes.minusButton}
+        action={decrement}>
         &#x25be;
       </HoldButton>
     </div>
@@ -85,6 +99,7 @@ function CustomNumber(props) {
 }
 
 CustomNumber.defaultProps = {
+  className: '',
   // required: false,
   value: null,
   // placeholder: null,
@@ -94,6 +109,7 @@ CustomNumber.defaultProps = {
 };
 
 CustomNumber.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // placeholder: PropTypes.string,
   // required: PropTypes.bool,

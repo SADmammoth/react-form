@@ -31,6 +31,7 @@ function Input(props) {
     id,
     type,
     name,
+    className,
     description,
     onChange,
     onInput,
@@ -94,6 +95,7 @@ function Input(props) {
         label,
         id,
         <CheckboxGroup
+          className={className}
           id={id}
           type={type}
           name={name}
@@ -116,6 +118,7 @@ function Input(props) {
         label,
         id,
         <MarkdownText
+          className={className}
           id={id}
           type={type}
           name={name}
@@ -142,6 +145,7 @@ function Input(props) {
           id,
           render,
           <CustomNumber
+            className={className}
             id={id}
             type={type}
             name={name}
@@ -170,6 +174,7 @@ function Input(props) {
           id,
           render,
           <Select
+            className={className}
             id={id}
             type={type}
             name={name}
@@ -197,6 +202,7 @@ function Input(props) {
           id,
           render,
           <MultipleSelect
+            className={className}
             id={id}
             type={type}
             name={name}
@@ -224,6 +230,7 @@ function Input(props) {
           id,
           render,
           <MultipleSearch
+            className={className}
             id={id}
             type={type}
             name={name}
@@ -251,6 +258,7 @@ function Input(props) {
           id,
           render,
           <TextArea
+            className={className}
             id={id}
             type={type}
             name={name}
@@ -280,6 +288,7 @@ function Input(props) {
           id,
           render,
           <Slider
+            className={className}
             id={id}
             type={type}
             name={name}
@@ -309,6 +318,7 @@ function Input(props) {
           id,
           render,
           <Range
+            className={className}
             id={id}
             name={name}
             description={description}
@@ -337,6 +347,7 @@ function Input(props) {
           id,
           render,
           <Search
+            className={className}
             id={id}
             name={name}
             description={description}
@@ -360,6 +371,7 @@ function Input(props) {
         label,
         id,
         <Password
+          className={className}
           id={id}
           name={name}
           description={description}
@@ -379,6 +391,7 @@ function Input(props) {
     if (type === 'file') {
       return (
         <File
+          className={className}
           id={id}
           name={name}
           accept={accept}
@@ -400,6 +413,7 @@ function Input(props) {
     if (type === 'file-multiple') {
       return (
         <MultipleFiles
+          className={className}
           id={id}
           name={name}
           accept={accept}
@@ -421,6 +435,7 @@ function Input(props) {
     if (type === 'image') {
       return (
         <Image
+          className={className}
           id={id}
           name={name}
           accept={accept}
@@ -442,6 +457,7 @@ function Input(props) {
     if (type === 'image-multiple') {
       return (
         <MultipleImages
+          className={className}
           id={id}
           name={name}
           accept={accept}
@@ -473,6 +489,7 @@ function Input(props) {
           byCharValidator,
           maskType,
           <TextInput
+            className={className}
             id={id}
             type={type}
             name={name}
@@ -512,6 +529,7 @@ Input.publicDefaults = {
 };
 
 Input.defaultProps = {
+  className: '',
   onInput: () => {},
   onChange: () => {},
   required: false,
@@ -529,6 +547,7 @@ Input.defaultProps = {
 };
 
 Input.publicProps = {
+  className: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string,

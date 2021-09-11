@@ -3,22 +3,40 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 
+import classNames from 'classnames';
 // import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
-function Option({ active, label, groups, onClick }) {
+import theme from '@/styles/theme';
+
+import styles from './SearchOption.styles';
+
+const useStyles = createUseStyles(styles);
+
+function Option({ active, disabled, label, children, groups, onClick }) {
+  const classes = useStyles(theme);
+
   let toShow = label;
   if (groups) {
     toShow = groups.map((group, i) => {
       if (!group) return group;
-      return i % 2 ? <pre className="bold">{group}</pre> : <pre>{group}</pre>;
+      return i % 2 ? (
+        <pre className={classes.searchResult}>{group}</pre>
+      ) : (
+        <pre>{group}</pre>
+      );
     });
   }
 
   return (
     <pre
-      className={`option search-option${active ? ' active' : ''}`}
+      className={classNames(classes.option, {
+        [classes.active]: active && !disabled,
+        // [classes.searchOption]: active,
+        [classes.disabled]: disabled,
+      })}
       onClick={onClick}>
-      {toShow}
+      {children || toShow}
     </pre>
   );
 }

@@ -1,12 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
+import FileLabel from '../../../generic/FileLabel/FileLabel';
 import createEvent from '@/formHelpers/createEvent';
 import Button from '@/generic/Button';
-import formatFileSize from '@/helpers/formatFileSize';
+import theme from '@/styles/theme';
 
-function File({ id, accept, render, label, value, onChange, name }) {
+import styles from './File.styles';
+
+const useStyles = createUseStyles(styles);
+
+function File({ className, id, accept, render, label, value, onChange, name }) {
+  const classes = useStyles(theme);
+
   const InputTag = render.Input || 'input';
   const Label = render.label || 'label';
   const input = useRef({});
@@ -23,16 +32,21 @@ function File({ id, accept, render, label, value, onChange, name }) {
     };
   }, [value]);
 
+  const onClose = () => {
+    onChange(createEvent(name, ''));
+    input.current.value = '';
+  };
+
   const ButtonTag = render.Button || Button;
 
   return (
-    <div className="form-group">
-      <Label className="form-label file_label" htmlFor={id}>
+    <div className={className}>
+      <Label className={classNames(className, classes.label)} htmlFor={id}>
         {label}
         {!!value || (
           <ButtonTag
             variant="addFile"
-            className="button"
+            className={classes.button}
             onClick={() => {}}
             style={{ 'pointer-events': 'none' }}>
             Add file
@@ -40,26 +54,19 @@ function File({ id, accept, render, label, value, onChange, name }) {
         )}
       </Label>
       {!value || (
-        <div className="selected-file">
-          <div className="file">
-            <p className="file_name">{currentValue.fileName}</p>
-            <p className="file_size">{formatFileSize(currentValue.size)}</p>
-            <button
-              type="button"
-              className="close_button"
-              onClick={() => {
-                onChange(createEvent(name, ''));
-                input.current.value = '';
-              }}>
-              x
-            </button>
-          </div>
+        <div className={classes.selectedFile}>
+          <FileLabel
+            name={currentValue.fileName}
+            size={currentValue.size}
+            onClose={onClose}
+            ButtonTag={ButtonTag}
+          />
         </div>
       )}
       <InputTag
         id={id}
         ref={input}
-        className="file_input"
+        className={classes.input}
         type="file"
         {...(value ? {} : { value: '' })}
         name={name}

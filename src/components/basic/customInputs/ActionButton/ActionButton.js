@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
 import { isEmpty } from 'lodash-es';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import Button from '@/generic/Button';
 
-export default function ActionButton(actionButton, id, render, input) {
+import styles from './ActionButton.styles';
+
+const useStyles = createUseStyles(styles);
+
+function ActionButton(actionButton, id, render, input) {
+  const theme = useTheme();
+  const classes = useStyles(theme);
+
   if (!actionButton || isEmpty(actionButton)) return input;
   const [value, setValue] = useState(input.props.value);
   useEffect(() => {
@@ -15,7 +23,7 @@ export default function ActionButton(actionButton, id, render, input) {
   const ButtonTag = render.Button || Button;
 
   return (
-    <div className="action-button-wrapper">
+    <div className={classes.wrapper}>
       {React.cloneElement(input, { ...input.props, value })}
       <ButtonTag
         variant="actionButton"
@@ -32,3 +40,5 @@ export default function ActionButton(actionButton, id, render, input) {
     </div>
   );
 }
+
+export default ActionButton;

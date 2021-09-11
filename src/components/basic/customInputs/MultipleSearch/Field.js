@@ -7,6 +7,7 @@ import createEvent from '@/formHelpers/createEvent';
 import DefaultTag from '@/generic/Tag';
 
 export default function Field({
+  classes,
   name,
   placeholder,
   currentLabel,
@@ -30,6 +31,7 @@ export default function Field({
 
       return (
         <Tag
+          render={render}
           onDelete={() => {
             onChange(createEvent(name, valueOption.label));
           }}>
@@ -41,44 +43,22 @@ export default function Field({
   );
 
   return (
-    <div className="select-header">
-      <div className="input-wrapper">
-        <InputTag
-          type="text"
-          className="search-input"
-          placeholder={placeholder || 'Start typing to see options...'}
-          value={currentLabel || ''}
-          aria-disabled={!currentLabel ? 'disabled' : null}
-          onInput={(event) => {
-            setCurrentLabel(event.target.value);
-          }}
-          onFocus={() => {
-            showList(true);
-          }}
-        />
-      </div>
-      <div className="tag-stack">
-        {currentValue && currentValue.length ? (
-          currentValue.map(mapCurrentValue)
-        ) : (
-          <div
-            className="select-placeholder"
-            onClick={() => {
-              showList(!listShown);
-            }}>
-            {placeholder || 'Choose option...'}
-          </div>
-        )}
-      </div>
-      <input
-        type="checkbox"
-        className="form-spoiler"
-        name="select-header-button"
-        checked={listShown}
-        onChange={() => {
-          showList(!listShown);
+    <div className={classes.header}>
+      {currentValue && currentValue.length
+        ? currentValue.map(mapCurrentValue)
+        : null}
+      <InputTag
+        type="text"
+        className={classes.input}
+        placeholder={placeholder || 'Start typing to see options...'}
+        value={currentLabel || ''}
+        aria-disabled={!currentLabel ? 'disabled' : null}
+        onInput={(event) => {
+          setCurrentLabel(event.target.value);
         }}
-        style={{ fontSize: '10px', marginBottom: '0px' }}
+        onFocus={() => {
+          showList(true);
+        }}
       />
     </div>
   );

@@ -4,6 +4,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import calcPercent from '@/formHelpers/slider/calcPercent';
@@ -12,9 +13,15 @@ import HoldButton from '@/generic/HoldButton';
 import SliderThumb from '@/generic/SliderThumb';
 import compareObjects from '@/helpers/compareObjects';
 import useIndex from '@/hooks/useIndex';
+import theme from '@/styles/theme';
+
+import styles from './Slider.styles';
+
+const useStyles = createUseStyles(styles);
 
 function Slider(props) {
   const {
+    className,
     // type,
     name,
     value: currentValue,
@@ -32,6 +39,9 @@ function Slider(props) {
   const { length } = valueOptions;
 
   const [index, setIndex] = useIndex(currentIndex, length);
+
+  const classes = useStyles({ ...theme, position: calcPercent(index, length) });
+
   const slider = useRef({});
 
   useEffect(() => {
@@ -51,44 +61,34 @@ function Slider(props) {
   };
 
   return (
-    <div
-      draggable="false"
-      className="form-slider"
-      style={{
-        '--percent': calcPercent(index, length),
-        '--display-tip': alwaysShowTip ? 'unset' : 'none',
-      }}>
-      <HoldButton name={name} className="form-slider-prev" action={prev}>
+    <div className={className} draggable="false">
+      <HoldButton name={name} className={classes.button} action={prev}>
         -
       </HoldButton>
 
       <div
         ref={slider}
-        className="form-slider-bg"
+        className={classes.background}
         onClick={moveOnBackgroundClick}
         draggable="false">
-        <input
-          draggable="false"
-          type="text"
-          name={name}
-          value={valueOptions[index].value}
-          required={required}
-          readOnly
-        />
-
         <SliderThumb
+          type="slider"
           sliderRef={slider.current}
           sliderValuesCount={length}
           moveTo={setIndex}
           moveToStart={() => setIndex(0)}
           moveToEnd={() => setIndex(length - 1)}
+          value={valueOptions[index].value}
+          required={required}
+          position={calcPercent(index, length)}
+          showTip={alwaysShowTip}
         />
       </div>
 
       <HoldButton
         type="button"
         name={name}
-        className="form-slider-next"
+        className={classes.button}
         action={next}>
         +
       </HoldButton>
@@ -97,6 +97,7 @@ function Slider(props) {
 }
 
 Slider.defaultProps = {
+  className: '',
   required: false,
   value: null,
   // placeholder: null,
@@ -108,6 +109,7 @@ Slider.defaultProps = {
 };
 
 Slider.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.string,
   // placeholder: PropTypes.string,
   required: PropTypes.bool,

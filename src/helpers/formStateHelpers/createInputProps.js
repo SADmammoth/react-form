@@ -5,6 +5,7 @@ export default function createInputProps(
   {
     type,
     name,
+    className,
     description,
     required,
     label,
@@ -70,6 +71,7 @@ export default function createInputProps(
     key: valuesState[name].id,
     type,
     name,
+    className,
     description,
     onInput: onInputHandler,
     onChange: onChangeHandler,

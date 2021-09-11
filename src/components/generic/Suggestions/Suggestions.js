@@ -3,12 +3,21 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useState } from 'react';
 
+import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
+import { useTheme, createUseStyles } from 'react-jss';
 
 // import PropTypes from 'prop-types';
 import SearchOption from '../SearchOption';
+import theme from '@/styles/theme';
+
+import styles from './Suggestions.styles';
+
+const useStyles = createUseStyles(styles);
 
 function Suggestions({
+  className,
+  inputClasses,
   allowScroll,
   showNumber,
   Input,
@@ -25,6 +34,8 @@ function Suggestions({
   onBlur,
   hideListOnChoice = true,
 }) {
+  const classes = useStyles(theme);
+
   const input = useRef({});
 
   const [listShown, showList] = useState(false);
@@ -32,9 +43,9 @@ function Suggestions({
   const numberHiddenOption = allowScroll ||
     !filteredValueOptions ||
     filteredValueOptions.length <= showNumber || (
-      <div className="option disabled" value="">
+      <Option disabled name="" value="">
         {`${filteredValueOptions.length - 10} more`}
-      </div>
+      </Option>
     );
 
   const Option = render.Option || SearchOption;
@@ -50,6 +61,13 @@ function Suggestions({
         name={name}
         key={name + valueOption.value}
         onClick={() => {
+          if (isActive) {
+            if (hideListOnChoice) {
+              showList(false);
+            }
+            return;
+          }
+
           setCurrentLabel(valueOption.label);
           onChange({ target: { name, value: valueOption.value } });
           if (hideListOnChoice) {
@@ -66,9 +84,12 @@ function Suggestions({
 
   return (
     <div
-      className={`form-select${!currentValue ? ' placeholdered' : ''}`}
+      className={classNames(className, classes.select, {
+        [classes.placeholdered]: !currentValue,
+      })}
       name={name}>
       <Input
+        classes={inputClasses}
         name={name}
         ref={input}
         listShown={listShown}
@@ -85,11 +106,14 @@ function Suggestions({
       />
 
       {listShown && (
-        <div className={`select-list${allowScroll ? ' scroll' : ''}`}>
+        <div
+          className={classNames(classes.list, {
+            [classes.scrollableList]: allowScroll,
+          })}>
           {loading ? (
-            <div className="option disabled" value="">
+            <Option disabled name="" value="">
               {render.Loader ? render.Loader(14) : 'Loading...'}
-            </div>
+            </Option>
           ) : (
             (allowScroll
               ? filteredValueOptions
@@ -101,7 +125,7 @@ function Suggestions({
       )}
       {listShown ? (
         <div
-          className="popup-backdrop"
+          className={classes.backdrop}
           onClick={() => {
             showList(false);
           }}
