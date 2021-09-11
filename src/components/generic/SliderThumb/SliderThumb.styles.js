@@ -58,6 +58,17 @@ const styles = {
     background: 'none',
     cursor: 'pointer',
   },
+  slider: {
+    position: 'relative',
+    left: ({ position }) => `${position}%`,
+
+    marginTop: '-4px',
+    borderRadius: '100%',
+    width: 10,
+    height: 10,
+    background: (theme) => theme.highlight,
+    cursor: 'pointer',
+  },
 };
 
 export default styles;

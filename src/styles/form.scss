@@ -11,20 +11,8 @@
   }
 }
 
-.form-control {
-  @include input;
-}
-
 .form-select {
   @include select;
-}
-
-.form-slider {
-  @include slider;
-}
-
-.form-range {
-  @include range;
 }
 
 .markdown-text {
