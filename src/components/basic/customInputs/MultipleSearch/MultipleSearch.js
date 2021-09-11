@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { includes, isEqual } from 'lodash-es';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import Field from './Field';
 import FilterOptions from './FilterOptions';
@@ -8,6 +9,11 @@ import createEvent from '@/formHelpers/createEvent';
 import useValueOptions from '@/formHelpers/getValueOptions';
 import Suggestions from '@/generic/Suggestions';
 import compareObjects from '@/helpers/compareObjects';
+import theme from '@/styles/theme';
+
+import styles from './MultipleSearch.styles';
+
+const useStyles = createUseStyles(styles);
 
 function MultipleSearch({
   // type,
@@ -21,6 +27,8 @@ function MultipleSearch({
   // required,
   allowScroll,
 }) {
+  const classes = useStyles(theme);
+
   const [valueOptions, loading] = useValueOptions(options);
   const [currentLabel, setCurrentLabel] = useState(null);
 
@@ -63,6 +71,7 @@ function MultipleSearch({
 
   return (
     <Suggestions
+      inputClasses={classes}
       filteredValueOptions={filteredValueOptions}
       valueOptions={valueOptions || []}
       showNumber={showNumber}
