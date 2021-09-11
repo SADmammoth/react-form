@@ -18,7 +18,12 @@ const useStyles = createUseStyles(styles);
 function CheckboxGroup(props) {
   const classes = useStyles(theme);
 
-  const { valueOptions: options, render, required } = props;
+  const {
+    valueOptions: options,
+    render,
+    required,
+    className /*FIXME*/,
+  } = props;
   const [valueOptions, loading] = useValueOptions(options);
 
   function renderCheckbox(
@@ -49,7 +54,9 @@ function CheckboxGroup(props) {
     const LabelTag = render.Label || 'label';
 
     return (
-      <div key={id + valueOption.value} className={classes[`${type}Fieldset`]}>
+      <div
+        key={id + valueOption.value}
+        className={classNames(className, classes[`${type}Fieldset`])}>
         <InputTag
           id={id + valueOption.value}
           name={name}

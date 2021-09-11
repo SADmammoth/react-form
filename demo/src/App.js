@@ -27,7 +27,6 @@ const App = () => {
           Label: (props) => {
             return <label data-custom="custom" {...props} />;
           },
-          Option,
           Button,
         }}
         onInputsUpdate={(inputs) => {
