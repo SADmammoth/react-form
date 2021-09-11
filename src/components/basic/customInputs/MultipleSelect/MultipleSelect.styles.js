@@ -11,15 +11,11 @@ const styles = {
   label: {
     background: 'none',
     border: 0,
-
-    '&::-webkit-input-placeholder': {
-      color: (theme) => `${theme.mutedColor}`,
-    },
-    fontFamily: 'inherit',
-    fontSize: '1rem',
-    padding: '0',
   },
   disabledSelect: {
+    color: (theme) => `${theme.mutedColor}`,
+  },
+  placeholder: {
     color: (theme) => `${theme.mutedColor}`,
   },
   header: {
@@ -42,6 +38,14 @@ const styles = {
     width: '100%',
     padding: '1%',
     boxSizing: 'border-box',
+  },
+  tags: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '90%',
+    '&>*': {
+      marginLeft: 2,
+    },
   },
 };
 

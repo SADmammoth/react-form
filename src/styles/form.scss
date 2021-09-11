@@ -1,16 +1,6 @@
 @import './variables.scss';
 @import './mixins.scss';
 
-.form-textarea {
-  resize: none;
-
-  @include input;
-
-  &.placeholdered {
-    color: $muted;
-  }
-}
-
 .form-select {
   @include select;
 }

@@ -1,19 +1,29 @@
 import React from 'react';
 
 // import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
-function Tag({ children, onDelete }) {
+import Button from '../Button';
+import theme from '@/styles/theme';
+
+import styles from './Tag.styles';
+
+const useStyles = createUseStyles(styles);
+
+function Tag({ render, children, onDelete }) {
+  const classes = useStyles(theme);
+
+  const onClick = (event) => {
+    onDelete(event);
+    event.preventDefault();
+  };
+
+  const ButtonTag = render.Button || Button;
+
   return (
-    <div className="tag">
+    <div className={classes.tag}>
       {children}
-      <button
-        type="button"
-        className="remove-button"
-        onClick={(event) => {
-          onDelete(event);
-          event.preventDefault();
-        }}
-      />
+      <ButtonTag className={classes.remove} variant="close" onClick={onClick} />
     </div>
   );
 }

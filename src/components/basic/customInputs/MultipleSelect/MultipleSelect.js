@@ -2,14 +2,22 @@ import React, { useEffect, useState } from 'react';
 
 import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import Field from './Field';
 import createEvent from '@/formHelpers/createEvent';
 import useValueOptions from '@/formHelpers/getValueOptions';
 import Suggestions from '@/generic/Suggestions';
 import compareObjects from '@/helpers/compareObjects';
+import theme from '@/styles/theme';
+
+import styles from './MultipleSelect.styles';
+
+const useStyles = createUseStyles(styles);
 
 function MultipleSelect(props) {
+  const classes = useStyles(theme);
+
   const {
     // type,
     valueOptions: options,
@@ -67,6 +75,7 @@ function MultipleSelect(props) {
 
   return (
     <Suggestions
+      inputClasses={classes}
       filteredValueOptions={valueOptions}
       showNumber={showNumber}
       Input={Field}

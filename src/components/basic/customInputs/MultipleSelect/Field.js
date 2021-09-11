@@ -3,10 +3,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 
+import classNames from 'classnames';
+
+import CheckboxGroup from '../CheckboxGroup/CheckboxGroup';
 import createEvent from '@/formHelpers/createEvent';
 import DefaultTag from '@/generic/Tag';
 
 export default function Field({
+  classes,
   name,
   placeholder,
   currentLabel,
@@ -16,15 +20,16 @@ export default function Field({
   render,
   onChange,
 }) {
-  const FieldTag = render.Field || 'field';
+  const InputTag = render.Input || 'input';
   const Tag = render.Tag || DefaultTag;
 
   return (
-    <div className="select-header">
-      <div className="tag-stack">
+    <div className={classes.header}>
+      <div className={classes.tags}>
         {currentLabel && currentLabel.length ? (
           currentLabel.map((label) => (
             <Tag
+              render={render}
               onDelete={() => {
                 onChange(createEvent(name, label));
                 setCurrentLabel(label);
@@ -34,15 +39,17 @@ export default function Field({
           ))
         ) : (
           <div
-            className="select-placeholder"
+            className={classes.placeholder}
             onClick={() => {
               showList(!listShown);
             }}>
             {placeholder || 'Choose option...'}
           </div>
         )}
-        <FieldTag
-          className={`select-label ${currentLabel ? '' : 'disabled'}`}
+        <InputTag
+          className={classNames(classes.label, {
+            [classes.disabledSelect]: !currentLabel,
+          })}
           type="hidden"
           placeholder={placeholder || 'Choose option...'}
           value={currentLabel || ''}
@@ -50,15 +57,16 @@ export default function Field({
           disabled
         />
       </div>
-      <field
-        type="checkbox"
-        className="form-spoiler"
+      <CheckboxGroup
+        type="spoiler"
+        className={classes.spoiler}
         name="select-header-button"
-        checked={listShown}
+        value={[listShown]}
+        valueOptions={[{ label: '', value: true }]}
         onChange={() => {
           showList(!listShown);
         }}
-        style={{ fontSize: '10px', marginBottom: '0px' }}
+        render={render}
       />
     </div>
   );

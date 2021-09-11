@@ -7,6 +7,7 @@ const commonButton = {
   fontSize: '0.7rem',
   right: 2,
   top: 2,
+  margin: 0,
 };
 
 const passwordButton = {
@@ -35,8 +36,11 @@ const styles = {
     background: 'none',
     border: 'none',
     outline: 'none',
-
+    margin: 0,
+    padding: '0',
     cursor: 'pointer',
+    verticalAlign: 'middle',
+
     '&::before': {
       content: "'\\00d7'",
       color: 'black',
