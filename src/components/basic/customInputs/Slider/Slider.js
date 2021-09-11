@@ -60,7 +60,7 @@ function Slider(props) {
   };
 
   return (
-    <div draggable="false" className="form-slider">
+    <div draggable="false">
       <HoldButton name={name} className={classes.button} action={prev}>
         -
       </HoldButton>

@@ -1,11 +1,20 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
+
+import theme from '@/styles/theme';
+
+import styles from './FieldGroup.styles';
+
+const useStyles = createUseStyles(styles);
 
 function FieldGroup({ name, title, children }) {
+  const classes = useStyles(theme);
+
   return (
-    <div id={`group-${name}`} className="group">
-      <p className="group-title">{title}</p>
+    <div id={`group-${name}`} className={classes.group}>
+      <p className={classes.title}>{title}</p>
       {children}
     </div>
   );
