@@ -33,6 +33,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   variant: PropTypes.oneOf([
     'actionButton',
+    'hidePassword',
     'showPassword',
     'addFile',
     'close',
