@@ -1,5 +1,5 @@
-export default function FilterOptions(search, options) {
-  if (search && search !== '') {
+export default function filterSearchOptions(search, options) {
+  if (search && search.length >= 3) {
     const searchRegex = new RegExp(search, 'gi');
 
     return options

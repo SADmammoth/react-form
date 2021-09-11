@@ -4,8 +4,8 @@ import { includes, isEqual } from 'lodash-es';
 import { useTheme, createUseStyles } from 'react-jss';
 
 import Field from './Field';
-import FilterOptions from './FilterOptions';
 import createEvent from '@/formHelpers/createEvent';
+import filterSearchOptions from '@/formHelpers/filterSearchOptions';
 import useValueOptions from '@/formHelpers/getValueOptions';
 import Suggestions from '@/generic/Suggestions';
 import compareObjects from '@/helpers/compareObjects';
@@ -34,7 +34,7 @@ function MultipleSearch({
   const [currentLabel, setCurrentLabel] = useState(null);
 
   const filteredValueOptions = useMemo(
-    () => FilterOptions(currentLabel, valueOptions),
+    () => filterSearchOptions(currentLabel, valueOptions),
     [currentLabel, valueOptions],
   );
 
