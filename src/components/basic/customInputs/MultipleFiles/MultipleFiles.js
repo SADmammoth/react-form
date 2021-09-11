@@ -64,7 +64,7 @@ function MultipleFiles({ id, accept, render, label, value, onChange, name }) {
         multiple
         id={id}
         ref={input}
-        className="file_input"
+        className={classes.input}
         type="file"
         {...(value ? {} : { value: '' })}
         name={name}

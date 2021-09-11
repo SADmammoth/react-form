@@ -10,7 +10,7 @@ const styles = {
   },
   password: {
     width: '100%',
-    padding: '2%',
+    padding: '1%',
     boxSizing: 'border-box',
   },
 };

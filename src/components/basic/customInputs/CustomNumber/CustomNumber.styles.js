@@ -24,7 +24,7 @@ const styles = {
     border: (theme) => `${theme.borderWidth} solid ${theme.commonColor}`,
     boxSizing: 'border-box',
     width: '100%',
-    padding: '2%',
+    padding: '1%',
   },
 
   plusButton: {

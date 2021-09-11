@@ -1,11 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
 
 import Validator from '@/Validator';
 import compareObjects from '@/helpers/compareObjects';
+import theme from '@/styles/theme';
+
+import styles from './TextArea.styles';
+
+const useStyles = createUseStyles(styles);
 
 function TextArea(props) {
+  const classes = useStyles(theme);
+
   const {
     id,
     type,
@@ -23,7 +32,7 @@ function TextArea(props) {
     render,
   } = props;
 
-  const [placeholderOn, switchPlaceholder] = useState(false);
+  const [placeholderOn, switchPlaceholder] = useState(!!placeholder);
 
   const onFocus = useCallback(() => {
     if (placeholderOn) {
@@ -71,7 +80,9 @@ function TextArea(props) {
     <InputTag
       id={id}
       type={type}
-      className={`form-textarea${placeholderOn ? ' placeholdered' : ''}`}
+      className={classNames(classes.textarea, {
+        [classes.placeholdered]: placeholderOn,
+      })}
       name={name}
       onChange={onInputHandler}
       onBlur={onChangeHandler}

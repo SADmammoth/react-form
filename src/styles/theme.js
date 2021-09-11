@@ -9,7 +9,7 @@ const styles = {
   infoColor: 'cyan',
 
   borderWidth: '1px',
-  borderWadius: '2px',
+  borderRadius: '2px',
 };
 
 export default styles;

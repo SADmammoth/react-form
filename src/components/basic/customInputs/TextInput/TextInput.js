@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useTheme, createUseStyles } from 'react-jss';
+
+import theme from '@/styles/theme';
+
+import styles from './TextInput.styles';
+
+const useStyles = createUseStyles(styles);
 
 function TextInput({
   name,
@@ -14,6 +22,8 @@ function TextInput({
   byCharValidator,
   ...props
 }) {
+  const classes = useStyles(theme);
+
   const InputTag = render.Input || 'input';
   const [value, setValue] = useState(currentValue);
   useEffect(() => {
@@ -25,7 +35,9 @@ function TextInput({
       {...props}
       name={name}
       type={type}
-      className={`form-control${invalid ? ' invalid' : ''}`}
+      className={classNames(classes.input, {
+        [classes.invalid]: invalid,
+      })}
       value={value}
       onBlur={(event) => {
         setValue(event.target.value);

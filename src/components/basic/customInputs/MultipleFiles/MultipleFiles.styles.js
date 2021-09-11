@@ -9,6 +9,9 @@ const styles = {
   selectedFile: {
     border: (theme) => `1px solid ${theme.highlightColor}`,
   },
+  input: {
+    display: 'none',
+  },
 };
 
 export default styles;
