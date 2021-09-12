@@ -1,3 +1,5 @@
+import { noSelect } from '@/styles/mixins';
+
 const styles = {
   background: {
     display: 'inline-block',
@@ -24,6 +26,7 @@ const styles = {
     position: 'relative',
     top: '4px',
     cursor: 'pointer',
+    ...noSelect,
   },
 };
 

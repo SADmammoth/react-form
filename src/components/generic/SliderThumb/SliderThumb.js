@@ -28,8 +28,14 @@ function SliderThumb({
   const classes = useStyles({ ...theme, position });
 
   const [dragging, setDragging] = useState(false);
+  // Saved dimensions and position on the screen of slider DOM-selement
   const [sliderRectParams, setSliderRectParams] = useState({});
-  const sliderPartLength = calcSliderPart(sliderRef, sliderValuesCount);
+
+  const [sliderStep, setSliderStep] = useState(0);
+
+  useEffect(() => {
+    setSliderStep(calcSliderPart(sliderRef, sliderValuesCount));
+  }, [sliderRef, sliderValuesCount]);
 
   useEffect(() => {
     if (!isEmpty(sliderRef)) {
@@ -47,33 +53,46 @@ function SliderThumb({
           return;
         }
 
-        if (event.clientX - left > width) {
+        if (event.clientX > width + left) {
           moveToEnd();
           return;
         }
 
-        const steps = Math.round((event.clientX - left) / sliderPartLength);
+        const steps = Math.round((event.clientX - left) / sliderStep);
 
         if (steps) {
           moveTo(steps);
         }
       }
     },
-    [dragging, JSON.stringify(sliderRectParams), sliderPartLength],
+    [dragging, sliderRectParams, sliderStep],
   );
 
-  const endMove = () => setDragging(false);
+  const endMove = () => {
+    setDragging(false);
+  };
+
+  /**
+   * Bind mousemove and mouseup listeners to document
+   *
+   * Mouse motion should be tracked all the time the user holds mouse button,
+   * not only the time coursor is on slider thumb
+   */
+
+  let removeListeners = () => {}; // Saved removeListeners callback
 
   useEffect(() => {
-    function removeListeners() {
-      document.removeEventListener('mousemove', mouseMove);
-      document.removeEventListener('mouseup', endMove);
-    }
-
     removeListeners();
 
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', endMove);
+
+    // Exact binded functions are would be removed.
+    // They differ for each effect call
+    removeListeners = () => {
+      document.removeEventListener('mousemove', mouseMove);
+      document.removeEventListener('mouseup', endMove);
+    };
 
     return removeListeners;
   }, [mouseMove, endMove]);
@@ -83,11 +102,13 @@ function SliderThumb({
       draggable="false"
       className={classNames(classes[type], classes.thumb)}
       onMouseDown={() => {
-        setDragging(true);
+        if (sliderRef && sliderRectParams && sliderStep) {
+          setDragging(true);
+        }
       }}>
       <input
         className={classNames(classes.tip, {
-          [classes.always]: showTip,
+          [classes.alwaysShown]: !showTip,
         })}
         type="text"
         name={`${name}-${type}`}

@@ -32,33 +32,22 @@ function Slider(props) {
   } = props;
 
   const value = currentValue || valueOptions[0].value;
-
   let currentIndex = valueOptions.findIndex((el) => el.value === value);
   currentIndex = currentIndex < 0 ? 0 : currentIndex;
-
   const { length } = valueOptions;
 
-  const [index, setIndex] = useIndex(currentIndex, length);
-
-  const classes = useStyles({ ...theme, position: calcPercent(index, length) });
-
+  const [index, setIndex, prev, next] = useIndex(currentIndex, length);
   const slider = useRef({});
 
   useEffect(() => {
     onChange(createEvent(name, valueOptions[index].value));
   }, [index]);
 
-  const prev = () => {
-    setIndex((i) => i - 1);
-  };
-
-  const next = () => {
-    setIndex((i) => i + 1);
-  };
-
   const moveOnBackgroundClick = ({ clientX }) => {
     setIndex(calcSliderIndex(slider, clientX, length));
   };
+
+  const classes = useStyles({ ...theme, position: calcPercent(index, length) });
 
   return (
     <div className={className} draggable="false">

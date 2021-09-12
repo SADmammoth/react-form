@@ -1,3 +1,5 @@
+import { noSelect } from '@/styles/mixins';
+
 const styles = {
   thumb: {
     position: 'relative',
@@ -13,6 +15,7 @@ const styles = {
     '&:hover $tip': {
       display: 'unset',
     },
+    ...noSelect,
   },
   tip: {
     bottom: '15px',
@@ -22,6 +25,7 @@ const styles = {
     outline: 'none',
     pointerEvents: 'none',
     display: 'none',
+    ...noSelect,
   },
   alwaysShown: {
     display: 'unset',

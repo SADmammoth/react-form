@@ -1,13 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import { debounce } from 'lodash';
+
 export default function useIndex(init, max) {
   const [index, setIndex] = useState(init);
 
   useEffect(() => {
-    setIndex(init);
+    debounce(() => setIndex(init), 10);
   }, [init]);
 
-  const setIndexExport = useCallback(
+  const moveIndex = useCallback(
     (newIndex) => {
       if (typeof newIndex === 'function') {
         setIndex((currentIndex) => {
@@ -26,5 +28,13 @@ export default function useIndex(init, max) {
     [max],
   );
 
-  return [index, setIndexExport];
+  const prevIndex = () => {
+    setIndex((i) => i - 1);
+  };
+
+  const nextIndex = () => {
+    setIndex((i) => i + 1);
+  };
+
+  return [index, moveIndex, prevIndex, nextIndex];
 }
