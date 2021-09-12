@@ -5,9 +5,9 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import CheckboxGroup from '../CheckboxGroup/CheckboxGroup';
+import CheckboxGroup from '../CheckboxGroup';
 import createEvent from '@/formHelpers/createEvent';
-import DefaultTag from '@/generic/Tag';
+import renderTag from '@/formHelpers/renderTag';
 
 export default function Field({
   classes,
@@ -20,8 +20,8 @@ export default function Field({
   render,
   onChange,
 }) {
-  const InputTag = render.Input || 'input';
-  const Tag = render.Tag || DefaultTag;
+  const Input = renderTag(render, 'Input');
+  const Tag = renderTag(render, 'Tag');
 
   return (
     <div className={classes.header}>
@@ -46,7 +46,7 @@ export default function Field({
             {placeholder || 'Choose option...'}
           </div>
         )}
-        <InputTag
+        <Input
           className={classNames(classes.label, {
             [classes.disabledSelect]: !currentLabel,
           })}

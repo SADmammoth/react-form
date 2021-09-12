@@ -8,6 +8,7 @@ import { useTheme, createUseStyles } from 'react-jss';
 
 import checkboxValueSeparator from '@/formHelpers/checkboxValueSeparator';
 import useValueOptions from '@/formHelpers/getValueOptions';
+import renderTag from '@/formHelpers/renderTag';
 import compareObjects from '@/helpers/compareObjects';
 import theme from '@/styles/theme';
 
@@ -45,14 +46,14 @@ function CheckboxGroup(props) {
       onChange(event);
     };
 
-    const InputTag = render.Input || 'input';
-    const LabelTag = render.Label || 'label';
+    const Input = renderTag(render, 'Input');
+    const Label = renderTag(render, 'Label');
 
     return (
       <div
         key={id + valueOption.value}
         className={classNames(className, classes[`${type}Fieldset`])}>
-        <InputTag
+        <Input
           id={id + valueOption.value}
           name={name}
           type={
@@ -71,9 +72,7 @@ function CheckboxGroup(props) {
             includes(values, valueOption.value)
           }
         />
-        <LabelTag htmlFor={id + valueOption.value}>
-          {valueOption.label}
-        </LabelTag>
+        <Label htmlFor={id + valueOption.value}>{valueOption.label}</Label>
       </div>
     );
   }

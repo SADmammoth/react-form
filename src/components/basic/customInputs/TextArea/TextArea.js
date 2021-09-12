@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
 import Validator from '@/Validator';
+import renderTag from '@/formHelpers/renderTag';
 import compareObjects from '@/helpers/compareObjects';
 import theme from '@/styles/theme';
 
@@ -75,13 +76,13 @@ function TextArea(props) {
     [value],
   );
 
-  const InputTag = render.Input || 'textarea';
+  const Input = renderTag(render, 'TextArea');
 
   return (
-    <InputTag
+    <Input
       id={id}
       type={type}
-      className={classNames(classes.textarea, {
+      className={classNames(className, classes.textarea, {
         [classes.placeholdered]: placeholderOn,
       })}
       name={name}

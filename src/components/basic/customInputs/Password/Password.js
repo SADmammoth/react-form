@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
-import Button from '@/generic/Button';
+import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
 
 import styles from './Password.styles';
@@ -128,12 +128,12 @@ function Password({
     [state],
   );
 
-  const InputTag = render.Input || 'input';
-  const ButtonTag = render.Button || Button;
+  const Input = renderTag(render, 'Input');
+  const Button = renderTag(render, 'Button');
 
   return (
     <div className={classNames(className, classes.actionButtonWrapper)}>
-      <InputTag
+      <Input
         className={classes.password}
         name={name}
         ref={input}
@@ -150,7 +150,7 @@ function Password({
         {...props}
       />
 
-      <ButtonTag
+      <Button
         variant={showPassword ? 'hidePassword' : 'showPassword'}
         className={classes.passwordButton}
         onClick={() => {
@@ -158,7 +158,7 @@ function Password({
           input.current.focus();
         }}>
         {showPassword ? 'hide' : 'show'}
-      </ButtonTag>
+      </Button>
     </div>
   );
 }

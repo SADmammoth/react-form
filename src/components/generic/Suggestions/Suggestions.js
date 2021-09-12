@@ -7,8 +7,8 @@ import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
 import { useTheme, createUseStyles } from 'react-jss';
 
+import renderTag from '@/formHelpers/renderTag';
 // import PropTypes from 'prop-types';
-import SearchOption from '../SearchOption';
 import theme from '@/styles/theme';
 
 import styles from './Suggestions.styles';
@@ -48,7 +48,7 @@ function Suggestions({
       </Option>
     );
 
-  const Option = render.Option || SearchOption;
+  const Option = renderTag(render, 'Option');
 
   function renderOption(valueOption) {
     let isActive;

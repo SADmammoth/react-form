@@ -5,9 +5,9 @@ import { differenceBy } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
-import FileLabel from '../../../generic/FileLabel/FileLabel';
 import createEvent from '@/formHelpers/createEvent';
-import Button from '@/generic/Button';
+import renderTag from '@/formHelpers/renderTag';
+import FileLabel from '@/generic/FileLabel/FileLabel';
 import getFileHash from '@/helpers/getFileHash';
 import theme from '@/styles/theme';
 
@@ -26,9 +26,6 @@ function MultipleFiles({
   name,
 }) {
   const classes = useStyles(theme);
-
-  const InputTag = render.Input || 'input';
-  const Label = render.label || 'label';
   const input = useRef({});
 
   const renderFiles = () => {
@@ -55,22 +52,24 @@ function MultipleFiles({
     });
   };
 
-  const ButtonTag = render.Button || Button;
+  const Input = renderTag(render, 'Input');
+  const Button = renderTag(render, 'Button');
+  const Label = renderTag(render, 'Label');
 
   return (
     <div>
       <Label className={classNames(classes.label, className)} htmlFor={id}>
         {label}
-        <ButtonTag
+        <Button
           variant={value.length > 0 ? 'appendFile' : 'addFile'}
           className={classes.button}
           onClick={() => {}}
           style={{ 'pointer-events': 'none' }}>
           Add file
-        </ButtonTag>
+        </Button>
       </Label>
       {!value || <div>{renderFiles()}</div>}
-      <InputTag
+      <Input
         multiple
         id={id}
         ref={input}

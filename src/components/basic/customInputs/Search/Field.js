@@ -1,5 +1,7 @@
 import React from 'react';
 
+import renderTag from '@/formHelpers/renderTag';
+
 export default function Field({
   classes,
   placeholder,
@@ -9,10 +11,10 @@ export default function Field({
   render,
   onBlur,
 }) {
-  const InputTag = render.Input || 'input';
+  const Input = renderTag(render, 'Input');
 
   return (
-    <InputTag
+    <Input
       type="text"
       className={classes.input}
       placeholder={placeholder || 'Start typing to see options...'}

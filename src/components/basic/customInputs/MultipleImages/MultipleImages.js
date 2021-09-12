@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
-import Button from '@/generic/Button';
+import renderTag from '@/formHelpers/renderTag';
 import SelectedImage from '@/generic/SelectedImage';
 import theme from '@/styles/theme';
 
@@ -23,24 +23,23 @@ function MultipleImages({
   name,
 }) {
   const classes = useStyles(theme);
-
-  const InputTag = render.Input || 'input';
-  const Label = render.label || 'label';
   const input = useRef({});
 
-  const ButtonTag = render.Button || Button;
+  const Input = renderTag(render, 'Input');
+  const Button = renderTag(render, 'Button');
+  const Label = renderTag(render, 'Label');
 
   return (
     <div className={className}>
       <Label className={classes.label} htmlFor={id}>
         {label}
-        <ButtonTag
+        <Button
           variant="addFile"
           className={classes.button}
           onClick={() => {}}
           style={{ 'pointer-events': 'none' }}>
           Add file
-        </ButtonTag>
+        </Button>
         <div className={classes.gallery}>
           {!value ||
             value.map((image) => {
@@ -65,7 +64,7 @@ function MultipleImages({
         </div>
       </Label>
 
-      <InputTag
+      <Input
         multiple
         id={id}
         ref={input}

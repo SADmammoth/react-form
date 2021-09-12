@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
+import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
 
 import styles from './TextInput.styles';
@@ -25,14 +26,15 @@ function TextInput({
 }) {
   const classes = useStyles(theme);
 
-  const InputTag = render.Input || 'input';
   const [value, setValue] = useState(currentValue);
   useEffect(() => {
     setValue(currentValue);
   }, [currentValue]);
 
+  const Input = renderTag(render, 'Input');
+
   return (
-    <InputTag
+    <Input
       {...props}
       name={name}
       type={type}

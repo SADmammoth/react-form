@@ -4,7 +4,7 @@
 import React, { useCallback } from 'react';
 
 import createEvent from '@/formHelpers/createEvent';
-import DefaultTag from '@/generic/Tag';
+import renderTag from '@/formHelpers/renderTag';
 
 export default function Field({
   classes,
@@ -19,8 +19,8 @@ export default function Field({
   currentValue,
   valueOptions,
 }) {
-  const InputTag = render.Input || 'input';
-  const Tag = render.Tag || DefaultTag;
+  const Input = renderTag(render, 'Input');
+  const Tag = renderTag(render, 'Tag');
 
   const mapCurrentValue = useCallback(
     (value) => {
@@ -47,7 +47,7 @@ export default function Field({
       {currentValue && currentValue.length
         ? currentValue.map(mapCurrentValue)
         : null}
-      <InputTag
+      <Input
         type="text"
         className={classes.input}
         placeholder={placeholder || 'Start typing to see options...'}

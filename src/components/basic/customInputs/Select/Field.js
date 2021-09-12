@@ -5,7 +5,8 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import CheckboxGroup from '../CheckboxGroup/CheckboxGroup';
+import CheckboxGroup from '../CheckboxGroup';
+import renderTag from '@/formHelpers/renderTag';
 
 export default function Field({
   classes,
@@ -15,7 +16,7 @@ export default function Field({
   listShown,
   render,
 }) {
-  const InputTag = render.Input || 'input';
+  const Input = renderTag(render, 'Input');
 
   return (
     <div
@@ -23,7 +24,7 @@ export default function Field({
       onClick={() => {
         showList(!listShown);
       }}>
-      <InputTag
+      <Input
         className={classNames(classes.label, {
           [classes.disabledSelect]: !currentLabel,
         })}

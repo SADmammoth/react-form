@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
-import FileLabel from '../../../generic/FileLabel/FileLabel';
 import createEvent from '@/formHelpers/createEvent';
-import Button from '@/generic/Button';
+import renderTag from '@/formHelpers/renderTag';
+import FileLabel from '@/generic/FileLabel';
 import theme from '@/styles/theme';
 
 import styles from './File.styles';
@@ -15,9 +15,6 @@ const useStyles = createUseStyles(styles);
 
 function File({ className, id, accept, render, label, value, onChange, name }) {
   const classes = useStyles(theme);
-
-  const InputTag = render.Input || 'input';
-  const Label = render.label || 'label';
   const input = useRef({});
 
   const [currentValue, setCurrentValue] = useState({});
@@ -37,20 +34,22 @@ function File({ className, id, accept, render, label, value, onChange, name }) {
     input.current.value = '';
   };
 
-  const ButtonTag = render.Button || Button;
+  const Input = renderTag(render, 'Input');
+  const Button = renderTag(render, 'Button');
+  const Label = renderTag(render, 'Label');
 
   return (
     <div className={className}>
       <Label className={classNames(className, classes.label)} htmlFor={id}>
         {label}
         {!!value || (
-          <ButtonTag
+          <Button
             variant="addFile"
             className={classes.button}
             onClick={() => {}}
             style={{ 'pointer-events': 'none' }}>
             Add file
-          </ButtonTag>
+          </Button>
         )}
       </Label>
       {!value || (
@@ -63,7 +62,7 @@ function File({ className, id, accept, render, label, value, onChange, name }) {
           />
         </div>
       )}
-      <InputTag
+      <Input
         id={id}
         ref={input}
         className={classes.input}

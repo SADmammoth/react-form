@@ -4,6 +4,7 @@ import React from 'react';
 import { useTheme, createUseStyles } from 'react-jss';
 
 import Button from '../Button';
+import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
 
 import styles from './Tag.styles';
@@ -18,12 +19,12 @@ function Tag({ render, children, onDelete }) {
     event.preventDefault();
   };
 
-  const ButtonTag = render.Button || Button;
+  const Button = renderTag(render, 'Button');
 
   return (
     <div className={classes.tag}>
       {children}
-      <ButtonTag className={classes.remove} variant="close" onClick={onClick} />
+      <Button className={classes.remove} variant="close" onClick={onClick} />
     </div>
   );
 }

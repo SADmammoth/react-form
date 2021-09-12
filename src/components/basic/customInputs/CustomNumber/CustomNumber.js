@@ -7,6 +7,7 @@ import { useTheme, createUseStyles } from 'react-jss';
 import Validator from '@/Validator/Validator';
 import createEvent from '@/formHelpers/createEvent';
 import getCounter from '@/formHelpers/getCounter';
+import renderTag from '@/formHelpers/renderTag';
 import HoldButton from '@/generic/HoldButton';
 import compareObjects from '@/helpers/compareObjects';
 import theme from '@/styles/theme';
@@ -72,12 +73,12 @@ function CustomNumber(props) {
     onChange(createEvent(name, counter(parseFloat(event.target.value))));
   };
 
-  const InputTag = render.input || 'input';
+  const Input = renderTag(render, 'Input');
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div className={classNames(className, classes.number)}>
-      <InputTag
+      <Input
         className={classes.input}
         type="text"
         name={name}

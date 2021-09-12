@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash-es';
 import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
-import Button from '@/generic/Button';
+import renderTag from '@/formHelpers/renderTag';
 
 import styles from './ActionButton.styles';
 
@@ -20,12 +20,12 @@ function ActionButton(actionButton, id, render, input) {
     setValue(input.props.value);
   }, [input.props.value]);
 
-  const ButtonTag = render.Button || Button;
+  const Button = renderTag(render, 'Button');
 
   return (
     <div className={classes.wrapper}>
       {React.cloneElement(input, { ...input.props, value })}
-      <ButtonTag
+      <Button
         variant="actionButton"
         onClick={async () => {
           const { value, name, onBlur, onChange } = input.props;
@@ -36,7 +36,7 @@ function ActionButton(actionButton, id, render, input) {
             : onBlur(createEvent(name, newValue));
         }}>
         {actionButton.label}
-      </ButtonTag>
+      </Button>
     </div>
   );
 }

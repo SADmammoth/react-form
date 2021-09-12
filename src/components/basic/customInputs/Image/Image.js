@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import classNames from 'classnames';
-import { size } from 'lodash';
 import PropTypes from 'prop-types';
 import { useTheme, createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
-import Button from '@/generic/Button';
 import SelectedImage from '@/generic/SelectedImage';
+import renderTag from '@/helpers/formHelpers/renderTag';
 import theme from '@/styles/theme';
 
 import styles from './Image.styles';
@@ -25,9 +23,6 @@ function Image({
   name,
 }) {
   const classes = useStyles(theme);
-
-  const InputTag = render.Input || 'input';
-  const Label = render.Label || 'label';
   const input = useRef({});
 
   const [currentValue, setCurrentValue] = useState({});
@@ -46,7 +41,9 @@ function Image({
     };
   }, [value]);
 
-  const ButtonTag = render.Button || Button;
+  const Input = renderTag(render, 'Input');
+  const Button = renderTag(render, 'Button');
+  const Label = renderTag(render, 'Label');
 
   const onClose = () => {
     onChange(createEvent(name, ''));
@@ -58,13 +55,13 @@ function Image({
       <Label className={classes.label} htmlFor={id}>
         {label}
         {!!value || (
-          <ButtonTag
+          <Button
             variant="addFile"
             className={classes.button}
             onClick={() => {}}
             style={{ 'pointer-events': 'none' }}>
             Add file
-          </ButtonTag>
+          </Button>
         )}
 
         {!value || (
@@ -78,7 +75,7 @@ function Image({
         )}
       </Label>
 
-      <InputTag
+      <Input
         id={id}
         ref={input}
         className={classes.input}

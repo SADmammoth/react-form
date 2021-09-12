@@ -6,6 +6,7 @@ import Input from '../Input';
 import validatorsMap from '@/Validator/validatorsMap';
 import mapGroups from '@/formHelpers/mapGroups';
 import renderGroups from '@/formHelpers/output/renderGroups';
+import renderTag from '@/formHelpers/renderTag';
 import validateForm from '@/formHelpers/validation/validateForm';
 import useOnSubmit from '@/formStateHelpers/handlers/useOnSubmit';
 import useFormReducer from '@/formStateHelpers/useFormReducer';
@@ -109,7 +110,7 @@ const Form = (props) => {
 
   const { method, action, className, style, submitButton, children } = props;
 
-  const FormTag = render.Form || 'form';
+  const FormTag = renderTag(render, 'Form');
 
   return (
     <FormTag
