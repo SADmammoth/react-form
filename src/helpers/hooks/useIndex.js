@@ -13,7 +13,7 @@ export default function useIndex(init, max) {
     (newIndex) => {
       if (typeof newIndex === 'function') {
         setIndex((currentIndex) => {
-          const indexToSave = newIndex(index);
+          const indexToSave = newIndex(currentIndex);
           return indexToSave >= 0 && indexToSave <= max - 1
             ? indexToSave
             : currentIndex;
@@ -29,11 +29,11 @@ export default function useIndex(init, max) {
   );
 
   const prevIndex = () => {
-    setIndex((i) => i - 1);
+    moveIndex((i) => i - 1);
   };
 
   const nextIndex = () => {
-    setIndex((i) => i + 1);
+    moveIndex((i) => i + 1);
   };
 
   return [index, moveIndex, prevIndex, nextIndex];
