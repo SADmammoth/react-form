@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import calcPercent from '@/formHelpers/slider/calcPercent';

@@ -380,10 +380,8 @@ function Input(props) {
           required={required}
           attributes={attributes}
           value={value}
-          valueOptions={valueOptions}
           placeholder={placeholder}
           render={render}
-          allowScroll={allowScroll}
         />,
       );
     }
@@ -497,7 +495,6 @@ function Input(props) {
             required={required && 'required'}
             onChange={onInputHandler}
             onBlur={onChangeHandler}
-            validator={validator}
             byCharValidator={byCharValidator}
             value={value}
             render={render}
@@ -579,12 +576,15 @@ Input.publicProps = {
   editable: PropTypes.bool,
   markdownFeatures: PropTypes.object,
   allowScroll: PropTypes.bool,
-  converters: {
+  converters: PropTypes.shape({
     in: PropTypes.func,
     out: PropTypes.func,
-  },
+  }),
   accept: PropTypes.string,
-  actionButton: { label: PropTypes.node, action: PropTypes.func },
+  actionButton: PropTypes.shape({
+    label: PropTypes.node,
+    action: PropTypes.func,
+  }),
   min: PropTypes.number,
   max: PropTypes.number,
   step: PropTypes.number,

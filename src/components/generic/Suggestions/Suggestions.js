@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 
 import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import renderTag from '@/formHelpers/renderTag';
 // import PropTypes from 'prop-types';
@@ -56,6 +56,7 @@ function Suggestions({
       (isEqual(currentValue, valueOption.value) ||
         includes(currentValue, valueOption.value)) &&
       !isActive;
+
     return (
       <Option
         name={name}

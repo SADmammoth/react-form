@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import Button from '../Button';
 import renderTag from '@/formHelpers/renderTag';

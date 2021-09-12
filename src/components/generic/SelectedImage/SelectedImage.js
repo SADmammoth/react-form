@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import FileLabel from '@/generic/FileLabel';
 import theme from '@/styles/theme';

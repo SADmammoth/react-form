@@ -5,7 +5,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 // import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import theme from '@/styles/theme';
 

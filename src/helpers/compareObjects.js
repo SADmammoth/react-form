@@ -4,7 +4,13 @@ export default function compareObjects(leftObject, rightObject, maxDepth = 3) {
   if (leftObject === rightObject || !maxDepth) {
     return true;
   }
-  if (typeof leftObject !== 'object' || typeof rightObject !== 'object') {
+
+  if (
+    !leftObject ||
+    !rightObject ||
+    typeof leftObject !== 'object' ||
+    typeof rightObject !== 'object'
+  ) {
     return false;
   }
 

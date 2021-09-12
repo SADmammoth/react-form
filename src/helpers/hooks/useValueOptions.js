@@ -20,5 +20,7 @@ export default function useValueOptions(fetch) {
     [fetch, setValueOptions],
   );
 
-  return [valueOptions, !valueOptions];
+  const isLoading = !valueOptions && fetch instanceof Function;
+
+  return [valueOptions, isLoading];
 }

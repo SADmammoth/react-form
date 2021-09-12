@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';

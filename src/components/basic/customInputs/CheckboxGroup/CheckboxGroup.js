@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import checkboxValueSeparator from '@/formHelpers/checkboxValueSeparator';
 import useValueOptions from '@/formHelpers/getValueOptions';

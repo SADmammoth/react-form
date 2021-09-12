@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import calcSliderPart from '@/formHelpers/slider/calcSliderPart';
 import theme from '@/styles/theme';

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
 import { isEmpty } from 'lodash-es';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
+import theme from '@/styles/theme';
 
 import styles from './ActionButton.styles';
 
 const useStyles = createUseStyles(styles);
 
 function ActionButton(actionButton, id, render, input) {
-  const theme = useTheme();
   const classes = useStyles(theme);
 
   if (!actionButton || isEmpty(actionButton)) return input;

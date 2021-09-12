@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import createEvent from '@/formHelpers/createEvent';
 import SelectedImage from '@/generic/SelectedImage';

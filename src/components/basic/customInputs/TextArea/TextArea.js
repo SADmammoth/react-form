@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import Validator from '@/Validator';
 import renderTag from '@/formHelpers/renderTag';

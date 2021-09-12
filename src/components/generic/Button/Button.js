@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import theme from '@/styles/theme';
 
@@ -16,7 +16,7 @@ function Button({ type, variant, children, className, onClick, ...props }) {
   return (
     <button
       // eslint-disable-next-line react/button-has-type
-      type={type || 'button'}
+      type={type}
       className={classNames(className, classes[variant])}
       onClick={(event) => {
         event.preventDefault();
@@ -28,8 +28,12 @@ function Button({ type, variant, children, className, onClick, ...props }) {
   );
 }
 
+Button.defaultProps = {
+  type: 'button',
+};
+
 Button.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   onClick: PropTypes.func,
   variant: PropTypes.oneOf([
     'actionButton',

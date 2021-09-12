@@ -10,6 +10,6 @@ export default async function countries() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(result);
-    }, 10000);
+    }, 1000);
   });
 }
