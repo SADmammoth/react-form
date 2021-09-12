@@ -66,10 +66,9 @@ const Field = React.forwardRef(
           name="select-header-button"
           type="spoiler"
           className={classes.spoiler}
-          value={[listShown]}
-          valueOptions={[{ label: '', value: true }]}
-          onChange={() => {
-            showList(!listShown);
+          value={listShown ? [listShown] : null}
+          onChange={(event) => {
+            showList(event.target.value);
           }}
           render={render}
         />
