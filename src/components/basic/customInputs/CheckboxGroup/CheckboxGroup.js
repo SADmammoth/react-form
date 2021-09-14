@@ -30,7 +30,9 @@ function CheckboxGroup(props) {
   const [valueOptions, loading] = useValueOptions(options);
 
   const renderCheckbox = useCallback(
-    (valueOption, { id, type, name, attributes }) => {
+    (valueOption, { id, type: groupType, name, attributes }) => {
+      const type = groupType.replace('-group', '');
+
       const onChangeHandler = (checked, checkboxValue, name) => {
         let currentValue = value || [];
         if (checked) {
@@ -44,6 +46,7 @@ function CheckboxGroup(props) {
 
       return (
         <Toggle
+          key={id + valueOption.label}
           id={id}
           value={valueOption.value}
           name={name}
@@ -100,7 +103,12 @@ CheckboxGroup.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['radio', 'checkbox', 'toggle', 'spoiler']).isRequired,
+  type: PropTypes.oneOf([
+    'radio-group',
+    'checkbox-group',
+    'toggle-group',
+    'spoiler-group',
+  ]).isRequired,
 
   // Array of strings for checkbox and string for radio
   value: PropTypes.oneOfType([

@@ -68,6 +68,7 @@ const Field = React.forwardRef(
           type="spoiler"
           className={classes.spoiler}
           checked={listShown}
+          onChange={showList}
           render={render}
         />
       </div>
