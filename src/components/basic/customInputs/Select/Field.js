@@ -6,6 +6,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import CheckboxGroup from '../CheckboxGroup';
+import Toggle from '../Toggle';
 import renderTag from '@/formHelpers/renderTag';
 
 const Field = React.forwardRef(
@@ -32,14 +33,13 @@ const Field = React.forwardRef(
           aria-disabled={!currentLabel ? 'disabled' : null}
           disabled
         />
-        <CheckboxGroup
+        <Toggle
           id="select-header-button"
           name="select-header-button"
           type="spoiler"
           className={classes.spoiler}
-          onChange={(event) => {
-            showList(event.target.value);
-          }}
+          checked={listShown}
+          onChange={showList}
           render={render}
         />
       </div>

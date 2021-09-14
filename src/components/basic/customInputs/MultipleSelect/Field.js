@@ -6,6 +6,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import CheckboxGroup from '../CheckboxGroup';
+import Toggle from '../Toggle';
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 
@@ -61,15 +62,12 @@ const Field = React.forwardRef(
             disabled
           />
         </div>
-        <CheckboxGroup
+        <Toggle
           id="select-header-button"
           name="select-header-button"
           type="spoiler"
           className={classes.spoiler}
-          value={listShown ? [listShown] : null}
-          onChange={(event) => {
-            showList(event.target.value);
-          }}
+          checked={listShown}
           render={render}
         />
       </div>

@@ -1,14 +1,12 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
-import createEvent from '../../../../helpers/formHelpers/createEvent';
-import checkboxValueSeparator from '@/formHelpers/checkboxValueSeparator';
-import renderTag from '@/formHelpers/renderTag';
+import Toggle from '../Toggle';
+import createEvent from '@/formHelpers/createEvent';
 import compareObjects from '@/helpers/compareObjects';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
@@ -31,75 +29,37 @@ function CheckboxGroup(props) {
   } = props;
   const [valueOptions, loading] = useValueOptions(options);
 
-  const [checked, setChecked] = useState(
-    valueOptions?.filter((f) => includes(values, f)).map((_, index) => index),
-  );
-
-  useEffect(() => {
-    setChecked(
-      valueOptions.filter((f) => includes(values, f)).map((_, index) => index),
-    );
-  }, [value, valueOptions]);
-
-  useEffect(() => {
-    onChange(createEvent(name, commonValue));
-  }, [commonValue]);
-
   const renderCheckbox = useCallback(
-    (valueOption, { id, type, name, attributes }, id) => {
-      const onChangeHandler = (event) => {
-        if (type === 'checkbox' || type === 'toggle' || type === 'spoiler') {
-          let { checked, value } = event.target;
-          // try {
-          //   value = JSON.parse(value);
-          // } catch (err) {
-          //   value = value;
-          // }
-          if (checked) {
-            values.push(value);
-          } else {
-            values.splice(values.indexOf(value), 1);
-          }
-          if (!values.length) {
-            values = null;
-          }
-          // eslint-disable-next-line no-param-reassign
-          event.target.value = values;
+    (valueOption, { id, type, name, attributes }) => {
+      const onChangeHandler = (checked, checkboxValue, name) => {
+        let currentValue = value || [];
+        if (checked) {
+          onChange(createEvent(name, [...currentValue, checkboxValue]));
+        } else {
+          let copy = [...currentValue];
+          copy.splice(copy.indexOf(checkboxValue), 1);
+          onChange(createEvent(name, copy));
         }
-        setCommonValue(values);
-        console.log(9);
       };
 
-      const Input = renderTag(render, 'Input');
-      const Label = renderTag(render, 'Label');
-
       return (
-        <div
-          key={id + valueOption.value}
-          className={classNames(className, classes[`${type}Fieldset`])}>
-          <Input
-            id={id + valueOption.value}
-            name={name}
-            type={
-              type === 'checkbox' || type === 'toggle' || type === 'spoiler'
-                ? 'checkbox'
-                : 'radio'
-            }
-            className={classNames(classes[type], {
-              [classes.required]: required,
-            })}
-            value={valueOption.value}
-            onChange={onChangeHandler}
-            {...attributes}
-            checked={
-              checked.includes(id)
-            }
-          />
-          <Label htmlFor={id + valueOption.value}>{valueOption.label}</Label>
-        </div>
+        <Toggle
+          id={id}
+          value={valueOption.value}
+          name={name}
+          type={type}
+          className={className}
+          classes={classes}
+          onChange={onChangeHandler}
+          attributes={attributes}
+          label={valueOption.label}
+          checked={includes(value, valueOption.value)}
+          required={required}
+          render={render}
+        />
       );
     },
-    [checked],
+    [value],
   );
 
   function renderCheckboxes() {
@@ -111,17 +71,9 @@ function CheckboxGroup(props) {
       return 'Loading...';
     }
 
-    if (!valueOptions) {
-      return renderEmptyCheckbox();
-    }
-
     return valueOptions.map((valueOption) =>
       renderCheckbox(valueOption, props),
     );
-  }
-
-  function renderEmptyCheckbox() {
-    return renderCheckbox({ value: true }, props);
   }
 
   const { type, id } = props;
@@ -135,7 +87,7 @@ function CheckboxGroup(props) {
 
 CheckboxGroup.defaultProps = {
   className: '',
-  value: null,
+  value: [],
   onInput: () => {},
   onChange: () => {},
   required: false,

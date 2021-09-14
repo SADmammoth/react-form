@@ -138,6 +138,7 @@ const inputs = [
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
+    value: ['AX'],
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
   },
   {
