@@ -1,15 +1,14 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
-import checkboxValueSeparator from '@/formHelpers/checkboxValueSeparator';
-import useValueOptions from '@/formHelpers/getValueOptions';
-import renderTag from '@/formHelpers/renderTag';
+import Toggle from '../Toggle';
+import createEvent from '@/formHelpers/createEvent';
 import compareObjects from '@/helpers/compareObjects';
+import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
 
 import styles from './CheckboxGroup.styles';
@@ -19,63 +18,52 @@ const useStyles = createUseStyles(styles);
 function CheckboxGroup(props) {
   const classes = useStyles(theme);
 
-  const { valueOptions: options, render, required, className } = props;
+  const {
+    valueOptions: options,
+    render,
+    required,
+    className,
+    name,
+    value,
+    onChange,
+  } = props;
   const [valueOptions, loading] = useValueOptions(options);
 
-  function renderCheckbox(
-    valueOption,
-    { value: commonValue, id, type, name, onChange, attributes },
-  ) {
-    //* 'valueOption' variable is 'value' property of current checkbox
-    /*
-     * 'commonValue' is value of checkbox group by name, means array or string
-     * consists of values of checked checkboxes  */
-    const values = checkboxValueSeparator(commonValue);
+  const renderCheckbox = useCallback(
+    (valueOption, { id, type: groupType, name, attributes }) => {
+      const type = groupType.replace('-group', '');
 
-    const onChangeHandler = (event) => {
-      if (type === 'checkbox' || type === 'toggle' || type === 'spoiler') {
-        const { checked, value } = event.target;
+      const onChangeHandler = (checked, checkboxValue, name) => {
+        let currentValue = value || [];
         if (checked) {
-          values.push(value);
+          onChange(createEvent(name, [...currentValue, checkboxValue]));
         } else {
-          values.splice(values.indexOf(value), 1);
+          let copy = [...currentValue];
+          copy.splice(copy.indexOf(checkboxValue), 1);
+          onChange(createEvent(name, copy));
         }
-        // eslint-disable-next-line no-param-reassign
-        event.target.value = values;
-      }
-      onChange(event);
-    };
+      };
 
-    const Input = renderTag(render, 'Input');
-    const Label = renderTag(render, 'Label');
-
-    return (
-      <div
-        key={id + valueOption.value}
-        className={classNames(className, classes[`${type}Fieldset`])}>
-        <Input
-          id={id + valueOption.value}
-          name={name}
-          type={
-            type === 'checkbox' || type === 'toggle' || type === 'spoiler'
-              ? 'checkbox'
-              : 'radio'
-          }
-          className={classNames(classes[type], {
-            [classes.required]: required,
-          })}
+      return (
+        <Toggle
+          key={id + valueOption.label}
+          id={id}
           value={valueOption.value}
+          name={name}
+          type={type}
+          className={className}
+          classes={classes}
           onChange={onChangeHandler}
-          {...attributes}
-          checked={
-            isEqual(valueOption.value, values === valueOption.value) ||
-            includes(values, valueOption.value)
-          }
+          attributes={attributes}
+          label={valueOption.label}
+          checked={includes(value, valueOption.value)}
+          required={required}
+          render={render}
         />
-        <Label htmlFor={id + valueOption.value}>{valueOption.label}</Label>
-      </div>
-    );
-  }
+      );
+    },
+    [value],
+  );
 
   function renderCheckboxes() {
     if (loading) {
@@ -102,21 +90,27 @@ function CheckboxGroup(props) {
 
 CheckboxGroup.defaultProps = {
   className: '',
-  value: null,
+  value: [],
   onInput: () => {},
   onChange: () => {},
   required: false,
   attributes: null,
   description: null,
+  valueOptions: null,
 };
 
 CheckboxGroup.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['radio', 'checkbox', 'toggle', 'spoiler']).isRequired,
+  type: PropTypes.oneOf([
+    'radio-group',
+    'checkbox-group',
+    'toggle-group',
+    'spoiler-group',
+  ]).isRequired,
 
-  // String of array for checkbox and string for radio
+  // Array of strings for checkbox and string for radio
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
@@ -131,7 +125,7 @@ CheckboxGroup.propTypes = {
       }),
     ),
     PropTypes.func,
-  ]).isRequired,
+  ]),
   description: PropTypes.string,
   onInput: PropTypes.func,
   onChange: PropTypes.func,

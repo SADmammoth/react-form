@@ -2,6 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import createEvent from '../../../helpers/formHelpers/createEvent';
 import {
   CheckboxGroup,
   CustomNumber,
@@ -21,6 +22,7 @@ import {
   TextInput,
   ActionButton,
 } from '../customInputs';
+import Toggle from '../customInputs/Toggle';
 import Tag from '@/generic/Tag';
 import compareObjects from '@/helpers/compareObjects';
 import LabelledInput from '@/wrappers/LabelledInput';
@@ -85,10 +87,10 @@ function Input(props) {
 
   function renderInput() {
     if (
-      type === 'checkbox' ||
-      type === 'radio' ||
-      type === 'toggle' ||
-      type === 'spoiler'
+      type === 'checkbox-group' ||
+      type === 'radio-group' ||
+      type === 'toggle-group' ||
+      type === 'spoiler-group'
     ) {
       return LabelledInput(
         render,
@@ -101,7 +103,6 @@ function Input(props) {
           name={name}
           description={description}
           onChange={onChangeHandler}
-          onInput={onInputHandler}
           required={required}
           label={label}
           attributes={attributes}
@@ -109,6 +110,31 @@ function Input(props) {
           valueOptions={valueOptions}
           render={render}
         />,
+      );
+    }
+
+    if (
+      type === 'checkbox' ||
+      type === 'radio' ||
+      type === 'toggle' ||
+      type === 'spoiler'
+    ) {
+      return (
+        <Toggle
+          className={className}
+          id={id}
+          type={type}
+          name={name}
+          description={description}
+          onChange={(checked, _, name) =>
+            onChangeHandler(createEvent(name, checked))
+          }
+          required={required}
+          label={label}
+          attributes={attributes}
+          checked={value}
+          render={render}
+        />
       );
     }
 
@@ -560,7 +586,7 @@ Input.publicProps = {
     PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.any,
       }),
     ),
     PropTypes.func,

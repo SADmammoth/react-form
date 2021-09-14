@@ -111,6 +111,16 @@ const inputs = [
     type: 'radio',
     id: 'radio',
     name: 'radio',
+    label: 'Radio',
+    group: {
+      title: 'Checkbox variants',
+      id: 'checkboxes',
+    },
+  },
+  {
+    type: 'radio-group',
+    id: 'radio-group',
+    name: 'radio-group',
     label: 'Radio countries',
     group: {
       title: 'Checkbox variants',
@@ -122,6 +132,16 @@ const inputs = [
     type: 'checkbox',
     id: 'checkbox',
     name: 'checkbox',
+    label: 'Checkbox',
+    group: {
+      title: 'Checkbox variants',
+      id: 'checkboxes',
+    },
+  },
+  {
+    type: 'checkbox-group',
+    id: 'checkbox-group',
+    name: 'checkbox-group',
     label: 'Checkbox countries',
     group: {
       title: 'Checkbox variants',
@@ -133,17 +153,39 @@ const inputs = [
     type: 'toggle',
     id: 'toggle',
     name: 'toggle',
+    label: 'Toggle',
+    group: {
+      title: 'Checkbox variants',
+      id: 'checkboxes',
+    },
+    value: true,
+  },
+  {
+    type: 'toggle-group',
+    id: 'toggle-group',
+    name: 'toggle-group',
     label: 'Toggle countries',
     group: {
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
+    value: ['AX'],
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
   },
   {
     type: 'spoiler',
     id: 'spoiler',
     name: 'spoiler',
+    label: 'Spoiler countries',
+    group: {
+      title: 'Checkbox variants',
+      id: 'checkboxes',
+    },
+  },
+  {
+    type: 'spoiler-group',
+    id: 'spoiler-group',
+    name: 'spoiler-group',
     label: 'Spoiler countries',
     group: {
       title: 'Checkbox variants',
