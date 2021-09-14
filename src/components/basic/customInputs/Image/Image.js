@@ -58,8 +58,7 @@ function Image({
           <Button
             variant="addFile"
             className={classes.button}
-            onClick={() => {}}
-            style={{ 'pointer-events': 'none' }}>
+            onClick={() => {}}>
             Add file
           </Button>
         )}

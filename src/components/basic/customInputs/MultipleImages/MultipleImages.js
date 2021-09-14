@@ -33,11 +33,7 @@ function MultipleImages({
     <div className={className}>
       <Label className={classes.label} htmlFor={id}>
         {label}
-        <Button
-          variant="addFile"
-          className={classes.button}
-          onClick={() => {}}
-          style={{ 'pointer-events': 'none' }}>
+        <Button variant="addFile" className={classes.button} onClick={() => {}}>
           Add file
         </Button>
         <div className={classes.gallery}>

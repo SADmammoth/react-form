@@ -63,8 +63,7 @@ function MultipleFiles({
         <Button
           variant={value.length > 0 ? 'appendFile' : 'addFile'}
           className={classes.button}
-          onClick={() => {}}
-          style={{ 'pointer-events': 'none' }}>
+          onClick={() => {}}>
           Add file
         </Button>
       </Label>

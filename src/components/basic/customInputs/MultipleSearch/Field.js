@@ -57,6 +57,9 @@ const Field = React.forwardRef(
           placeholder={placeholder || 'Start typing to see options...'}
           value={currentLabel || ''}
           aria-disabled={!currentLabel ? 'disabled' : null}
+          onChange={(event) => {
+            setCurrentLabel(event.target.value);
+          }}
           onInput={(event) => {
             setCurrentLabel(event.target.value);
           }}

@@ -46,8 +46,7 @@ function File({ className, id, accept, render, label, value, onChange, name }) {
           <Button
             variant="addFile"
             className={classes.button}
-            onClick={() => {}}
-            style={{ 'pointer-events': 'none' }}>
+            onClick={() => {}}>
             Add file
           </Button>
         )}

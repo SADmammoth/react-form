@@ -136,9 +136,10 @@ Range.propTypes = {
     PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.any,
       }),
     ),
+    PropTypes.func,
   ]).isRequired,
   alwaysShowTip: PropTypes.bool,
 };

@@ -31,6 +31,7 @@ const styles = {
     border: '1px solid black',
     padding: '6px 12px',
     cursor: 'pointer',
+    pointerEvents: 'none',
   },
   close: {
     background: 'none',
