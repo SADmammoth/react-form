@@ -9,10 +9,10 @@ import {
   File,
   Image,
   MarkdownText,
-  MultipleFiles,
-  MultipleImages,
-  MultipleSearch,
-  MultipleSelect,
+  FileMultiple,
+  ImageMultiple,
+  SearchMultiple,
+  SelectMultiple,
   Password,
   Range,
   Search,
@@ -227,7 +227,7 @@ function Input(props) {
           actionButton,
           id,
           render,
-          <MultipleSelect
+          <SelectMultiple
             className={className}
             id={id}
             type={type}
@@ -255,7 +255,7 @@ function Input(props) {
           actionButton,
           id,
           render,
-          <MultipleSearch
+          <SearchMultiple
             className={className}
             id={id}
             type={type}
@@ -436,7 +436,7 @@ function Input(props) {
 
     if (type === 'file-multiple') {
       return (
-        <MultipleFiles
+        <FileMultiple
           className={className}
           id={id}
           name={name}
@@ -480,7 +480,7 @@ function Input(props) {
 
     if (type === 'image-multiple') {
       return (
-        <MultipleImages
+        <ImageMultiple
           className={className}
           id={id}
           name={name}

@@ -11,11 +11,11 @@ import FileLabel from '@/generic/FileLabel/FileLabel';
 import getFileHash from '@/helpers/getFileHash';
 import theme from '@/styles/theme';
 
-import styles from './MultipleFiles.styles';
+import styles from './FileMultiple.styles';
 
 const useStyles = createUseStyles(styles);
 
-function MultipleFiles({
+function FileMultiple({
   className,
   id,
   accept,
@@ -99,6 +99,6 @@ function MultipleFiles({
   );
 }
 
-MultipleFiles.propTypes = {};
+FileMultiple.propTypes = {};
 
-export default MultipleFiles;
+export default FileMultiple;

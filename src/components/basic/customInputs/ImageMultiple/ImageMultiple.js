@@ -8,11 +8,11 @@ import renderTag from '@/formHelpers/renderTag';
 import SelectedImage from '@/generic/SelectedImage';
 import theme from '@/styles/theme';
 
-import styles from './MultipleImages.styles';
+import styles from './ImageMultiple.styles';
 
 const useStyles = createUseStyles(styles);
 
-function MultipleImages({
+function ImageMultiple({
   className,
   id,
   accept,
@@ -82,6 +82,6 @@ function MultipleImages({
   );
 }
 
-MultipleImages.propTypes = {};
+ImageMultiple.propTypes = {};
 
-export default MultipleImages;
+export default ImageMultiple;

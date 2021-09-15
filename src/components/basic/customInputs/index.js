@@ -4,10 +4,10 @@ import CustomNumber from './CustomNumber';
 import File from './File';
 import Image from './Image';
 import MarkdownText from './MarkdownText';
-import MultipleFiles from './MultipleFiles';
-import MultipleImages from './MultipleImages';
-import MultipleSearch from './MultipleSearch';
-import MultipleSelect from './MultipleSelect';
+import FileMultiple from './FileMultiple';
+import ImageMultiple from './ImageMultiple';
+import SearchMultiple from './SearchMultiple';
+import SelectMultiple from './SelectMultiple';
 import Password from './Password';
 import Range from './Range';
 import Search from './Search';
@@ -22,10 +22,10 @@ export {
   File,
   Image,
   MarkdownText,
-  MultipleFiles,
-  MultipleImages,
-  MultipleSearch,
-  MultipleSelect,
+  FileMultiple,
+  ImageMultiple,
+  SearchMultiple,
+  SelectMultiple,
   Password,
   Range,
   Search,

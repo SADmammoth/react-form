@@ -11,11 +11,11 @@ import compareObjects from '@/helpers/compareObjects';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
 
-import styles from './MultipleSelect.styles';
+import styles from './SelectMultiple.styles';
 
 const useStyles = createUseStyles(styles);
 
-function MultipleSelect(props) {
+function SelectMultiple(props) {
   const classes = useStyles(theme);
 
   const {
@@ -96,14 +96,14 @@ function MultipleSelect(props) {
   );
 }
 
-MultipleSelect.defaultProps = {
+SelectMultiple.defaultProps = {
   className: '',
   // required: false,
   value: [],
   placeholder: null,
 };
 
-MultipleSelect.propTypes = {
+SelectMultiple.propTypes = {
   className: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
@@ -126,4 +126,4 @@ MultipleSelect.propTypes = {
   }),
 };
 
-export default React.memo(MultipleSelect, compareObjects);
+export default React.memo(SelectMultiple, compareObjects);

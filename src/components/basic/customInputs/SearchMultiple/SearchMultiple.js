@@ -11,11 +11,11 @@ import compareObjects from '@/helpers/compareObjects';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
 
-import styles from './MultipleSearch.styles';
+import styles from './SearchMultiple.styles';
 
 const useStyles = createUseStyles(styles);
 
-function MultipleSearch({
+function SearchMultiple({
   className,
   // type,
   name,
@@ -92,6 +92,6 @@ function MultipleSearch({
   );
 }
 
-MultipleSearch.propTypes = {};
+SearchMultiple.propTypes = {};
 
-export default React.memo(MultipleSearch, compareObjects);
+export default React.memo(SearchMultiple, compareObjects);
