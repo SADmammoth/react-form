@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useCallback } from 'react';
 
 import PropTypes from 'prop-types';
 
+import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
 import Input from '../Input';
 import validatorsMap from '@/Validator/validatorsMap';
 import mapGroups from '@/formHelpers/mapGroups';
@@ -49,20 +50,7 @@ const Form = (props) => {
     dispatch(actions.createInputs(inputsProps, render));
   }, [state.values, inputsProps]);
 
-  const mapGroupsCb = useCallback(
-    (inputs) => mapGroups(inputs, inputsProps),
-    [inputsProps],
-  );
-
-  useDiff(
-    (diff, values) => {
-      if (values) {
-        const [inputs] = values;
-        onInputsUpdate(getInputs(inputs, mapGroupsCb));
-      }
-    },
-    [state.inputs, state.values],
-  );
+  useOnInputsUpdate(inputsProps, state, onInputsUpdate);
 
   if (!notify) {
     showNotifications = 'hideAll';
