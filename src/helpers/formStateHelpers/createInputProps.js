@@ -31,6 +31,7 @@ export default function createInputProps(
     min,
     max,
     step,
+    hidden,
   },
   updateValueCallback,
   valuesState,
@@ -102,5 +103,6 @@ export default function createInputProps(
     min,
     max,
     step,
+    hidden,
   };
 }

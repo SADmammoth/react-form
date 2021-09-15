@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Input from '../Input';
 import validatorsMap from '@/Validator/validatorsMap';
 import mapGroups from '@/formHelpers/mapGroups';
+import getInputs from '@/formHelpers/output/getInputs';
 import renderGroups from '@/formHelpers/output/renderGroups';
 import renderTag from '@/formHelpers/renderTag';
 import validateForm from '@/formHelpers/validation/validateForm';
@@ -31,11 +32,6 @@ const Form = (props) => {
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
-  const mapGroupsCb = useCallback(
-    (inputs) => mapGroups(inputs, inputsProps),
-    [inputsProps],
-  );
-
   const inputAdditionalFields = {
     render,
   };
@@ -53,16 +49,16 @@ const Form = (props) => {
     dispatch(actions.createInputs(inputsProps, render));
   }, [state.values, inputsProps]);
 
+  const mapGroupsCb = useCallback(
+    (inputs) => mapGroups(inputs, inputsProps),
+    [inputsProps],
+  );
+
   useDiff(
     (diff, values) => {
       if (values) {
         const [inputs] = values;
-        onInputsUpdate({
-          ...mapGroupsCb(inputs),
-          $list: [...Object.values(inputs || {})].map((inputprops) => (
-            <Input {...inputprops} />
-          )),
-        });
+        onInputsUpdate(getInputs(inputs, mapGroupsCb));
       }
     },
     [state.inputs, state.values],
@@ -156,6 +152,7 @@ Form.propTypes = {
         title: PropTypes.string,
         id: PropTypes.string,
       }),
+      hide: PropTypes.bool,
     }),
   ).isRequired,
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),

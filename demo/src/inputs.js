@@ -284,6 +284,7 @@ const inputs = [
     id: 'markdown',
     name: 'markdown',
     label: 'Markdown (WIP)',
+    hidden: true,
   },
 ];
 
