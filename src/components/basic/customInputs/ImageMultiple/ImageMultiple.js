@@ -38,14 +38,16 @@ function ImageMultiple({
         </Button>
         <div className={classes.gallery}>
           {!value ||
-            value.map((image) => {
+            value.map((image, index, images) => {
               if (!image) return;
               const { name: fileName, size } = image;
               const url = URL.createObjectURL(image);
+
               const onClose = () => {
-                const copy = [...image];
+                const copy = [...images];
                 copy.splice(index, 1);
                 onChange(createEvent(name, copy));
+                input.current.value = '';
               };
               return (
                 <SelectedImage
@@ -53,7 +55,7 @@ function ImageMultiple({
                   fileName={fileName}
                   size={size}
                   onClose={onClose}
-                  ButtonTag={ButtonTag}
+                  ButtonTag={Button}
                 />
               );
             })}
