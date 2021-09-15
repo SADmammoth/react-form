@@ -57,7 +57,7 @@ function File({ className, id, accept, render, label, value, onChange, name }) {
             name={currentValue.fileName}
             size={currentValue.size}
             onClose={onClose}
-            ButtonTag={ButtonTag}
+            ButtonTag={Button}
           />
         </div>
       )}

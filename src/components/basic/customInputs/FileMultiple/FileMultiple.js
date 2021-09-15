@@ -45,7 +45,7 @@ function FileMultiple({
             name={fileName}
             size={size}
             onClose={onClose}
-            ButtonTag={ButtonTag}
+            ButtonTag={Button}
           />
         </div>
       );

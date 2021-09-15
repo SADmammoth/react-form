@@ -69,7 +69,7 @@ function Image({
             fileName={currentValue.fileName}
             size={currentValue.size}
             onClose={onClose}
-            ButtonTag={ButtonTag}
+            ButtonTag={Button}
           />
         )}
       </Label>
