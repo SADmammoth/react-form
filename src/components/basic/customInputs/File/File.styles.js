@@ -11,8 +11,9 @@ const styles = {
     display: 'none',
   },
 
-  selectedFile: {
-    border: (theme) => `1px solid ${theme.highlightColor}`,
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    cursor: (theme) => theme.disabledCursor,
   },
 };
 

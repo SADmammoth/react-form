@@ -22,6 +22,7 @@ function TextInput({
   onChange,
   onBlur,
   byCharValidator,
+  disabled,
   ...props
 }) {
   const classes = useStyles(theme);
@@ -40,6 +41,7 @@ function TextInput({
       type={type}
       className={classNames(className, classes.input, {
         [classes.invalid]: invalid,
+        [classes.disabled]: disabled,
       })}
       value={value}
       onBlur={(event) => {
@@ -55,6 +57,7 @@ function TextInput({
           event.preventDefault();
         }
       }}
+      disabled={disabled}
       {...attributes}
     />
   );

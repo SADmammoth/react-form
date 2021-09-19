@@ -23,6 +23,7 @@ function Toggle({
   checked,
   required,
   render,
+  disabled,
 }) {
   const classes = useStyles(theme);
 
@@ -36,7 +37,9 @@ function Toggle({
   return (
     <div
       key={id + value}
-      className={classNames(className, classes[`${type}Fieldset`])}>
+      className={classNames(className, {
+        [classes.disabled]: disabled,
+      })}>
       <Input
         id={id + value}
         name={name}
@@ -47,11 +50,13 @@ function Toggle({
         }
         className={classNames(classes[type], {
           [classes.required]: required,
+          [classes.disabledInput]: disabled,
         })}
         value={value}
         onChange={onChangeHandler}
         {...attributes}
         checked={checked}
+        disabled={disabled}
       />
       <Label htmlFor={id + value}>{label}</Label>
     </div>

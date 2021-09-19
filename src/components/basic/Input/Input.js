@@ -63,6 +63,7 @@ function Input(props) {
     min,
     max,
     step,
+    disabled,
   } = props;
 
   const onError = (overriddenValidationMessage) => {
@@ -93,6 +94,7 @@ function Input(props) {
       type === 'spoiler-group'
     ) {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -109,6 +111,7 @@ function Input(props) {
           value={value}
           valueOptions={valueOptions}
           render={render}
+          disabled={disabled}
         />,
       );
     }
@@ -134,12 +137,14 @@ function Input(props) {
           attributes={attributes}
           checked={value}
           render={render}
+          disabled={disabled}
         />
       );
     }
 
     if (type === 'markdown') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -157,12 +162,14 @@ function Input(props) {
           editable={editable}
           render={render}
           markdownFeatures={markdownFeatures}
+          disabled={disabled}
         />,
       );
     }
 
     if (type === 'number') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -170,6 +177,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <CustomNumber
             className={className}
             id={id}
@@ -185,6 +193,7 @@ function Input(props) {
             min={min}
             max={max}
             step={step}
+            disabled={disabled}
           />,
         ),
       );
@@ -192,6 +201,7 @@ function Input(props) {
 
     if (type === 'select') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -199,6 +209,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <Select
             className={className}
             id={id}
@@ -213,6 +224,7 @@ function Input(props) {
             valueOptions={valueOptions}
             placeholder={placeholder}
             render={render}
+            disabled={disabled}
           />,
         ),
       );
@@ -220,6 +232,7 @@ function Input(props) {
 
     if (type === 'select-multiple') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -227,6 +240,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <SelectMultiple
             className={className}
             id={id}
@@ -241,6 +255,7 @@ function Input(props) {
             valueOptions={valueOptions}
             placeholder={placeholder}
             render={render}
+            disabled={disabled}
           />,
         ),
       );
@@ -248,6 +263,7 @@ function Input(props) {
 
     if (type === 'search-multiple') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -255,6 +271,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <SearchMultiple
             className={className}
             id={id}
@@ -269,6 +286,7 @@ function Input(props) {
             valueOptions={valueOptions}
             placeholder={placeholder}
             render={render}
+            disabled={disabled}
           />,
         ),
       );
@@ -276,6 +294,7 @@ function Input(props) {
 
     if (type === 'textarea') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -283,6 +302,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <TextArea
             className={className}
             id={id}
@@ -299,6 +319,7 @@ function Input(props) {
             maxSymbols={maxSymbols}
             placeholder={placeholder}
             render={render}
+            disabled={disabled}
           />,
         ),
       );
@@ -306,6 +327,7 @@ function Input(props) {
 
     if (type === 'slider') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -313,6 +335,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <Slider
             className={className}
             id={id}
@@ -329,6 +352,7 @@ function Input(props) {
             placeholder={placeholder}
             alwaysShowTip={alwaysShowTip}
             render={render}
+            disabled={disabled}
           />,
         ),
       );
@@ -336,6 +360,7 @@ function Input(props) {
 
     if (type === 'range') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -343,6 +368,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <Range
             className={className}
             id={id}
@@ -358,6 +384,7 @@ function Input(props) {
             placeholder={placeholder}
             alwaysShowTip={alwaysShowTip}
             render={render}
+            disabled={disabled}
           />,
         ),
       );
@@ -365,6 +392,7 @@ function Input(props) {
 
     if (type === 'search') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -372,6 +400,7 @@ function Input(props) {
           actionButton,
           id,
           render,
+          disabled,
           <Search
             className={className}
             id={id}
@@ -386,6 +415,7 @@ function Input(props) {
             placeholder={placeholder}
             render={render}
             allowScroll={allowScroll}
+            disabled={disabled}
           />,
         ),
       );
@@ -393,6 +423,7 @@ function Input(props) {
 
     if (type === 'password') {
       return LabelledInput(
+        disabled,
         render,
         label,
         id,
@@ -408,6 +439,7 @@ function Input(props) {
           value={value}
           placeholder={placeholder}
           render={render}
+          disabled={disabled}
         />,
       );
     }
@@ -430,6 +462,7 @@ function Input(props) {
           render={render}
           allowScroll={allowScroll}
           label={label}
+          disabled={disabled}
         />
       );
     }
@@ -452,6 +485,7 @@ function Input(props) {
           render={render}
           allowScroll={allowScroll}
           label={label}
+          disabled={disabled}
         />
       );
     }
@@ -474,6 +508,7 @@ function Input(props) {
           render={render}
           allowScroll={allowScroll}
           label={label}
+          disabled={disabled}
         />
       );
     }
@@ -496,11 +531,13 @@ function Input(props) {
           render={render}
           allowScroll={allowScroll}
           label={label}
+          disabled={disabled}
         />
       );
     }
 
     return LabelledInput(
+      disabled,
       render,
       label,
       id,
@@ -508,6 +545,7 @@ function Input(props) {
         actionButton,
         id,
         render,
+        disabled,
         MaskedInput(
           mask,
           byCharValidator,
@@ -525,6 +563,7 @@ function Input(props) {
             value={value}
             render={render}
             invalid={invalid}
+            disabled={disabled}
           />,
         ),
       ),
@@ -549,6 +588,7 @@ Input.publicDefaults = {
     in: (inOut) => inOut,
     out: (outIn) => outIn,
   },
+  disabled: false,
 };
 
 Input.defaultProps = {
@@ -614,6 +654,7 @@ Input.publicProps = {
   min: PropTypes.number,
   max: PropTypes.number,
   step: PropTypes.number,
+  disabled: PropTypes.bool,
 };
 
 Input.propTypes = {

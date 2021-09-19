@@ -25,6 +25,9 @@ const styles = {
     outline: 'none',
     pointerEvents: 'none',
     display: 'none',
+    '$disabled &': {
+      color: (theme) => theme.mutedColor,
+    },
     ...noSelect,
   },
   alwaysShown: {
@@ -45,6 +48,9 @@ const styles = {
     marginLeft: '-2px',
     background: 'none',
     cursor: 'pointer',
+    '$disabled&': {
+      color: (theme) => theme.mutedColor,
+    },
   },
   right: {
     '&::before': {
@@ -61,6 +67,9 @@ const styles = {
     marginLeft: '-10px',
     background: 'none',
     cursor: 'pointer',
+    '$disabled&': {
+      color: (theme) => theme.mutedColor,
+    },
   },
   slider: {
     position: 'relative',
@@ -72,6 +81,12 @@ const styles = {
     height: 10,
     background: (theme) => theme.highlight,
     cursor: 'pointer',
+    '$disabled&': {
+      backgroundColor: (theme) => theme.mutedColor,
+    },
+  },
+  disabled: {
+    cursor: (theme) => theme.disabledCursor,
   },
 };
 

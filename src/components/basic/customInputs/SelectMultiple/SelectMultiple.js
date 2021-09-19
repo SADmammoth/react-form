@@ -28,6 +28,7 @@ function SelectMultiple(props) {
     onChange,
     // required,
     render,
+    disabled,
   } = props;
 
   const [valueOptions, loading] = useValueOptions(options);
@@ -92,6 +93,7 @@ function SelectMultiple(props) {
       currentLabel={currentLabel}
       render={render}
       hideListOnChoice={false}
+      disabled={disabled}
     />
   );
 }

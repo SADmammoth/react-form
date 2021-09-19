@@ -32,6 +32,7 @@ function CustomNumber(props) {
     max,
     step,
     render,
+    disabled,
   } = props;
 
   const counter = useCallback(
@@ -79,20 +80,32 @@ function CustomNumber(props) {
     // eslint-disable-next-line jsx-a11y/no-onchange
     <div className={classNames(className, classes.number)}>
       <Input
-        className={classes.input}
+        className={classNames(classes.input, {
+          [classes.disabled]: disabled,
+        })}
         type="text"
         name={name}
         onChange={onInputHandler}
         onBlur={onChangeHandler}
         value={value}
+        disabled={disabled}
       />
-      <HoldButton name={name} className={classes.plusButton} action={increment}>
+      <HoldButton
+        name={name}
+        className={classNames(classes.plusButton, {
+          [classes.disabled]: disabled,
+        })}
+        action={increment}
+        disabled={disabled}>
         &#x25b4;
       </HoldButton>
       <HoldButton
         name={name}
-        className={classes.minusButton}
-        action={decrement}>
+        className={classNames(classes.minusButton, {
+          [classes.disabled]: disabled,
+        })}
+        action={decrement}
+        disabled={disabled}>
         &#x25be;
       </HoldButton>
     </div>

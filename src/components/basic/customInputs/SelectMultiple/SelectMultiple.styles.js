@@ -47,6 +47,15 @@ const styles = {
       marginLeft: 2,
     },
   },
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    borderColor: (theme) => theme.mutedColor,
+    backgroundColor: (theme) => theme.disabledBgColor,
+    cursor: (theme) => theme.disabledCursor,
+    '& $label': {
+      color: (theme) => theme.mutedColor,
+    },
+  },
 };
 
 export default styles;

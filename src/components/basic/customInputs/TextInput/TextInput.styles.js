@@ -12,7 +12,7 @@ const styles = {
     },
 
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: (theme) => `${theme.commonColor}`,
+      backgroundColor: (theme) => theme.commonColor,
       width: 5,
     },
 
@@ -23,6 +23,12 @@ const styles = {
     width: '100%',
     padding: '1%',
     boxSizing: 'border-box',
+  },
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    borderColor: (theme) => theme.mutedColor,
+    backgroundColor: (theme) => theme.disabledBgColor,
+    cursor: (theme) => theme.disabledCursor,
   },
 };
 

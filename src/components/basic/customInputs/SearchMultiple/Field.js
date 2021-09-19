@@ -3,6 +3,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback } from 'react';
 
+import classNames from 'classnames';
+
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 
@@ -20,6 +22,7 @@ const Field = React.forwardRef(
       onChange,
       currentValue,
       valueOptions,
+      disabled,
     },
     ref,
   ) => {
@@ -38,7 +41,8 @@ const Field = React.forwardRef(
             render={render}
             onDelete={() => {
               onChange(createEvent(name, valueOption.label));
-            }}>
+            }}
+            disabled={disabled}>
             {valueOption.label}
           </Tag>
         );
@@ -47,7 +51,11 @@ const Field = React.forwardRef(
     );
 
     return (
-      <div ref={ref} className={classes.header}>
+      <div
+        ref={ref}
+        className={classNames(classes.header, {
+          [classes.disabled]: disabled,
+        })}>
         {currentValue && currentValue.length
           ? currentValue.map(mapCurrentValue)
           : null}
@@ -66,6 +74,7 @@ const Field = React.forwardRef(
           onFocus={() => {
             showList(true);
           }}
+          disabled={disabled}
         />
       </div>
     );

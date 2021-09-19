@@ -20,6 +20,11 @@ const styles = {
       marginLeft: '5px',
     },
   },
+
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    cursor: (theme) => theme.disabledCursor,
+  },
 };
 
 export default styles;

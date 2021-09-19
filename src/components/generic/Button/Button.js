@@ -10,7 +10,15 @@ import styles from './Button.styles';
 
 const useStyles = createUseStyles(styles);
 
-function Button({ type, variant, children, className, onClick, ...props }) {
+function Button({
+  type,
+  variant,
+  children,
+  className,
+  onClick,
+  disabled,
+  ...props
+}) {
   const classes = useStyles(theme);
 
   return (
@@ -20,8 +28,10 @@ function Button({ type, variant, children, className, onClick, ...props }) {
       className={classNames(className, classes[variant])}
       onClick={(event) => {
         event.preventDefault();
-        onClick(event);
+
+        if (!disabled) onClick(event);
       }}
+      disabled={disabled}
       {...props}>
       {children}
     </button>

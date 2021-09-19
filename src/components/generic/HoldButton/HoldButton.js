@@ -9,6 +9,7 @@ function HoldButton({
   children,
   holdInterval,
   firstInterval,
+  disabled,
 }) {
   const [timer, saveTimer] = useState(null);
   const [interval, saveInterval] = useState(null);
@@ -37,7 +38,8 @@ function HoldButton({
       name={name}
       className={className}
       onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}>
+      onMouseUp={onMouseUp}
+      disabled={disabled}>
       {children}
     </button>
   );

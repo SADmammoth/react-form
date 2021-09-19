@@ -27,6 +27,7 @@ function SearchMultiple({
   render,
   // required,
   allowScroll,
+  disabled,
 }) {
   const classes = useStyles(theme);
 
@@ -88,6 +89,7 @@ function SearchMultiple({
       currentLabel={currentLabel}
       render={render}
       onBlur={onBlur}
+      disabled={disabled}
     />
   );
 }

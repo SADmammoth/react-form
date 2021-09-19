@@ -12,6 +12,10 @@ const styles = {
   input: {
     display: 'none',
   },
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    cursor: (theme) => theme.disabledCursor,
+  },
 };
 
 export default styles;

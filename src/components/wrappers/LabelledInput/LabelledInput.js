@@ -1,14 +1,26 @@
 import React from 'react';
 
-import renderTag from '@/formHelpers/renderTag';
+import classNames from 'classnames';
+import { useTheme, createUseStyles } from 'react-jss';
 
-export default function LabelledInput(render, label, id, input) {
+import renderTag from '@/formHelpers/renderTag';
+import theme from '@/styles/theme';
+
+import styles from './LabelledInput.styles';
+
+const useStyles = createUseStyles(styles);
+
+function LabelledInput(disabled, render, label, id, input) {
+  const classes = useStyles(theme);
+
   // eslint-disable-next-line react/destructuring-assignment
   const Label = renderTag(render, 'Label');
 
   return label ? (
-    <div className="form-group">
-      <Label className="form-label" htmlFor={id}>
+    <div>
+      <Label
+        className={classNames(classes.label, { [classes.disabled]: disabled })}
+        htmlFor={id}>
         {label}
       </Label>
       {input}
@@ -17,3 +29,4 @@ export default function LabelledInput(render, label, id, input) {
     input
   );
 }
+export default LabelledInput;

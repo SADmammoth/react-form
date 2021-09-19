@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
@@ -21,6 +22,7 @@ function Image({
   value,
   onChange,
   name,
+  disabled,
 }) {
   const classes = useStyles(theme);
   const input = useRef({});
@@ -51,14 +53,15 @@ function Image({
   };
 
   return (
-    <div className={className}>
+    <div className={classNames(className, { [classes.disabled]: disabled })}>
       <Label className={classes.label} htmlFor={id}>
         {label}
         {!!value || (
           <Button
             variant="addFile"
             className={classes.button}
-            onClick={() => {}}>
+            onClick={() => {}}
+            disabled={disabled}>
             Add file
           </Button>
         )}
@@ -70,6 +73,7 @@ function Image({
             size={currentValue.size}
             onClose={onClose}
             ButtonTag={Button}
+            disabled={disabled}
           />
         )}
       </Label>
@@ -86,6 +90,7 @@ function Image({
           const file = event.target.files[0];
           onChange(createEvent(name, file));
         }}
+        disabled={disabled}
       />
     </div>
   );

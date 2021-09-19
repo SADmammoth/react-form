@@ -37,6 +37,15 @@ const styles = {
       marginLeft: '5px',
     },
   },
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    borderColor: (theme) => theme.mutedColor,
+    backgroundColor: (theme) => theme.disabledBgColor,
+    cursor: (theme) => theme.disabledCursor,
+    '& $input': {
+      color: (theme) => theme.mutedColor,
+    },
+  },
 };
 
 export default styles;

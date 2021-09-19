@@ -117,6 +117,38 @@ const styles = {
       content: "'\\25B2'",
     },
   },
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    cursor: (theme) => theme.disabledCursor,
+  },
+  disabledInput: {
+    cursor: (theme) => theme.disabledCursor,
+    '&:checked::after': {
+      color: (theme) => theme.mutedColor,
+      background: (theme) => theme.mutedColor,
+      borderColor: (theme) => theme.mutedColor,
+    },
+    '&::before': {
+      borderColor: (theme) => theme.mutedColor,
+    },
+    '&$toggle': {
+      '&::before': {
+        background: (theme) => theme.disabledBgColor,
+        color: (theme) => theme.mutedColor,
+      },
+      '&::after': {
+        background: (theme) => theme.mutedColor,
+      },
+      '&:checked::before': {
+        borderColor: (theme) => theme.mutedColor,
+      },
+    },
+    '&$spoiler': {
+      '&::before': {
+        color: (theme) => theme.mutedColor,
+      },
+    },
+  },
 };
 
 export default styles;

@@ -8,18 +8,30 @@ import styles from './Button.styles';
 
 const useStyles = createUseStyles(styles);
 
-function Button({ type, variant, children, className, onClick, ...props }) {
+function Button({
+  type,
+  variant,
+  children,
+  className,
+  onClick,
+  disabled,
+  ...props
+}) {
   const classes = useStyles();
 
   return (
     <button
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={classNames(className, classes[variant])}
+      className={classNames(className, classes[variant], {
+        [classes.disabled]: disabled,
+      })}
       onClick={(event) => {
         event.preventDefault();
-        onClick(event);
+
+        if (!disabled) onClick(event);
       }}
+      disabled={disabled}
       {...props}>
       {children}
     </button>

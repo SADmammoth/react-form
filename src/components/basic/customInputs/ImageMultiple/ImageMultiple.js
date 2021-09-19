@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
@@ -21,6 +22,7 @@ function ImageMultiple({
   value,
   onChange,
   name,
+  disabled,
 }) {
   const classes = useStyles(theme);
   const input = useRef({});
@@ -30,10 +32,17 @@ function ImageMultiple({
   const Label = renderTag(render, 'Label');
 
   return (
-    <div className={className}>
+    <div
+      className={classNames(className, {
+        [classes.disabled]: disabled,
+      })}>
       <Label className={classes.label} htmlFor={id}>
         {label}
-        <Button variant="addFile" className={classes.button} onClick={() => {}}>
+        <Button
+          variant="addFile"
+          className={classes.button}
+          onClick={() => {}}
+          disabled={disabled}>
           Add file
         </Button>
         <div className={classes.gallery}>
@@ -56,6 +65,7 @@ function ImageMultiple({
                   size={size}
                   onClose={onClose}
                   ButtonTag={Button}
+                  disabled={disabled}
                 />
               );
             })}
@@ -79,6 +89,7 @@ function ImageMultiple({
 
           onChange(createEvent(name, newValue));
         }}
+        disabled={disabled}
       />
     </div>
   );

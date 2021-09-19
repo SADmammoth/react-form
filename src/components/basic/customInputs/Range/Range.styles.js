@@ -16,6 +16,14 @@ const styles = {
       background: (theme) => theme.commonColor,
     },
   },
+  disabled: {
+    '& $background': {
+      backgroundColor: (theme) => theme.disabledBgColor,
+      '&::before': {
+        backgroundColor: (theme) => theme.mutedColor,
+      },
+    },
+  },
 };
 
 export default styles;

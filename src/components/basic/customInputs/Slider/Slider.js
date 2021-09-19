@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useRef } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
@@ -29,6 +30,7 @@ function Slider(props) {
     required,
     valueOptions,
     alwaysShowTip,
+    disabled,
   } = props;
 
   const value = currentValue || valueOptions[0].value;
@@ -44,14 +46,20 @@ function Slider(props) {
   }, [index]);
 
   const moveOnBackgroundClick = ({ clientX }) => {
-    setIndex(calcSliderIndex(slider, clientX, length));
+    if (!disabled) setIndex(calcSliderIndex(slider, clientX, length));
   };
 
   const classes = useStyles({ ...theme, position: calcPercent(index, length) });
 
   return (
-    <div className={className} draggable="false">
-      <HoldButton name={name} className={classes.button} action={prev}>
+    <div
+      className={classNames(className, { [classes.disabled]: disabled })}
+      draggable="false">
+      <HoldButton
+        name={name}
+        className={classNames(classes.button, { [classes.disabled]: disabled })}
+        action={prev}
+        disabled={disabled}>
         -
       </HoldButton>
 
@@ -71,14 +79,16 @@ function Slider(props) {
           required={required}
           position={calcPercent(index, length)}
           showTip={alwaysShowTip}
+          disabled={disabled}
         />
       </div>
 
       <HoldButton
         type="button"
         name={name}
-        className={classes.button}
-        action={next}>
+        className={classNames(classes.button, { [classes.disabled]: disabled })}
+        action={next}
+        disabled={disabled}>
         +
       </HoldButton>
     </div>

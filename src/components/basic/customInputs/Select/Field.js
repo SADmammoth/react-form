@@ -11,7 +11,15 @@ import renderTag from '@/formHelpers/renderTag';
 
 const Field = React.forwardRef(
   (
-    { classes, placeholder, currentLabel, showList, listShown, render },
+    {
+      classes,
+      placeholder,
+      currentLabel,
+      showList,
+      listShown,
+      render,
+      disabled,
+    },
     ref,
   ) => {
     const Input = renderTag(render, 'Input');
@@ -19,9 +27,9 @@ const Field = React.forwardRef(
     return (
       <div
         ref={ref}
-        className={classes.header}
+        className={classNames(classes.header, { [classes.disabled]: disabled })}
         onClick={() => {
-          showList(!listShown);
+          if (!disabled) showList(!listShown);
         }}>
         <Input
           className={classNames(classes.label, {
@@ -41,6 +49,7 @@ const Field = React.forwardRef(
           checked={listShown}
           onChange={showList}
           render={render}
+          disabled={disabled}
         />
       </div>
     );

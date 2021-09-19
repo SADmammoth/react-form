@@ -7,6 +7,7 @@ const styles = {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     marginTop: '5px',
+    border: (theme) => `1px solid ${theme.highlightColor}`,
   },
 
   name: {
@@ -28,6 +29,12 @@ const styles = {
   close: {
     position: 'absolute',
     right: 0,
+  },
+
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    borderColor: (theme) => theme.mutedColor,
+    cursor: (theme) => theme.disabledCursor,
   },
 };
 

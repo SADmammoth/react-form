@@ -32,6 +32,7 @@ function Suggestions({
   currentLabel,
   render,
   onBlur,
+  disabled,
   hideListOnChoice = true,
 }) {
   const classes = useStyles(theme);
@@ -104,6 +105,7 @@ function Suggestions({
         onChange={onChange}
         currentValue={currentValue}
         valueOptions={valueOptions}
+        disabled={disabled}
       />
 
       {listShown && (
@@ -128,7 +130,7 @@ function Suggestions({
         <div
           className={classes.backdrop}
           onClick={() => {
-            showList(false);
+            if (!disabled) showList(false);
           }}
         />
       ) : null}

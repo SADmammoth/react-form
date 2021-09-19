@@ -13,7 +13,17 @@ import styles from './File.styles';
 
 const useStyles = createUseStyles(styles);
 
-function File({ className, id, accept, render, label, value, onChange, name }) {
+function File({
+  className,
+  id,
+  accept,
+  render,
+  label,
+  value,
+  onChange,
+  name,
+  disabled,
+}) {
   const classes = useStyles(theme);
   const input = useRef({});
 
@@ -39,27 +49,27 @@ function File({ className, id, accept, render, label, value, onChange, name }) {
   const Label = renderTag(render, 'Label');
 
   return (
-    <div className={className}>
+    <div className={classNames(className, { [classes.disabled]: disabled })}>
       <Label className={classNames(className, classes.label)} htmlFor={id}>
         {label}
         {!!value || (
           <Button
             variant="addFile"
             className={classes.button}
-            onClick={() => {}}>
+            onClick={() => {}}
+            disabled={disabled}>
             Add file
           </Button>
         )}
       </Label>
       {!value || (
-        <div className={classes.selectedFile}>
-          <FileLabel
-            name={currentValue.fileName}
-            size={currentValue.size}
-            onClose={onClose}
-            ButtonTag={Button}
-          />
-        </div>
+        <FileLabel
+          name={currentValue.fileName}
+          size={currentValue.size}
+          onClose={onClose}
+          ButtonTag={Button}
+          disabled={disabled}
+        />
       )}
       <Input
         id={id}
@@ -72,6 +82,7 @@ function File({ className, id, accept, render, label, value, onChange, name }) {
         onChange={(event) => {
           onChange(createEvent(name, event.target.files[0]));
         }}
+        disabled={disabled}
       />
     </div>
   );

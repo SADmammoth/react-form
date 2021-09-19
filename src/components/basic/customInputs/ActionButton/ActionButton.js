@@ -11,7 +11,7 @@ import styles from './ActionButton.styles';
 
 const useStyles = createUseStyles(styles);
 
-function ActionButton(actionButton, id, render, input) {
+function ActionButton(actionButton, id, render, disabled, input) {
   const classes = useStyles(theme);
 
   if (!actionButton || isEmpty(actionButton)) return input;
@@ -34,7 +34,8 @@ function ActionButton(actionButton, id, render, input) {
           onChange
             ? onChange(createEvent(name, newValue))
             : onBlur(createEvent(name, newValue));
-        }}>
+        }}
+        disabled={disabled}>
         {actionButton.label}
       </Button>
     </div>

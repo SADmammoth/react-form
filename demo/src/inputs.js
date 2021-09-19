@@ -1,4 +1,5 @@
 import countries from './countries';
+import imagebytes from './imagebytes';
 
 const inputs = [
   {
@@ -19,6 +20,7 @@ const inputs = [
         return '';
       },
     },
+    disabled: true,
   },
   {
     type: 'text',
@@ -116,6 +118,7 @@ const inputs = [
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
+    value: 'AX',
   },
   {
     type: 'radio-group',
@@ -126,6 +129,7 @@ const inputs = [
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
+    value: 'AX',
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
   },
   {
@@ -147,6 +151,7 @@ const inputs = [
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
+    value: ['AX'],
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
   },
   {
@@ -191,6 +196,7 @@ const inputs = [
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
+    value: ['AX'],
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
   },
   {
@@ -200,6 +206,7 @@ const inputs = [
     label: 'Select country',
     placeholder: 'Country',
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
+    value: 'AX',
   },
   {
     type: 'select-multiple',
@@ -216,6 +223,7 @@ const inputs = [
     label: 'Search country',
     placeholder: 'Country',
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
+    value: 'AX',
   },
   {
     type: 'search-multiple',
@@ -224,6 +232,7 @@ const inputs = [
     label: 'Search countries',
     placeholder: 'Country',
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
+    value: ['AX'],
   },
   {
     type: 'range',
@@ -239,6 +248,7 @@ const inputs = [
           value: x,
         };
       }),
+    value: { from: 2, to: 91 },
   },
   {
     type: 'slider',
@@ -260,24 +270,50 @@ const inputs = [
     id: 'file',
     name: 'file',
     label: 'File',
+    value: new File(['foo'], 'foo.txt', {
+      type: 'text/plain',
+    }),
   },
   {
     type: 'file-multiple',
     id: 'file-multiple',
     name: 'file-multiple',
     label: 'Files',
+    value: [
+      new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+      }),
+      new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+      }),
+    ],
   },
   {
     type: 'image',
     id: 'image',
     name: 'image',
     label: 'Image',
+    value: new File(
+      [new Blob([imagebytes], { type: 'image/svg+xml' })],
+      'foo.svg',
+      {
+        type: 'image/svg+xml',
+      },
+    ),
   },
   {
     type: 'image-multiple',
     id: 'image-multiple',
     name: 'image-multiple',
     label: 'Images',
+    value: [
+      new File([new Blob([imagebytes], { type: 'image/svg+xml' })], 'foo.svg', {
+        type: 'image/svg+xml',
+      }),
+      new File([new Blob([imagebytes], { type: 'image/svg+xml' })], 'foo.svg', {
+        type: 'image/svg+xml',
+      }),
+    ],
   },
   {
     type: 'markdown',

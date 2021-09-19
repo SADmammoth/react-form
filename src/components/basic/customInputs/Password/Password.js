@@ -20,6 +20,7 @@ function Password({
   onChange,
   onInput,
   render,
+  disabled,
   ...props
 }) {
   const classes = useStyles(theme);
@@ -134,7 +135,9 @@ function Password({
   return (
     <div className={classNames(className, classes.actionButtonWrapper)}>
       <Input
-        className={classes.password}
+        className={classNames(classes.password, {
+          [classes.disabled]: disabled,
+        })}
         name={name}
         ref={input}
         type="text"
@@ -147,6 +150,7 @@ function Password({
         onPaste={onPaste}
         onCopy={onCopy}
         onCut={onCut}
+        disabled={disabled}
         {...props}
       />
 
@@ -156,7 +160,8 @@ function Password({
         onClick={() => {
           setShowPassword((state) => !state);
           input.current.focus();
-        }}>
+        }}
+        disabled={disabled}>
         {showPassword ? 'hide' : 'show'}
       </Button>
     </div>

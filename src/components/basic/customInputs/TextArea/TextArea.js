@@ -32,6 +32,7 @@ function TextArea(props) {
     onError,
     placeholder,
     render,
+    disabled,
   } = props;
 
   const [placeholderOn, switchPlaceholder] = useState(!!placeholder);
@@ -84,6 +85,7 @@ function TextArea(props) {
       type={type}
       className={classNames(className, classes.textarea, {
         [classes.placeholdered]: placeholderOn,
+        [classes.disabled]: disabled,
       })}
       name={name}
       onChange={onInputHandler}
@@ -92,6 +94,7 @@ function TextArea(props) {
       {...attributes}
       value={placeholderOn ? placeholder : value}
       onFocus={onFocus}
+      disabled={disabled}
     />
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
@@ -10,11 +11,11 @@ import styles from './FileLabel.styles';
 
 const useStyles = createUseStyles(styles);
 
-function FileLabel({ ButtonTag, name, size, onClose }) {
+function FileLabel({ ButtonTag, name, size, onClose, disabled }) {
   const classes = useStyles(theme);
 
   return (
-    <div className={classes.file}>
+    <div className={classNames(classes.file, { [classes.disabled]: disabled })}>
       <p className={classes.name}>{name}</p>
       <p className={classes.size}>{formatFileSize(size)}</p>
       <ButtonTag
@@ -22,6 +23,7 @@ function FileLabel({ ButtonTag, name, size, onClose }) {
         variant="close"
         className={classes.close}
         onClick={onClose}
+        disabled={disabled}
       />
     </div>
   );

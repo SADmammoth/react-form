@@ -66,6 +66,19 @@ const styles = {
         'linear-gradient(to left top, transparent 45%, currentColor 50%, currentColor 50%, transparent 53%)',
     },
   },
+  disabled: {
+    background: 'transparent',
+    border: (theme) => theme.mutedColor,
+    color: (theme) => theme.mutedColor,
+
+    '&$showPassword::before': {
+      color: (theme) => theme.mutedColor,
+    },
+    '&$close::before': {
+      color: (theme) => theme.mutedColor,
+    },
+    cursor: (theme) => theme.disabledCursor,
+  },
 };
 
 export default styles;

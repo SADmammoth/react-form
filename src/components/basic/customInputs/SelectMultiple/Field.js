@@ -22,6 +22,7 @@ const Field = React.forwardRef(
       setCurrentLabel,
       render,
       onChange,
+      disabled,
     },
     ref,
   ) => {
@@ -29,7 +30,11 @@ const Field = React.forwardRef(
     const Tag = renderTag(render, 'Tag');
 
     return (
-      <div ref={ref} className={classes.header}>
+      <div
+        ref={ref}
+        className={classNames(classes.header, {
+          [classes.disabled]: disabled,
+        })}>
         <div className={classes.tags}>
           {currentLabel && currentLabel.length ? (
             currentLabel.map((label) => (
@@ -46,7 +51,7 @@ const Field = React.forwardRef(
             <div
               className={classes.placeholder}
               onClick={() => {
-                showList(!listShown);
+                if (!disabled) showList(!listShown);
               }}>
               {placeholder || 'Choose option...'}
             </div>
@@ -70,6 +75,7 @@ const Field = React.forwardRef(
           checked={listShown}
           onChange={showList}
           render={render}
+          disabled={disabled}
         />
       </div>
     );

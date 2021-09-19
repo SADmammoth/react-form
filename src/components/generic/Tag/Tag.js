@@ -11,7 +11,7 @@ import styles from './Tag.styles';
 
 const useStyles = createUseStyles(styles);
 
-function Tag({ render, children, onDelete }) {
+function Tag({ render, children, onDelete, disabled }) {
   const classes = useStyles(theme);
 
   const onClick = (event) => {
@@ -24,7 +24,12 @@ function Tag({ render, children, onDelete }) {
   return (
     <div className={classes.tag}>
       {children}
-      <Button className={classes.remove} variant="close" onClick={onClick} />
+      <Button
+        className={classes.remove}
+        variant="close"
+        onClick={onClick}
+        disabled={disabled}
+      />
     </div>
   );
 }

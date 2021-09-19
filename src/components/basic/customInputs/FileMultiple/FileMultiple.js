@@ -24,6 +24,7 @@ function FileMultiple({
   value,
   onChange,
   name,
+  disabled,
 }) {
   const classes = useStyles(theme);
   const input = useRef({});
@@ -40,14 +41,13 @@ function FileMultiple({
       };
 
       return (
-        <div className={classes.selectedFile}>
-          <FileLabel
-            name={fileName}
-            size={size}
-            onClose={onClose}
-            ButtonTag={Button}
-          />
-        </div>
+        <FileLabel
+          name={fileName}
+          size={size}
+          onClose={onClose}
+          ButtonTag={Button}
+          disabled={disabled}
+        />
       );
     });
   };
@@ -57,13 +57,14 @@ function FileMultiple({
   const Label = renderTag(render, 'Label');
 
   return (
-    <div>
-      <Label className={classNames(classes.label, className)} htmlFor={id}>
+    <div className={classNames(className, { [classes.disabled]: disabled })}>
+      <Label className={classes.label} htmlFor={id}>
         {label}
         <Button
           variant={value.length > 0 ? 'appendFile' : 'addFile'}
           className={classes.button}
-          onClick={() => {}}>
+          onClick={() => {}}
+          disabled={disabled}>
           Add file
         </Button>
       </Label>
@@ -94,6 +95,7 @@ function FileMultiple({
 
           onChange(createEvent(name, newFiles));
         }}
+        disabled={disabled}
       />
     </div>
   );

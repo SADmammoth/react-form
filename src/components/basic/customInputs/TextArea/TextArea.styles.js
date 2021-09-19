@@ -24,7 +24,13 @@ const styles = {
     height: '90px',
   },
   placeholdered: {
-    color: (theme) => `${theme.mutedColor}`,
+    color: (theme) => theme.mutedColor,
+  },
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    borderColor: (theme) => theme.mutedColor,
+    backgroundColor: (theme) => theme.disabledBgColor,
+    cursor: (theme) => theme.disabledCursor,
   },
 };
 

@@ -28,6 +28,7 @@ function Search({
   render,
   required,
   allowScroll,
+  disabled,
 }) {
   const classes = useStyles(theme);
 
@@ -81,6 +82,7 @@ function Search({
       currentLabel={currentLabel}
       render={render}
       onBlur={onBlur}
+      disabled={disabled}
     />
   );
 }

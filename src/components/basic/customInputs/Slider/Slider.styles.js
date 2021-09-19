@@ -28,6 +28,16 @@ const styles = {
     cursor: 'pointer',
     ...noSelect,
   },
+
+  disabled: {
+    '& $background': {
+      backgroundColor: (theme) => theme.disabledBgColor,
+      '&::before': {
+        backgroundColor: (theme) => theme.mutedColor,
+      },
+    },
+    cursor: (theme) => theme.disabledCursor,
+  },
 };
 
 export default styles;

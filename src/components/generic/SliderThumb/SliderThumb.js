@@ -24,6 +24,7 @@ function SliderThumb({
   position,
   required,
   showTip,
+  disabled,
 }) {
   const classes = useStyles({ ...theme, position });
 
@@ -83,9 +84,10 @@ function SliderThumb({
 
   useEffect(() => {
     removeListeners();
-
-    document.addEventListener('mousemove', mouseMove);
-    document.addEventListener('mouseup', endMove);
+    if (!disabled) {
+      document.addEventListener('mousemove', mouseMove);
+      document.addEventListener('mouseup', endMove);
+    }
 
     // Exact binded functions are would be removed.
     // They differ for each effect call
@@ -100,9 +102,11 @@ function SliderThumb({
   return (
     <div
       draggable="false"
-      className={classNames(classes[type], classes.thumb)}
+      className={classNames(classes[type], classes.thumb, {
+        [classes.disabled]: disabled,
+      })}
       onMouseDown={() => {
-        if (sliderRef && sliderRectParams && sliderStep) {
+        if (sliderRef && sliderRectParams && sliderStep && !disabled) {
           setDragging(true);
         }
       }}>

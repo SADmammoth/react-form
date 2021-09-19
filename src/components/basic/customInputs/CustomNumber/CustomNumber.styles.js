@@ -36,6 +36,12 @@ const styles = {
     ...buttonsBasic,
     bottom: 2,
   },
+  disabled: {
+    color: (theme) => theme.mutedColor,
+    borderColor: (theme) => theme.mutedColor,
+    backgroundColor: (theme) => theme.disabledBgColor,
+    cursor: (theme) => theme.disabledCursor,
+  },
 };
 
 export default styles;

@@ -20,6 +20,14 @@ const styles = {
     backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
     border: (theme) => `1px solid #c4c4c4`,
   },
+
+  disabled: {
+    borderColor: (theme) => theme.mutedColor,
+    '& $image': {
+      opacity: '0.5',
+    },
+    cursor: (theme) => theme.disabledCursor,
+  },
 };
 
 export default styles;

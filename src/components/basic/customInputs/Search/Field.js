@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
 import renderTag from '@/formHelpers/renderTag';
 
 const Field = React.forwardRef(
@@ -12,6 +14,7 @@ const Field = React.forwardRef(
       setCurrentLabel,
       render,
       onBlur,
+      disabled,
     },
     ref,
   ) => {
@@ -21,7 +24,7 @@ const Field = React.forwardRef(
       <Input
         ref={ref}
         type="text"
-        className={classes.input}
+        className={classNames(classes.input, { [classes.disabled]: disabled })}
         placeholder={placeholder || 'Start typing to see options...'}
         value={currentLabel || ''}
         aria-disabled={!currentLabel ? 'disabled' : null}
@@ -32,6 +35,7 @@ const Field = React.forwardRef(
           showList(true);
         }}
         onBlur={onBlur}
+        disabled={disabled}
       />
     );
   },

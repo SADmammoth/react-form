@@ -27,6 +27,7 @@ function Select(props) {
     onChange,
     // required,
     render,
+    disabled,
   } = props;
 
   const [valueOptions, loading] = useValueOptions(options);
@@ -58,6 +59,7 @@ function Select(props) {
       placeholder={placeholder}
       currentLabel={currentLabel}
       render={render}
+      disabled={disabled}
     />
   );
 }

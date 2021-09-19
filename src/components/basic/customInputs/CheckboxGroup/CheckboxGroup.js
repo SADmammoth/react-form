@@ -26,6 +26,7 @@ function CheckboxGroup(props) {
     name,
     value,
     onChange,
+    disabled,
   } = props;
   const [valueOptions, loading] = useValueOptions(options);
 
@@ -52,13 +53,13 @@ function CheckboxGroup(props) {
           name={name}
           type={type}
           className={className}
-          classes={classes}
           onChange={onChangeHandler}
           attributes={attributes}
           label={valueOption.label}
           checked={includes(value, valueOption.value)}
           required={required}
           render={render}
+          disabled={disabled}
         />
       );
     },

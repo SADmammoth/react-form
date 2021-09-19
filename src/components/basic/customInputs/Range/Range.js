@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
@@ -24,6 +25,7 @@ function Range(props) {
     required,
     valueOptions,
     alwaysShowTip,
+    disabled,
   } = props;
 
   let { from, to } = currentValue;
@@ -73,7 +75,7 @@ function Range(props) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-onchange
-    <div className={className}>
+    <div className={classNames(className, { [classes.disabled]: disabled })}>
       <div ref={range} className={classes.background}>
         <SliderThumb
           type="left"
@@ -86,6 +88,7 @@ function Range(props) {
           required={required}
           position={calcPercent(leftIndex, length)}
           showTip={alwaysShowTip}
+          disabled={disabled}
         />
 
         <SliderThumb
@@ -100,6 +103,7 @@ function Range(props) {
           required={required}
           position={calcPercent(rightIndex, length)}
           showTip={alwaysShowTip}
+          disabled={disabled}
         />
       </div>
     </div>
