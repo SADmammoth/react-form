@@ -1,3 +1,5 @@
+import { difference, includes, intersection, isArray } from 'lodash-es';
+
 import createInputProps from '../createInputProps';
 
 export default function useCreateInputs(
@@ -27,18 +29,26 @@ export default function useCreateInputs(
 
     Object.entries(inputsData).forEach(([name, input]) => {
       if (input.control && inputsData[input.control.field]) {
-        // if (!valuesData[input.bind].bind) {
-        //   valuesData[input.bind].bind = [input.name];
-        // } else {
-        //   valuesData[input.bind].bind.push(input.name);
-        // }
-        console.log(input.value);
+        if (isArray(input.value)) {
+          const avaliableValues = Object.keys(input.control.map);
+          const common = input.value.find((x) =>
+            includes(avaliableValues, x.value || x),
+          );
+          if (common) {
+            inputsData[input.control.field][input.control.prop] =
+              input.control.map[common];
+            return;
+          }
+        }
         if (input.control.map[input.value] !== undefined) {
-          console.log(inputsData[input.control.field][input.control.prop]);
           inputsData[input.control.field][input.control.prop] =
             input.control.map[input.value];
+          return;
         }
-        console.log('AHHHHHHHHHHHHHHHHHHHHHHHHH');
+        if (input.control.map['*'] !== undefined) {
+          inputsData[input.control.field][input.control.prop] =
+            input.control.map['*'];
+        }
       }
     });
 

@@ -141,14 +141,6 @@ const inputs = [
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
-    control: {
-      field: 'text',
-      prop: 'disabled',
-      map: {
-        [true]: true,
-        [false]: false,
-      },
-    },
   },
   {
     type: 'checkbox-group',
@@ -161,6 +153,14 @@ const inputs = [
     },
     value: ['AX'],
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
+    control: {
+      field: 'text',
+      prop: 'disabled',
+      map: {
+        ['AX']: true,
+        ['*']: false,
+      },
+    },
   },
   {
     type: 'toggle',
