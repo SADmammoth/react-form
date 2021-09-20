@@ -140,6 +140,7 @@ Form.propTypes = {
       }),
       control: {
         field: PropTypes.string,
+        group: PropTypes.string,
         prop: PropTypes.string,
         map: PropTypes.objectOf(PropTypes.string),
       },

@@ -154,11 +154,11 @@ const inputs = [
     value: ['AX'],
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
     control: {
-      field: 'text',
+      group: 'checkboxes',
       prop: 'hidden',
       map: {
-        ['*']: true,
         ['AX']: false,
+        ['*']: true,
       },
     },
   },
