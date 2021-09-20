@@ -140,6 +140,12 @@ Form.propTypes = {
         title: PropTypes.string,
         id: PropTypes.string,
       }),
+      control: {
+        field: PropTypes.string,
+        prop: PropTypes.string,
+        map: PropTypes.objectOf(PropTypes.string),
+      },
+      bind: PropTypes.string,
       hide: PropTypes.bool,
     }),
   ).isRequired,

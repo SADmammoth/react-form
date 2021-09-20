@@ -141,6 +141,14 @@ const inputs = [
       title: 'Checkbox variants',
       id: 'checkboxes',
     },
+    control: {
+      field: 'text',
+      prop: 'disabled',
+      map: {
+        [true]: true,
+        [false]: false,
+      },
+    },
   },
   {
     type: 'checkbox-group',

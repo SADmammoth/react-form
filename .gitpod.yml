@@ -1,0 +1,5 @@
+
+vscode:
+  extensions:
+    - shan.code-settings-sync
+    - esbenp.prettier-vscode

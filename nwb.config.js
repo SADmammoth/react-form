@@ -23,4 +23,8 @@ module.exports = {
       '@/styles': path.resolve('src/styles'),
     },
   },
+  devServer: {
+    host: "0.0.0.0",
+    allowedHosts: [".gitpod.io"]
+  }
 };

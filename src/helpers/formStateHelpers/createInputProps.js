@@ -33,6 +33,7 @@ export default function createInputProps(
     step,
     hidden,
     disabled,
+    control,
   },
   updateValueCallback,
   valuesState,
@@ -106,5 +107,6 @@ export default function createInputProps(
     step,
     hidden,
     disabled,
+    control,
   };
 }
