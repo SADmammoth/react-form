@@ -155,10 +155,10 @@ const inputs = [
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
     control: {
       field: 'text',
-      prop: 'disabled',
+      prop: 'hidden',
       map: {
-        ['AX']: true,
-        ['*']: false,
+        ['*']: true,
+        ['AX']: false,
       },
     },
   },
