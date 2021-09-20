@@ -49,6 +49,10 @@ export default function useCreateInputs(
           inputsData[input.control.field][input.control.prop] =
             input.control.map['*'];
         }
+      } else if (input.control) {
+        console.error(
+          `Incorrect control by '${name}': no such field '${input.control.field}'`,
+        );
       }
     });
 

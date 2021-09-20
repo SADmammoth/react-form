@@ -28,6 +28,10 @@ export default function useCreateValues() {
         } else {
           valuesData[input.bind].bind.push(input.name);
         }
+      } else if (input.bind) {
+        console.error(
+          `Incorrect binding of '${input.name}': no such field ${input.bind}`,
+        );
       }
     });
 
