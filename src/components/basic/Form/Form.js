@@ -43,6 +43,7 @@ const Form = (props) => {
   );
 
   useDiff(() => {
+    console.log(inputsProps);
     dispatch(actions.createValues(inputsProps));
   }, [inputsProps]);
 

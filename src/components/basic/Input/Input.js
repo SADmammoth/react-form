@@ -22,6 +22,7 @@ import {
   TextInput,
   ActionButton,
 } from '../customInputs';
+import Subform from '../customInputs/Subform';
 import Toggle from '../customInputs/Toggle';
 import Tag from '@/generic/Tag';
 import compareObjects from '@/helpers/compareObjects';
@@ -64,6 +65,9 @@ function Input(props) {
     max,
     step,
     disabled,
+    inputs,
+    group,
+    addInputs,
   } = props;
 
   const onError = (overriddenValidationMessage) => {
@@ -536,6 +540,17 @@ function Input(props) {
       );
     }
 
+    if (type === 'subform') {
+      return (
+        <Subform
+          name={name}
+          group={group}
+          inputs={inputs}
+          addInputs={addInputs}
+        />
+      );
+    }
+
     return LabelledInput(
       disabled,
       render,
@@ -655,6 +670,10 @@ Input.publicProps = {
   max: PropTypes.number,
   step: PropTypes.number,
   disabled: PropTypes.bool,
+  inputs: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape(Input.publicProps), PropTypes.func),
+  ]),
+  addInputs: PropTypes.func,
 };
 
 Input.propTypes = {

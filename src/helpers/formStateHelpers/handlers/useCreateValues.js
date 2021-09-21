@@ -5,6 +5,7 @@ export default function useCreateValues() {
   return (inputsProps, valuesState) => {
     const valuesData = {};
     inputsProps.forEach((input) => {
+      if (input.type === 'subform') return;
       let convertersFromMap = input.converters || {
         in: (a) => a,
         out: (b) => b,

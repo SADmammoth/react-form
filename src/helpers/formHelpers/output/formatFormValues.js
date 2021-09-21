@@ -2,6 +2,7 @@ export default function formatFormValues(stateValues) {
   const values = {};
 
   Object.entries(stateValues).forEach(([name, valueItem]) => {
+    if (valueItem.type === 'subform') return;
     const { group } = valueItem;
     const converter = valueItem.converters.out;
 

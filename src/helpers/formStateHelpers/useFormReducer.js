@@ -20,6 +20,8 @@ export default function useFormReducer(notifications, inputAdditionalFields) {
     notifications,
   );
 
+  inputAdditionalFields.addInputs = addInputsCallback;
+
   const createInputs = useCreateInputs(
     updateValueCallback,
     highlightInput,
@@ -33,6 +35,10 @@ export default function useFormReducer(notifications, inputAdditionalFields) {
     formReducer(updateInput, updateValue, createInputs, createValues),
     init,
   );
+
+  function addInputsCallback(...args) {
+    addInputsCallback.state = state;
+  }
 
   function updateValueCallback(name, value) {
     dispatch(actions.updateValue(name, value));

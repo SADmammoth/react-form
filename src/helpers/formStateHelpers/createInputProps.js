@@ -34,13 +34,15 @@ export default function createInputProps(
     hidden,
     disabled,
     control,
+    inputs,
+    group,
   },
   updateValueCallback,
   valuesState,
   highlightInput,
   additionalFields,
 ) {
-  const { render, formId } = additionalFields;
+  const { render, formId, addInputs } = additionalFields;
 
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
@@ -87,11 +89,11 @@ export default function createInputProps(
     label,
     placeholder,
     attributes,
-    value: valuesState[name].value,
+    value: valuesState[name]?.value,
     valueOptions,
     minSymbols,
     maxSymbols,
-    invalid: !!valuesState[name].invalid,
+    invalid: !!valuesState[name]?.invalid,
     highlightInput,
     validationMessage,
     alwaysShowTip,
@@ -108,5 +110,8 @@ export default function createInputProps(
     hidden,
     disabled,
     control,
+    inputs,
+    group,
+    addInputs,
   };
 }

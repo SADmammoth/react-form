@@ -5,6 +5,7 @@ const actionTypes = {
   UPDATE_VALUE: 'UPDATE_VALUE',
   CREATE_INPUTS: 'CREATE_INPUTS',
   CREATE_VALUES: 'CREATE_VALUES',
+  ADD_INPUTS: 'ADD_INPUTS',
   HIGHLIGHT_INPUT: 'HIGHLIGHT_INPUT',
   UNHIGHLIGHT_INPUT: 'UNHIGHLIGHT_INPUT',
   RESET_FORM: 'RESET_FORM',
@@ -14,6 +15,7 @@ const formReducer =
   (updateInput, updateValue, createInputs, createValues) =>
   (state, { type, data }) => {
     const { inputs, values } = state;
+    console.log(type);
     switch (type) {
       case actionTypes.UPDATE_INPUT:
         return {
@@ -40,6 +42,17 @@ const formReducer =
         return {
           ...state,
           inputs: createInputs(data.inputsProps, values),
+        };
+      case actionTypes.ADD_INPUTS:
+        return {
+          values: {
+            ...values,
+            ...createValues(data.inputsProps, values),
+          },
+          inputs: {
+            ...inputs,
+            ...createInputs(data.inputsProps, values),
+          },
         };
       case actionTypes.CREATE_VALUES:
         return { values: createValues(data.inputsProps, values) };
@@ -119,6 +132,10 @@ const actions = {
   }),
   createInputs: (inputsProps) => ({
     type: actionTypes.CREATE_INPUTS,
+    data: { inputsProps },
+  }),
+  addInputs: (inputsProps) => ({
+    type: actionTypes.ADD_INPUTS,
     data: { inputsProps },
   }),
   createValues: (inputsProps) => ({

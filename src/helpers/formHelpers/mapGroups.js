@@ -11,7 +11,7 @@ export default function mapGroups(inputs, inputsProps) {
 
   inputsProps.forEach((input) => {
     if (inputs[input.name]?.hidden) return;
-    if (input.group) {
+    if (input.group && input.type !== 'subform') {
       if (!inputsGroups[input.group.id]) {
         inputsGroups[input.group.id] = {
           $title: input.group.title,

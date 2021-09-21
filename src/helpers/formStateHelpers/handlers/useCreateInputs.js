@@ -14,7 +14,7 @@ export default function useCreateInputs(
 
     const inputsData = {};
 
-    inputsProps.forEach(({ group, ...props }) => {
+    inputsProps.forEach((props) => {
       const inputProps = createInputProps(
         props,
         updateValueCallback,
