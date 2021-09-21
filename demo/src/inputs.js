@@ -153,14 +153,6 @@ const inputs = [
     },
     value: ['AX'],
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
-    control: {
-      group: 'checkboxes',
-      prop: 'hidden',
-      map: {
-        ['AX']: false,
-        ['*']: true,
-      },
-    },
   },
   {
     type: 'toggle',
@@ -215,6 +207,24 @@ const inputs = [
     placeholder: 'Country',
     valueOptions: () => countries().then((res) => res.slice(0, 3)),
     value: 'AX',
+    control: [
+      {
+        group: 'checkboxes',
+        prop: 'hidden',
+        map: {
+          ['AX']: false,
+          ['*']: true,
+        },
+      },
+      {
+        field: 'text',
+        prop: 'hidden',
+        map: {
+          ['AX']: false,
+          ['*']: true,
+        },
+      },
+    ],
   },
   {
     type: 'select-multiple',

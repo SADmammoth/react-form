@@ -3,51 +3,58 @@ import { includes, isArray } from 'lodash-es';
 const controlInputProps =
   (inputProps, inputsData) =>
   ([name, input]) => {
-    const controlTarget = (target, [name, input], depth = 3) => {
+    const controlTarget = (target, control, [name, input], depth = 3) => {
       if (inputsData[target]) {
         if (isArray(input.value)) {
-          const avaliableValues = Object.keys(input.control.map);
+          const avaliableValues = Object.keys(control.map);
           const common = input.value.find((x) =>
             includes(avaliableValues, x.value || x),
           );
 
           if (common) {
             console.log(target);
-            inputsData[target][input.control.prop] = input.control.map[common];
+            inputsData[target][control.prop] = control.map[common];
             return;
           }
         }
 
-        if (input.control.map[input.value] !== undefined) {
-          inputsData[target][input.control.prop] =
-            input.control.map[input.value];
+        if (control.map[input.value] !== undefined) {
+          inputsData[target][control.prop] = control.map[input.value];
           return;
         }
 
-        if (input.control.map['*'] !== undefined) {
-          inputsData[target][input.control.prop] = input.control.map['*'];
+        if (control.map['*'] !== undefined) {
+          inputsData[target][control.prop] = control.map['*'];
           return;
         }
       }
 
-      if (depth > 0 && input.control.group) {
+      if (depth > 0 && control.group) {
         const inGroup = inputProps
-          .filter(({ group }) => group?.id === input.control.group)
+          .filter(({ group }) => group?.id === control.group)
           .map(({ name }) => name);
         console.log(inGroup);
         inGroup.forEach((target) =>
-          controlTarget(target, [name, input], depth--),
+          controlTarget(target, control, [name, input], depth--),
         );
+        return;
       }
-      return;
-    };
 
-    if (input.control) {
-      controlTarget(input.control.field, [name, input]);
-    } else if (input.control) {
       console.error(
         `Incorrect control by '${name}': no such field '${input.control.field}'`,
       );
+    };
+
+    if (input.control) {
+      if (isArray(input.control)) {
+        input.control.forEach((control) =>
+          controlTarget(control.field, control, [name, input]),
+        );
+        return;
+      }
+
+      controlTarget(input.control.field, input.control, [name, input]);
+      return;
     }
   };
 
