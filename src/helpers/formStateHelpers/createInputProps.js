@@ -34,6 +34,7 @@ export default function createInputProps(
     hidden,
     disabled,
     control,
+    group,
   },
   updateValueCallback,
   valuesState,
@@ -108,5 +109,6 @@ export default function createInputProps(
     hidden,
     disabled,
     control,
+    group,
   };
 }

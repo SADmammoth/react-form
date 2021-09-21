@@ -16,7 +16,7 @@ export default function useCreateInputs(
 
     const inputsData = {};
 
-    inputsProps.forEach(({ group, ...props }) => {
+    inputsProps.forEach((props) => {
       const inputProps = createInputProps(
         props,
         updateValueCallback,
@@ -32,10 +32,11 @@ export default function useCreateInputs(
       controlInputProps(inputsProps, inputsData),
     );
 
-    Object.entries(inputsData).forEach(([name, { hidden }]) => {
-      if (hidden === true) {
+    Object.entries(inputsData).forEach(([name, { hidden, group }]) => {
+      console.log(hidden, group);
+      if (hidden && group?.subform) {
         unloadProps(name);
-      } else {
+      } else if (hidden === false && group?.subform) {
         updateProps();
       }
     });

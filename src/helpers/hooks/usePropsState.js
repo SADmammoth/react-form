@@ -33,7 +33,7 @@ export default function usePropsState(props) {
               addProp(
                 props.map((inputProps) => ({
                   ...inputProps,
-                  group: { title: input.label, id: input.name },
+                  group: { title: input.label, id: input.name, subform: true },
                 })),
               );
             }
@@ -42,7 +42,7 @@ export default function usePropsState(props) {
           addProp(
             input.inputs.map((inputProps) => ({
               ...inputProps,
-              group: { title: input.label, id: input.name },
+              group: { title: input.label, id: input.name, subform: true },
             })),
           );
         }
