@@ -5,6 +5,8 @@ export default function useCreateInputs(
   updateValueCallback,
   highlightInput,
   notifications,
+  unloadProps,
+  updateProps,
   inputAdditionalFields,
 ) {
   return (inputsProps, valuesState) => {
@@ -29,6 +31,14 @@ export default function useCreateInputs(
     Object.entries(inputsData).forEach(
       controlInputProps(inputsProps, inputsData),
     );
+
+    Object.entries(inputsData).forEach(([name, { hidden }]) => {
+      if (hidden === true) {
+        unloadProps(name);
+      } else {
+        updateProps();
+      }
+    });
 
     return inputsData;
   };

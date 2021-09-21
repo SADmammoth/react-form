@@ -7,13 +7,19 @@ export default function usePropsState(props) {
   const [allPropsState, setAllPropsState] = useState(props);
 
   useEffect(() => {
-    setAllPropsState([...props.filter(({ inputs }) => !inputs), ...propsState]);
+    setAllPropsState([...props, ...propsState]);
   }, [props, propsState]);
 
   const addProp = (prop) =>
     setPropsState((state) => {
       return [...state, ...prop];
     });
+
+  const [shouldUpdate, setUpdate] = useState(false);
+
+  const update = () => {
+    setUpdate(true);
+  };
 
   safeUseEffect(
     (isUnmounted) => {
@@ -41,9 +47,18 @@ export default function usePropsState(props) {
           );
         }
       });
+
+      setUpdate(false);
     },
-    [props],
+    [props, shouldUpdate],
   );
 
-  return allPropsState;
+  const unload = (inputName) => {
+    console.log(inputName);
+    setPropsState((propsState) => {
+      return propsState.filter(({ name }) => name !== inputName);
+    });
+  };
+
+  return [allPropsState, unload, update];
 }

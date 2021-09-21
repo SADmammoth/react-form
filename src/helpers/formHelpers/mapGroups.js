@@ -10,7 +10,7 @@ export default function mapGroups(inputs, inputsProps) {
   if (!inputs || isEmpty(inputs)) return inputs;
 
   inputsProps.forEach((input) => {
-    if (inputs[input.name]?.hidden) return;
+    if (inputs[input.name]?.hidden || input.inputs) return;
     if (input.group) {
       if (!inputsGroups[input.group.id]) {
         inputsGroups[input.group.id] = {

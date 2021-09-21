@@ -31,7 +31,8 @@ const Form = (props) => {
     resetOnSubmit,
   } = props;
 
-  const inputsProps = usePropsState(inputsPropsInit);
+  const [inputsProps, unloadProps, updateProps] =
+    usePropsState(inputsPropsInit);
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
@@ -42,6 +43,8 @@ const Form = (props) => {
 
   const [state, dispatch, actions] = useFormReducer(
     notifications,
+    unloadProps,
+    updateProps,
     inputAdditionalFields,
   );
 
