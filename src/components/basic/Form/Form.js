@@ -17,6 +17,7 @@ import masks from '@/maskHelpers/masks';
 const Form = (props) => {
   let { showNotifications } = props;
   const {
+    id: formId,
     inputs: inputsProps,
     onInputsUpdate,
     onSubmit: onSubmitHandler,
@@ -33,6 +34,7 @@ const Form = (props) => {
 
   const inputAdditionalFields = {
     render,
+    formId,
   };
 
   const [state, dispatch, actions] = useFormReducer(
@@ -126,6 +128,7 @@ Form.defaultProps = {
 };
 
 Form.propTypes = {
+  id: PropTypes.string.isRequired,
   method: PropTypes.string,
   action: PropTypes.string,
   className: PropTypes.string,

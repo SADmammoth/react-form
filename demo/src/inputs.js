@@ -4,7 +4,6 @@ import imagebytes from './imagebytes';
 const inputs = [
   {
     type: 'text',
-    id: 'text',
     name: 'text',
     label: 'Text',
     placeholder: 'ABCD',
@@ -24,7 +23,6 @@ const inputs = [
   },
   {
     type: 'text',
-    id: 'hex',
     name: 'hex',
     label: 'Hex',
     converter: {
@@ -45,7 +43,6 @@ const inputs = [
   },
   {
     type: 'text',
-    id: 'email',
     name: 'email',
     label: 'Email',
     validator: 'email',
@@ -53,7 +50,6 @@ const inputs = [
   },
   {
     type: 'text',
-    id: 'phone',
     name: 'phone',
     label: 'Phone mask',
     mask: '+999 (99) 999-99-99',
@@ -61,7 +57,6 @@ const inputs = [
   },
   {
     type: 'text',
-    id: 'date',
     name: 'date',
     label: 'Date mask',
     converters: 'dateTime',
@@ -71,7 +66,6 @@ const inputs = [
   },
   {
     type: 'textarea',
-    id: 'textarea',
     name: 'textarea',
     label: 'Textarea',
     minSymbols: 3,
@@ -93,7 +87,6 @@ const inputs = [
   },
   {
     type: 'number',
-    id: 'number',
     name: 'number',
     label: 'Number',
     value: 1,
@@ -104,14 +97,12 @@ const inputs = [
   },
   {
     type: 'password',
-    id: 'password',
     name: 'password',
     label: 'Password',
     placeholder: 'ABCD',
   },
   {
     type: 'radio',
-    id: 'radio',
     name: 'radio',
     label: 'Radio',
     group: {
@@ -122,7 +113,6 @@ const inputs = [
   },
   {
     type: 'radio-group',
-    id: 'radio-group',
     name: 'radio-group',
     label: 'Radio countries',
     group: {
@@ -134,7 +124,6 @@ const inputs = [
   },
   {
     type: 'checkbox',
-    id: 'checkbox',
     name: 'checkbox',
     label: 'Checkbox',
     group: {
@@ -144,7 +133,6 @@ const inputs = [
   },
   {
     type: 'checkbox-group',
-    id: 'checkbox-group',
     name: 'checkbox-group',
     label: 'Checkbox countries',
     group: {
@@ -156,7 +144,6 @@ const inputs = [
   },
   {
     type: 'toggle',
-    id: 'toggle',
     name: 'toggle',
     label: 'Toggle',
     group: {
@@ -167,7 +154,6 @@ const inputs = [
   },
   {
     type: 'toggle-group',
-    id: 'toggle-group',
     name: 'toggle-group',
     label: 'Toggle countries',
     group: {
@@ -179,7 +165,6 @@ const inputs = [
   },
   {
     type: 'spoiler',
-    id: 'spoiler',
     name: 'spoiler',
     label: 'Spoiler countries',
     group: {
@@ -189,7 +174,6 @@ const inputs = [
   },
   {
     type: 'spoiler-group',
-    id: 'spoiler-group',
     name: 'spoiler-group',
     label: 'Spoiler countries',
     group: {
@@ -201,7 +185,6 @@ const inputs = [
   },
   {
     type: 'select',
-    id: 'select',
     name: 'select',
     label: 'Select country',
     placeholder: 'Country',
@@ -228,7 +211,6 @@ const inputs = [
   },
   {
     type: 'select-multiple',
-    id: 'select-multiple',
     name: 'select-multiple',
     label: 'Select countries',
     placeholder: 'Country',
@@ -236,7 +218,6 @@ const inputs = [
   },
   {
     type: 'search',
-    id: 'search',
     name: 'search',
     label: 'Search country',
     placeholder: 'Country',
@@ -245,7 +226,6 @@ const inputs = [
   },
   {
     type: 'search-multiple',
-    id: 'search-multiple',
     name: 'search-multiple',
     label: 'Search countries',
     placeholder: 'Country',
@@ -254,7 +234,6 @@ const inputs = [
   },
   {
     type: 'range',
-    id: 'range',
     name: 'range',
     label: 'Price range',
     valueOptions: new Array(100)
@@ -270,7 +249,6 @@ const inputs = [
   },
   {
     type: 'slider',
-    id: 'slider',
     name: 'slider',
     label: 'Alphabet',
     valueOptions: 'qwertyuiopasdfghjklzxcvbnm'
@@ -285,7 +263,6 @@ const inputs = [
   },
   {
     type: 'file',
-    id: 'file',
     name: 'file',
     label: 'File',
     value: new File(['foo'], 'foo.txt', {
@@ -294,7 +271,6 @@ const inputs = [
   },
   {
     type: 'file-multiple',
-    id: 'file-multiple',
     name: 'file-multiple',
     label: 'Files',
     value: [
@@ -308,7 +284,6 @@ const inputs = [
   },
   {
     type: 'image',
-    id: 'image',
     name: 'image',
     label: 'Image',
     value: new File(
@@ -321,7 +296,6 @@ const inputs = [
   },
   {
     type: 'image-multiple',
-    id: 'image-multiple',
     name: 'image-multiple',
     label: 'Images',
     value: [
@@ -335,7 +309,6 @@ const inputs = [
   },
   {
     type: 'markdown',
-    id: 'markdown',
     name: 'markdown',
     label: 'Markdown (WIP)',
     hidden: true,

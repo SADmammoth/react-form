@@ -40,7 +40,7 @@ export default function createInputProps(
   highlightInput,
   additionalFields,
 ) {
-  const { render } = additionalFields;
+  const { render, formId } = additionalFields;
 
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
@@ -70,8 +70,8 @@ export default function createInputProps(
   }
 
   return {
-    id: valuesState[name].id,
-    key: valuesState[name].id,
+    id: name + formId,
+    key: name + formId,
     type,
     name,
     className,

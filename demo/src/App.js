@@ -11,6 +11,7 @@ const App = () => {
   return (
     <Fragment>
       <Form
+        id="form"
         onSubmit={async (data) => {
           console.log(data);
         }}
