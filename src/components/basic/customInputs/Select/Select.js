@@ -7,7 +7,7 @@ import { createUseStyles } from 'react-jss';
 import Field from './Field';
 import Suggestions from '@/generic/Suggestions';
 import compareObjects from '@/helpers/compareObjects';
-import useValueOptions from '@/hooks/useValueOptions';
+import useFetchedProps from '@/hooks/useFetchedProps';
 import theme from '@/styles/theme';
 
 import styles from './Select.styles';
@@ -30,7 +30,7 @@ function Select(props) {
     disabled,
   } = props;
 
-  const [valueOptions, loading] = useValueOptions(options);
+  const [valueOptions, loading] = useFetchedProps(options);
 
   const [currentLabel, setCurrentLabel] = useState(null);
 

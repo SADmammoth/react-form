@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import safeUseEffect from '@/hooks/safeUseEffect';
 
-export default function useValueOptions(fetch) {
+export default function useFetchedProps(fetch) {
   const [valueOptions, setValueOptions] = useState(null);
 
   safeUseEffect(

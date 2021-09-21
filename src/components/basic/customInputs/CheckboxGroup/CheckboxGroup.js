@@ -8,7 +8,7 @@ import { createUseStyles } from 'react-jss';
 import Toggle from '../Toggle';
 import createEvent from '@/formHelpers/createEvent';
 import compareObjects from '@/helpers/compareObjects';
-import useValueOptions from '@/hooks/useValueOptions';
+import useFetchedProps from '@/hooks/useFetchedProps';
 import theme from '@/styles/theme';
 
 import styles from './CheckboxGroup.styles';
@@ -28,7 +28,7 @@ function CheckboxGroup(props) {
     onChange,
     disabled,
   } = props;
-  const [valueOptions, loading] = useValueOptions(options);
+  const [valueOptions, loading] = useFetchedProps(options);
 
   const renderCheckbox = useCallback(
     (valueOption, { id, type: groupType, name, attributes }) => {

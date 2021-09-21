@@ -9,7 +9,7 @@ import filterSearchOptions from '@/formHelpers/filterSearchOptions';
 import Suggestions from '@/generic/Suggestions';
 // import PropTypes from 'prop-types';
 import compareObjects from '@/helpers/compareObjects';
-import useValueOptions from '@/hooks/useValueOptions';
+import useFetchedProps from '@/hooks/useFetchedProps';
 import theme from '@/styles/theme';
 
 import styles from './Search.styles';
@@ -32,7 +32,7 @@ function Search({
 }) {
   const classes = useStyles(theme);
 
-  const [valueOptions, loading] = useValueOptions(options);
+  const [valueOptions, loading] = useFetchedProps(options);
   const [currentLabel, setCurrentLabel] = useState(null);
 
   const filteredValueOptions = useMemo(

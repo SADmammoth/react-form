@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
+import usePropsState from '../../../helpers/hooks/usePropsState';
 import Input from '../Input';
 import validatorsMap from '@/Validator/validatorsMap';
 import renderGroups from '@/formHelpers/output/renderGroups';
@@ -18,7 +19,7 @@ const Form = (props) => {
   let { showNotifications } = props;
   const {
     id: formId,
-    inputs: inputsProps,
+    inputs: inputsPropsInit,
     onInputsUpdate,
     onSubmit: onSubmitHandler,
     notify,
@@ -29,6 +30,8 @@ const Form = (props) => {
     dateTimeFormatMask,
     resetOnSubmit,
   } = props;
+
+  const inputsProps = usePropsState(inputsPropsInit);
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 

@@ -3,7 +3,7 @@ import { includes, isArray } from 'lodash-es';
 const controlInputProps =
   (inputProps, inputsData) =>
   ([name, input]) => {
-    const controlTarget = (target, control, [name, input], depth = 3) => {
+    const controlTarget = (target, control, [name, input], depth = 2) => {
       if (inputsData[target]) {
         if (isArray(input.value)) {
           const avaliableValues = Object.keys(control.map);
@@ -33,9 +33,9 @@ const controlInputProps =
         const inGroup = inputProps
           .filter(({ group }) => group?.id === control.group)
           .map(({ name }) => name);
-        console.log(inGroup);
+
         inGroup.forEach((target) =>
-          controlTarget(target, control, [name, input], depth--),
+          controlTarget(target, control, [name, input], depth - 1),
         );
         return;
       }

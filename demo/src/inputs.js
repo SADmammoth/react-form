@@ -1,5 +1,6 @@
 import countries from './countries';
 import imagebytes from './imagebytes';
+import subform from './subform';
 
 const inputs = [
   {
@@ -48,252 +49,256 @@ const inputs = [
     validator: 'email',
     placeholder: 'text@example.com',
   },
-  {
-    type: 'text',
-    name: 'phone',
-    label: 'Phone mask',
-    mask: '+999 (99) 999-99-99',
-    placeholder: '+___ (__) ___-__-__',
-  },
-  {
-    type: 'text',
-    name: 'date',
-    label: 'Date mask',
-    converters: 'dateTime',
-    mask: 'dateTimeInPastByCharWithInvisibleMask',
-    value: new Date(),
-    placeholder: 'dd-MM-yyyy',
-  },
-  {
-    type: 'textarea',
-    name: 'textarea',
-    label: 'Textarea',
-    minSymbols: 3,
-    maxSymbols: 30,
-    placeholder: 'Text (3-30 chars)',
+  // {
+  //   type: 'text',
+  //   name: 'phone',
+  //   label: 'Phone mask',
+  //   mask: '+999 (99) 999-99-99',
+  //   placeholder: '+___ (__) ___-__-__',
+  // },
+  // {
+  //   type: 'text',
+  //   name: 'date',
+  //   label: 'Date mask',
+  //   converters: 'dateTime',
+  //   mask: 'dateTimeInPastByCharWithInvisibleMask',
+  //   value: new Date(),
+  //   placeholder: 'dd-MM-yyyy',
+  // },
+  // {
+  //   type: 'textarea',
+  //   name: 'textarea',
+  //   label: 'Textarea',
+  //   minSymbols: 3,
+  //   maxSymbols: 30,
+  //   placeholder: 'Text (3-30 chars)',
 
-    converters: {
-      in: (e) => e?.text,
-      out: (value) => {
-        return { text: value };
-      },
-    },
-    actionButton: {
-      label: 'Clear',
-      action: async (name, value) => {
-        return '';
-      },
-    },
-  },
-  {
-    type: 'number',
-    name: 'number',
-    label: 'Number',
-    value: 1,
+  //   converters: {
+  //     in: (e) => e?.text,
+  //     out: (value) => {
+  //       return { text: value };
+  //     },
+  //   },
+  //   actionButton: {
+  //     label: 'Clear',
+  //     action: async (name, value) => {
+  //       return '';
+  //     },
+  //   },
+  // },
+  // {
+  //   type: 'number',
+  //   name: 'number',
+  //   label: 'Number',
+  //   value: 1,
 
-    min: 1,
-    step: 2,
-    max: 10,
-  },
-  {
-    type: 'password',
-    name: 'password',
-    label: 'Password',
-    placeholder: 'ABCD',
-  },
-  {
-    type: 'radio',
-    name: 'radio',
-    label: 'Radio',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-    value: 'AX',
-  },
-  {
-    type: 'radio-group',
-    name: 'radio-group',
-    label: 'Radio countries',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-    value: 'AX',
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-  },
+  //   min: 1,
+  //   step: 2,
+  //   max: 10,
+  // },
+  // {
+  //   type: 'password',
+  //   name: 'password',
+  //   label: 'Password',
+  //   placeholder: 'ABCD',
+  // },
+  // {
+  //   type: 'radio',
+  //   name: 'radio',
+  //   label: 'Radio',
+  //   group: {
+  //     title: 'Checkbox variants',
+  //     id: 'checkboxes',
+  //   },
+  //   value: 'AX',
+  // },
+  // {
+  //   type: 'radio-group',
+  //   name: 'radio-group',
+  //   label: 'Radio countries',
+  //   group: {
+  //     title: 'Checkbox variants',
+  //     id: 'checkboxes',
+  //   },
+  //   value: 'AX',
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  // },
   {
     type: 'checkbox',
     name: 'checkbox',
     label: 'Checkbox',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-  },
-  {
-    type: 'checkbox-group',
-    name: 'checkbox-group',
-    label: 'Checkbox countries',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-    value: ['AX'],
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-  },
-  {
-    type: 'toggle',
-    name: 'toggle',
-    label: 'Toggle',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-    value: true,
-  },
-  {
-    type: 'toggle-group',
-    name: 'toggle-group',
-    label: 'Toggle countries',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-    value: ['AX'],
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-  },
-  {
-    type: 'spoiler',
-    name: 'spoiler',
-    label: 'Spoiler countries',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-  },
-  {
-    type: 'spoiler-group',
-    name: 'spoiler-group',
-    label: 'Spoiler countries',
-    group: {
-      title: 'Checkbox variants',
-      id: 'checkboxes',
-    },
-    value: ['AX'],
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-  },
-  {
-    type: 'select',
-    name: 'select',
-    label: 'Select country',
-    placeholder: 'Country',
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-    value: 'AX',
-    control: [
-      {
-        group: 'checkboxes',
-        prop: 'hidden',
-        map: {
-          ['AX']: false,
-          ['*']: true,
-        },
+    control: {
+      group: 'subform',
+      prop: 'hidden',
+      map: {
+        [true]: true,
+        [false]: false,
       },
-      {
-        field: 'text',
-        prop: 'hidden',
-        map: {
-          ['AX']: false,
-          ['*']: true,
-        },
-      },
-    ],
+    },
   },
-  {
-    type: 'select-multiple',
-    name: 'select-multiple',
-    label: 'Select countries',
-    placeholder: 'Country',
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-  },
-  {
-    type: 'search',
-    name: 'search',
-    label: 'Search country',
-    placeholder: 'Country',
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-    value: 'AX',
-  },
-  {
-    type: 'search-multiple',
-    name: 'search-multiple',
-    label: 'Search countries',
-    placeholder: 'Country',
-    valueOptions: () => countries().then((res) => res.slice(0, 3)),
-    value: ['AX'],
-  },
-  {
-    type: 'range',
-    name: 'range',
-    label: 'Price range',
-    valueOptions: new Array(100)
-      .fill(0)
-      .map((_, i) => 10 * (i + 1))
-      .map((x) => {
-        return {
-          label: '$' + x,
-          value: x,
-        };
-      }),
-    value: { from: 2, to: 91 },
-  },
-  {
-    type: 'slider',
-    name: 'slider',
-    label: 'Alphabet',
-    valueOptions: 'qwertyuiopasdfghjklzxcvbnm'
-      .split('')
-      .sort()
-      .map((value) => {
-        return {
-          label: value,
-          value,
-        };
-      }),
-  },
-  {
-    type: 'file',
-    name: 'file',
-    label: 'File',
-    value: new File(['foo'], 'foo.txt', {
-      type: 'text/plain',
-    }),
-  },
-  {
-    type: 'file-multiple',
-    name: 'file-multiple',
-    label: 'Files',
-    value: [
-      new File(['foo'], 'foo.txt', {
-        type: 'text/plain',
-      }),
-      new File(['foo'], 'foo.txt', {
-        type: 'text/plain',
-      }),
-    ],
-  },
-  {
-    type: 'image',
-    name: 'image',
-    label: 'Image',
-    value: new File(
-      [new Blob([imagebytes], { type: 'image/svg+xml' })],
-      'foo.svg',
-      {
-        type: 'image/svg+xml',
-      },
-    ),
-  },
+  // {
+  //   type: 'checkbox-group',
+  //   name: 'checkbox-group',
+  //   label: 'Checkbox countries',
+  //   group: {
+  //     title: 'Checkbox variants',
+  //     id: 'checkboxes',
+  //   },
+  //   value: ['AX'],
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  // },
+  // {
+  //   type: 'toggle',
+  //   name: 'toggle',
+  //   label: 'Toggle',
+  //   group: {
+  //     title: 'Checkbox variants',
+  //     id: 'checkboxes',
+  //   },
+  //   value: true,
+  // },
+  // {
+  //   type: 'toggle-group',
+  //   name: 'toggle-group',
+  //   label: 'Toggle countries',
+  //   group: {
+  //     title: 'Checkbox variants',
+  //     id: 'checkboxes',
+  //   },
+  //   value: ['AX'],
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  // },
+  // {
+  //   type: 'spoiler',
+  //   name: 'spoiler',
+  //   label: 'Spoiler countries',
+  //   group: {
+  //     title: 'Checkbox variants',
+  //     id: 'checkboxes',
+  //   },
+  // },
+  // {
+  //   type: 'spoiler-group',
+  //   name: 'spoiler-group',
+  //   label: 'Spoiler countries',
+  //   group: {
+  //     title: 'Checkbox variants',
+  //     id: 'checkboxes',
+  //   },
+  //   value: ['AX'],
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  //},
+  // {
+  //   type: 'select',
+  //   name: 'select',
+  //   label: 'Select country',
+  //   placeholder: 'Country',
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  //   value: 'AX',
+  //   control: [
+  //     {
+  //       group: 'checkboxes',
+  //       prop: 'hidden',
+  //       map: {
+  //         ['AX']: false,
+  //         ['*']: true,
+  //       },
+  //     },
+  //     {
+  //       field: 'text',
+  //       prop: 'hidden',
+  //       map: {
+  //         ['AX']: false,
+  //         ['*']: true,
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   type: 'select-multiple',
+  //   name: 'select-multiple',
+  //   label: 'Select countries',
+  //   placeholder: 'Country',
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  // },
+  // {
+  //   type: 'search',
+  //   name: 'search',
+  //   label: 'Search country',
+  //   placeholder: 'Country',
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  //   value: 'AX',
+  // },
+  // {
+  //   type: 'search-multiple',
+  //   name: 'search-multiple',
+  //   label: 'Search countries',
+  //   placeholder: 'Country',
+  //   valueOptions: () => countries().then((res) => res.slice(0, 3)),
+  //   value: ['AX'],
+  // },
+  // {
+  //   type: 'range',
+  //   name: 'range',
+  //   label: 'Price range',
+  //   valueOptions: new Array(100)
+  //     .fill(0)
+  //     .map((_, i) => 10 * (i + 1))
+  //     .map((x) => {
+  //       return {
+  //         label: '$' + x,
+  //         value: x,
+  //       };
+  //     }),
+  //   value: { from: 2, to: 91 },
+  // },
+  // {
+  //   type: 'slider',
+  //   name: 'slider',
+  //   label: 'Alphabet',
+  //   valueOptions: 'qwertyuiopasdfghjklzxcvbnm'
+  //     .split('')
+  //     .sort()
+  //     .map((value) => {
+  //       return {
+  //         label: value,
+  //         value,
+  //       };
+  //     }),
+  // },
+  // {
+  //   type: 'file',
+  //   name: 'file',
+  //   label: 'File',
+  //   value: new File(['foo'], 'foo.txt', {
+  //     type: 'text/plain',
+  //   }),
+  // },
+  // {
+  //   type: 'file-multiple',
+  //   name: 'file-multiple',
+  //   label: 'Files',
+  //   value: [
+  //     new File(['foo'], 'foo.txt', {
+  //       type: 'text/plain',
+  //     }),
+  //     new File(['foo'], 'foo.txt', {
+  //       type: 'text/plain',
+  //     }),
+  //   ],
+  // },
+  // {
+  //   type: 'image',
+  //   name: 'image',
+  //   label: 'Image',
+  //   value: new File(
+  //     [new Blob([imagebytes], { type: 'image/svg+xml' })],
+  //     'foo.svg',
+  //     {
+  //       type: 'image/svg+xml',
+  //     },
+  //   ),
+  // },
   {
     type: 'image-multiple',
     name: 'image-multiple',
@@ -312,6 +317,12 @@ const inputs = [
     name: 'markdown',
     label: 'Markdown (WIP)',
     hidden: true,
+  },
+  {
+    type: 'subform',
+    name: 'subform',
+    label: 'subform',
+    inputs: subform,
   },
 ];
 
