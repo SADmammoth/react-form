@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import createEvent from '../../../helpers/formHelpers/createEvent';
 import {
   CheckboxGroup,
-  CustomNumber,
+  Number,
   File,
   Image,
   MarkdownText,
@@ -178,7 +178,7 @@ function Input(props) {
           id,
           render,
           disabled,
-          <CustomNumber
+          <Number
             className={className}
             id={id}
             type={type}

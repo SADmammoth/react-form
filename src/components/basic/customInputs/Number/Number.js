@@ -12,11 +12,11 @@ import HoldButton from '@/generic/HoldButton';
 import compareObjects from '@/helpers/compareObjects';
 import theme from '@/styles/theme';
 
-import styles from './CustomNumber.styles';
+import styles from './Number.styles';
 
 const useStyles = createUseStyles(styles);
 
-function CustomNumber(props) {
+function Number(props) {
   const classes = useStyles(theme);
 
   const {
@@ -112,7 +112,7 @@ function CustomNumber(props) {
   );
 }
 
-CustomNumber.defaultProps = {
+Number.defaultProps = {
   className: '',
   // required: false,
   value: null,
@@ -122,7 +122,7 @@ CustomNumber.defaultProps = {
   max: 999,
 };
 
-CustomNumber.propTypes = {
+Number.propTypes = {
   className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // placeholder: PropTypes.string,
@@ -138,4 +138,4 @@ CustomNumber.propTypes = {
   }),
 };
 
-export default React.memo(CustomNumber, compareObjects);
+export default React.memo(Number, compareObjects);

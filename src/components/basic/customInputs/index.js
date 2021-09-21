@@ -1,6 +1,6 @@
 import ActionButton from './ActionButton';
 import CheckboxGroup from './CheckboxGroup';
-import CustomNumber from './CustomNumber';
+import Number from './Number';
 import File from './File';
 import Image from './Image';
 import MarkdownText from './MarkdownText';
@@ -18,7 +18,7 @@ import TextInput from './TextInput';
 
 export {
   CheckboxGroup,
-  CustomNumber,
+  Number,
   File,
   Image,
   MarkdownText,
