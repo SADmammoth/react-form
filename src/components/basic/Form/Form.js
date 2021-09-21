@@ -19,7 +19,7 @@ const Form = (props) => {
   let { showNotifications } = props;
   const {
     id: formId,
-    inputs: inputsPropsInit,
+    inputs: inputsProps,
     onInputsUpdate,
     onSubmit: onSubmitHandler,
     notify,
@@ -30,8 +30,6 @@ const Form = (props) => {
     dateTimeFormatMask,
     resetOnSubmit,
   } = props;
-
-  const inputsProps = usePropsState(inputsPropsInit);
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 

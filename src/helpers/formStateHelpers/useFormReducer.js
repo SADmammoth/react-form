@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { useReducer } from 'react';
 
+import usePropsState from '../hooks/usePropsState';
 import formReducer, { init, actions } from './formReducer';
 import useCreateInputs from './handlers/useCreateInputs';
 import useCreateValues from './handlers/useCreateValues';
@@ -38,5 +39,7 @@ export default function useFormReducer(notifications, inputAdditionalFields) {
     dispatch(actions.updateValue(name, value));
   }
 
-  return [state, dispatch, actions];
+  const inputs = usePropsState(Object.values(state.inputs));
+
+  return [state /*{ ...state, inputs }*/, dispatch, actions];
 }
