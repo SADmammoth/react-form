@@ -16,4 +16,14 @@ function init({ inputsProps }) {
   return state;
 }
 
-export { init };
+function setInvalid(state, { name }) {
+  if (!name) throw new Error('Invalid name parameter');
+  return { ...state, [name]: { ...state[name], invalid: true } };
+}
+
+function unsetInvalid(state, { name }) {
+  if (!name) throw new Error('Invalid name parameter');
+  return { ...state, [name]: { ...state[name], invalid: false } };
+}
+
+export { init, setInvalid, unsetInvalid };

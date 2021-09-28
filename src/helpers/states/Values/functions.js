@@ -6,7 +6,9 @@ function init({ inputsProps }) {
 
   inputsProps.forEach((input) => {
     state[input.name] = {
-      value: getConverters(input).in(input.defaultValue || input.value),
+      value: getConverters(input.converters).in(
+        input.defaultValue || input.value,
+      ),
       defaultValue: input.defaultValue && [...input.defaultValue],
     };
   });

@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useCallback } from 'react';
 
 import PropTypes from 'prop-types';
 
+import useInputHighlight from '../../../helpers/formStateHelpers/useInputHighlight';
 import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
 import useInputsReducer from '../../../helpers/states/Inputs';
 import useValuesReducer from '../../../helpers/states/Values';
@@ -54,23 +55,26 @@ const Form = (props) => {
     valuesActions.put({ name, value });
   };
 
+  const highlightInput = useInputHighlight(
+    inputsActions.setInvalid,
+    inputsActions.unsetInvalid,
+    2000,
+    notifications,
+  );
+
   const inputAdditionalFields = {
     render,
     formId,
+
+    highlightInput,
+    updateValue,
   };
 
-  useOnInputsUpdate(
-    inputs,
-    values,
-    updateValue,
-    inputAdditionalFields,
-    onInputsUpdate,
-  );
+  useOnInputsUpdate(inputs, values, inputAdditionalFields, onInputsUpdate);
 
   function onValidationFail(input) {
     if (input) {
-      // dispatch(actions.highlightInput(input.name));
-      // notifications.error(input.validationMessage);
+      highlightInput(input.name, input.validationMessage);
     }
   }
 
@@ -114,13 +118,7 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}>
       {children ||
-        renderGroups(
-          inputs,
-          values,
-          updateValue,
-          inputAdditionalFields,
-          render.group,
-        )}
+        renderGroups(inputs, values, inputAdditionalFields, render.group)}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </FormTag>
   );

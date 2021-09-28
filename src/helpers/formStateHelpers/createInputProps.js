@@ -1,5 +1,5 @@
-import convertersMap from '@/Validator/convertersMap';
-import validatorsMap from '@/Validator/validatorsMap';
+import getConverters from '../getConverters';
+import getValidators from '../getValidators';
 
 export default function createInputProps(
   {
@@ -34,20 +34,17 @@ export default function createInputProps(
     hidden,
     disabled,
     control,
+    invalid,
   },
-  updateValueCallback,
   valuesState,
-  highlightInput,
-  additionalFields,
+  { render, formId, updateValue, highlightInput },
 ) {
-  const { render, formId } = additionalFields;
-
   const onChangeHandler = (inputName, value) => {
     if (onChange) {
       onChange(inputName, value);
     }
 
-    updateValueCallback(inputName, value);
+    updateValue(inputName, value);
   };
 
   const onInputHandler = (inputName, value) => {
@@ -55,19 +52,11 @@ export default function createInputProps(
       onInput(inputName, value);
     }
 
-    updateValueCallback(inputName, value);
+    updateValue(inputName, value);
   };
 
-  let validatorFromMap;
-  if (typeof validator === 'string') {
-    validatorFromMap = validatorsMap[validator] || {};
-  }
-
-  let convertersFromMap;
-
-  if (typeof converters === 'string') {
-    convertersFromMap = convertersMap[converters];
-  }
+  validator = getValidators(validator, byCharValidator);
+  converters = getConverters(converters);
 
   return {
     id: name + formId,
@@ -80,18 +69,16 @@ export default function createInputProps(
     onChange: onChangeHandler,
     mask,
     maskType,
-    validator,
-    byCharValidator,
-    ...validatorFromMap,
+    ...validator,
     required,
     label,
     placeholder,
     attributes,
-    value: valuesState[name].value,
+    value: valuesState[name]?.value,
     valueOptions,
     minSymbols,
     maxSymbols,
-    invalid: !!valuesState[name].invalid,
+    invalid,
     highlightInput,
     validationMessage,
     alwaysShowTip,
@@ -99,7 +86,7 @@ export default function createInputProps(
     render,
     markdownFeatures,
     allowScroll,
-    converters: convertersFromMap || converters,
+    converters,
     accept,
     actionButton,
     min,

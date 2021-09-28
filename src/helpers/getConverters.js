@@ -1,11 +1,11 @@
 import convertersMap from '@/Validator/convertersMap';
 
-export default function getConverters(inputProps) {
-  let converterIn = inputProps.converters || { in: (a) => a, out: (b) => b };
+export default function getConverters(convertersProp) {
+  let converters = convertersProp || { in: (a) => a, out: (b) => b };
 
-  if (typeof inputProps.converters === 'string') {
-    converterIn = convertersMap[inputProps.converters];
+  if (typeof convertersProp === 'string') {
+    converters = convertersMap[convertersProp];
   }
 
-  return converterIn;
+  return converters;
 }

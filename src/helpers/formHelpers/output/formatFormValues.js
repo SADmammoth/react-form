@@ -8,7 +8,7 @@ export default function formatFormValues(values, inputs) {
     input = inputs[name];
 
     const { group } = input;
-    const converter = getConverters(input).out;
+    const converter = getConverters(input.converters).out;
 
     if (group) {
       formattedValues[group.id] = {

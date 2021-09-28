@@ -6,9 +6,9 @@ const useInputHighlight = (highlight, unhighlight, timer, notifications) => {
   const [highlightedData, setHighlighted] = useState(null);
 
   const highlightInput = (name, errorMessage) => {
-    highlight(name);
+    highlight({ name });
     notifications.error(errorMessage);
-    setHighlighted([name, errorMessage]);
+    setHighlighted({ name, errorMessage });
   };
 
   const startTimeout = useCallback(
@@ -17,7 +17,7 @@ const useInputHighlight = (highlight, unhighlight, timer, notifications) => {
 
       setTimeout(() => {
         if (!isUnmounted.value) {
-          unhighlight(...highlightedData);
+          unhighlight(highlightedData);
           setHighlighted(null);
         } else if (levels < 5) {
           levels += 1;

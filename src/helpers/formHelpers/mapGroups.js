@@ -6,12 +6,7 @@ import createInput from '../createInput';
 import createInputProps from '../formStateHelpers/createInputProps';
 import Input from '@/basic/Input';
 
-export default function mapGroups(
-  inputs,
-  values,
-  updateValueCallback,
-  additionalFields,
-) {
+export default function mapGroups(inputs, values, additionalFields) {
   const inputsGroups = {};
 
   if (!inputs || isEmpty(inputs)) return inputs;
@@ -22,12 +17,7 @@ export default function mapGroups(
       if (!inputsGroups[input.group.id]) {
         inputsGroups[input.group.id] = {
           $title: input.group.title,
-          [input.name]: createInput(
-            input,
-            values,
-            updateValueCallback,
-            additionalFields,
-          ),
+          [input.name]: createInput(input, values, additionalFields),
         };
         return;
       }
@@ -35,18 +25,12 @@ export default function mapGroups(
       inputsGroups[input.group.id][input.name] = createInput(
         input,
         values,
-        updateValueCallback,
         additionalFields,
       );
       return;
     }
 
-    inputsGroups[input.name] = createInput(
-      input,
-      values,
-      updateValueCallback,
-      additionalFields,
-    );
+    inputsGroups[input.name] = createInput(input, values, additionalFields);
   });
 
   return inputsGroups;

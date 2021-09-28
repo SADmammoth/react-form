@@ -6,21 +6,15 @@ import mapGroups from '@/formHelpers/mapGroups';
 export default function useOnInputsUpdate(
   inputs,
   values,
-  updateValueCallback,
   additionalFields,
   onInputsUpdate,
 ) {
   useEffect(() => {
-    const components = mapGroups(
-      inputs,
-      values,
-      updateValueCallback,
-      additionalFields,
-    );
+    const components = mapGroups(inputs, values, additionalFields);
 
     onInputsUpdate({
       ...components,
-      $list: mapList(inputs, values, updateValueCallback, additionalFields),
+      $list: mapList(inputs, values, additionalFields),
     });
   }, [inputs, values]);
 }
