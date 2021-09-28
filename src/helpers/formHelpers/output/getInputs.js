@@ -1,12 +1,19 @@
 import React from 'react';
 
+import createInput from '../../createInput';
 import Input from '@/basic/Input';
 
-export default function getInputs(inputs, mapGroupsCb) {
+export default function getInputs(
+  inputs,
+  values,
+  additionalFields,
+  mapGroupsCb,
+) {
+  const components = mapGroupsCb(inputs);
   return {
-    ...mapGroupsCb(inputs),
+    ...components,
     $list: [...Object.values(inputs || {})]
       .filter(({ hidden }) => !hidden)
-      .map((inputprops) => <Input {...inputprops} />),
+      .map((props) => createInput(props, values, additionalFields)),
   };
 }

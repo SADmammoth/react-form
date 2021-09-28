@@ -39,8 +39,6 @@ const Form = (props) => {
     formId,
   };
 
-  // useOnInputsUpdate(inputsProps, state, onInputsUpdate);
-
   if (!notify) {
     showNotifications = 'hideAll';
   }
@@ -56,6 +54,8 @@ const Form = (props) => {
   useEffect(() => {
     valuesActions.init({ inputsProps });
   }, [inputsProps]);
+
+  useOnInputsUpdate(inputs, values, inputAdditionalFields, onInputsUpdate);
 
   function onValidationFail(input) {
     if (input) {

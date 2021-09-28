@@ -1,22 +1,21 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import useDiff from './useDiff';
 import mapGroups from '@/formHelpers/mapGroups';
 import getInputs from '@/formHelpers/output/getInputs';
 
-export default function useOnInputsUpdate(inputsProps, state, onInputsUpdate) {
+export default function useOnInputsUpdate(
+  inputs,
+  values,
+  additionalFields,
+  onInputsUpdate,
+) {
   const mapGroupsCb = useCallback(
-    (inputs) => mapGroups(inputs, inputsProps),
-    [inputsProps],
+    (inputs) => mapGroups(inputs, values, additionalFields),
+    [inputs, values],
   );
 
-  useDiff(
-    (diff, values) => {
-      if (values) {
-        const [inputs] = values;
-        onInputsUpdate(getInputs(inputs, mapGroupsCb));
-      }
-    },
-    [state.inputs, state.values],
-  );
+  useEffect(() => {
+    onInputsUpdate(getInputs(inputs, values, additionalFields, mapGroupsCb));
+  }, [inputs, values]);
 }
