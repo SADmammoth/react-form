@@ -34,11 +34,6 @@ const Form = (props) => {
 
   const [notifications] = useNotifications({ showNotifications }, notify);
 
-  const inputAdditionalFields = {
-    render,
-    formId,
-  };
-
   if (!notify) {
     showNotifications = 'hideAll';
   }
@@ -55,7 +50,22 @@ const Form = (props) => {
     valuesActions.init({ inputsProps });
   }, [inputsProps]);
 
-  useOnInputsUpdate(inputs, values, inputAdditionalFields, onInputsUpdate);
+  const updateValue = (name, value) => {
+    valuesActions.put({ name, value });
+  };
+
+  const inputAdditionalFields = {
+    render,
+    formId,
+  };
+
+  useOnInputsUpdate(
+    inputs,
+    values,
+    updateValue,
+    inputAdditionalFields,
+    onInputsUpdate,
+  );
 
   function onValidationFail(input) {
     if (input) {
@@ -104,7 +114,13 @@ const Form = (props) => {
       style={{ ...style }}
       onSubmit={onSubmit}>
       {children ||
-        renderGroups(inputs, values, inputAdditionalFields, render.group)}
+        renderGroups(
+          inputs,
+          values,
+          updateValue,
+          inputAdditionalFields,
+          render.group,
+        )}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </FormTag>
   );
