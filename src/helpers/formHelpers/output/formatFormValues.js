@@ -1,23 +1,29 @@
-export default function formatFormValues(stateValues) {
-  const values = {};
+import getConverters from '../../getConverters';
 
-  Object.entries(stateValues).forEach(([name, valueItem]) => {
-    const { group } = valueItem;
-    const converter = valueItem.converters.out;
+export default function formatFormValues(values, inputs) {
+  const formattedValues = {};
+  let input;
+
+  Object.entries(values).forEach(([name, valueItem]) => {
+    input = inputs[name];
+
+    const { group } = input;
+    const converter = getConverters(input).out;
 
     if (group) {
-      values[group.id] = {
+      formattedValues[group.id] = {
         $title: group.title,
-        ...values[group.id],
+        ...formattedValues[group.id],
         [name]: converter(valueItem.value),
       };
     } else {
-      values[name] = converter(valueItem.value);
+      formattedValues[name] = converter(valueItem.value);
     }
 
     if (valueItem.defaultValue) {
-      values[`${name}_default`] = converter(valueItem.defaultValue);
+      formattedValues[`${name}_default`] = converter(valueItem.defaultValue);
     }
   });
-  return values;
+
+  return formattedValues;
 }

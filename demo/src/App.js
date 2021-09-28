@@ -35,7 +35,7 @@ const App = () => {
         //   console.log(inputs);
         //   // setInputs(inputs);
         // }}
-        // notify={(...args) => console.log(args)}
+        notify={(...args) => console.log(args)}
         // markdownFeatures={{
         //   headings: true,
         //   links: true,

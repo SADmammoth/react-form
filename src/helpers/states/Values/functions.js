@@ -1,4 +1,4 @@
-import getConvertersIn from './helpers/getConvertersIn';
+import getConverters from '../../getConverters';
 import setFormDefaultValue from './helpers/setFormDefaultValue';
 
 function init({ inputsProps }) {
@@ -6,7 +6,7 @@ function init({ inputsProps }) {
 
   inputsProps.forEach((input) => {
     state[input.name] = {
-      value: getConvertersIn(input)(input.defaultValue || input.value),
+      value: getConverters(input).in(input.defaultValue || input.value),
       defaultValue: input.defaultValue && [...input.defaultValue],
     };
   });

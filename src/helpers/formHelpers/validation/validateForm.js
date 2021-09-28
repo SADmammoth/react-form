@@ -4,7 +4,7 @@ export default function checkValidity(inputs, values, onValidationFail) {
   let input;
   let isAnyFailed;
   Object.keys(values).forEach((valueName) => {
-    input = inputs.find((input) => input.name === valueName);
+    input = inputs[name];
 
     if (
       values[valueName].required &&

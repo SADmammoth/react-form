@@ -32,7 +32,7 @@ const Form = (props) => {
     resetOnSubmit,
   } = props;
 
-  // const [notifications] = useNotifications({ showNotifications }, notify);
+  const [notifications] = useNotifications({ showNotifications }, notify);
 
   const inputAdditionalFields = {
     render,
@@ -41,9 +41,9 @@ const Form = (props) => {
 
   // useOnInputsUpdate(inputsProps, state, onInputsUpdate);
 
-  // if (!notify) {
-  //   showNotifications = 'hideAll';
-  // }
+  if (!notify) {
+    showNotifications = 'hideAll';
+  }
 
   const [inputs, inputsActions] = useInputsReducer();
 
@@ -57,40 +57,40 @@ const Form = (props) => {
     valuesActions.init({ inputsProps });
   }, [inputsProps]);
 
-  // function onValidationFail(input) {
-  //   if (input) {
-  //     // dispatch(actions.highlightInput(input.name));
-  //     // notifications.error(input.validationMessage);
-  //   }
-  // }
+  function onValidationFail(input) {
+    if (input) {
+      // dispatch(actions.highlightInput(input.name));
+      // notifications.error(input.validationMessage);
+    }
+  }
 
-  // useEffect(() => {
-  //   validatorsMap.setFormats(
-  //     validationMaskDateFormat,
-  //     validationMaskDateTimeFormat,
-  //     dateFormatMask,
-  //     dateTimeFormatMask,
-  //   );
-  // }, [
-  //   validationMaskDateFormat,
-  //   validationMaskDateTimeFormat,
-  //   dateFormatMask,
-  //   dateTimeFormatMask,
-  // ]);
+  useEffect(() => {
+    validatorsMap.setFormats(
+      validationMaskDateFormat,
+      validationMaskDateTimeFormat,
+      dateFormatMask,
+      dateTimeFormatMask,
+    );
+  }, [
+    validationMaskDateFormat,
+    validationMaskDateTimeFormat,
+    dateFormatMask,
+    dateTimeFormatMask,
+  ]);
 
-  // const onSubmit = useOnSubmit(
-  //   values,
-  //   inputsProps,
-  //   () => validateForm(inputsProps, values, onValidationFail),
-  //   (data) =>
-  //     onSubmitHandler(data).then(() => {
-  //       if (resetOnSubmit) {
-  //         dispatch(actions.resetForm(inputsProps));
-  //       }
-  //     }),
-  //   notifications,
-  //   resetOnSubmit,
-  // );
+  const onSubmit = useOnSubmit(
+    values,
+    inputs,
+    () => validateForm(inputs, values, onValidationFail),
+    (data) =>
+      onSubmitHandler(data).then(() => {
+        if (resetOnSubmit) {
+          dispatch(actions.resetForm(inputsProps));
+        }
+      }),
+    notifications,
+    resetOnSubmit,
+  );
 
   const { method, action, className, style, submitButton, children } = props;
 
@@ -102,8 +102,7 @@ const Form = (props) => {
       action={action}
       className={`form ${className}` || ''}
       style={{ ...style }}
-      // onSubmit={onSubmit}
-    >
+      onSubmit={onSubmit}>
       {children ||
         renderGroups(inputs, values, inputAdditionalFields, render.group)}
       {React.cloneElement(submitButton, { type: 'submit' })}
