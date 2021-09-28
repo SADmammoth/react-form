@@ -1,5 +1,5 @@
 export default async function countries() {
-  const countries = await fetch('https://restcountries.eu/rest/v2/all').then(
+  const countries = await fetch('https://restcountries.com/v2/all').then(
     (res) => res.json(),
   );
 

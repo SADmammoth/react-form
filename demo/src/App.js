@@ -31,17 +31,18 @@ const App = () => {
           Option,
           Button,
         }}
-        onInputsUpdate={(inputs) => {
-          console.log(inputs);
-          // setInputs(inputs);
-        }}
-        notify={(...args) => console.log(args)}
-        markdownFeatures={{
-          headings: true,
-          links: true,
-          bold: true,
-          italic: true,
-        }}></Form>
+        // onInputsUpdate={(inputs) => {
+        //   console.log(inputs);
+        //   // setInputs(inputs);
+        // }}
+        // notify={(...args) => console.log(args)}
+        // markdownFeatures={{
+        //   headings: true,
+        //   links: true,
+        //   bold: true,
+        //   italic: true,
+        // }}
+      />
       {/* {inputs.$list} */}
       {/* 
       <Form.MarkdownOutput

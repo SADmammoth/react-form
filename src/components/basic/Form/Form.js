@@ -3,6 +3,8 @@ import React, { Fragment, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
+import useInputsReducer from '../../../helpers/states/Inputs';
+import useValuesReducer from '../../../helpers/states/Values';
 import Input from '../Input';
 import validatorsMap from '@/Validator/validatorsMap';
 import renderGroups from '@/formHelpers/output/renderGroups';
@@ -30,67 +32,65 @@ const Form = (props) => {
     resetOnSubmit,
   } = props;
 
-  const [notifications] = useNotifications({ showNotifications }, notify);
+  // const [notifications] = useNotifications({ showNotifications }, notify);
 
   const inputAdditionalFields = {
     render,
     formId,
   };
 
-  const [state, dispatch, actions] = useFormReducer(
-    notifications,
-    inputAdditionalFields,
-  );
+  // useOnInputsUpdate(inputsProps, state, onInputsUpdate);
 
-  useDiff(() => {
-    dispatch(actions.createValues(inputsProps));
-  }, [inputsProps]);
+  // if (!notify) {
+  //   showNotifications = 'hideAll';
+  // }
 
-  useDiff(() => {
-    dispatch(actions.createInputs(inputsProps, render));
-  }, [state.values, inputsProps]);
-
-  useOnInputsUpdate(inputsProps, state, onInputsUpdate);
-
-  if (!notify) {
-    showNotifications = 'hideAll';
-  }
-
-  function onValidationFail(input) {
-    if (input) {
-      dispatch(actions.highlightInput(input.name));
-      notifications.error(input.validationMessage);
-    }
-  }
+  const [inputs, inputsActions] = useInputsReducer();
 
   useEffect(() => {
-    validatorsMap.setFormats(
-      validationMaskDateFormat,
-      validationMaskDateTimeFormat,
-      dateFormatMask,
-      dateTimeFormatMask,
-    );
-  }, [
-    validationMaskDateFormat,
-    validationMaskDateTimeFormat,
-    dateFormatMask,
-    dateTimeFormatMask,
-  ]);
+    inputsActions.init({ inputsProps });
+  }, [inputsProps]);
 
-  const { values, inputs } = state;
-  const onSubmit = useOnSubmit(
-    values,
-    inputsProps,
-    () => validateForm(inputsProps, values, onValidationFail),
-    (data) =>
-      onSubmitHandler(data).then(() => {
-        if (resetOnSubmit) {
-          dispatch(actions.resetForm(inputsProps));
-        }
-      }),
-    notifications,
-    resetOnSubmit,
-  );
+  const [values, valuesActions] = useValuesReducer();
+
+  useEffect(() => {
+    valuesActions.init({ inputsProps });
+  }, [inputsProps]);
+
+  // function onValidationFail(input) {
+  //   if (input) {
+  //     // dispatch(actions.highlightInput(input.name));
+  //     // notifications.error(input.validationMessage);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   validatorsMap.setFormats(
+  //     validationMaskDateFormat,
+  //     validationMaskDateTimeFormat,
+  //     dateFormatMask,
+  //     dateTimeFormatMask,
+  //   );
+  // }, [
+  //   validationMaskDateFormat,
+  //   validationMaskDateTimeFormat,
+  //   dateFormatMask,
+  //   dateTimeFormatMask,
+  // ]);
+
+  // const onSubmit = useOnSubmit(
+  //   values,
+  //   inputsProps,
+  //   () => validateForm(inputsProps, values, onValidationFail),
+  //   (data) =>
+  //     onSubmitHandler(data).then(() => {
+  //       if (resetOnSubmit) {
+  //         dispatch(actions.resetForm(inputsProps));
+  //       }
+  //     }),
+  //   notifications,
+  //   resetOnSubmit,
+  // );
 
   const { method, action, className, style, submitButton, children } = props;
 
@@ -102,8 +102,10 @@ const Form = (props) => {
       action={action}
       className={`form ${className}` || ''}
       style={{ ...style }}
-      onSubmit={onSubmit}>
-      {children || renderGroups(inputs, inputsProps, render.group)}
+      // onSubmit={onSubmit}
+    >
+      {children ||
+        renderGroups(inputs, values, inputAdditionalFields, render.group)}
       {React.cloneElement(submitButton, { type: 'submit' })}
     </FormTag>
   );
