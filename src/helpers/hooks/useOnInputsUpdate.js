@@ -1,8 +1,7 @@
 import { useCallback, useEffect } from 'react';
 
-import useDiff from './useDiff';
+import mapList from '../formHelpers/mapList';
 import mapGroups from '@/formHelpers/mapGroups';
-import getInputs from '@/formHelpers/output/getInputs';
 
 export default function useOnInputsUpdate(
   inputs,
@@ -11,21 +10,17 @@ export default function useOnInputsUpdate(
   additionalFields,
   onInputsUpdate,
 ) {
-  const mapGroupsCb = useCallback(
-    (inputs) =>
-      mapGroups(inputs, values, updateValueCallback, additionalFields),
-    [inputs, values],
-  );
-
   useEffect(() => {
-    onInputsUpdate(
-      getInputs(
-        inputs,
-        values,
-        updateValueCallback,
-        additionalFields,
-        mapGroupsCb,
-      ),
+    const components = mapGroups(
+      inputs,
+      values,
+      updateValueCallback,
+      additionalFields,
     );
+
+    onInputsUpdate({
+      ...components,
+      $list: mapList(inputs, values, updateValueCallback, additionalFields),
+    });
   }, [inputs, values]);
 }
