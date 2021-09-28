@@ -6,17 +6,11 @@ import FieldGroup from '@/generic/FieldGroup';
 export default function renderGroups(
   inputs,
   values,
-  updateValueCallback,
   additionalFields,
   groupTag,
 ) {
   if (!inputs) return inputs;
-  const mapped = mapGroups(
-    inputs,
-    values,
-    updateValueCallback,
-    additionalFields,
-  );
+  const mapped = mapGroups(inputs, values, additionalFields);
 
   return Object.entries(mapped).map(([name, inputData]) => {
     if (React.isValidElement(inputData) || !inputData) {

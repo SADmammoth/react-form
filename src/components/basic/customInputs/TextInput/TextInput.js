@@ -23,6 +23,7 @@ function TextInput({
   onBlur,
   byCharValidator,
   disabled,
+  onKeyPress,
   ...props
 }) {
   const classes = useStyles(theme);
@@ -53,6 +54,7 @@ function TextInput({
         onChange(event);
       }}
       onKeyPress={(event) => {
+        onKeyPress(event);
         if (!byCharValidator(event.target.value + event.key)) {
           event.preventDefault();
         }

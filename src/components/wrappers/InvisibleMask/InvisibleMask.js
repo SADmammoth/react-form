@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 
+import Validator from '../../../Validator';
+import getValueFromMask from '../../../helpers/maskHelpers/getValueFromMask';
 import replaceSubstring from '@/helpers/replaceSubstring';
 import getMaskCharsBeforePlaceholder from '@/maskHelpers/getMaskCharsBeforePlaceholder';
 import invisibleMaskOnInputValue from '@/maskHelpers/invisibleMaskOnInputValue';
@@ -21,7 +23,7 @@ function InvisibleMask(input, maskArray) {
     }
   };
 
-  const onKeyDown = (event) => {
+  const onKeyPress = (event) => {
     if (event.key.includes('Arrow') || event.key === 'Delete') {
       event.preventDefault();
     }
@@ -36,22 +38,33 @@ function InvisibleMask(input, maskArray) {
       inputOnChange(event);
       event.preventDefault();
     }
+
+    const {
+      target: { value },
+      key,
+    } = event;
+
+    let newValue = getValueFromMask(value) + key;
+    newValue = value + key;
+
+    if (!Validator.maskByChar(newValue, maskArray.join(''))) {
+      event.preventDefault();
+    }
   };
 
   const onChange = (event) => {
     inputOnChange(
       invisibleMaskOnInputValue(name, event.target.value, maskArray),
     );
-    inputOnKeyPress(event);
   };
 
   const onBlur = (event) => {
-    inputOnBlur(event);
+    if (inputOnBlur) inputOnBlur(event);
   };
 
   return React.cloneElement(input, {
     onFocus,
-    onKeyDown,
+    onKeyPress,
     onChange,
     onBlur,
   });

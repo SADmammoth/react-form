@@ -73,7 +73,7 @@ const MaskValidator = {
         break;
       default:
         regexp = currMaskEl.match(/([9aAh%#\\])\\/);
-        regexp = regexp ? regexp[0] : currMaskEl;
+        regexp = regexp ? regexp[1] : currMaskEl;
     }
 
     return new RegExp(regexp).test(input[input.length - 1]);

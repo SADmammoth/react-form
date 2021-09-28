@@ -16,25 +16,6 @@ function Mask(input, mask, validate = false, type = 'default') {
     .split(maskEscapedCharsOrEmptyRegex)
     .filter((el) => !!el);
 
-  if (validate) {
-    resultInput = React.cloneElement(resultInput, {
-      onKeyPress: (event) => {
-        const {
-          target: { value },
-          key,
-        } = event;
-        let newValue = getValueFromMask(value) + key;
-        if (type === 'invisible') {
-          newValue = value + key;
-        }
-
-        if (!Validator.maskByChar(newValue, mask)) {
-          event.preventDefault();
-        }
-      },
-    });
-  }
-
   return type === 'invisible'
     ? InvisibleMask(resultInput, maskArray)
     : VisibleMask(resultInput, maskArray);

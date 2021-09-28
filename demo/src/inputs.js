@@ -37,7 +37,7 @@ const inputs = [
       },
     },
     value: '#ffffff',
-    mask: '#hhhhhh',
+    mask: '#\\hhhhhh',
     maskType: 'invisible',
     placeholder: '#ffffff',
   },

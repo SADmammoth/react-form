@@ -1,8 +1,8 @@
 import Mask from '../Mask';
 
-export default function MaskedInput(mask, byCharValidator, maskType, input) {
+export default function MaskedInput(mask, maskType, input) {
   if (mask && mask !== '') {
-    return Mask(input, mask, !byCharValidator, maskType);
+    return Mask(input, mask, true, maskType);
   }
   return input;
 }

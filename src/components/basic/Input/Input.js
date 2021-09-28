@@ -548,7 +548,6 @@ function Input(props) {
         disabled,
         MaskedInput(
           mask,
-          byCharValidator,
           maskType,
           <TextInput
             className={className}
