@@ -1,4 +1,6 @@
-import bindFields from './bindFields';
+import { isArray } from 'lodash-es';
+
+import bindIter from './bindIter';
 
 export default function bind(state) {
   const newState = { ...state };
@@ -6,19 +8,14 @@ export default function bind(state) {
   Object.keys(state).forEach((name) => {
     const field = newState[name];
     if (field.bind) {
-      const boundField = newState[field.bind];
-      if (!boundField) {
-        console.error(
-          `Incorrect binding of '${name}': no such field ${field.bind}`,
-        );
+      if (isArray(field.bind)) {
+        field.bind.forEach((bind) => {
+          bindIter(field, bind, newState);
+        });
         return;
       }
-      bindFields(
-        field,
-        boundField,
-        (one) => (newState[name] = one),
-        (two) => (newState[field.bind] = two),
-      );
+
+      bindIter(field, field.bind, newState);
       console.log('newstate', { ...newState });
     }
   });
