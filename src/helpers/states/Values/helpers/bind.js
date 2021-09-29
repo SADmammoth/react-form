@@ -10,12 +10,12 @@ export default function bind(state) {
     if (field.bind) {
       if (isArray(field.bind)) {
         field.bind.forEach((bind) => {
-          bindIter(field, bind, newState);
+          bindIter(name, field, bind, newState);
         });
         return;
       }
 
-      bindIter(field, field.bind, newState);
+      bindIter(name, field, field.bind, newState);
     }
   });
   return newState;

@@ -44,7 +44,7 @@ const inputs = [
     name: 'text3',
     label: 'Text',
     placeholder: 'ABCD',
-    bind: 'text2',
+    bind: ['text2', 'text'],
   },
   // {
   //   type: 'text',
