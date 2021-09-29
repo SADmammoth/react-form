@@ -556,8 +556,8 @@ function Input(props) {
             name={name}
             placeholder={placeholder}
             required={required && 'required'}
-            onChange={onInputHandler}
-            onBlur={onChangeHandler}
+            onInput={onInputHandler}
+            onChange={onChangeHandler}
             byCharValidator={byCharValidator}
             value={value}
             render={render}

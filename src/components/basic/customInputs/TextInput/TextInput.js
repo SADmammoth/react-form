@@ -19,8 +19,8 @@ function TextInput({
   value: currentValue,
   render,
   attributes,
+  onInput,
   onChange,
-  onBlur,
   byCharValidator,
   disabled,
   onKeyPress,
@@ -47,14 +47,14 @@ function TextInput({
       value={value}
       onBlur={(event) => {
         setValue(event.target.value);
-        onBlur(event);
+        onChange(event);
       }}
       onChange={(event) => {
         setValue(event.target.value);
-        onChange(event);
+        onInput(event);
       }}
       onKeyPress={(event) => {
-        onKeyPress(event);
+        if (onKeyPress) onKeyPress(event);
         if (!byCharValidator(event.target.value + event.key)) {
           event.preventDefault();
         }
