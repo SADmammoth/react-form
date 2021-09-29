@@ -12,7 +12,6 @@ const controlInputProps =
           );
 
           if (common) {
-            console.log(target);
             inputsData[target][control.prop] = control.map[common];
             return;
           }
@@ -33,7 +32,7 @@ const controlInputProps =
         const inGroup = inputProps
           .filter(({ group }) => group?.id === control.group)
           .map(({ name }) => name);
-        console.log(inGroup);
+
         inGroup.forEach((target) =>
           controlTarget(target, control, [name, input], depth--),
         );

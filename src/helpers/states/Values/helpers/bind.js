@@ -16,9 +16,7 @@ export default function bind(state) {
       }
 
       bindIter(field, field.bind, newState);
-      console.log('newstate', { ...newState });
     }
   });
-  console.log('newstate', newState);
   return newState;
 }

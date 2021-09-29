@@ -37,13 +37,14 @@ const inputs = [
         return '';
       },
     },
+    bind: 'text3',
   },
   {
     type: 'password',
     name: 'text3',
     label: 'Text',
     placeholder: 'ABCD',
-    bind: ['text2', 'text'],
+    bind: 'text2',
   },
   // {
   //   type: 'text',

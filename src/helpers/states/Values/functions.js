@@ -20,8 +20,6 @@ function init({ inputsProps }) {
 }
 
 function put(state, { name, value }) {
-  console.log(name, value);
-  console.log('beforebind', { ...state, [name]: { ...state[name], value } });
   return bind({
     ...state,
     [name]: { ...state[name], updatedAt: Date.now(), value },

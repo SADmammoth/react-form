@@ -96,7 +96,6 @@ function Password({
     let el = event.target;
     let cursorPosStart = event.target.selectionStart;
     let cursorPosEnd = event.target.selectionEnd;
-    console.log(cursorPosStart, cursorPosEnd);
     let v = el.value;
     let textBefore = v.substring(0, cursorPosStart);
     let textAfter = v.substring(cursorPosEnd, v.length);
