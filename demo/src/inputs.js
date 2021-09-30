@@ -13,6 +13,14 @@ const inputs = [
         return { text: value };
       },
     },
+    control: {
+      field: 'text2',
+      prop: 'hidden',
+      map: {
+        ['hey']: true,
+        ['*']: false,
+      },
+    },
     actionButton: {
       label: 'Clear',
       action: async (name, value) => {
@@ -37,14 +45,12 @@ const inputs = [
         return '';
       },
     },
-    bind: 'text3',
   },
   {
     type: 'password',
     name: 'text3',
     label: 'Text',
     placeholder: 'ABCD',
-    bind: ['text2', 'text'],
   },
   // {
   //   type: 'text',

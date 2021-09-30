@@ -2,7 +2,9 @@ import React, { Fragment, useEffect, useCallback } from 'react';
 
 import PropTypes from 'prop-types';
 
+import controlInputProps from '../../../helpers/controlInputProps';
 import useInputHighlight from '../../../helpers/formStateHelpers/useInputHighlight';
+import useDiff from '../../../helpers/hooks/useDiff';
 import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
 import useValidatorFormats from '../../../helpers/hooks/useValidatorFormats';
 import useInputsReducer from '../../../helpers/states/Inputs';
@@ -44,6 +46,29 @@ const Form = (props) => {
   useEffect(() => {
     valuesActions.init({ inputsProps });
   }, [inputsProps]);
+
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
+
+  useDiff(
+    (diff) => {
+      console.log(diff);
+      if (diff && diff[0]) {
+        const [changedValues] = diff;
+        console.log(changedValues);
+        Object.entries(changedValues).forEach(([name, { value }]) =>
+          controlInputProps(
+            name,
+            { ...inputs[name], value },
+            inputs,
+            (name, props) => inputsActions.put({ name, props }),
+          ),
+        );
+      }
+    },
+    [values, inputs],
+  );
 
   const updateValue = (name, value) => {
     valuesActions.put({ name, value });
