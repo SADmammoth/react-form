@@ -1,7 +1,6 @@
-import { useCallback, useEffect } from 'react';
-
-import mapList from '../formHelpers/mapList';
+import { useEffect } from 'react';
 import mapGroups from '@/formHelpers/mapGroups';
+import mapList from '../formHelpers/mapList';
 
 export default function useOnInputsUpdate(
   inputs,

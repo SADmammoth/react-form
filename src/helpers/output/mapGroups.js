@@ -1,10 +1,5 @@
-import React from 'react';
-
 import { isEmpty } from 'lodash-es';
-
-import createInput from '../createInput';
-import createInputProps from '../formStateHelpers/createInputProps';
-import Input from '@/basic/Input';
+import createInput from '../../states/createInput';
 
 export default function mapGroups(inputs, values, additionalFields) {
   const inputsGroups = {};

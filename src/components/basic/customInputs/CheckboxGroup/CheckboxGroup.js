@@ -1,16 +1,13 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-
-import { includes, isEqual } from 'lodash-es';
+import React, { useCallback } from 'react';
+import { includes } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
-import Toggle from '../Toggle';
 import createEvent from '@/formHelpers/createEvent';
 import compareObjects from '@/helpers/compareObjects';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
-
+import Toggle from '../Toggle';
 import styles from './CheckboxGroup.styles';
 
 const useStyles = createUseStyles(styles);
@@ -23,7 +20,7 @@ function CheckboxGroup(props) {
     render,
     required,
     className,
-    name,
+    // name,
     value,
     onChange,
     disabled,
@@ -35,11 +32,11 @@ function CheckboxGroup(props) {
       const type = groupType.replace('-group', '');
 
       const onChangeHandler = (checked, checkboxValue, name) => {
-        let currentValue = value || [];
+        const currentValue = value || [];
         if (checked) {
           onChange(createEvent(name, [...currentValue, checkboxValue]));
         } else {
-          let copy = [...currentValue];
+          const copy = [...currentValue];
           copy.splice(copy.indexOf(checkboxValue), 1);
           onChange(createEvent(name, copy));
         }

@@ -1,13 +1,9 @@
-import React from 'react';
-
+import maskEscapedCharsOrEmptyRegex from '@/maskHelpers/regexps/maskEscapedCharsOrEmptyRegex';
 import InvisibleMask from '../InvisibleMask';
 import VisibleMask from '../VisibleMask';
-import Validator from '@/Validator';
-import getValueFromMask from '@/maskHelpers/getValueFromMask';
-import maskEscapedCharsOrEmptyRegex from '@/maskHelpers/regexps/maskEscapedCharsOrEmptyRegex';
 
-function Mask(input, mask, validate = false, type = 'default') {
-  let resultInput = input;
+function Mask(input, mask, type = 'default') {
+  const resultInput = input;
   if (input.props.type === 'textarea' || input.props.type === 'select') {
     return input;
   }

@@ -1,14 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 import FileLabel from '@/generic/FileLabel';
 import theme from '@/styles/theme';
-
 import styles from './File.styles';
 
 const useStyles = createUseStyles(styles);

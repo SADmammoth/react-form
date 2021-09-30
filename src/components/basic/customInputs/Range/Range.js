@@ -1,16 +1,13 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import createEvent from '@/formHelpers/createEvent';
 import calcPercent from '@/formHelpers/slider/calcPercent';
 import SliderThumb from '@/generic/SliderThumb';
 import compareObjects from '@/helpers/compareObjects';
 import useRange from '@/hooks/useRange';
 import theme from '@/styles/theme';
-
 import styles from './Range.styles';
 
 const useStyles = createUseStyles(styles);

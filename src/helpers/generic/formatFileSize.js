@@ -1,18 +1,19 @@
 export default function formatFileSize(bytes) {
   let size = bytes;
   if (size < 1024) {
-    return size.toFixed(2) + 'B';
+    return `${size.toFixed(2)}B`;
   }
   size /= 1024;
   if (size < 1024) {
-    return size.toFixed(2) + 'KB';
+    return `${size.toFixed(2)}KB`;
   }
   size /= 1024;
   if (size < 1024) {
-    return size.toFixed(2) + 'MB';
+    return `${size.toFixed(2)}MB`;
   }
   size /= 1024;
   if (size < 1024) {
-    return size.toFixed(2) + 'GB';
+    return `${size.toFixed(2)}GB`;
   }
+  return 'Infinity';
 }

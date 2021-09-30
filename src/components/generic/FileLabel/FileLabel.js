@@ -1,12 +1,8 @@
 import React from 'react';
-
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import formatFileSize from '@/helpers/formatFileSize';
 import theme from '@/styles/theme';
-
 import styles from './FileLabel.styles';
 
 const useStyles = createUseStyles(styles);

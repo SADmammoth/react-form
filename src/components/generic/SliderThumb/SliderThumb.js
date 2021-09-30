@@ -1,19 +1,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect, useCallback } from 'react';
-
 import classNames from 'classnames';
 import { isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import calcSliderPart from '@/formHelpers/slider/calcSliderPart';
 import theme from '@/styles/theme';
-
 import styles from './SliderThumb.styles';
 
 const useStyles = createUseStyles(styles);
 
 function SliderThumb({
+  name,
   type,
   sliderRef,
   sliderValuesCount,

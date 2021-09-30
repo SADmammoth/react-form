@@ -3,7 +3,7 @@ import { omit } from 'lodash-es';
 function init({ inputsProps }) {
   const state = {};
 
-  //TODO Add filter
+  // TODO Add filter
 
   inputsProps.forEach((input) => {
     state[input.name] = {
@@ -11,7 +11,7 @@ function init({ inputsProps }) {
     };
   });
 
-  //TODO Add control
+  // TODO Add control
 
   return state;
 }

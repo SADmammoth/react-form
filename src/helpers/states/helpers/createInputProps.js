@@ -1,5 +1,5 @@
-import getConverters from '../getConverters';
-import getValidators from '../getValidators';
+import getConverters from './getConverters';
+import getValidators from './getValidators';
 
 export default function createInputProps(
   {

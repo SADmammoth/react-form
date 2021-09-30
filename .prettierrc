@@ -9,9 +9,10 @@
     "^react$",
     "^([^./](.*))(?<!(@/.*))(?<!(@sadmammoth/.*))$",
     "^@sadmammoth/(.*)$",
-    "^(([./](.*))|(@/(.*)))(?<!((.*)\\.styles\\.?(.*)))$",
+    "^(@/(.*))(?<!((.*)\\.styles\\.?(.*)))$",
+    "^([./](.*))(?<!((.*)\\.styles\\.?(.*)))$",
     "^(.*)\\.styles\\.?(.*)$"
   ],
-  "importOrderSeparation": true,
+  "importOrderSeparation": false,
   "experimentalBabelParserPluginsList": ["jsx", "typescript"]
 }

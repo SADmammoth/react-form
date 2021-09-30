@@ -1,15 +1,23 @@
 import { useState } from 'react';
-
 import safeUseEffect from '@/hooks/safeUseEffect';
+
+function manageProps(props, input) {
+  return Object.fromEntries(
+    props.map((inputProps) => [
+      inputProps.name,
+      {
+        ...inputProps,
+        group: { title: input.label, id: `${input.name}sub`, subform: true },
+      },
+    ]),
+  );
+}
 
 export default function useSubforms(state) {
   const [subforms, setSubforms] = useState([]);
   const [all, setAll] = useState(state);
 
-  const addProp = (props) =>
-    setSubforms((state) => {
-      return { ...state, ...props };
-    });
+  const addProp = (props) => setSubforms((state) => ({ ...state, ...props }));
 
   safeUseEffect(
     (isUnmounted) => {
@@ -37,16 +45,4 @@ export default function useSubforms(state) {
   };
 
   return [subforms, loadProps];
-}
-
-function manageProps(props, input) {
-  return Object.fromEntries(
-    props.map((inputProps) => [
-      inputProps.name,
-      {
-        ...inputProps,
-        group: { title: input.label, id: input.name + 'sub', subform: true },
-      },
-    ]),
-  );
 }

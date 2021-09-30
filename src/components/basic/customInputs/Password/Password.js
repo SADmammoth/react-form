@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-
 import classNames from 'classnames';
 import { times } from 'lodash-es';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
-
 import styles from './Password.styles';
 
 const useStyles = createUseStyles(styles);
@@ -25,11 +21,8 @@ function Password({
 }) {
   const classes = useStyles(theme);
 
-  const hidePassword = (value) => {
-    return times(value.length, () => render.passwordBullet || '\u2022').join(
-      '',
-    );
-  };
+  const hidePassword = (value) =>
+    times(value.length, () => render.passwordBullet || '\u2022').join('');
 
   const [state, setState] = useState(value);
 
@@ -46,12 +39,9 @@ function Password({
     input.current.value = showPassword ? state : hidePassword(state);
   }, [showPassword, state]);
 
-  const onChangeHandler = useCallback(
-    (event) => {
-      onChange(createEvent(name, state));
-    },
-    [state, name],
-  );
+  const onChangeHandler = useCallback(() => {
+    onChange(createEvent(name, state));
+  }, [state, name]);
 
   const onKeyDown = useCallback(
     (event) => {
@@ -93,13 +83,13 @@ function Password({
     );
     const pos = event.target.selectionStart;
     newText = newText.replace(/\r?\n/g, ' ');
-    let el = event.target;
-    let cursorPosStart = event.target.selectionStart;
-    let cursorPosEnd = event.target.selectionEnd;
-    let v = el.value;
-    let textBefore = v.substring(0, cursorPosStart);
-    let textAfter = v.substring(cursorPosEnd, v.length);
-    let mergedText = textBefore + newText + textAfter;
+    const el = event.target;
+    const cursorPosStart = event.target.selectionStart;
+    const cursorPosEnd = event.target.selectionEnd;
+    const v = el.value;
+    const textBefore = v.substring(0, cursorPosStart);
+    const textAfter = v.substring(cursorPosEnd, v.length);
+    const mergedText = textBefore + newText + textAfter;
     event.target.value = hidePassword(mergedText);
     setState(mergedText);
     onChange(createEvent(name, mergedText));

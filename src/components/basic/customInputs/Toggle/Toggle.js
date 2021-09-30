@@ -1,12 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
-
+import React from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
-
 import styles from './Toggle.styles';
 
 const useStyles = createUseStyles(styles);

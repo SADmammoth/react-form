@@ -1,4 +1,4 @@
-import { types, actions } from './actions';
+import { types } from './actions';
 import { init, put } from './functions';
 
 export default function valuesReducer(state, { type, data }) {

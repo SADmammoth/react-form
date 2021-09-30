@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-
 import { isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
-import Field from './Field';
 import Suggestions from '@/generic/Suggestions';
 import compareObjects from '@/helpers/compareObjects';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
-
+import Field from './Field';
 import styles from './Select.styles';
 
 const useStyles = createUseStyles(styles);

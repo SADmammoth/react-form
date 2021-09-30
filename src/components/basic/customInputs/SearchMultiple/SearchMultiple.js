@@ -1,16 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-
 import { includes, isEqual } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
-
-import Field from './Field';
 import createEvent from '@/formHelpers/createEvent';
 import filterSearchOptions from '@/formHelpers/filterSearchOptions';
 import Suggestions from '@/generic/Suggestions';
 import compareObjects from '@/helpers/compareObjects';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
-
+import Field from './Field';
 import styles from './SearchMultiple.styles';
 
 const useStyles = createUseStyles(styles);

@@ -2,13 +2,10 @@
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-
 import classNames from 'classnames';
-
-import CheckboxGroup from '../CheckboxGroup';
-import Toggle from '../Toggle';
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
+import Toggle from '../Toggle';
 
 const Field = React.forwardRef(
   (

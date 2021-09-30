@@ -9,7 +9,11 @@ export default function bindIter(name, field, bindTo, newState) {
   bindFields(
     { ...field, name },
     { ...newState[bindTo], name: bindTo },
-    (one) => (newState[name] = one),
-    (two) => (newState[bindTo] = two),
+    (one) => {
+      newState[name] = one;
+    },
+    (two) => {
+      newState[bindTo] = two;
+    },
   );
 }

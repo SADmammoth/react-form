@@ -2,11 +2,9 @@
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useRef } from 'react';
-
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import createEvent from '@/formHelpers/createEvent';
 import calcPercent from '@/formHelpers/slider/calcPercent';
 import calcSliderIndex from '@/formHelpers/slider/calcSliderIndex';
@@ -15,7 +13,6 @@ import SliderThumb from '@/generic/SliderThumb';
 import compareObjects from '@/helpers/compareObjects';
 import useIndex from '@/hooks/useIndex';
 import theme from '@/styles/theme';
-
 import styles from './Slider.styles';
 
 const useStyles = createUseStyles(styles);

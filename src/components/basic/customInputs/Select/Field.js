@@ -2,12 +2,9 @@
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
-
 import classNames from 'classnames';
-
-import CheckboxGroup from '../CheckboxGroup';
-import Toggle from '../Toggle';
 import renderTag from '@/formHelpers/renderTag';
+import Toggle from '../Toggle';
 
 const Field = React.forwardRef(
   (

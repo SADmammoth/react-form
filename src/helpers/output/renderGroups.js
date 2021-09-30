@@ -1,7 +1,6 @@
 import React from 'react';
-
-import mapGroups from '../mapGroups';
 import FieldGroup from '@/generic/FieldGroup';
+import mapGroups from './mapGroups';
 
 export default function renderGroups(
   inputs,

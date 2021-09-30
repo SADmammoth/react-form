@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-
 import Validator from '@/Validator';
 import regexpEscape from '@/Validator/helpers/regexpEscape';
 import getUniqueItems from '@/helpers/getUniqueItems';

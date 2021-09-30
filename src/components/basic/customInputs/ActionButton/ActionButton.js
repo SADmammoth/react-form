@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
 import { isEmpty } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
-
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
-
 import styles from './ActionButton.styles';
 
 const useStyles = createUseStyles(styles);
@@ -31,9 +28,11 @@ function ActionButton(actionButton, id, render, disabled, input) {
           const { value, name, onBlur, onChange } = input.props;
           const newValue = await actionButton.action(name, value);
           setValue(newValue);
-          onChange
-            ? onChange(createEvent(name, newValue))
-            : onBlur(createEvent(name, newValue));
+          if (onChange) {
+            onChange(createEvent(name, newValue));
+          } else {
+            onBlur(createEvent(name, newValue));
+          }
         }}
         disabled={disabled}>
         {actionButton.label}

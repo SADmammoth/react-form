@@ -1,14 +1,10 @@
 import React, { useRef } from 'react';
-
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 import SelectedImage from '@/generic/SelectedImage';
 import theme from '@/styles/theme';
-
 import styles from './ImageMultiple.styles';
 
 const useStyles = createUseStyles(styles);
@@ -48,7 +44,7 @@ function ImageMultiple({
         <div className={classes.gallery}>
           {!value ||
             value.map((image, index, images) => {
-              if (!image) return;
+              if (!image) return null;
               const { name: fileName, size } = image;
               const url = URL.createObjectURL(image);
 
@@ -80,11 +76,9 @@ function ImageMultiple({
         type="file"
         {...(value ? {} : { value: '' })}
         name={name}
-        accept={'image/' + (accept || '*')}
+        accept={`image/${accept || '*'}`}
         onChange={(event) => {
-          const newValue = Array.from(event.target.files).map((file) => {
-            return file;
-          });
+          const newValue = Array.from(event.target.files).map((file) => file);
           newValue.unshift(...value);
 
           onChange(createEvent(name, newValue));

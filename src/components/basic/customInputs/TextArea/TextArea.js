@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import Validator from '@/Validator';
 import renderTag from '@/formHelpers/renderTag';
 import compareObjects from '@/helpers/compareObjects';
 import theme from '@/styles/theme';
-
 import styles from './TextArea.styles';
 
 const useStyles = createUseStyles(styles);

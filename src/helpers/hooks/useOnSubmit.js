@@ -1,5 +1,5 @@
-import useResponseProcessor from '../useResponseProcessor';
 import formatFormValues from '@/formHelpers/output/formatFormValues';
+import useResponseProcessor from './useResponseProcessor';
 
 export default function useOnSubmit(
   values,

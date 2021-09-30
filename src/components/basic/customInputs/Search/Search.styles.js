@@ -24,7 +24,6 @@ const styles = {
     },
 
     width: '100%',
-    padding: '1%',
     boxSizing: 'border-box',
   },
   disabled: {

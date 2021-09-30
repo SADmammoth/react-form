@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 export default function useIndex(init, max) {
   const [index, setIndex] = useState(init);

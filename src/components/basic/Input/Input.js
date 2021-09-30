@@ -1,7 +1,9 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
+import Tag from '@/generic/Tag';
+import compareObjects from '@/helpers/compareObjects';
+import LabelledInput from '@/wrappers/LabelledInput';
+import MaskedInput from '@/wrappers/MaskedInput';
 import createEvent from '../../../helpers/formHelpers/createEvent';
 import {
   CheckboxGroup,
@@ -22,10 +24,6 @@ import {
   ActionButton,
 } from '../customInputs';
 import Toggle from '../customInputs/Toggle';
-import Tag from '@/generic/Tag';
-import compareObjects from '@/helpers/compareObjects';
-import LabelledInput from '@/wrappers/LabelledInput';
-import MaskedInput from '@/wrappers/MaskedInput';
 
 function Input(props) {
   const {
@@ -53,7 +51,7 @@ function Input(props) {
     highlightInput,
     validationMessage,
     alwaysShowTip,
-    editable,
+    // editable,
     render,
     allowScroll,
     accept,

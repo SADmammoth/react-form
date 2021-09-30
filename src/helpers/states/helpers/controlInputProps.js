@@ -1,7 +1,7 @@
 import { includes, isArray } from 'lodash-es';
 
 const controlInputProps = (name, input, inputProps, put) => {
-  /**********************************************/
+  /** ******************************************* */
   const controlTarget = (target, control, name, input, depth = 3) => {
     if (inputProps[target]) {
       if (isArray(input.value)) {
@@ -33,7 +33,7 @@ const controlInputProps = (name, input, inputProps, put) => {
         .map(({ name }) => name);
       console.log(inGroup);
       inGroup.forEach((target) =>
-        controlTarget(target, control, [name, input], depth--),
+        controlTarget(target, control, [name, input], depth - 1),
       );
       return;
     }
@@ -43,7 +43,7 @@ const controlInputProps = (name, input, inputProps, put) => {
     );
   };
 
-  /**********************************************/
+  /** ******************************************* */
 
   if (input.control) {
     if (isArray(input.control)) {
@@ -54,7 +54,6 @@ const controlInputProps = (name, input, inputProps, put) => {
     }
 
     controlTarget(input.control.field, input.control, name, input);
-    return;
   }
 };
 

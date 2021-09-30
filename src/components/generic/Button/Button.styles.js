@@ -23,9 +23,6 @@ const styles = {
   actionButton: {
     ...commonButton,
   },
-  showPassword: {
-    ...commonButton,
-  },
   addFile: {
     display: 'inline-block',
     border: '1px solid black',

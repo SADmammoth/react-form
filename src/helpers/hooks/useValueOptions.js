@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import safeUseEffect from '@/hooks/safeUseEffect';
 
 export default function useValueOptions(fetch) {

@@ -1,11 +1,8 @@
 import React from 'react';
-
 import classNames from 'classnames';
-import { useTheme, createUseStyles } from 'react-jss';
-
+import { createUseStyles } from 'react-jss';
 import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
-
 import styles from './LabelledInput.styles';
 
 const useStyles = createUseStyles(styles);

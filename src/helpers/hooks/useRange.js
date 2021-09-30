@@ -1,7 +1,3 @@
-import { useState } from 'react';
-
-import { debounce } from 'lodash';
-
 import useIndex from './useIndex';
 
 export default function useRange(from, to, max) {

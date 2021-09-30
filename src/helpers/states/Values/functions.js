@@ -1,6 +1,5 @@
-import getConverters from '../../getConverters';
+import getConverters from '../getConverters';
 import bind from './helpers/bind';
-import setFormDefaultValue from './helpers/setFormDefaultValue';
 
 function init({ inputsProps }) {
   const state = {};

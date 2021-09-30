@@ -8,8 +8,6 @@ const styles = {
   list: {
     marginTop: 1,
     position: 'absolute',
-    width: '100%',
-    boxSizing: 'border-box',
     zIndex: '999',
 
     backgroundColor: (theme) => `${theme.bgColor}`,
@@ -17,7 +15,6 @@ const styles = {
     borderRadius: (theme) => `${theme.borderRadius}`,
     color: (theme) => `${theme.commonColor}`,
     outlineColor: (theme) => `${theme.highlightColor}`,
-    padding: '2%',
 
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: (theme) => `${theme.commonColor}`,

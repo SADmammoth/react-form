@@ -2,15 +2,12 @@
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useState } from 'react';
-
 import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
-
 import renderTag from '@/formHelpers/renderTag';
 // import PropTypes from 'prop-types';
 import theme from '@/styles/theme';
-
 import styles from './Suggestions.styles';
 
 const useStyles = createUseStyles(styles);
@@ -52,11 +49,9 @@ function Suggestions({
   const Option = renderTag(render, 'Option');
 
   function renderOption(valueOption) {
-    let isActive;
-    isActive =
-      (isEqual(currentValue, valueOption.value) ||
-        includes(currentValue, valueOption.value)) &&
-      !isActive;
+    const isActive =
+      isEqual(currentValue, valueOption.value) ||
+      includes(currentValue, valueOption.value);
 
     return (
       <Option

@@ -1,16 +1,12 @@
 import React, { useRef } from 'react';
-
 import classNames from 'classnames';
 import { differenceBy } from 'lodash-es';
-import PropTypes from 'prop-types';
-import { useTheme, createUseStyles } from 'react-jss';
-
+import { createUseStyles } from 'react-jss';
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 import FileLabel from '@/generic/FileLabel/FileLabel';
 import getFileHash from '@/helpers/getFileHash';
 import theme from '@/styles/theme';
-
 import styles from './FileMultiple.styles';
 
 const useStyles = createUseStyles(styles);
@@ -29,9 +25,13 @@ function FileMultiple({
   const classes = useStyles(theme);
   const input = useRef({});
 
-  const renderFiles = () => {
-    return value.reverse().map((file, index) => {
-      if (!file) return;
+  const Input = renderTag(render, 'Input');
+  const Button = renderTag(render, 'Button');
+  const Label = renderTag(render, 'Label');
+
+  const renderFiles = () =>
+    value.reverse().map((file, index) => {
+      if (!file) return null;
 
       const { name: fileName, size } = file;
       const onClose = () => {
@@ -50,11 +50,6 @@ function FileMultiple({
         />
       );
     });
-  };
-
-  const Input = renderTag(render, 'Input');
-  const Button = renderTag(render, 'Button');
-  const Label = renderTag(render, 'Label');
 
   return (
     <div className={classNames(className, { [classes.disabled]: disabled })}>
@@ -80,10 +75,10 @@ function FileMultiple({
         accept={accept}
         onChange={(event) => {
           const newValue = Array.from(event.target.files);
-          let newFiles = differenceBy(newValue, value, getFileHash);
+          const newFiles = differenceBy(newValue, value, getFileHash);
 
           if (newFiles.length < newValue.length) {
-            let existingFiles = differenceBy(newValue, newFiles, getFileHash);
+            const existingFiles = differenceBy(newValue, newFiles, getFileHash);
 
             console.error(
               `File(s) "${existingFiles

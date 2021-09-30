@@ -1,4 +1,5 @@
 export default function checkFormNames(inputs) {
+  // TODO
   for (let i = 0; i < inputs.length; i += 1) {
     if (
       inputs

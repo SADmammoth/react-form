@@ -18,7 +18,6 @@ const styles = {
     resize: 'none',
 
     width: '100%',
-    padding: '1%',
     boxSizing: 'border-box',
 
     height: '90px',

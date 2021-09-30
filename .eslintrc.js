@@ -38,11 +38,34 @@ module.exports = {
     'object-curly-newline': 0,
 
     'react/require-default-props': 0,
+    'react/destructuring-assignment': 0,
+    'no-shadow': 0,
+    'react/jsx-curly-newline': 0,
+    'import/no-unused-modules': [1, { unusedExports: true }],
     indent: 0,
   },
 
   plugins: ['babel'],
   settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@/', path.resolve('src/')],
+          ['@/Validator', path.resolve('src/Validator')],
+          ['@/wrappers', path.resolve('src/components/wrappers')],
+          ['@/generic', path.resolve('src/components/generic')],
+          ['@/basic', path.resolve('src/components/basic')],
+          ['@/helpers', path.resolve('src/helpers')],
+          ['@/formHelpers', path.resolve('src/helpers/formHelpers')],
+          ['@/formStateHelpers', path.resolve('src/helpers/formStateHelpers')],
+          ['@/maskHelpers', path.resolve('src/helpers/maskHelpers')],
+          ['@/hooks', path.resolve('src/helpers/hooks')],
+          ['@/maskHelpers', path.resolve('src/helpers/maskHelpers')],
+          ['@/styles', path.resolve('src/styles')],
+        ],
+        extensions: ['.js'],
+      },
+    },
     react: {
       version: 'detect',
     },

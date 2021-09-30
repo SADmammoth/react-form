@@ -1,4 +1,4 @@
-import getConverters from '../../getConverters';
+import getConverters from '../../states/getConverters';
 
 export default function formatFormValues(values, inputs) {
   const formattedValues = {};

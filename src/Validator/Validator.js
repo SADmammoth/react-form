@@ -91,7 +91,7 @@ const Validator = {
   floatMessage: 'Input must be a number',
 
   float: (number, from, to) => {
-    if (!input) return true;
+    if (!number) return true;
     const num = parseFloat(number);
     return num <= to && num >= from;
   },
@@ -99,16 +99,15 @@ const Validator = {
   numberMessage: 'Input must be an integer number',
 
   number: (number, from, to) => {
-    if (!input) return true;
+    if (!number) return true;
     const num = parseInt(number, 10);
     return num <= to && num >= from;
   },
 
   //* By char validators
 
-  charCountValidator: (input, max, min) => {
-    return checkCharsCount(input, min || 0, max);
-  },
+  charCountValidator: (input, max, min) =>
+    checkCharsCount(input, min || 0, max),
 
   text: (input) => {
     if (!input) return true;

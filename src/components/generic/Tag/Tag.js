@@ -1,12 +1,8 @@
 import React from 'react';
-
 // import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
-import Button from '../Button';
-import renderTag from '@/formHelpers/renderTag';
 import theme from '@/styles/theme';
-
+import Button from '../Button';
 import styles from './Tag.styles';
 
 const useStyles = createUseStyles(styles);
@@ -19,12 +15,12 @@ function Tag({ render, children, onDelete, disabled }) {
     event.preventDefault();
   };
 
-  const Button = renderTag(render, 'Button');
+  const ButtonTag = render.Button || Button;
 
   return (
     <div className={classes.tag}>
       {children}
-      <Button
+      <ButtonTag
         className={classes.remove}
         variant="close"
         onClick={onClick}

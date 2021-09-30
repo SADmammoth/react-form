@@ -1,5 +1,4 @@
 import { isArray } from 'lodash-es';
-
 import bindIter from './bindIter';
 
 export default function bind(state) {

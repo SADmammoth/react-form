@@ -1,7 +1,5 @@
 import React from 'react';
-
 import classNames from 'classnames';
-
 import renderTag from '@/formHelpers/renderTag';
 
 const Field = React.forwardRef(

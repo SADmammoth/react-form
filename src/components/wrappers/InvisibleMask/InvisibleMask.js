@@ -1,20 +1,14 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-
-import Validator from '../../../Validator';
-import getValueFromMask from '../../../helpers/maskHelpers/getValueFromMask';
 import replaceSubstring from '@/helpers/replaceSubstring';
 import getMaskCharsBeforePlaceholder from '@/maskHelpers/getMaskCharsBeforePlaceholder';
 import invisibleMaskOnInputValue from '@/maskHelpers/invisibleMaskOnInputValue';
 import placeInputCursorToEnd from '@/maskHelpers/placeInputCursorToEnd';
+import Validator from '../../../Validator';
+import getValueFromMask from '../../../helpers/maskHelpers/getValueFromMask';
 
 function InvisibleMask(input, maskArray) {
-  const {
-    name,
-    onChange: inputOnChange,
-    onBlur: inputOnBlur,
-    onKeyPress: inputOnKeyPress,
-  } = input.props;
+  const { name, onChange: inputOnChange, onBlur: inputOnBlur } = input.props;
 
   const onFocus = (event) => {
     if (!event.target.value || event.target.value === '') {

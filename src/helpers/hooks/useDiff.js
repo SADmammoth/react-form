@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-
 import { transform, isObject } from 'lodash-es';
-
 import compareObjects from '@/helpers/compareObjects';
 
 function difference(objectLeft, objectRight) {

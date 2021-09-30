@@ -1,10 +1,7 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import theme from '@/styles/theme';
-
 import styles from './FieldGroup.styles';
 
 const useStyles = createUseStyles(styles);

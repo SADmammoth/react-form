@@ -1,9 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
-
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import Validator from '@/Validator/Validator';
 import createEvent from '@/formHelpers/createEvent';
 import getCounter from '@/formHelpers/getCounter';
@@ -11,7 +9,6 @@ import renderTag from '@/formHelpers/renderTag';
 import HoldButton from '@/generic/HoldButton';
 import compareObjects from '@/helpers/compareObjects';
 import theme from '@/styles/theme';
-
 import styles from './Number.styles';
 
 const useStyles = createUseStyles(styles);

@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import createEvent from '@/formHelpers/createEvent';
 import SelectedImage from '@/generic/SelectedImage';
 import renderTag from '@/helpers/formHelpers/renderTag';
 import theme from '@/styles/theme';
-
 import styles from './Image.styles';
 
 const useStyles = createUseStyles(styles);
@@ -85,7 +81,7 @@ function Image({
         type="file"
         {...(value ? {} : { value: '' })}
         name={name}
-        accept={'image/' + (accept || '*')}
+        accept={`image/${accept || '*'}`}
         onChange={(event) => {
           const file = event.target.files[0];
           onChange(createEvent(name, file));

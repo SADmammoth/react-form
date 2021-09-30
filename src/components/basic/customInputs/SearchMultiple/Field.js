@@ -2,9 +2,7 @@
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback } from 'react';
-
 import classNames from 'classnames';
-
 import createEvent from '@/formHelpers/createEvent';
 import renderTag from '@/formHelpers/renderTag';
 
@@ -16,7 +14,7 @@ const Field = React.forwardRef(
       placeholder,
       currentLabel,
       showList,
-      listShown,
+      // listShown,
       setCurrentLabel,
       render,
       onChange,

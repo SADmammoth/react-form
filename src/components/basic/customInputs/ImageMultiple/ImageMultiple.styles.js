@@ -8,7 +8,6 @@ const styles = {
     maxHeight: 100,
     flexDirection: 'column',
     flexWrap: 'nowrap',
-    maxHeight: 'none',
     maxWidth: 700,
   },
 

@@ -1,21 +1,19 @@
-import React, { Fragment, useEffect, useCallback } from 'react';
-
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import controlInputProps from '../../../helpers/controlInputProps';
-import useInputHighlight from '../../../helpers/formStateHelpers/useInputHighlight';
-import useDiff from '../../../helpers/hooks/useDiff';
-import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
-import useValidatorFormats from '../../../helpers/hooks/useValidatorFormats';
-import useInputsReducer from '../../../helpers/states/Inputs';
-import useValuesReducer from '../../../helpers/states/Values';
-import Input from '../Input';
 import renderGroups from '@/formHelpers/output/renderGroups';
 import renderTag from '@/formHelpers/renderTag';
 import validateForm from '@/formHelpers/validation/validateForm';
 import useOnSubmit from '@/formStateHelpers/handlers/useOnSubmit';
 import useNotifications from '@/formStateHelpers/useNotifications';
 import masks from '@/maskHelpers/masks';
+import useDiff from '../../../helpers/hooks/useDiff';
+import useInputHighlight from '../../../helpers/hooks/useInputHighlight';
+import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
+import useValidatorFormats from '../../../helpers/hooks/useValidatorFormats';
+import useInputsReducer from '../../../helpers/states/Inputs';
+import useValuesReducer from '../../../helpers/states/Values';
+import controlInputProps from '../../../helpers/states/helpers/controlInputProps';
+import Input from '../Input';
 
 const Form = (props) => {
   let { showNotifications } = props;
@@ -105,6 +103,7 @@ const Form = (props) => {
     (data) =>
       onSubmitHandler(data).then(() => {
         if (resetOnSubmit) {
+          // FIXME
           dispatch(actions.resetForm(inputsProps));
         }
       }),
@@ -188,9 +187,13 @@ Form.propTypes = {
     Input: PropTypes.any,
     Form: PropTypes.any,
   }),
+  // eslint-disable-next-line react/no-unused-prop-types
   validationMaskDateFormat: PropTypes.string,
+  // eslint-disable-next-line react/no-unused-prop-types
   validationMaskDateTimeFormat: PropTypes.string,
+  // eslint-disable-next-line react/no-unused-prop-types
   dateFormatMask: PropTypes.string,
+  // eslint-disable-next-line react/no-unused-prop-types
   dateTimeFormatMask: PropTypes.string,
 
   resetOnSubmit: PropTypes.bool,

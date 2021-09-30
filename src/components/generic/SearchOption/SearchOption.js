@@ -2,13 +2,10 @@
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-
 import classNames from 'classnames';
 // import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
 import theme from '@/styles/theme';
-
 import styles from './SearchOption.styles';
 
 const useStyles = createUseStyles(styles);
