@@ -7,7 +7,9 @@ export default function formatFormValues(values, inputs) {
   Object.entries(values).forEach(([name, valueItem]) => {
     input = inputs[name];
 
-    const { group } = input;
+    const { group, hidden } = input;
+    if (hidden) return;
+
     const converter = getConverters(input.converters).out;
 
     if (group) {
