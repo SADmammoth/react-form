@@ -56,7 +56,7 @@ const Form = (props) => {
       console.log(diff);
       if (diff && diff[0]) {
         const [changedValues] = diff;
-        debugger;
+
         Object.entries(changedValues).forEach(([name, { value }]) =>
           controlInputProps(
             name,

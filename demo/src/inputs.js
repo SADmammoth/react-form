@@ -1,5 +1,6 @@
 import countries from './countries';
 import imagebytes from './imagebytes';
+import subform from './subform';
 
 const inputs = [
   {
@@ -32,32 +33,7 @@ const inputs = [
     type: 'subform',
     name: 'subform',
     label: 'Subform',
-    inputs: [
-      {
-        type: 'text',
-        name: 'text2',
-        label: 'Text',
-        placeholder: 'ABCD',
-        converters: {
-          in: (e) => e?.text,
-          out: (value) => {
-            return { text: value };
-          },
-        },
-        actionButton: {
-          label: 'Clear',
-          action: async (name, value) => {
-            return '';
-          },
-        },
-      },
-      {
-        type: 'password',
-        name: 'text3',
-        label: 'Text',
-        placeholder: 'ABCD',
-      },
-    ],
+    inputs: subform,
   },
   // {
   //   type: 'text',
