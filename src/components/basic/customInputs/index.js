@@ -1,17 +1,16 @@
 import ActionButton from './ActionButton';
 import CheckboxGroup from './CheckboxGroup';
-import Number from './Number';
 import File from './File';
-import Image from './Image';
-import MarkdownText from './MarkdownText';
 import FileMultiple from './FileMultiple';
+import Image from './Image';
 import ImageMultiple from './ImageMultiple';
-import SearchMultiple from './SearchMultiple';
-import SelectMultiple from './SelectMultiple';
+import Number from './Number';
 import Password from './Password';
 import Range from './Range';
 import Search from './Search';
+import SearchMultiple from './SearchMultiple';
 import Select from './Select';
+import SelectMultiple from './SelectMultiple';
 import Slider from './Slider';
 import TextArea from './TextArea';
 import TextInput from './TextInput';
@@ -21,7 +20,6 @@ export {
   Number,
   File,
   Image,
-  MarkdownText,
   FileMultiple,
   ImageMultiple,
   SearchMultiple,

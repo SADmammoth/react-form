@@ -8,7 +8,6 @@ import {
   Number,
   File,
   Image,
-  MarkdownText,
   FileMultiple,
   ImageMultiple,
   SearchMultiple,
@@ -56,7 +55,6 @@ function Input(props) {
     alwaysShowTip,
     editable,
     render,
-    markdownFeatures,
     allowScroll,
     accept,
     actionButton,
@@ -139,31 +137,6 @@ function Input(props) {
           render={render}
           disabled={disabled}
         />
-      );
-    }
-
-    if (type === 'markdown') {
-      return LabelledInput(
-        disabled,
-        render,
-        label,
-        id,
-        <MarkdownText
-          className={className}
-          id={id}
-          type={type}
-          name={name}
-          description={description}
-          onChange={onChangeHandler}
-          onInput={onInputHandler}
-          required={required}
-          attributes={attributes}
-          value={value}
-          editable={editable}
-          render={render}
-          markdownFeatures={markdownFeatures}
-          disabled={disabled}
-        />,
       );
     }
 
@@ -639,7 +612,6 @@ Input.publicProps = {
   validationMessage: PropTypes.string,
   alwaysShowTip: PropTypes.bool,
   editable: PropTypes.bool,
-  markdownFeatures: PropTypes.object,
   allowScroll: PropTypes.bool,
   converters: PropTypes.shape({
     in: PropTypes.func,
