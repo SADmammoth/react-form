@@ -20,6 +20,7 @@ function init({ inputsProps }) {
 }
 
 function put(state, { name, value }) {
+  if (value === state[name]?.value) return state;
   return bind({
     ...state,
     [name]: { ...state[name], updatedAt: Date.now(), value },

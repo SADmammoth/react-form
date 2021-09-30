@@ -14,7 +14,7 @@ const inputs = [
       },
     },
     control: {
-      field: 'text2',
+      field: 'subform',
       prop: 'hidden',
       map: {
         ['hey']: true,
@@ -29,30 +29,35 @@ const inputs = [
     },
   },
   {
-    type: 'text',
-    name: 'text2',
-    label: 'Text',
-    placeholder: 'ABCD',
-    converters: {
-      in: (e) => e?.text,
-      out: (value) => {
-        return { text: value };
+    type: 'subform',
+    name: 'subform',
+    label: 'Subform',
+    inputs: [
+      {
+        type: 'text',
+        name: 'text2',
+        label: 'Text',
+        placeholder: 'ABCD',
+        converters: {
+          in: (e) => e?.text,
+          out: (value) => {
+            return { text: value };
+          },
+        },
+        actionButton: {
+          label: 'Clear',
+          action: async (name, value) => {
+            return '';
+          },
+        },
       },
-    },
-    actionButton: {
-      label: 'Clear',
-      action: async (name, value) => {
-        return '';
+      {
+        type: 'password',
+        name: 'text3',
+        label: 'Text',
+        placeholder: 'ABCD',
       },
-    },
-    bind: 'text3',
-  },
-  {
-    type: 'password',
-    name: 'text3',
-    label: 'Text',
-    placeholder: 'ABCD',
-    bind: ['text2', 'text'],
+    ],
   },
   // {
   //   type: 'text',

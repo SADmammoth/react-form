@@ -44,7 +44,7 @@ const Form = (props) => {
   const [values, valuesActions] = useValuesReducer();
 
   useEffect(() => {
-    valuesActions.init({ inputsProps });
+    valuesActions.init({ inputsProps: Object.values(inputs) });
   }, [inputsProps]);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Form = (props) => {
       console.log(diff);
       if (diff && diff[0]) {
         const [changedValues] = diff;
-        console.log(changedValues);
+        debugger;
         Object.entries(changedValues).forEach(([name, { value }]) =>
           controlInputProps(
             name,

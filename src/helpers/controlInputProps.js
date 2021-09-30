@@ -28,10 +28,10 @@ const controlInputProps = (name, input, inputProps, put) => {
     }
 
     if (depth > 0 && control.group) {
-      const inGroup = inputProps
+      const inGroup = Object.values(inputProps)
         .filter(({ group }) => group?.id === control.group)
         .map(({ name }) => name);
-
+      console.log(inGroup);
       inGroup.forEach((target) =>
         controlTarget(target, control, [name, input], depth--),
       );
