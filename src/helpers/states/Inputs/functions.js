@@ -13,7 +13,7 @@ function init({ inputsProps }) {
 
   inputsProps.forEach((input) => {
     state[input.name] = {
-      ...omit(input, ['value', 'defaultValue']),
+      ...input,
     };
   });
 
