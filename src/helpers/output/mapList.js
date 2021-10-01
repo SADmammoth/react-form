@@ -7,7 +7,7 @@ export default function mapList(
   additionalFields,
 ) {
   return [...Object.values(inputs || {})]
-    .filter(({ hidden }) => !hidden)
+    .filter(({ hidden, type }) => !hidden && type !== 'subform')
     .map((props) =>
       createInput(props, values, updateValueCallback, additionalFields),
     );

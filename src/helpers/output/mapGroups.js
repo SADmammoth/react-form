@@ -7,7 +7,8 @@ export default function mapGroups(inputs, values, additionalFields) {
   if (!inputs || isEmpty(inputs)) return inputs;
 
   Object.values(inputs).forEach((input) => {
-    if (inputs[input.name]?.hidden) return;
+    if (inputs[input.name]?.hidden || inputs[input.name].type === 'subform')
+      return;
     if (input.group) {
       if (!inputsGroups[input.group.id]) {
         inputsGroups[input.group.id] = {
