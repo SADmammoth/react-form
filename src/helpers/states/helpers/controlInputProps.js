@@ -4,6 +4,10 @@ const controlInputProps = (name, input, inputProps, put) => {
   /** ******************************************* */
   const controlTarget = (target, control, name, input, depth = 3) => {
     if (inputProps[target]) {
+      if (control.map instanceof Function) {
+        put(target, { [control.prop]: control.map(input.value) });
+        return;
+      }
       if (isArray(input.value)) {
         const avaliableValues = Object.keys(control.map);
         const common = input.value.find((x) =>

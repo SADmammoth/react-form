@@ -17,9 +17,8 @@ const inputs = [
     control: {
       field: 'subform',
       prop: 'hidden',
-      map: {
-        ['hey']: true,
-        ['*']: false,
+      map: (value) => {
+        return value === 'hey';
       },
     },
     actionButton: {
