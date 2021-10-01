@@ -8,32 +8,33 @@ const inputs = [
     name: 'text',
     label: 'Text',
     placeholder: 'ABCD',
-    converters: {
-      in: (e) => e?.text,
-      out: (value) => {
-        return { text: value };
-      },
-    },
-    control: {
-      field: 'subform',
-      prop: 'hidden',
-      map: (value) => {
-        return value === 'hey';
-      },
-    },
+    // converters: {
+    //   in: (e) => e?.text,
+    //   out: (value) => {
+    //     return { text: value };
+    //   },
+    // },
     actionButton: {
       label: 'Clear',
       action: async (name, value) => {
         return '';
       },
     },
+    value: 'text',
   },
   {
-    type: 'subform',
-    name: 'subform',
-    label: 'Subform',
-    inputs: subform,
+    type: 'date',
+    name: 'date',
+    label: 'Date',
+    placeholder: 'ABCD',
+    value: new Date(),
   },
+  // {
+  //   type: 'subform',
+  //   name: 'subform',
+  //   label: 'Subform',
+  //   inputs: subform,
+  // },
   // {
   //   type: 'text',
   //   name: 'hex',

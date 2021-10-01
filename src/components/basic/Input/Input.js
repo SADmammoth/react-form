@@ -24,6 +24,7 @@ import {
   TextInput,
   ActionButton,
 } from '../customInputs';
+import Date from '../customInputs/Date';
 import Toggle from '../customInputs/Toggle';
 
 function Input(props) {
@@ -511,6 +512,10 @@ function Input(props) {
     if (type === 'subform') {
       const Loader = renderTag(render, 'Loader');
       return <Loader />;
+    }
+
+    if (type === 'date') {
+      return <Date {...props} />;
     }
 
     return LabelledInput(
