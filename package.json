@@ -1,6 +1,6 @@
 {
   "name": "@sadmammoth/react-form",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "author": "SADmammoth",
   "license": "MIT",
   "repository": "SADmammoth/react-form",
@@ -17,7 +17,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component --copy-files",
+    "build": "GENERATE_SOURCEMAP=false nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
@@ -26,12 +26,12 @@
   },
   "dependencies": {
     "classnames": "^2.3.1",
-    "lodash-es": "^4.17.21",
-    "prop-types": "^15.7.2",
-    "react-jss": "^10.7.1"
+    "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": "16.x",
+    "react-jss": "^10.7.1",
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^2.0.2",

@@ -8,6 +8,9 @@ module.exports = {
     umd: 'ReactForm',
   },
   webpack: {
+    extra: {
+      externals: ['react-jss', 'prop-types'],
+    },
     aliases: {
       '@/': path.resolve('src/'),
       '@/Validator': path.resolve('src/Validator'),
