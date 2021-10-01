@@ -103,8 +103,7 @@ const Form = (props) => {
     (data) =>
       onSubmitHandler(data).then(() => {
         if (resetOnSubmit) {
-          // FIXME
-          dispatch(actions.resetForm(inputsProps));
+          valuesActions.init({ inputsProps });
         }
       }),
     notifications,

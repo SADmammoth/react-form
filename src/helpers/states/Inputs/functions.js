@@ -1,17 +1,21 @@
 import { omit } from 'lodash-es';
+import checkFormNames from '@/helpers/checkFormNames';
 
 function init({ inputsProps }) {
   const state = {};
 
-  // TODO Add filter
+  const duplicateNames = checkFormNames(inputsProps);
+
+  if (duplicateNames) {
+    console.error(`Duplicate names ${duplicateNames} at inputs configuration`);
+    return state;
+  }
 
   inputsProps.forEach((input) => {
     state[input.name] = {
       ...omit(input, ['value', 'defaultValue']),
     };
   });
-
-  // TODO Add control
 
   return state;
 }

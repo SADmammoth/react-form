@@ -14,6 +14,7 @@ const App = () => {
         onSubmit={async (data) => {
           console.log(data);
         }}
+        resetOnSubmit={true}
         inputs={inputsProps}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}

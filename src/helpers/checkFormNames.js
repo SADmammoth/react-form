@@ -1,14 +1,12 @@
 export default function checkFormNames(inputs) {
-  // TODO
   for (let i = 0; i < inputs.length; i += 1) {
     if (
       inputs
         .slice(i + 1)
-        .findIndex((anotherInput) => inputs[i].name === anotherInput.name) !==
-      -1
+        .find((anotherInput) => inputs[i].name === anotherInput.name)
     ) {
-      return false;
+      return inputs[i].name;
     }
   }
-  return true;
+  return null;
 }
