@@ -1,4 +1,4 @@
-import getConverters from '../getConverters';
+import getConverters from '../helpers/getConverters';
 import bind from './helpers/bind';
 
 function init({ inputsProps }) {

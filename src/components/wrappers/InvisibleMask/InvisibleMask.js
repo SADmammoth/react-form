@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import replaceSubstring from '@/helpers/replaceSubstring';
+import Validator from '@/Validator';
+import replaceSubstring from '@/genericHelpers/replaceSubstring';
 import getMaskCharsBeforePlaceholder from '@/maskHelpers/getMaskCharsBeforePlaceholder';
+import getValueFromMask from '@/maskHelpers/getValueFromMask';
 import invisibleMaskOnInputValue from '@/maskHelpers/invisibleMaskOnInputValue';
 import placeInputCursorToEnd from '@/maskHelpers/placeInputCursorToEnd';
-import Validator from '../../../Validator';
-import getValueFromMask from '../../../helpers/maskHelpers/getValueFromMask';
 
 function InvisibleMask(input, maskArray) {
   const { name, onChange: inputOnChange, onBlur: inputOnBlur } = input.props;

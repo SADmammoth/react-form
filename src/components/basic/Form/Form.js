@@ -1,18 +1,18 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import renderGroups from '@/formHelpers/output/renderGroups';
-import renderTag from '@/formHelpers/renderTag';
-import validateForm from '@/formHelpers/validation/validateForm';
-import useOnSubmit from '@/formStateHelpers/handlers/useOnSubmit';
-import useNotifications from '@/formStateHelpers/useNotifications';
+import renderTag from '@/helpers/renderTag';
+import validateForm from '@/helpers/validateForm';
+import useDiff from '@/hooks/useDiff';
+import useInputHighlight from '@/hooks/useInputHighlight';
+import useNotifications from '@/hooks/useNotifications';
+import useOnInputsUpdate from '@/hooks/useOnInputsUpdate';
+import useOnSubmit from '@/hooks/useOnSubmit';
+import useValidatorFormats from '@/hooks/useValidatorFormats';
 import masks from '@/maskHelpers/masks';
-import useDiff from '../../../helpers/hooks/useDiff';
-import useInputHighlight from '../../../helpers/hooks/useInputHighlight';
-import useOnInputsUpdate from '../../../helpers/hooks/useOnInputsUpdate';
-import useValidatorFormats from '../../../helpers/hooks/useValidatorFormats';
-import useInputsReducer from '../../../helpers/states/Inputs';
-import useValuesReducer from '../../../helpers/states/Values';
-import controlInputProps from '../../../helpers/states/helpers/controlInputProps';
+import renderGroups from '@/outputHelpers/renderGroups';
+import useInputsReducer from '@/stateHelpers/Inputs';
+import useValuesReducer from '@/stateHelpers/Values';
+import controlInputProps from '@/stateHelpers/helpers/controlInputProps';
 import Input from '../Input';
 
 const Form = (props) => {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import mapGroups from '@/formHelpers/mapGroups';
-import mapList from '../formHelpers/mapList';
+import mapGroups from '@/outputHelpers/mapGroups';
+import mapList from '@/outputHelpers/mapList';
 
 export default function useOnInputsUpdate(
   inputs,

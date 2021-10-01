@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import createEvent from '@/formHelpers/createEvent';
 import SelectedImage from '@/generic/SelectedImage';
-import renderTag from '@/helpers/formHelpers/renderTag';
+import createEvent from '@/helpers/createEvent';
+import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import styles from './Image.styles';
 

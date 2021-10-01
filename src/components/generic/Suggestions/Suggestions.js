@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { includes, isEqual } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
-import renderTag from '@/formHelpers/renderTag';
+import renderTag from '@/helpers/renderTag';
 // import PropTypes from 'prop-types';
 import theme from '@/styles/theme';
 import styles from './Suggestions.styles';

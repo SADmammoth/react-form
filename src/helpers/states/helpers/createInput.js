@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from '../../components/basic/Input';
+import Input from '@/basic/Input';
 import createInputProps from './createInputProps';
 
 export default function createInput(props, values, additionalFields) {

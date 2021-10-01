@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import classNames from 'classnames';
 import { differenceBy } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
-import createEvent from '@/formHelpers/createEvent';
-import renderTag from '@/formHelpers/renderTag';
-import FileLabel from '@/generic/FileLabel/FileLabel';
-import getFileHash from '@/helpers/getFileHash';
+import FileLabel from '@/generic/FileLabel';
+import getFileHash from '@/genericHelpers/getFileHash';
+import createEvent from '@/helpers/createEvent';
+import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import styles from './FileMultiple.styles';
 

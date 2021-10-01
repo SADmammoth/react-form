@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
-import createEvent from '@/formHelpers/createEvent';
-import renderTag from '@/formHelpers/renderTag';
+import createEvent from '@/helpers/createEvent';
+import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import styles from './ActionButton.styles';
 

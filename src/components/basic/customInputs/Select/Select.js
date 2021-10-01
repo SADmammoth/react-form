@@ -3,7 +3,7 @@ import { isEqual } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 import Suggestions from '@/generic/Suggestions';
-import compareObjects from '@/helpers/compareObjects';
+import compareObjects from '@/genericHelpers/compareObjects';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
 import Field from './Field';

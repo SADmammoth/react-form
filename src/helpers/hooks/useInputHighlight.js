@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import safeUseEffect from '@/hooks/safeUseEffect';
+import safeUseEffect from './safeUseEffect';
 
 const useInputHighlight = (highlight, unhighlight, timer, notifications) => {
   const [highlightedData, setHighlighted] = useState(null);

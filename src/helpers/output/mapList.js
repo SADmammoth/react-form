@@ -1,4 +1,4 @@
-import createInput from '../states/createInput';
+import createInput from '@/stateHelpers/helpers/createInput';
 
 export default function mapList(
   inputs,

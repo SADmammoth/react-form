@@ -3,8 +3,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import classNames from 'classnames';
-import createEvent from '@/formHelpers/createEvent';
-import renderTag from '@/formHelpers/renderTag';
+import createEvent from '@/helpers/createEvent';
+import renderTag from '@/helpers/renderTag';
 import Toggle from '../Toggle';
 
 const Field = React.forwardRef(

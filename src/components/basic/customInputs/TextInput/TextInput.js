@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import renderTag from '@/formHelpers/renderTag';
+import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import styles from './TextInput.styles';
 

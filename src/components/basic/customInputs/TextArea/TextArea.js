@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 import Validator from '@/Validator';
-import renderTag from '@/formHelpers/renderTag';
-import compareObjects from '@/helpers/compareObjects';
+import compareObjects from '@/genericHelpers/compareObjects';
+import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import styles from './TextArea.styles';
 

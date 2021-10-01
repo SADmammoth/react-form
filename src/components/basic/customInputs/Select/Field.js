@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import classNames from 'classnames';
-import renderTag from '@/formHelpers/renderTag';
+import renderTag from '@/helpers/renderTag';
 import Toggle from '../Toggle';
 
 const Field = React.forwardRef(

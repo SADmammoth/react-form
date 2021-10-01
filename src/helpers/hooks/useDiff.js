@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { transform, isObject } from 'lodash-es';
-import compareObjects from '@/helpers/compareObjects';
+import compareObjects from '@/genericHelpers/compareObjects';
 
 function difference(objectLeft, objectRight) {
   function changes(object, base) {

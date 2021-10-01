@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { isEqual } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
-import createEvent from '@/formHelpers/createEvent';
-import filterSearchOptions from '@/formHelpers/filterSearchOptions';
 import Suggestions from '@/generic/Suggestions';
-// import PropTypes from 'prop-types';
-import compareObjects from '@/helpers/compareObjects';
+import compareObjects from '@/genericHelpers/compareObjects';
+import createEvent from '@/helpers/createEvent';
+import filterSearchOptions from '@/helpers/filterSearchOptions';
 import useValueOptions from '@/hooks/useValueOptions';
 import theme from '@/styles/theme';
 import Field from './Field';

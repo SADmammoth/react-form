@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-import calcSliderPart from '@/formHelpers/slider/calcSliderPart';
+import calcSliderPart from '@/helpers/calcSliderPart';
 import theme from '@/styles/theme';
 import styles from './SliderThumb.styles';
 

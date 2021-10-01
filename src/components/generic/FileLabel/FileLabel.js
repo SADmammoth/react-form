@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import formatFileSize from '@/helpers/formatFileSize';
+import formatFileSize from '@/genericHelpers/formatFileSize';
 import theme from '@/styles/theme';
 import styles from './FileLabel.styles';
 

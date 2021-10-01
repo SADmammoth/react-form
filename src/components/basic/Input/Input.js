@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tag from '@/generic/Tag';
-import compareObjects from '@/helpers/compareObjects';
+import compareObjects from '@/genericHelpers/compareObjects';
+import createEvent from '@/helpers/createEvent';
 import LabelledInput from '@/wrappers/LabelledInput';
 import MaskedInput from '@/wrappers/MaskedInput';
-import createEvent from '../../../helpers/formHelpers/createEvent';
 import {
   CheckboxGroup,
   Number,

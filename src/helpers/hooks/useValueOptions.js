@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import safeUseEffect from '@/hooks/safeUseEffect';
+import safeUseEffect from './safeUseEffect';
 
 export default function useValueOptions(fetch) {
   const [valueOptions, setValueOptions] = useState(null);

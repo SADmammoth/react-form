@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import validatorsMap from '../../Validator/validatorsMap';
+import validatorsMap from '@/Validator/validatorsMap';
 
 export default function useValidatorFormats({
   validationMaskDateFormat,
