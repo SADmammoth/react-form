@@ -45,13 +45,8 @@ const Form = (props) => {
     valuesActions.init({ inputsProps: Object.values(inputs) });
   }, [inputsProps]);
 
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
-
   useDiff(
     (diff) => {
-      console.log(diff);
       if (diff && diff[0]) {
         const [changedValues] = diff;
 

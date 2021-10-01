@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Tag from '@/generic/Tag';
 import compareObjects from '@/genericHelpers/compareObjects';
 import createEvent from '@/helpers/createEvent';
+import renderTag from '@/helpers/renderTag';
 import LabelledInput from '@/wrappers/LabelledInput';
 import MaskedInput from '@/wrappers/MaskedInput';
 import {
@@ -505,6 +506,11 @@ function Input(props) {
           disabled={disabled}
         />
       );
+    }
+
+    if (type === 'subform') {
+      const Loader = renderTag(render, 'Loader');
+      return <Loader />;
     }
 
     return LabelledInput(
