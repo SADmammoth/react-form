@@ -3,8 +3,8 @@ const path = require('path');
 module.exports = {
   type: 'react-component',
   npm: {
-    cjs: true,
-    esModules: true,
+    cjs: false,
+    esModules: false,
     umd: 'ReactForm',
   },
   webpack: {
