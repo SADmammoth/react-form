@@ -9,7 +9,7 @@ module.exports = {
   },
   webpack: {
     extra: {
-      externals: ['react-jss', 'prop-types'],
+      externals: ['react', 'react-jss', 'prop-types'],
     },
     aliases: {
       '@/': path.resolve('src/'),

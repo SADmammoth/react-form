@@ -42,8 +42,8 @@ const Form = (props) => {
   const [values, valuesActions] = useValuesReducer();
 
   useEffect(() => {
-    valuesActions.init({ inputsProps: Object.values(inputs) });
-  }, [inputs]);
+    valuesActions.init({ inputsProps });
+  }, [inputsProps]);
 
   useDiff(
     (diff) => {
