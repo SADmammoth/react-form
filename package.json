@@ -1,12 +1,10 @@
 {
   "name": "@sadmammoth/react-form",
-  "version": "2.0.3",
+  "version": "2.0.7",
   "author": "SADmammoth",
   "license": "MIT",
   "repository": "SADmammoth/react-form",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "source": "src/index.js",
+  "main": "umd/react-form.min.js",
   "engines": {
     "node": ">=10"
   },
@@ -17,7 +15,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "GENERATE_SOURCEMAP=false nwb build-react-component",
+    "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
