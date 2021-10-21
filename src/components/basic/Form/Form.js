@@ -25,6 +25,7 @@ const Form = (props) => {
     notify,
     render,
     resetOnSubmit,
+    onValueChange,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
@@ -49,6 +50,8 @@ const Form = (props) => {
     (diff) => {
       if (diff && diff[0]) {
         const [changedValues] = diff;
+
+        if (onValueChange) onValueChange(changedValues);
 
         Object.entries(changedValues).forEach(([name, { value }]) =>
           controlInputProps(
@@ -139,6 +142,7 @@ Form.defaultProps = {
   dateTimeFormatMask: masks.dateTimeMask,
   resetOnSubmit: false,
   render: {},
+  onValueChange: () => {},
 };
 
 Form.propTypes = {
@@ -191,6 +195,7 @@ Form.propTypes = {
   dateTimeFormatMask: PropTypes.string,
 
   resetOnSubmit: PropTypes.bool,
+  onValueChange: PropTypes.func,
 };
 
 export default Form;
