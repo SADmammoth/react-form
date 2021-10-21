@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Form from '../../src';
 import Button from './Button';
 import Input from './Input';
@@ -6,7 +6,7 @@ import Option from './Option';
 import inputsProps from './inputs';
 
 const App = () => {
-  // const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({});
   return (
     <Fragment>
       <Form
@@ -15,6 +15,7 @@ const App = () => {
           console.log(data);
         }}
         resetOnSubmit={true}
+        persistFormData={true}
         inputs={inputsProps}
         style={{ width: '20vw', margin: '0 auto' }}
         submitButton={<button>Submit</button>}
@@ -33,7 +34,7 @@ const App = () => {
         }}
         onInputsUpdate={(inputs) => {
           console.log(inputs);
-          // setInputs(inputs);
+          setInputs(inputs);
         }}
         notify={(...args) => console.log(args)}
         // markdownFeatures={{
@@ -42,8 +43,9 @@ const App = () => {
         //   bold: true,
         //   italic: true,
         // }}
-      />
-      {/* {inputs.$list} */}
+      >
+        {inputs.$list}
+      </Form>
       {/* 
       <Form.MarkdownOutput
         id="markdownOutput"

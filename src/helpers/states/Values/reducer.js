@@ -1,5 +1,5 @@
 import { types } from './actions';
-import { init, put } from './functions';
+import { init, override, put } from './functions';
 
 export default function valuesReducer(state, { type, data }) {
   switch (type) {
@@ -8,6 +8,9 @@ export default function valuesReducer(state, { type, data }) {
 
     case types.PUT:
       return put(state, data);
+
+    case types.OVERRIDE:
+      return override(data);
 
     default:
       return state;

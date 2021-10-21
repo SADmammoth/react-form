@@ -13,6 +13,7 @@ import renderGroups from '@/outputHelpers/renderGroups';
 import useInputsReducer from '@/stateHelpers/Inputs';
 import useValuesReducer from '@/stateHelpers/Values';
 import controlInputProps from '@/stateHelpers/helpers/controlInputProps';
+import usePersistFormData from '../../../helpers/hooks/usePersistFormData';
 import Input from '../Input';
 
 const Form = (props) => {
@@ -26,6 +27,7 @@ const Form = (props) => {
     render,
     resetOnSubmit,
     onValueChange,
+    persistFormData,
   } = props;
 
   const [notifications] = useNotifications({ showNotifications }, notify);
@@ -46,12 +48,23 @@ const Form = (props) => {
     valuesActions.init({ inputsProps });
   }, [inputsProps]);
 
+  const [setData, resetData] = usePersistFormData(
+    formId,
+    persistFormData
+      ? (data) => {
+          valuesActions.override(data);
+        }
+      : null,
+  );
+
   useDiff(
     (diff) => {
       if (diff && diff[0]) {
         const [changedValues] = diff;
 
         if (onValueChange) onValueChange(changedValues);
+
+        if (persistFormData) setData(values);
 
         Object.entries(changedValues).forEach(([name, { value }]) =>
           controlInputProps(
@@ -101,6 +114,7 @@ const Form = (props) => {
     (data) =>
       onSubmitHandler(data).then(() => {
         if (resetOnSubmit) {
+          resetData();
           valuesActions.init({ inputsProps });
         }
       }),
@@ -143,6 +157,7 @@ Form.defaultProps = {
   resetOnSubmit: false,
   render: {},
   onValueChange: () => {},
+  persistFormData: false,
 };
 
 Form.propTypes = {
@@ -196,6 +211,7 @@ Form.propTypes = {
 
   resetOnSubmit: PropTypes.bool,
   onValueChange: PropTypes.func,
+  persistFormData: PropTypes.bool,
 };
 
 export default Form;

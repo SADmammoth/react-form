@@ -1,6 +1,7 @@
 const types = {
   INIT: 'INIT',
   PUT: 'PUT',
+  OVERRIDE: 'OVERRIDE',
 };
 
 const actions = (dispatch) => ({
@@ -9,6 +10,9 @@ const actions = (dispatch) => ({
   },
   put: (data) => {
     dispatch({ type: types.PUT, data });
+  },
+  override: (data) => {
+    dispatch({ type: types.OVERRIDE, data });
   },
 });
 

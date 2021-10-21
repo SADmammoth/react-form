@@ -26,4 +26,8 @@ function put(state, { name, value }) {
   });
 }
 
-export { init, put };
+function override(data) {
+  return data;
+}
+
+export { init, put, override };
