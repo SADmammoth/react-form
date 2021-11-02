@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
+import Button from '@/generic/Button';
 import SelectedImage from '@/generic/SelectedImage';
 import createEvent from '@/helpers/createEvent';
 import renderTag from '@/helpers/renderTag';
@@ -40,7 +41,6 @@ function Image({
   }, [value]);
 
   const Input = renderTag(render, 'Input');
-  const Button = renderTag(render, 'Button');
   const Label = renderTag(render, 'Label');
 
   const onClose = () => {
@@ -57,7 +57,8 @@ function Image({
             variant="addFile"
             className={classes.button}
             onClick={() => {}}
-            disabled={disabled}>
+            disabled={disabled}
+            render={render}>
             Add file
           </Button>
         )}

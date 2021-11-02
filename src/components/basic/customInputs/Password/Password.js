@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { times } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
+import Button from '@/generic/Button';
 import createEvent from '@/helpers/createEvent';
 import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
@@ -119,7 +120,6 @@ function Password({
   );
 
   const Input = renderTag(render, 'Input');
-  const Button = renderTag(render, 'Button');
 
   return (
     <div className={classNames(className, classes.actionButtonWrapper)}>
@@ -150,7 +150,8 @@ function Password({
           setShowPassword((state) => !state);
           input.current.focus();
         }}
-        disabled={disabled}>
+        disabled={disabled}
+        render={render}>
         {showPassword ? 'hide' : 'show'}
       </Button>
     </div>

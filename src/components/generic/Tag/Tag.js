@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
+import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import Button from '../Button';
 import styles from './Tag.styles';
@@ -15,18 +16,18 @@ function Tag({ render, children, onDelete, disabled }) {
     event.preventDefault();
   };
 
-  const ButtonTag = render.Button || Button;
+  const Tag = renderTag(render, 'Tag');
 
   return (
-    <div className={classes.tag}>
+    <Tag className={classes.tag}>
       {children}
-      <ButtonTag
+      <Button
         className={classes.remove}
         variant="close"
         onClick={onClick}
         disabled={disabled}
       />
-    </div>
+    </Tag>
   );
 }
 

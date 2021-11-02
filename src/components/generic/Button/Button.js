@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
+import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import styles from './Button.styles';
 
@@ -14,12 +15,15 @@ function Button({
   className,
   onClick,
   disabled,
+  render,
   ...props
 }) {
   const classes = useStyles(theme);
 
+  const ButtonTag = renderTag(render, 'Button');
+
   return (
-    <button
+    <ButtonTag
       // eslint-disable-next-line react/button-has-type
       type={type}
       className={classNames(className, classes[variant])}
@@ -31,7 +35,7 @@ function Button({
       disabled={disabled}
       {...props}>
       {children}
-    </button>
+    </ButtonTag>
   );
 }
 

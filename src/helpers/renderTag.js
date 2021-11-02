@@ -1,13 +1,11 @@
-import Button from '@/generic/Button';
 import SearchOption from '@/generic/SearchOption';
-import Tag from '@/generic/Tag';
 
 const defaultTags = {
-  Button,
+  Button: 'button',
   Input: 'input',
   Group: 'div',
   Label: 'label',
-  Tag,
+  Tag: 'div',
   TextArea: 'textarea',
   Option: SearchOption,
   Form: 'form',

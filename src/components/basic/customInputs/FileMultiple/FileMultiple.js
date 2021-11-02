@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import classNames from 'classnames';
 import { differenceBy } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
+import Button from '@/generic/Button';
 import FileLabel from '@/generic/FileLabel';
 import getFileHash from '@/genericHelpers/getFileHash';
 import createEvent from '@/helpers/createEvent';
@@ -26,7 +27,6 @@ function FileMultiple({
   const input = useRef({});
 
   const Input = renderTag(render, 'Input');
-  const Button = renderTag(render, 'Button');
   const Label = renderTag(render, 'Label');
 
   const renderFiles = () =>
@@ -59,7 +59,8 @@ function FileMultiple({
           variant={value.length > 0 ? 'appendFile' : 'addFile'}
           className={classes.button}
           onClick={() => {}}
-          disabled={disabled}>
+          disabled={disabled}
+          render={render}>
           Add file
         </Button>
       </Label>

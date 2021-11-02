@@ -1,57 +1,7 @@
 import React from 'react';
 
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { createUseStyles } from 'react-jss';
-
-import styles from './Button.styles';
-
-const useStyles = createUseStyles(styles);
-
-function Button({
-  type,
-  variant,
-  children,
-  className,
-  onClick,
-  disabled,
-  ...props
-}) {
-  const classes = useStyles();
-
-  return (
-    <button
-      // eslint-disable-next-line react/button-has-type
-      type={type}
-      className={classNames(className, classes[variant], {
-        [classes.disabled]: disabled,
-      })}
-      onClick={(event) => {
-        event.preventDefault();
-
-        if (!disabled) onClick(event);
-      }}
-      disabled={disabled}
-      {...props}>
-      {children}
-    </button>
-  );
+function Button({ ...props }) {
+  return <button type="button" data-custom="custom" {...props} />;
 }
-
-Button.defaultProps = {
-  type: 'button',
-};
-
-Button.propTypes = {
-  type: PropTypes.string,
-  onClick: PropTypes.func,
-  variant: PropTypes.oneOf([
-    'actionButton',
-    'showPassword',
-    'hidePassword',
-    'addFile',
-    'close',
-  ]),
-};
 
 export default Button;

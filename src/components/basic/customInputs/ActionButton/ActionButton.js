@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
+import Button from '@/generic/Button';
 import createEvent from '@/helpers/createEvent';
-import renderTag from '@/helpers/renderTag';
 import theme from '@/styles/theme';
 import styles from './ActionButton.styles';
 
@@ -16,8 +16,6 @@ function ActionButton(actionButton, id, render, disabled, input) {
   useEffect(() => {
     setValue(input.props.value);
   }, [input.props.value]);
-
-  const Button = renderTag(render, 'Button');
 
   return (
     <div className={classes.wrapper}>
@@ -34,7 +32,8 @@ function ActionButton(actionButton, id, render, disabled, input) {
             onBlur(createEvent(name, newValue));
           }
         }}
-        disabled={disabled}>
+        disabled={disabled}
+        render={render}>
         {actionButton.label}
       </Button>
     </div>

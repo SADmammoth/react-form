@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
+import Button from '@/generic/Button';
 import FileLabel from '@/generic/FileLabel';
 import createEvent from '@/helpers/createEvent';
 import renderTag from '@/helpers/renderTag';
@@ -41,7 +42,6 @@ function File({
   };
 
   const Input = renderTag(render, 'Input');
-  const Button = renderTag(render, 'Button');
   const Label = renderTag(render, 'Label');
 
   return (
@@ -53,7 +53,8 @@ function File({
             variant="addFile"
             className={classes.button}
             onClick={() => {}}
-            disabled={disabled}>
+            disabled={disabled}
+            render={render}>
             Add file
           </Button>
         )}
