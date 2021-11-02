@@ -14,6 +14,7 @@ const SelectedImage = ({
   onClose,
   ButtonTag,
   disabled,
+  render,
 }) => {
   const classes = useStyles(theme);
 
@@ -29,6 +30,7 @@ const SelectedImage = ({
         onClose={onClose}
         ButtonTag={ButtonTag}
         disabled={disabled}
+        render={render}
       />
     </picture>
   );

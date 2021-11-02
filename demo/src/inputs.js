@@ -282,19 +282,19 @@ const inputs = [
   //     type: 'text/plain',
   //   }),
   // },
-  // {
-  //   type: 'file-multiple',
-  //   name: 'file-multiple',
-  //   label: 'Files',
-  //   value: [
-  //     new File(['foo'], 'foo.txt', {
-  //       type: 'text/plain',
-  //     }),
-  //     new File(['foo'], 'foo.txt', {
-  //       type: 'text/plain',
-  //     }),
-  //   ],
-  // },
+  {
+    type: 'file-multiple',
+    name: 'file-multiple',
+    label: 'Files',
+    value: [
+      new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+      }),
+      new File(['foo'], 'foo.txt', {
+        type: 'text/plain',
+      }),
+    ],
+  },
   // {
   //   type: 'image',
   //   name: 'image',

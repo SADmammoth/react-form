@@ -47,6 +47,7 @@ function FileMultiple({
           onClose={onClose}
           ButtonTag={Button}
           disabled={disabled}
+          render={render}
         />
       );
     });

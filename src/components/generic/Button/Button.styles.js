@@ -20,6 +20,9 @@ const passwordButton = {
 };
 
 const styles = {
+  button: {
+    pointerEvents: 'none',
+  },
   actionButton: {
     ...commonButton,
   },

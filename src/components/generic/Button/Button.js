@@ -26,13 +26,14 @@ function Button({
     <ButtonTag
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={classNames(className, classes[variant])}
+      className={classNames(className, classes.button, classes[variant])}
       onClick={(event) => {
         event.preventDefault();
 
         if (!disabled) onClick(event);
       }}
       disabled={disabled}
+      data-variant={variant}
       {...props}>
       {children}
     </ButtonTag>

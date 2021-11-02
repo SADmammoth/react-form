@@ -7,7 +7,7 @@ import styles from './FileLabel.styles';
 
 const useStyles = createUseStyles(styles);
 
-function FileLabel({ ButtonTag, name, size, onClose, disabled }) {
+function FileLabel({ ButtonTag, name, size, onClose, disabled, render }) {
   const classes = useStyles(theme);
 
   return (
@@ -20,6 +20,7 @@ function FileLabel({ ButtonTag, name, size, onClose, disabled }) {
         className={classes.close}
         onClick={onClose}
         disabled={disabled}
+        render={render}
       />
     </div>
   );

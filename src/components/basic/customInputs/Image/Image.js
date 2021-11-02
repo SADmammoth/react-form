@@ -71,6 +71,7 @@ function Image({
             onClose={onClose}
             ButtonTag={Button}
             disabled={disabled}
+            render={render}
           />
         )}
       </Label>

@@ -63,6 +63,7 @@ function ImageMultiple({
                   onClose={onClose}
                   ButtonTag={Button}
                   disabled={disabled}
+                  render={render}
                 />
               );
             })}
