@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": ["styled", "css", "sty", "classes"]
+      }
+    ],
+
+    "paths": {
+      "@/*": ["src/*"],
+      "@/Validator/*": ["src/Validator/*"],
+      "@/wrappers/*": ["src/components/wrappers/*"],
+      "@/generic/*": ["src/components/generic/*"],
+      "@/basic/*": ["src/components/basic/*"],
+      "@/helpers/*": ["src/helpers/*"],
+      "@/genericHelpers/*": ["src/helpers/generic/*"],
+      "@/stateHelpers/*": ["src/helpers/states/*"],
+      "@/maskHelpers/*": ["src/helpers/maskHelpers/*"],
+      "@/outputHelpers/*": ["src/helpers/output/*"],
+      "@/hooks/*": ["src/helpers/hooks/*"],
+      "@/styles/*": ["src/styles/*"]
+    }
+  },
+  "include": ["src/**/*", "typings.d.ts", "emotion.d.ts"],
+  "exclude": ["node_modules", "dist", "umd"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

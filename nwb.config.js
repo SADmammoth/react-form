@@ -9,7 +9,7 @@ module.exports = {
   },
   webpack: {
     extra: {
-      externals: ['react', 'react-jss', 'prop-types'],
+      // externals: ['react'],
     },
     aliases: {
       '@/': path.resolve('src/'),
@@ -24,6 +24,14 @@ module.exports = {
       '@/outputHelpers': path.resolve('src/helpers/output'),
       '@/hooks': path.resolve('src/helpers/hooks'),
       '@/styles': path.resolve('src/styles'),
+    },
+    config: (config) => {
+      config.resolve.extensions = ['.ts', '.tsx', '.js', '.jsx'];
+      config.module.rules.push({
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+      });
+      return config;
     },
   },
   devServer: {

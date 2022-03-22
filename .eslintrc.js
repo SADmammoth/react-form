@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   env: {
     browser: true,
@@ -8,62 +6,58 @@ module.exports = {
     node: true,
     jest: true,
   },
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     allowImportExportEverywhere: true,
     ecmaFeatures: {
       globalReturn: false,
     },
   },
-  extends: ['airbnb'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
   rules: {
     'no-console': 'off',
-    'react/prop-types': 0,
-    'no-undef': 1,
-    'implicit-arrow-linebreak': 0,
-    'operator-linebreak': 0,
-    'function-paren-newline': 0,
-    'react/jsx-props-no-spreading': 0,
-    'react/jsx-fragments': 0,
-    'react/jsx-filename-extension': 0,
-    'react/jsx-closing-bracket-location': 0,
-    'import/no-unresolved': 0,
-    'jsx-a11y/control-has-associated-label': 0,
-    'react/forbid-prop-types': 0,
-    'no-param-reassign': 0,
-    'object-curly-newline': 0,
-
-    'react/require-default-props': 0,
-    'react/destructuring-assignment': 0,
-    'no-shadow': 0,
-    'react/jsx-curly-newline': 0,
+    'import/extensions': 0,
+    'react/jsx-props-no-spreading': [2, { custom: 'ignore' }],
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': [2, { extensions: ['.jsx', '.tsx'] }],
     'import/no-unused-modules': [1, { unusedExports: true }],
-    indent: 0,
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    'react/jsx-fragments': 0,
   },
 
-  plugins: ['babel'],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
   settings: {
     'import/resolver': {
       alias: {
         map: [
-          ['@/', path.resolve('src/')],
-          ['@/Validator', path.resolve('src/Validator')],
-          ['@/wrappers', path.resolve('src/components/wrappers')],
-          ['@/generic', path.resolve('src/components/generic')],
-          ['@/basic', path.resolve('src/components/basic')],
-          ['@/helpers', path.resolve('src/helpers')],
-          ['@/genericHelpers', path.resolve('src/helpers/generic')],
-          ['@/stateHelpers', path.resolve('src/helpers/states')],
-          ['@/maskHelpers', path.resolve('src/helpers/maskHelpers')],
-          ['@/outputHelpers', path.resolve('src/helpers/output')],
-          ['@/hooks', path.resolve('src/helpers/hooks')],
-          ['@/styles', path.resolve('src/styles')],
+          ['@/', 'src/*'],
+          ['@/Validator', 'src/Validator/*'],
+          ['@/wrappers', 'src/components/wrappers/*'],
+          ['@/generic', 'src/components/generic/*'],
+          ['@/basic', 'src/components/basic/*'],
+          ['@/helpers', 'src/helpers/*'],
+          ['@/genericHelpers', 'src/helpers/generic/*'],
+          ['@/stateHelpers', 'src/helpers/states/*'],
+          ['@/maskHelpers', 'src/helpers/maskHelpers/*'],
+          ['@/outputHelpers', 'src/helpers/output/*'],
+          ['@/hooks', 'src/helpers/hooks/*'],
+          ['@/styles', 'src/styles/*'],
         ],
-        extensions: ['.js'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       },
     },
     react: {
