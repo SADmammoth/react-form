@@ -1,42 +1,27 @@
 import { ReactElement } from 'react';
 import FormHtmlProps from './FormHtmlProps';
 import InputsProps from './InputsProps';
-
-export interface FormData {
-  [key: string]: string;
-}
-
-export interface InputsComponentsList {
-  [key: string]: object | ReactElement;
-  $list: ReactElement[];
-}
-
-export interface RenderElementsProp {
-  Group: ReactElement;
-  Label: ReactElement;
-  Loader: (size: string | number, centered: boolean) => ReactElement;
-  Input: ReactElement;
-  Form: ReactElement;
-}
-
-export enum NotificationStatus {
-  Success = 'success',
-  Error = 'error',
-}
+import {
+  OnInputUpdateCallback,
+  NotificationsVisibility,
+  NotifyCallback,
+  RenderElementsProp,
+  OnSubmitCallback,
+} from './basic';
 
 export default interface FormProps extends FormHtmlProps {
   inputs: InputsProps;
 
-  onSubmit?: ((data: FormData) => Promise<void>) | false;
+  onSubmit?: OnSubmitCallback;
   submitButton?: ReactElement;
   resetOnSubmit?: boolean;
   persistFormData?: boolean;
 
-  onInputsUpdate?: (inputs: InputsComponentsList) => void;
+  onInputsUpdate?: OnInputUpdateCallback;
   onValueChange?: (diff: { [key: string]: unknown }) => void;
 
-  notify?: (status: NotificationStatus, error?: unknown) => void;
-  showNotifications?: 'all' | 'errorsOnly' | 'hideAll';
+  notify?: NotifyCallback;
+  showNotifications?: NotificationsVisibility;
 
   render?: RenderElementsProp;
 
