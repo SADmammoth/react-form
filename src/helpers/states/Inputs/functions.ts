@@ -1,8 +1,10 @@
 import { omit } from 'lodash-es';
 import checkFormNames from '@/helpers/checkFormNames';
+import { InputsState } from '@/helpers/types/basic';
+import { ActionDataType } from './actions';
 
-function init({ inputsProps }) {
-  const state = {};
+function init({ inputsProps }: ActionDataType) {
+  const state: InputsState = {};
 
   const duplicateNames = checkFormNames(inputsProps);
 
@@ -11,16 +13,17 @@ function init({ inputsProps }) {
     return state;
   }
 
+  let value, defaultValue, inputState;
+
   inputsProps.forEach((input) => {
-    state[input.name] = {
-      ...omit(input, ['value', 'defaultValue']),
-    };
+    ({ value, defaultValue, ...inputState } = input);
+    state[input.name] = inputState;
   });
 
   return state;
 }
 
-function put(state, { name, props }) {
+function put(state: InputsState, { name, props }: ) {
   return {
     ...state,
     [name]: {

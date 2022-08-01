@@ -11,6 +11,7 @@ export interface InputProps {
   group: { id: string; title: string };
   loaded: boolean;
   value: any;
+  defaultValue: any;
 
   type: InputType;
   name: string;

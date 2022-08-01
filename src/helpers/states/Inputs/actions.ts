@@ -1,28 +1,29 @@
-const types = {
-  INIT: 'INIT',
-  SET_INVALID: 'SET_INVALID',
-  UNSET_INVALID: 'UNSET_INVALID',
-  PUT: 'PUT',
-};
+import InputsProps from '@/helpers/types/InputsProps';
 
-const actions = (
-  dispatch: (arg: {
-    type: typeof types[keyof typeof types];
-    data: unknown;
-  }) => void,
-) => ({
-  init: (data: unknown) => {
-    dispatch({ type: types.INIT, data });
+enum ACTION_TYPES {
+  INIT = 'INIT',
+  SET_INVALID = 'SET_INVALID',
+  UNSET_INVALID = 'UNSET_INVALID',
+  PUT = 'PUT',
+}
+
+export type InitActionDataType = { inputsProps: InputsProps }; //TODO
+export type PutActionDataType = { name: unknown; props: unknown }; //TODO
+export type ActionPayload = { type: ACTION_TYPES; data: InitActionDataType };
+
+const actions = (dispatch: (payload: ActionPayload) => void) => ({
+  init: (data: InitActionDataType) => {
+    dispatch({ type: ACTION_TYPES.INIT, data });
   },
-  put: (data: unknown) => {
-    dispatch({ type: types.PUT, data });
+  put: (data: PutActionDataType) => {
+    dispatch({ type: ACTION_TYPES.PUT, data });
   },
   setInvalid: (data: unknown) => {
-    dispatch({ type: types.SET_INVALID, data });
+    dispatch({ type: ACTION_TYPES.SET_INVALID, data });
   },
   unsetInvalid: (data: unknown) => {
-    dispatch({ type: types.UNSET_INVALID, data });
+    dispatch({ type: ACTION_TYPES.UNSET_INVALID, data });
   },
 });
 
-export { types, actions };
+export { ACTION_TYPES, actions };
