@@ -1,0 +1,15 @@
+export enum InputType {
+  Text = 'text',
+  Number = 'number',
+  TextArea = 'textarea',
+  Checkbox = 'checkbox',
+  CheckboxGroup = 'checkbox-group',
+  RadioGroup = 'radio-group',
+  Slider = 'slider',
+  Range = 'range',
+  Select = 'select',
+  Search = 'search',
+  File = 'file',
+  Image = 'image',
+  Subform = 'subform',
+}

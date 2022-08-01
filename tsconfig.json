@@ -19,21 +19,21 @@
     ],
 
     "paths": {
-      "@/*": ["src/*"],
-      "@/Validator/*": ["src/Validator/*"],
-      "@/wrappers/*": ["src/components/wrappers/*"],
-      "@/generic/*": ["src/components/generic/*"],
-      "@/basic/*": ["src/components/basic/*"],
-      "@/helpers/*": ["src/helpers/*"],
-      "@/genericHelpers/*": ["src/helpers/generic/*"],
-      "@/stateHelpers/*": ["src/helpers/states/*"],
-      "@/maskHelpers/*": ["src/helpers/maskHelpers/*"],
-      "@/outputHelpers/*": ["src/helpers/output/*"],
-      "@/hooks/*": ["src/helpers/hooks/*"],
-      "@/styles/*": ["src/styles/*"]
+      "@/*": ["oldsrc/*"],
+      "@/Validator/*": ["oldsrc/Validator/*"],
+      "@/wrappers/*": ["oldsrc/components/wrappers/*"],
+      "@/generic/*": ["oldsrc/components/generic/*"],
+      "@/basic/*": ["oldsrc/components/basic/*"],
+      "@/helpers/*": ["oldsrc/helpers/*"],
+      "@/genericHelpers/*": ["oldsrc/helpers/generic/*"],
+      "@/stateHelpers/*": ["oldsrc/helpers/states/*"],
+      "@/maskHelpers/*": ["oldsrc/helpers/maskHelpers/*"],
+      "@/outputHelpers/*": ["oldsrc/helpers/output/*"],
+      "@/hooks/*": ["oldsrc/helpers/hooks/*"],
+      "@/styles/*": ["oldsrc/styles/*"]
     }
   },
-  "include": ["src/**/*", "typings.d.ts", "emotion.d.ts"],
+  "include": ["oldsrc/**/*", "typings.d.ts", "emotion.d.ts"],
   "exclude": ["node_modules", "dist", "umd"],
   "ts-node": {
     "compilerOptions": {
