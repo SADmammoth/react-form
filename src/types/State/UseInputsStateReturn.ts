@@ -6,6 +6,6 @@ export type UseInputsStateReturn<Props extends InputsProps> = [
   inputs: InputsState<Props>,
   updateInput: <Name extends keyof Props>(
     name: Name,
-    props: InputPropsByType,
+    props: Partial<InputPropsByType[Props[Name]['type']]>,
   ) => void,
 ];

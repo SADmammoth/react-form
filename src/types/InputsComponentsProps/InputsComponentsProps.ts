@@ -1,11 +1,8 @@
+import { InputPropsByType } from '../InputsProps/InputProps';
 import { InputsProps } from '../InputsProps/InputsProps';
-import { SetValueCallback } from '../SetValueCallback';
-import { InputsState } from '../State/InputsState';
-import { UpdateValueCallback } from '../UpdateValueCallback';
+import { CommonInputsComponentsProps } from './CommonInputsComponentsProps';
 
-export type InputsComponentsProps<Props extends InputsProps> =
-  InputsState<Props> & {
-    formId: string;
-    updateValue: UpdateValueCallback;
-    setValue: SetValueCallback;
-  };
+export type InputsComponentsProps<Props extends InputsProps> = {
+  [name in keyof Props]: InputPropsByType[Props[name]['type']] &
+    CommonInputsComponentsProps<Props>;
+};
