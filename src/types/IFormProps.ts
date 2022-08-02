@@ -1,9 +1,9 @@
 import { InputsProps } from './InputsProps/InputsProps';
 import { OnSubmitCallback } from './OnSubmitCallback';
 
-export interface IFormProps {
+export interface IFormProps<Props extends InputsProps> {
   inputs: InputsProps;
 
-  onSubmit?: OnSubmitCallback;
+  onSubmit?: OnSubmitCallback<Props>;
   resetOnSubmit?: boolean;
 }
