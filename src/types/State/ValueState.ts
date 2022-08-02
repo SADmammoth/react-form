@@ -5,7 +5,7 @@ import { ControlProps } from '../InputsProps/atomic/ControlProps';
 import { Validators } from '../InputsProps/atomic/ValidatorProps';
 
 export type ValueState<Props extends InputsProps, Name extends keyof Props> = {
-  value: InputPropValueType<Props, Name>;
-  control: ControlProps;
-  bind: unknown; //TODO
-} & Partial<Validators>;
+  value?: InputPropValueType<Props, Name>;
+  control?: ControlProps;
+  bind?: string;
+} & Validators;

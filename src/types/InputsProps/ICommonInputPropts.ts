@@ -12,6 +12,7 @@ export interface ICommonInputProps {
   validator?: ValidatorProps;
   validationMessage?: string;
   disabled?: boolean;
+  bind?: string;
 
   value?: unknown;
 }

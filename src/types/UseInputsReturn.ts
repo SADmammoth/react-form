@@ -3,16 +3,14 @@ import { InputsComponentsProps } from './InputsComponentsProps/InputsComponentsP
 import { InputPropValueType } from './InputsProps/InputPropValueType';
 import { InputPropsByType } from './InputsProps/InputProps';
 import { InputsProps } from './InputsProps/InputsProps';
+import { SetValueCallback } from './SetValueCallback';
 
 export type UseInputsReturn<Props extends InputsProps> = {
   inputs: InputsComponentsProps<Props>;
   formProps: IFormComponentProps;
-  setValue: <Name extends keyof Props>(
-    name: Name,
-    value: InputPropValueType<Props, Name>,
-  ) => boolean;
+  setValue: SetValueCallback<Props>;
   setInputProps: <Name extends keyof Props>(
     name: Name,
     props: Partial<InputPropsByType[Props[Name]['type']]>,
-  ) => boolean;
+  ) => void;
 };

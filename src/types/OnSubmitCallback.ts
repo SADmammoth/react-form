@@ -1,6 +1,6 @@
-import { FormDataOutput } from './FormDataOutput/FormDataOutput';
+import { OnSubmitFunction } from '../functions/onSubmit';
 import { InputsProps } from './InputsProps/InputsProps';
 
 export type OnSubmitCallback<Props extends InputsProps> =
-  | ((data: FormDataOutput<Props>) => Promise<void>)
+  | OnSubmitFunction
   | false;
