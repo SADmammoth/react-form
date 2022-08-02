@@ -23,8 +23,8 @@ export type InputProps =
   | ISelectInputProps
   | ISearchInputProps
   | IFileInputProps
-  | IImageInputProps
-  | ISubform;
+  | IImageInputProps;
+// | ISubform
 
 export type InputPropsByType = {
   [InputType.Text]: ITextInputProps;
@@ -38,5 +38,5 @@ export type InputPropsByType = {
   [InputType.Search]: ISearchInputProps;
   [InputType.File]: IFileInputProps;
   [InputType.Image]: IImageInputProps;
-  [InputType.Subform]: ISubform;
-};
+  // [InputType.Subform]: ISubform;
+} & { [type in InputType]: unknown };

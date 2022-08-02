@@ -1,3 +1,4 @@
+import { ICommonInputProps } from '../ICommonInputPropts';
 import { ValueOption, ValueOptions } from '../atomic/ValueOptions';
 
 export type OptionProps = {
@@ -7,7 +8,7 @@ export type OptionProps = {
   };
 };
 
-export interface IOptionBasedTypes {
+export interface IOptionBasedTypes extends ICommonInputProps {
   valueOptions: ValueOptions;
   value?: ValueOption;
   optionsProps?: OptionProps;

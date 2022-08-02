@@ -1,12 +1,9 @@
 import { InputProps, InputPropsByType } from './InputProps';
 
-export type InputsProps<Names extends keyof any> = {
-  [name in Names]: InputProps;
+export type InputsProps = {
+  [name: string]: InputProps;
 };
 
-export type TypeByName<
-  Names extends keyof any,
-  Props extends InputsProps<Names>,
-> = {
-  [name in Names]: Props[name]['type'];
+export type TypeByName<Props extends InputsProps> = {
+  [name in keyof Props]: Props[name]['type'];
 };

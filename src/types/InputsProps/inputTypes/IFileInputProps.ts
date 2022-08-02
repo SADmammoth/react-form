@@ -6,7 +6,7 @@ export type FileIcons = {
   [fileExtension: string]: string;
 };
 
-export interface IFileInputProps extends ICommonInputProps, IFileBasedInputs {
+export interface IFileInputProps extends IFileBasedInputs {
   type: InputType.File;
   fileIcons?: FileIcons;
 }

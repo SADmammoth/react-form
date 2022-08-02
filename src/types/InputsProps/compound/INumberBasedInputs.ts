@@ -1,4 +1,6 @@
-export interface INumberBasedInputs {
+import { ICommonInputProps } from '../ICommonInputPropts';
+
+export interface INumberBasedInputs extends ICommonInputProps {
   value?: number;
 
   min?: number;

@@ -5,13 +5,15 @@ import { ValidatorProps } from './atomic/ValidatorProps';
 
 export interface ICommonInputProps {
   type: InputType;
-  required: boolean;
+  required?: boolean;
   label: string;
-  group: IGroup;
-  control: ControlProps;
-  converters: ConvertersProps;
-  hidden: boolean;
-  validator: ValidatorProps;
-  validationMessage: string;
-  disabled: boolean;
+  group?: IGroup;
+  control?: ControlProps;
+  converters?: ConvertersProps;
+  hidden?: boolean;
+  validator?: ValidatorProps;
+  validationMessage?: string;
+  disabled?: boolean;
+
+  value?: unknown;
 }

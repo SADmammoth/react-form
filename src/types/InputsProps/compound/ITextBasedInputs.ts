@@ -1,7 +1,8 @@
+import { ICommonInputProps } from '../ICommonInputPropts';
 import { MaskType } from '../atomic/MaskType';
 import { ByCharValidatorProps } from '../atomic/ValidatorProps';
 
-export interface ITextBasedInputs {
+export interface ITextBasedInputs extends ICommonInputProps {
   value?: string;
 
   placeholder?: string;
