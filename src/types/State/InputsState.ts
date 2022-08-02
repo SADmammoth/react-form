@@ -1,4 +1,4 @@
-import { InputsProps } from '../InputsProps/InputsProps';
+import { InputsProps, TypeByName } from '../InputsProps/InputsProps';
 import { InputState } from './InputState';
 
 export type InputsState<Props extends InputsProps> = {

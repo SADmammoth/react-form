@@ -39,4 +39,4 @@ export type InputPropsByType = {
   [InputType.File]: IFileInputProps;
   [InputType.Image]: IImageInputProps;
   // [InputType.Subform]: ISubform;
-} & { [type in InputType]: unknown };
+};
