@@ -48,5 +48,9 @@ export function useValueState<InitInputsProps extends InputsProps>(
     [values],
   );
 
-  return [values, updateValue, setValue];
+  const resetState = () => {
+    setValues(initState);
+  };
+
+  return [values, updateValue, setValue, resetState];
 }

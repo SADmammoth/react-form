@@ -1,0 +1,1 @@
+export type ResetStateCallback = () => void;

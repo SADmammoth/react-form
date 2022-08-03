@@ -14,5 +14,9 @@ export function useInputsState<InitInputsProps extends InputsProps>(
       return { ...oldInputs, [name]: { ...oldInputs[name], ...props } };
     });
   };
-  return [inputs, updateInputs];
+
+  const resetState = () => {
+    setInputs(initState);
+  };
+  return [inputs, updateInputs, resetState];
 }

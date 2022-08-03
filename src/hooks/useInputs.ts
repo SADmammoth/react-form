@@ -2,6 +2,7 @@ import { fillDefaultFields } from '../functions/fillDefaultFields';
 import { formatFormOutput } from '../functions/formatFormOutput';
 import { inputsPropsToStates } from '../functions/inputsPropsToState';
 import { stateToInputsComponentsProps } from '../functions/stateToInputsComponentsProps';
+import { validateForm } from '../functions/validateForm';
 import { IFormProps } from '../types/IFormProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { UseInputsReturn } from '../types/UseInputsReturn';
@@ -19,8 +20,10 @@ export function useInputs<InitInputsProps extends InputsProps>({
     fillDefaultFields(inputsProps),
   );
 
-  const [inputs, updateInput] = useInputsState(inputsInitState);
-  const [values, updateValue, setValue] = useValueState(valuesInitState);
+  const [inputs, updateInput, resetInputsState] =
+    useInputsState(inputsInitState);
+  const [values, updateValue, setValue, resetValuesState] =
+    useValueState(valuesInitState);
 
   return {
     inputs: stateToInputsComponentsProps(inputs, {
@@ -30,7 +33,19 @@ export function useInputs<InitInputsProps extends InputsProps>({
     }),
     formProps: {
       onSubmit: () => {
-        if (onSubmit) return onSubmit(formatFormOutput(values), resetOnSubmit);
+        if (!validateForm(values)) {
+          //Notification
+          return;
+        }
+        const data = formatFormOutput(values);
+
+        if (onSubmit)
+          onSubmit(data).then(() => {
+            if (resetOnSubmit) {
+              resetInputsState();
+              resetValuesState();
+            }
+          });
       },
     },
     setInputProps: updateInput,
