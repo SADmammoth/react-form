@@ -10,8 +10,8 @@ import { getValidatorByKey } from './getValidatorByKey';
 export function inputsPropsToStates<InitInputsProps extends InputsProps>(
   props: InitInputsProps,
 ): [InputsState<InitInputsProps>, ValuesState<InitInputsProps>] {
-  let inputsState = {};
-  let valuesState = {};
+  let inputsState: Record<string, any> = {};
+  let valuesState: Record<string, any> = {};
 
   const propsEntries = Object.entries(props);
 

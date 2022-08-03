@@ -6,6 +6,7 @@ export function validateForm<Props extends InputsProps>(
 ) {
   //Highlight fields
   return Object.values(valuesState).every(({ validator, value }) => {
+    if (!validator) return true;
     return validator(value);
   });
 }

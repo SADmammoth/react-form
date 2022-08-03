@@ -32,20 +32,24 @@ export function useInputs<InitInputsProps extends InputsProps>({
       updateValue,
     }),
     formProps: {
-      onSubmit: () => {
+      onSubmit: (event: SubmitEvent) => {
+        if (onSubmit) {
+          event.preventDefault();
+        }
         if (!validateForm(values)) {
           //Notification
-          return;
+          console.error('Validation failed');
+          return false;
         }
         const data = formatFormOutput(values);
-
-        if (onSubmit)
+        if (onSubmit) {
           onSubmit(data).then(() => {
             if (resetOnSubmit) {
               resetInputsState();
               resetValuesState();
             }
           });
+        }
       },
     },
     setInputProps: updateInput,

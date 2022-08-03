@@ -1,3 +1,3 @@
 export interface IFormComponentProps {
-  onSubmit?: () => void;
+  onSubmit?: (event: SubmitEvent) => void;
 }

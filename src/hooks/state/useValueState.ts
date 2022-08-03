@@ -16,13 +16,13 @@ export function useValueState<InitInputsProps extends InputsProps>(
       //TODO Highlight Input
       //TODO Control
       //TODO Binding
+
       if (oldValue.byCharValidator) {
-        if (oldValue.byCharValidator(value)) {
-          setValues({ ...values, [name]: { ...oldValue, value } });
-          return true;
+        if (!oldValue.byCharValidator(value)) {
+          return false;
         }
-        return false;
       }
+      setValues({ ...values, [name]: { ...oldValue, value } });
 
       return true;
     },
@@ -36,12 +36,11 @@ export function useValueState<InitInputsProps extends InputsProps>(
       //TODO Control
       //TODO Binding
       if (oldValue.validator) {
-        if (oldValue.validator(value)) {
-          setValues({ ...values, [name]: { ...oldValue, value } });
-          return true;
+        if (!oldValue.validator(value)) {
+          return false;
         }
-        return false;
       }
+      setValues({ ...values, [name]: { ...oldValue, value } });
 
       return true;
     },
