@@ -1,3 +1,4 @@
+import { fillDefaultFields } from '../functions/fillDefaultFields';
 import { formatFormOutput } from '../functions/formatFormOutput';
 import { inputsPropsToStates } from '../functions/inputsPropsToState';
 import { stateToInputsComponentsProps } from '../functions/stateToInputsComponentsProps';
@@ -14,7 +15,9 @@ export function useInputs<InitInputsProps extends InputsProps>({
   onSubmit,
   resetOnSubmit,
 }: IFormProps<InitInputsProps>): UseInputsReturn<InitInputsProps> {
-  const [inputsInitState, valuesInitState] = inputsPropsToStates(inputsProps);
+  const [inputsInitState, valuesInitState] = inputsPropsToStates(
+    fillDefaultFields(inputsProps),
+  );
 
   const [inputs, updateInput] = useInputsState(inputsInitState);
   const [values, updateValue, setValue] = useValueState(valuesInitState);

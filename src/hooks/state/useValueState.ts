@@ -13,12 +13,18 @@ export function useValueState<InitInputsProps extends InputsProps>(
   const updateValue: UpdateValueCallback<InitInputsProps> = useCallback(
     (name, value) => {
       const oldValue = values[name];
-      if (oldValue.byCharValidator && oldValue.byCharValidator(value)) {
-        setValues({ ...values, [name]: { ...oldValue, value } });
-        return true;
-      }
       //TODO Highlight Input
-      return false;
+      //TODO Control
+      //TODO Binding
+      if (oldValue.byCharValidator) {
+        if (oldValue.byCharValidator(value)) {
+          setValues({ ...values, [name]: { ...oldValue, value } });
+          return true;
+        }
+        return false;
+      }
+
+      return true;
     },
     [values],
   );
@@ -26,12 +32,18 @@ export function useValueState<InitInputsProps extends InputsProps>(
   const setValue: SetValueCallback<InitInputsProps> = useCallback(
     (name, value) => {
       const oldValue = values[name];
-      if (oldValue.validator && oldValue.validator(value)) {
-        setValues({ ...values, [name]: { ...oldValue, value } });
-        return true;
-      }
       //TODO Highlight Input
-      return false;
+      //TODO Control
+      //TODO Binding
+      if (oldValue.validator) {
+        if (oldValue.validator(value)) {
+          setValues({ ...values, [name]: { ...oldValue, value } });
+          return true;
+        }
+        return false;
+      }
+
+      return true;
     },
     [values],
   );

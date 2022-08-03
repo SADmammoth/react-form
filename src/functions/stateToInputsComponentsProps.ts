@@ -7,5 +7,9 @@ export function stateToInputsComponentsProps<Props extends InputsProps>(
   inputsState: InputsState<Props>,
   commonProps: CommonInputsComponentsProps<Props>,
 ): InputsComponentsProps<Props> {
-  return {} as unknown as InputsComponentsProps<Props>;
+  return Object.fromEntries(
+    Object.entries(inputsState).map(([name, inputState]) => {
+      return [name, { ...inputState, ...commonProps }];
+    }),
+  ) as InputsComponentsProps<Props>;
 }
