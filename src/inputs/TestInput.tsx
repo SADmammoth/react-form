@@ -27,12 +27,12 @@ const TestInput = ({
         name={name}
         placeholder={placeholder}
         value={value as string}
-        onInput={(event) => {
+        onChange={(event) => {
           //@ts-ignore
           updateValue(name, event.target.value);
           event.preventDefault();
         }}
-        onChange={(event) => {
+        onBlur={(event) => {
           //@ts-ignore
           setValue(name, event.target.value);
           event.preventDefault();

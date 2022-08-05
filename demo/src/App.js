@@ -1,28 +1,24 @@
 import React, { Fragment, useState } from 'react';
 import { useInputs } from '../../src';
 import TestInput from '../../src/inputs/TestInput';
+import { withValueState } from '../../src/inputs/withValueState';
+import Form from './Form';
 
 const App = () => {
-  const { inputs, formProps } = useInputs({
-    inputs: {
-      one: {
-        type: 'text',
-        label: 'Label',
-        placeholder: 'Label',
-      },
-    },
-    formId: 'form',
-    onSubmit: async (data) => {
-      console.log(data);
-    },
-  });
+  const Inp = withValueState(TestInput);
 
   return (
     <Fragment>
-      <form {...formProps}>
-        <TestInput {...inputs.one} />
-        <button type="submit">Submit</button>
-      </form>
+      <Form />
+      <Inp
+        label="Der"
+        name="name"
+        type="checkbox"
+        value="der"
+        onChange={(value) => {
+          console.log('OnChange', value);
+        }}
+      />
     </Fragment>
   );
 };
