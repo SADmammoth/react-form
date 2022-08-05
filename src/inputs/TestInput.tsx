@@ -30,10 +30,12 @@ const TestInput = ({
         onInput={(event) => {
           //@ts-ignore
           updateValue(name, event.target.value);
+          event.preventDefault();
         }}
         onChange={(event) => {
           //@ts-ignore
           setValue(name, event.target.value);
+          event.preventDefault();
         }}
       />
       <label htmlFor={id}>{label}</label>

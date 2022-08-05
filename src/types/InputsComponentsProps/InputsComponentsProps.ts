@@ -4,5 +4,8 @@ import { CommonInputsComponentsProps } from './CommonInputsComponentsProps';
 
 export type InputsComponentsProps<Props extends InputsProps> = {
   [name in keyof Props]: InputPropsByType[Props[name]['type']] &
-    CommonInputsComponentsProps<Props> & { name: string };
+    CommonInputsComponentsProps<Props> & {
+      name: string;
+      value: Props[name]['value'];
+    };
 };

@@ -26,7 +26,7 @@ export function useInputs<InitInputsProps extends InputsProps>({
     useValueState(valuesInitState);
 
   return {
-    inputs: stateToInputsComponentsProps(inputs, {
+    inputs: stateToInputsComponentsProps(inputs, values, {
       formId,
       setValue,
       updateValue,

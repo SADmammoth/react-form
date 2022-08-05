@@ -9,9 +9,6 @@ const App = () => {
         type: 'text',
         label: 'Label',
         placeholder: 'Label',
-        validator: () => {
-          return false;
-        },
       },
     },
     formId: 'form',
