@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { useInputs } from '../../src';
+import { useInputsStyles } from '../../src/hooks/useInputsStyles';
 import TextInput from '../../src/inputs/TextInput';
 
 const Form = () => {
-  const { inputs, formProps } = useInputs({
+  const { inputs, formProps, stylesData } = useInputs({
     inputs: {
       one: {
         type: 'text',
@@ -17,9 +18,11 @@ const Form = () => {
     },
   });
 
+  const styles = useInputsStyles(stylesData);
+
   return (
     <form {...formProps}>
-      <TextInput {...inputs.one} />
+      <TextInput {...inputs.one} style={styles.one} />
       <button type="submit">Submit</button>
     </form>
   );

@@ -4,7 +4,7 @@ import { InputComponentProps } from '../types/InputsComponentsProps/InputsCompon
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 
-const TestInput = ({
+const TestInput = <Name extends string>({
   type,
   label,
   name,
