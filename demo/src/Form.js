@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useInputs } from '../../src';
-import TestInput from '../../src/inputs/TestInput';
+import TextInput from '../../src/inputs/TextInput';
 
 const Form = () => {
   const { inputs, formProps } = useInputs({
@@ -19,7 +19,7 @@ const Form = () => {
 
   return (
     <form {...formProps}>
-      <TestInput {...inputs.one} />
+      <TextInput {...inputs.one} />
       <button type="submit">Submit</button>
     </form>
   );

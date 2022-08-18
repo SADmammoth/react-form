@@ -1,10 +1,8 @@
 import React from 'react';
-import { CommonInputsComponentsProps } from '../types/InputsComponentsProps/CommonInputsComponentsProps';
-import { InputPropsIntersection } from '../types/InputsProps/InputProps';
+import { Optional } from '../helpers/Optional';
+import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
-
-type Props = InputPropsIntersection &
-  CommonInputsComponentsProps<InputsProps> & { name: string };
+import { InputType } from '../types/InputsProps/atomic/InputType';
 
 const TestInput = ({
   type,
@@ -15,10 +13,11 @@ const TestInput = ({
   value,
   setValue,
   updateValue,
-  ...props
-}: Props) => {
+  disabled,
+  required,
+}: InputComponentProps<InputsProps, InputType.Text>) => {
   const id = formId + name;
-  console.log(value);
+
   return (
     <div>
       <input
@@ -37,8 +36,12 @@ const TestInput = ({
           setValue(name, event.target.value);
           event.preventDefault();
         }}
+        disabled={disabled}
+        required={required}
       />
-      <label htmlFor={id}>{label}</label>
+      <Optional $={!!label}>
+        <label htmlFor={id}>{label}</label>
+      </Optional>
     </div>
   );
 };
