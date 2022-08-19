@@ -16,5 +16,5 @@ export type InputComponentProps<
     value: InputPropsByType[Type]['value'];
     type: Type;
 
-    styles?: InputStyle<Props>[string];
+    style?: InputStyle<Props>[string];
   };

@@ -1,7 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { useInputs } from '../../src';
-import { useInputsStyles } from '../../src/hooks/useInputsStyles';
-import TextInput from '../../src/inputs/TextInput';
+import { useInputs, useInputsStyles, TextInput, Theme } from '../../src';
 
 const Form = () => {
   const { inputs, formProps, stylesData } = useInputs({
@@ -21,10 +19,12 @@ const Form = () => {
   const styles = useInputsStyles(stylesData);
 
   return (
-    <form {...formProps}>
-      <TextInput {...inputs.one} style={styles.one} />
-      <button type="submit">Submit</button>
-    </form>
+    <Theme>
+      <form {...formProps}>
+        <TextInput {...inputs.one} style={styles.one} />
+        <button type="submit">Submit</button>
+      </form>
+    </Theme>
   );
 };
 

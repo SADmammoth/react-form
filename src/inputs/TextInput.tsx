@@ -1,10 +1,11 @@
 import React from 'react';
+import { css } from '@emotion/react';
 import { Optional } from '../helpers/Optional';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 
-const TestInput = <Name extends string>({
+const TextInput = ({
   type,
   label,
   name,
@@ -15,12 +16,16 @@ const TestInput = <Name extends string>({
   updateValue,
   disabled,
   required,
+  style,
 }: InputComponentProps<InputsProps, InputType.Text>) => {
   const id = formId + name;
+
+  const cssProp = style ? style.root : null;
 
   return (
     <div>
       <input
+        css={cssProp}
         id={id}
         type={type}
         name={name}
@@ -46,4 +51,4 @@ const TestInput = <Name extends string>({
   );
 };
 
-export default TestInput;
+export default TextInput;

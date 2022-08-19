@@ -24,10 +24,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
-    "@emotion/styled": "^11.8.1",
-    "@types/lodash-es": "^4.17.6",
-    "classnames": "^2.3.1",
-    "lodash-es": "^4.17.21"
+    "emotion-normalize": "^11.0.1"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
@@ -35,14 +32,12 @@
     "react-jss": "^10.7.1"
   },
   "devDependencies": {
-    "@emotion/babel-preset-css-prop": "^11.2.0",
     "@trivago/prettier-plugin-sort-imports": "^2.0.2",
     "@types/react": "^17.0.41",
     "@types/react-dom": "^17.0.14",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-emotion": "^11.0.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-import-resolver-alias": "^1.1.2",

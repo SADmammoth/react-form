@@ -1,11 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { useInputs } from '../../src';
-import TestInput from '../../src/inputs/TestInput';
+import {TextInput} from '../../src';
 import { withValueState } from '../../src/inputs/withValueState';
 import Form from './Form';
 
 const App = () => {
-  const Inp = withValueState(TestInput);
+  const Inp = withValueState(TextInput);
 
   return (
     <Fragment>

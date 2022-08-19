@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "importHelpers": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": "./",
@@ -33,7 +34,7 @@
       "@/styles/*": ["oldsrc/styles/*"]
     }
   },
-  "include": ["oldsrc/**/*", "typings.d.ts", "emotion.d.ts"],
+  "include": ["src/**/*", "typings.d.ts", "emotion.d.ts"],
   "exclude": ["node_modules", "dist", "umd"],
   "ts-node": {
     "compilerOptions": {
