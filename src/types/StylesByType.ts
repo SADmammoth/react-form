@@ -5,5 +5,7 @@ import { InputType } from './InputsProps/atomic/InputType';
 export type StylesByType = {
   [key in InputType]: ProcessedClasses<{
     root: Interpolation<Theme>;
+    inputBox: Interpolation<Theme>;
+    label: Interpolation<Theme>;
   }>;
 } & { [type in InputType]: ProcessedClasses<Classes> };

@@ -20,12 +20,14 @@ const TextInput = ({
 }: InputComponentProps<InputsProps, InputType.Text>) => {
   const id = formId + name;
 
-  const cssProp = style ? style.root : null;
+  const inputStyle = style ? style.root : null;
+  const inputBoxStyle = style ? style.inputBox : null;
+  const labelStyle = style ? style.label : null;
 
   return (
-    <div>
+    <div css={inputBoxStyle}>
       <input
-        css={cssProp}
+        css={inputStyle}
         id={id}
         type={type}
         name={name}
@@ -45,7 +47,9 @@ const TextInput = ({
         required={required}
       />
       <Optional $={!!label}>
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id} css={labelStyle}>
+          {label}
+        </label>
       </Optional>
     </div>
   );

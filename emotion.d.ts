@@ -6,5 +6,24 @@ declare module '@emotion/react' {
     typography: {
       fontFamily: string;
     };
+    color: {
+      common: string;
+      disabled: string;
+      background: string;
+      highlight: string;
+
+      commonText: string;
+      secondaryText: string;
+      disabledText: string;
+
+      error: string;
+      errorBackground: string;
+      errorSecondaryText: string;
+      errorText: string;
+    };
+    misc: {
+      borderRadius: string;
+      inputWidth: string;
+    };
   }
 }
