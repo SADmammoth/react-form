@@ -7,4 +7,4 @@ export type SetValueCallback<Props extends InputsProps> = <
 >(
   name: Name,
   value: Value,
-) => boolean;
+) => Value | undefined;

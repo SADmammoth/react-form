@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { ProcessedClasses } from '../styles/helpers/classes';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { StylesByType } from '../types/StylesByType';
+import { NumberInputStyles } from '../styles/NumberInput.styles';
 import { TextInputStyles } from '../styles/TextInput.styles.';
 
 function _placeholderStyles() {
@@ -15,6 +16,7 @@ function _placeholderStyles() {
 const TYPES = {
   ..._placeholderStyles(),
   [InputType.Text]: TextInputStyles,
+  [InputType.Number]: NumberInputStyles,
 };
 
 export function getStyleByType<Type extends InputType>(

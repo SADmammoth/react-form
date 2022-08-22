@@ -16,15 +16,15 @@ export function useValueState<InitInputsProps extends InputsProps>(
       //TODO Highlight Input
       //TODO Control
       //TODO Binding
-
       if (oldValue.byCharValidator) {
+        console.log(oldValue.byCharValidator(value));
         if (!oldValue.byCharValidator(value)) {
-          return false;
+          return oldValue.value as unknown as typeof value; //FIXME
         }
       }
       setValues({ ...values, [name]: { ...oldValue, value } });
 
-      return true;
+      return value;
     },
     [values],
   );
@@ -37,12 +37,12 @@ export function useValueState<InitInputsProps extends InputsProps>(
       //TODO Binding
       if (oldValue.validator) {
         if (!oldValue.validator(value)) {
-          return false;
+          return oldValue.value as unknown as typeof value; //FIXME
         }
       }
       setValues({ ...values, [name]: { ...oldValue, value } });
 
-      return true;
+      return value;
     },
     [values],
   );

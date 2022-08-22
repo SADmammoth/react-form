@@ -10,11 +10,21 @@ export function stateToInputsComponentsProps<Props extends InputsProps>(
   commonProps: CommonInputsComponentsProps<Props>,
 ): InputsComponentsProps<Props> {
   return Object.fromEntries(
-    Object.entries(inputsState).map(([name, inputState]) => {
-      return [
-        name,
-        { ...inputState, ...commonProps, name, value: valuesState[name].value },
-      ];
-    }),
-  ) as InputsComponentsProps<Props>;
+    Object.entries(inputsState).map(
+      <Name extends keyof Props>([name, inputState]: [
+        name: Name,
+        inputState: InputsState<Props>[Name],
+      ]) => {
+        return [
+          name,
+          {
+            ...inputState,
+            ...commonProps,
+            name,
+            value: valuesState[name].value,
+          },
+        ];
+      },
+    ),
+  ) as unknown as InputsComponentsProps<Props>;
 }

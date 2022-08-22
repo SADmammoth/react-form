@@ -1,11 +1,9 @@
-import React from 'react';
-import { css } from '@emotion/react';
 import { Optional } from '../helpers/Optional';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 
-const TextInput = ({
+const NumberInput = ({
   type,
   label,
   name,
@@ -29,17 +27,17 @@ const TextInput = ({
       <input
         css={inputStyle}
         id={id}
-        type={type}
+        type="text"
         name={name}
         placeholder={placeholder}
         value={value as string}
         onChange={(event) => {
           //@ts-ignore
-          event.target.value = updateValue(name, event.target.value);
+          event.target.value = updateValue(name, event.target.value) || ''; // Change to ref
         }}
         onBlur={(event) => {
           //@ts-ignore
-          event.target.value = setValue(name, event.target.value);
+          event.target.value = setValue(name, event.target.value) || '';
         }}
         disabled={disabled}
         required={required}
@@ -53,4 +51,4 @@ const TextInput = ({
   );
 };
 
-export default TextInput;
+export default NumberInput;
