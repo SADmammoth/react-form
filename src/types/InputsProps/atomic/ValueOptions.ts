@@ -3,4 +3,4 @@ export interface ValueOption {
   value: string;
 }
 
-export type ValueOptions = ValueOption[] | { from: number; to: number }; //TODO
+export type ValueOptions = ValueOption[] /*| { from: number; to: number }*/; //TODO

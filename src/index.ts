@@ -1,3 +1,4 @@
+import CheckboxGroupInput from './inputs/CheckboxGroupInput';
 import CheckboxInput from './inputs/CheckboxInput';
 import NumberInput from './inputs/NumberInput';
 import TextInput from './inputs/TextInput';
@@ -8,5 +9,6 @@ export { useInputs } from './hooks/useInputs';
 export { TextInput };
 export { NumberInput };
 export { CheckboxInput };
+export { CheckboxGroupInput };
 
 export { Theme };

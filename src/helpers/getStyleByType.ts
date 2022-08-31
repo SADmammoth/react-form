@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import { ProcessedClasses } from '../styles/helpers/classes';
 import { InputType } from '../types/InputsProps/atomic/InputType';
-import { StylesByType } from '../types/StylesByType';
-import { CheckboxInputStyles } from '../styles/CheckboxStyles.styles';
+import { CheckboxGroupInputStyles } from '../styles/CheckboxGroupInput.styles';
+import { CheckboxInputStyles } from '../styles/CheckboxInput.styles';
 import { NumberInputStyles } from '../styles/NumberInput.styles';
 import { TextInputStyles } from '../styles/TextInput.styles';
 
@@ -19,6 +19,7 @@ const TYPES = {
   [InputType.Text]: TextInputStyles,
   [InputType.Number]: NumberInputStyles,
   [InputType.Checkbox]: CheckboxInputStyles,
+  [InputType.CheckboxGroup]: CheckboxGroupInputStyles,
 };
 
 export type StyleByType = typeof TYPES;

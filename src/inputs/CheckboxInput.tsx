@@ -29,6 +29,7 @@ const CheckboxInput = ({
           event.target.checked = setValue(name, event.target.checked);
         }}
         css={checkboxStyle}
+        defaultChecked={value}
       />
       <Optional $={!!label}>
         <label htmlFor={id} css={labelStyle}>

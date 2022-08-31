@@ -6,24 +6,49 @@ import {
   Theme,
   NumberInput,
   CheckboxInput,
+  CheckboxGroupInput,
 } from '../../src';
 
 const Form = () => {
   const { inputs, formProps, stylesData } = useInputs({
     inputs: {
-      one: {
+      text: {
         type: 'text',
         label: 'Text',
         placeholder: 'Text',
       },
-      two: {
+      number: {
         type: 'number',
         label: 'Number',
         placeholder: '1234',
       },
-      three: {
+      checkbox: {
         type: 'checkbox',
         label: 'Checkbox',
+      },
+      checkboxGroup: {
+        type: 'checkbox-group',
+        label: 'Checkbox Group',
+        valueOptions: [
+          {
+            label: 'Option 1',
+            value: '1',
+          },
+          {
+            label: 'Option 2',
+            value: '2',
+          },
+          {
+            label: 'Option 3',
+            value: '3',
+          },
+        ],
+        value: [
+          {
+            label: 'Option 3',
+            value: '3',
+          },
+        ],
       },
     },
     formId: 'form',
@@ -37,9 +62,13 @@ const Form = () => {
   return (
     <Theme>
       <form {...formProps}>
-        <TextInput {...inputs.one} style={styles.one} />
-        <NumberInput {...inputs.two} style={styles.two} />
-        <CheckboxInput {...inputs.three} style={styles.three} />
+        <TextInput {...inputs.text} style={styles.text} />
+        <NumberInput {...inputs.number} style={styles.number} />
+        <CheckboxInput {...inputs.checkbox} style={styles.checkbox} />
+        <CheckboxGroupInput
+          {...inputs.checkboxGroup}
+          style={styles.checkboxGroup}
+        />
         <button type="submit">Submit</button>
       </form>
     </Theme>

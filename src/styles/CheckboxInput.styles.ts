@@ -1,13 +1,13 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import classes from './helpers/classes';
 
-export const CheckboxInputStyles = classes({
-  inputBox: (theme) => css`
+export const CheckboxInputClasses = {
+  inputBox: (theme: Theme) => css`
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
   `,
-  label: (theme) => css`
+  label: (theme: Theme) => css`
     position: relative;
     padding-left: 25px;
     color: ${theme.color.commonText};
@@ -29,7 +29,7 @@ export const CheckboxInputStyles = classes({
       border: 3px solid ${theme.color.background};
     }
   `,
-  checkbox: (theme) => css`
+  checkbox: (theme: Theme) => css`
     appearance: hidden;
     display: none;
 
@@ -37,4 +37,6 @@ export const CheckboxInputStyles = classes({
       background: ${theme.color.common};
     }
   `,
-});
+};
+
+export const CheckboxInputStyles = classes(CheckboxInputClasses);
