@@ -72,7 +72,7 @@ const NumberInput = ({
       </Optional>
       <div css={buttonsStyle}>
         <Button
-          disabled={value === max}
+          disabled={value === max || (value === undefined && max === Infinity)}
           style={buttonStyle}
           label="Plus"
           onClick={() => {
@@ -81,7 +81,7 @@ const NumberInput = ({
           <Icon type={IconType.ChevronUp} />
         </Button>
         <Button
-          disabled={value === min}
+          disabled={value === min || (value === undefined && min === -Infinity)}
           style={buttonStyle}
           label="Minus"
           onClick={() => {

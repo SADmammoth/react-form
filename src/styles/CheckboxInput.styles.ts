@@ -14,8 +14,6 @@ export const CheckboxInputClasses = {
 
     user-select: none;
 
-    cursor: pointer;
-
     &:before {
       content: '';
       width: 10px;
@@ -35,6 +33,22 @@ export const CheckboxInputClasses = {
 
     &:checked ~ label:before {
       background: ${theme.color.common};
+    }
+
+    &:not(:disabled) ~ label {
+      cursor: pointer;
+    }
+
+    &:disabled ~ label {
+      color: ${theme.color.disabledText};
+    }
+
+    &:disabled ~ label:before {
+      outline-color: ${theme.color.disabled};
+    }
+
+    &:disabled:checked ~ label:before {
+      background: ${theme.color.disabled};
     }
   `,
 };

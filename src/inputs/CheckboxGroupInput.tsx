@@ -13,6 +13,7 @@ const CheckboxGroupInput = ({
   style,
   value,
   valueOptions,
+  disabled,
 }: InputComponentProps<InputsProps, InputType.CheckboxGroup>) => {
   const id = formId + name;
 
@@ -78,6 +79,7 @@ const CheckboxGroupInput = ({
                 )
               : undefined
           }
+          disabled={disabled}
         />
       ))}
     </div>

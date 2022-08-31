@@ -76,7 +76,6 @@ export const NumberInputStyles = classes({
     outline: none;
     border: none;
     color: ${theme.color.commonText};
-    cursor: pointer;
 
     &:hover {
       color: ${theme.color.highlight};
@@ -86,6 +85,9 @@ export const NumberInputStyles = classes({
     }
     &:disabled {
       color: ${theme.color.disabled};
+    }
+    &:not(:disabled) {
+      cursor: pointer;
     }
   `,
 });

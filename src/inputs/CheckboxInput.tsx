@@ -11,6 +11,7 @@ const CheckboxInput = ({
   setValue,
   style,
   value,
+  disabled,
 }: InputComponentProps<InputsProps, InputType.Checkbox>) => {
   const id = formId + name;
 
@@ -30,6 +31,7 @@ const CheckboxInput = ({
         }}
         css={checkboxStyle}
         defaultChecked={value}
+        disabled={disabled}
       />
       <Optional $={!!label}>
         <label htmlFor={id} css={labelStyle}>
