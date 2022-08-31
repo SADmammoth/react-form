@@ -5,6 +5,7 @@ import {
   TextInput,
   Theme,
   NumberInput,
+  CheckboxInput,
 } from '../../src';
 
 const Form = () => {
@@ -20,6 +21,10 @@ const Form = () => {
         label: 'Number',
         placeholder: '1234',
       },
+      three: {
+        type: 'checkbox',
+        label: 'Checkbox',
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
@@ -34,6 +39,7 @@ const Form = () => {
       <form {...formProps}>
         <TextInput {...inputs.one} style={styles.one} />
         <NumberInput {...inputs.two} style={styles.two} />
+        <CheckboxInput {...inputs.three} style={styles.three} />
         <button type="submit">Submit</button>
       </form>
     </Theme>

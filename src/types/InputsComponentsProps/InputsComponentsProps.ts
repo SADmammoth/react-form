@@ -1,4 +1,4 @@
-import { InputStyle } from '../InputStyle';
+import { StyleByType } from '../../helpers/getStyleByType';
 import { InputPropsByType } from '../InputsProps/InputProps';
 import { InputsProps } from '../InputsProps/InputsProps';
 import { CommonInputsComponentsProps } from './CommonInputsComponentsProps';
@@ -16,5 +16,5 @@ export type InputComponentProps<
     value: InputPropsByType[Type]['value'];
     type: Type;
 
-    style?: InputStyle<Props>[string];
+    style?: StyleByType[Type];
   };

@@ -20,7 +20,10 @@ const Button: React.FC<Props> = ({
       css={style}
       aria-label={label}
       title={label}
-      onClick={() => onClick()}
+      onClick={(event) => {
+        onClick();
+        event.preventDefault();
+      }}
       disabled={disabled}>
       {children}
     </button>

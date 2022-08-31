@@ -28,17 +28,17 @@ const NumberInput = ({
   const buttonStyle = style ? style.button : null;
   const buttonsStyle = style ? style.buttons : null;
 
-  const getValue = useCallback(() => {
+  const getValue = () => {
     return value !== undefined ? value : min || 0;
-  }, [value]);
+  };
 
-  const increment = useCallback(() => {
-    updateValue(name, getValue() + 1);
-  }, [value]);
+  const increment = () => {
+    setValue(name, getValue() + 1);
+  };
 
-  const decrement = useCallback(() => {
-    updateValue(name, (value !== undefined ? value : max || 0) - 1);
-  }, [value]);
+  const decrement = () => {
+    setValue(name, (value !== undefined ? value : max || 0) - 1);
+  };
 
   return (
     <div css={inputBoxStyle}>

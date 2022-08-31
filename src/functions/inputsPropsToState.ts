@@ -30,7 +30,7 @@ export function inputsPropsToStates<InitInputsProps extends InputsProps>(
       ...otherInputProps
     } = inputProps;
 
-    inputsState[name] = otherInputProps;
+    inputsState[name] = { type, ...otherInputProps };
 
     valuesState[name] = {
       value,

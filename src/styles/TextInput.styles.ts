@@ -1,9 +1,7 @@
 import { css } from '@emotion/react';
-import { InputType } from 'src/types/InputsProps/atomic/InputType';
-import { StylesByType } from 'src/types/StylesByType';
 import classes from './helpers/classes';
 
-export const TextInputStyles: StylesByType[InputType.Text] = classes({
+export const TextInputStyles = classes({
   root: (theme) => css`
     border: 3px solid ${theme.color.common};
     background-color: ${theme.color.background};
