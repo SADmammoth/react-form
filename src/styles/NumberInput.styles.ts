@@ -41,6 +41,8 @@ export const NumberInputStyles: StylesByType[InputType.Text] = classes({
     flex-direction: column-reverse;
     width: ${theme.misc.inputWidth};
     padding: 10px;
+
+    position: relative;
   `,
   invalid: (theme) => css`
     color: ${theme.color.errorText};
@@ -57,5 +59,34 @@ export const NumberInputStyles: StylesByType[InputType.Text] = classes({
   `,
   labelInvalid: (theme) => css`
     color: ${theme.color.errorText};
+  `,
+  buttons: (theme) => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    right: 15px;
+    margin-bottom: 2px;
+  `,
+  button: (theme) => css`
+    padding: 0px;
+    margin: 0;
+    font-size: 0.7rem;
+    background: none;
+    outline: none;
+    border: none;
+    color: ${theme.color.commonText};
+
+    &:hover {
+      color: ${theme.color.highlight};
+    }
+    &:active {
+      color: ${theme.color.common};
+    }
+    &:disabled {
+      color: ${theme.color.disabled};
+    }
   `,
 });

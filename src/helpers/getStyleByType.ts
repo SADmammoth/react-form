@@ -3,7 +3,7 @@ import { ProcessedClasses } from '../styles/helpers/classes';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { StylesByType } from '../types/StylesByType';
 import { NumberInputStyles } from '../styles/NumberInput.styles';
-import { TextInputStyles } from '../styles/TextInput.styles.';
+import { TextInputStyles } from '../styles/TextInput.styles';
 
 function _placeholderStyles() {
   return Object.fromEntries(
@@ -21,6 +21,6 @@ const TYPES = {
 
 export function getStyleByType<Type extends InputType>(
   type: InputType,
-): StylesByType[Type] {
+): typeof TYPES[Type] {
   return TYPES[type];
 }
