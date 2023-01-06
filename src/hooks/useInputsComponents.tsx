@@ -26,7 +26,7 @@ const createComponent = <InitInputsProps extends InputsProps>(
         const Input = registeredInputs[type] as React.ComponentType<Props>;
         const mappedInputProps = {
           type,
-          style: { ...styles[type], ...style },
+          style: styles[name],
           ...inputProps,
         } as Props;
         return <Input key={mappedInputProps.name} {...mappedInputProps} />;
