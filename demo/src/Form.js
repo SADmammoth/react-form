@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
   useInputs,
   useInputsStyles,
@@ -7,10 +7,16 @@ import {
   NumberInput,
   CheckboxInput,
   CheckboxGroupInput,
+  useInputsComponents,
+  useRegisterAllInputs,
 } from '../../src';
 
 const Form = () => {
-  const { inputs, formProps, stylesData } = useInputs({
+  const registerInputs = useRegisterAllInputs();
+
+  registerInputs();
+
+  const { Inputs, formProps } = useInputsComponents({
     inputs: {
       text: {
         type: 'text',
@@ -56,19 +62,13 @@ const Form = () => {
       console.log(data);
     },
   });
-
-  const styles = useInputsStyles(stylesData);
-
   return (
     <Theme>
       <form {...formProps}>
-        <TextInput {...inputs.text} style={styles.text} />
-        <NumberInput {...inputs.number} style={styles.number} />
-        <CheckboxInput {...inputs.checkbox} style={styles.checkbox} />
-        <CheckboxGroupInput
-          {...inputs.checkboxGroup}
-          style={styles.checkboxGroup}
-        />
+        <Inputs.Text />
+        <Inputs.Number />
+        <Inputs.Checkbox />
+        <Inputs.CheckboxGroup />
         <button type="submit">Submit</button>
       </form>
     </Theme>

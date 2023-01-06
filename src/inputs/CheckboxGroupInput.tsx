@@ -55,6 +55,7 @@ const CheckboxGroupInput = ({
       </Optional>
       {valueOptions.map(({ label, value: optionValue }) => (
         <CheckboxInput
+          key={optionValue}
           style={checkboxStyles}
           label={label}
           type={InputType.Checkbox}

@@ -17,7 +17,6 @@ export function useValueState<InitInputsProps extends InputsProps>(
       //TODO Control
       //TODO Binding
       if (oldValue.byCharValidator) {
-        console.log(oldValue.byCharValidator(value));
         if (!oldValue.byCharValidator(value)) {
           return oldValue.value as unknown as typeof value; //FIXME
         }
