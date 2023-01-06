@@ -1,6 +1,5 @@
+import { ALL_INPUTS_MAP } from './const/ALL_INPUTS_MAP';
 import { useInputsComponents } from './hooks/useInputsComponents';
-import { useRegisterAllInputs } from './hooks/useRegisterAllInputs';
-import { useRegisterInputs } from './hooks/useRegisterInputs';
 import CheckboxGroupInput from './inputs/CheckboxGroupInput';
 import CheckboxInput from './inputs/CheckboxInput';
 import NumberInput from './inputs/NumberInput';
@@ -17,5 +16,4 @@ export { CheckboxGroupInput };
 export { Theme };
 
 export { useInputsComponents };
-export { useRegisterAllInputs };
-export { useRegisterInputs };
+export { ALL_INPUTS_MAP };

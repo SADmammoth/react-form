@@ -1,21 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import {
-  useInputs,
-  useInputsStyles,
-  TextInput,
-  Theme,
-  NumberInput,
-  CheckboxInput,
-  CheckboxGroupInput,
-  useInputsComponents,
-  useRegisterAllInputs,
-} from '../../src';
+import { Theme, useInputsComponents } from '../../src';
 
 const Form = () => {
-  const registerInputs = useRegisterAllInputs();
-
-  registerInputs();
-
   const { Inputs, formProps } = useInputsComponents({
     inputs: {
       text: {

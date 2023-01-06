@@ -1,16 +1,14 @@
-import { StyleByType } from 'src/helpers/getStyleByType';
-import { IFormProps } from 'src/types/IFormProps';
-import { InputStyle } from 'src/types/InputStyle';
 import { InputComponentProps } from 'src/types/InputsComponentsProps/InputsComponentsProps';
+import { RegisteredInputsMap } from 'src/types/RegisteredInputsMap';
+import { ALL_INPUTS_MAP } from '../const/ALL_INPUTS_MAP';
+import { StyleByType } from '../helpers/getStyleByType';
+import { IFormProps } from '../types/IFormProps';
+import { InputStyle } from '../types/InputStyle';
 import { InputPropsByType } from '../types/InputsProps/InputProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { UseInputsComponentsReturn } from '../types/UseInputsComponentsReturn';
 import { useInputs } from './useInputs';
 import { useInputsStyles } from './useInputsStyles';
-import {
-  RegisteredInputsMap,
-  useRegisteredInputsMap,
-} from './useRegisterInputs';
 
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -31,7 +29,6 @@ const createComponent = <InitInputsProps extends InputsProps>(
           style: { ...styles[type], ...style },
           ...inputProps,
         } as Props;
-        console.log(registeredInputs);
         return <Input key={mappedInputProps.name} {...mappedInputProps} />;
       },
     ];
@@ -40,14 +37,14 @@ const createComponent = <InitInputsProps extends InputsProps>(
 
 export function useInputsComponents<InitInputsProps extends InputsProps>(
   props: IFormProps<InitInputsProps>,
+  registeredInputsMap = ALL_INPUTS_MAP,
 ): UseInputsComponentsReturn<InitInputsProps> {
-  const registeredInputs = useRegisteredInputsMap();
   const { inputs, stylesData, ...rest } = useInputs(props);
   const styles = useInputsStyles(stylesData);
 
   return {
     Inputs: Object.fromEntries(
-      Object.entries(inputs).map(createComponent(registeredInputs, styles)),
+      Object.entries(inputs).map(createComponent(registeredInputsMap, styles)),
     ),
     ...rest,
   };
