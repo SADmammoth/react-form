@@ -14,6 +14,7 @@ import { IRadioGroupInputProps } from './inputTypes/IRadioGroupInputProps';
 import { IRangeInputProps } from './inputTypes/IRangeInputProps';
 import { ISearchInputProps } from './inputTypes/ISearchInputProps';
 import { ISelectInputProps } from './inputTypes/ISelectInputProps';
+import { ISliderInputProps } from './inputTypes/ISliderInputProps';
 import { ISubform } from './inputTypes/ISubformProps';
 import { ITextAreaInputProps } from './inputTypes/ITextAreaInputProps';
 import { ITextInputProps } from './inputTypes/ITextInputProps';
@@ -25,6 +26,7 @@ export type InputProps =
   | ICheckboxGroupInputProps
   | IRadioGroupInputProps
   | ITextAreaInputProps
+  | ISliderInputProps
   | IRangeInputProps
   | ISelectInputProps
   | ISearchInputProps
@@ -39,6 +41,7 @@ export type InputPropsByType = {
   [InputType.CheckboxGroup]: ICheckboxGroupInputProps;
   [InputType.RadioGroup]: IRadioGroupInputProps;
   [InputType.TextArea]: ITextAreaInputProps;
+  [InputType.Slider]: ISliderInputProps;
   [InputType.Range]: IRangeInputProps;
   [InputType.Select]: ISelectInputProps;
   [InputType.Search]: ISearchInputProps;

@@ -1,4 +1,3 @@
-import { InputPropValueType } from 'src/types/InputsProps/InputPropValueType';
 import { Optional } from '../helpers/Optional';
 import { StyleByType } from '../helpers/getStyleByType';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';

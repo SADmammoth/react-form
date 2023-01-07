@@ -11,6 +11,7 @@ declare module '@emotion/react' {
       disabled: string;
       background: string;
       highlight: string;
+      popupBackground: string;
 
       commonText: string;
       secondaryText: string;

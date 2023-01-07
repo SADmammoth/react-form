@@ -9,6 +9,7 @@ const themeConfig: Theme = {
     disabled: '#b9c1d0',
     background: '#fbfdff',
     highlight: '#4e89da',
+    popupBackground: '#dde6f2',
 
     commonText: '#3d6094',
     secondaryText: '#9ebfeb',

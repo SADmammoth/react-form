@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import {TextInput} from '../../src';
+import { TextInput } from '../../src';
 import { withValueState } from '../../src/inputs/withValueState';
 import Form from './Form';
 

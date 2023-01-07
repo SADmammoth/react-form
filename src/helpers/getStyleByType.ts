@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { SliderInputStyles } from '../styles/SliderInputStyles';
 import { ProcessedClasses } from '../styles/helpers/classes';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { CheckboxGroupInputStyles } from '../styles/CheckboxGroupInput.styles';
@@ -22,6 +23,7 @@ const TYPES = {
   [InputType.Checkbox]: CheckboxInputStyles,
   [InputType.CheckboxGroup]: CheckboxGroupInputStyles,
   [InputType.RadioGroup]: RadioGroupInputStyles,
+  [InputType.Slider]: SliderInputStyles,
 };
 
 export type StyleByType = typeof TYPES;
