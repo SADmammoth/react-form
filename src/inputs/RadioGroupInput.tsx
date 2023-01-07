@@ -41,9 +41,9 @@ const RadioGroupInput = ({
           style={checkboxStyles}
           label={label}
           type={InputType.Checkbox}
-          formId={formId}
-          name={`${name}_${optionValue}`}
-          setValue={(_, isChecked) => {
+          formId={formId + optionValue}
+          name={name + '[]'}
+          setValue={(m, isChecked) => {
             let newValue;
             if (isChecked) {
               newValue = { label, value: optionValue };
@@ -54,6 +54,7 @@ const RadioGroupInput = ({
           updateValue={(_, value) => value}
           value={value ? value.value === optionValue : undefined}
           disabled={disabled}
+          required={!value && required}
         />
       ))}
     </div>

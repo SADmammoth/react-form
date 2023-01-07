@@ -14,6 +14,7 @@ const CheckboxGroupInput = ({
   value,
   valueOptions,
   disabled,
+  required,
 }: InputComponentProps<InputsProps, InputType.CheckboxGroup>) => {
   const id = formId + name;
 
@@ -59,16 +60,16 @@ const CheckboxGroupInput = ({
           style={checkboxStyles}
           label={label}
           type={InputType.Checkbox}
-          formId={formId}
-          name={`${name}_${optionValue}`}
-          setValue={(name, isChecked) => {
+          formId={formId + optionValue}
+          name={name + '[]'}
+          setValue={(_, isChecked) => {
             //@ts-ignore
             if (isChecked) {
               //@ts-ignore
-              addValue(name);
+              addValue(optionValue);
             } else {
               //@ts-ignore
-              removeValue(name);
+              removeValue(optionValue);
             }
             return isChecked;
           }}
@@ -80,6 +81,7 @@ const CheckboxGroupInput = ({
                 )
               : undefined
           }
+          required={value && value.length == 0 && required}
           disabled={disabled}
         />
       ))}

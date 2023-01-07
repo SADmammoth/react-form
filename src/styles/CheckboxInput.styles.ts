@@ -18,7 +18,7 @@ export const CheckboxInputClasses = {
       content: '';
       width: 10px;
       height: 10px;
-      left: 0px;
+      left: 0;
       background: ${theme.color.background};
       position: absolute;
       border-radius: 3px;
@@ -29,7 +29,8 @@ export const CheckboxInputClasses = {
   `,
   checkbox: (theme: Theme) => css`
     appearance: hidden;
-    display: none;
+    opacity: 0;
+    width: 1px;
 
     &:checked ~ label:before {
       background: ${theme.color.common};
