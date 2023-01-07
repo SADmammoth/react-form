@@ -1,7 +1,6 @@
-import { StyleByType } from 'src/helpers/getStyleByType';
+import { StyleByType } from '../helpers/getStyleByType';
 import { IFormComponentProps } from './IFormComponentProps';
 import { InputComponent } from './InputComponent';
-import { InputsComponentsProps } from './InputsComponentsProps/InputsComponentsProps';
 import { InputPropsByType } from './InputsProps/InputProps';
 import { InputsProps } from './InputsProps/InputsProps';
 import { SetValueCallback } from './SetValueCallback';

@@ -4,6 +4,7 @@ import { InputType } from '../types/InputsProps/atomic/InputType';
 import { CheckboxGroupInputStyles } from '../styles/CheckboxGroupInput.styles';
 import { CheckboxInputStyles } from '../styles/CheckboxInput.styles';
 import { NumberInputStyles } from '../styles/NumberInput.styles';
+import { RadioGroupInputStyles } from '../styles/RadioGroupInput.styles';
 import { TextInputStyles } from '../styles/TextInput.styles';
 
 function _placeholderStyles() {
@@ -20,6 +21,7 @@ const TYPES = {
   [InputType.Number]: NumberInputStyles,
   [InputType.Checkbox]: CheckboxInputStyles,
   [InputType.CheckboxGroup]: CheckboxGroupInputStyles,
+  [InputType.RadioGroup]: RadioGroupInputStyles,
 };
 
 export type StyleByType = typeof TYPES;

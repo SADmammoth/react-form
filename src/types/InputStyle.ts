@@ -1,5 +1,5 @@
 import { SerializedStyles } from '@emotion/react';
-import { StyleByType } from 'src/helpers/getStyleByType';
+import { StyleByType } from '../helpers/getStyleByType';
 import { InputsProps } from './InputsProps/InputsProps';
 import { InputType } from './InputsProps/atomic/InputType';
 

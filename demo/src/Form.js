@@ -42,6 +42,47 @@ const Form = () => {
           },
         ],
       },
+      radioGroup: {
+        type: 'radio-group',
+        label: 'Radio Group',
+        valueOptions: [
+          {
+            label: 'Option 1',
+            value: '1',
+          },
+          {
+            label: 'Option 2',
+            value: '2',
+          },
+          {
+            label: 'Option 3',
+            value: '3',
+          },
+        ],
+        value: {
+          label: 'Option 3',
+          value: '3',
+        },
+      },
+      radioGroupRequired: {
+        type: 'radio-group',
+        label: 'Radio Group Required',
+        required: true,
+        valueOptions: [
+          {
+            label: 'Option 1',
+            value: '1',
+          },
+          {
+            label: 'Option 2',
+            value: '2',
+          },
+          {
+            label: 'Option 3',
+            value: '3',
+          },
+        ],
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
@@ -55,6 +96,8 @@ const Form = () => {
         <Inputs.Number />
         <Inputs.Checkbox />
         <Inputs.CheckboxGroup />
+        <Inputs.RadioGroup />
+        <Inputs.RadioGroupRequired />
         <button type="submit">Submit</button>
       </form>
     </Theme>

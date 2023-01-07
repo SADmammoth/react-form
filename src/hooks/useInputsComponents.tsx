@@ -1,11 +1,11 @@
-import { InputComponentProps } from 'src/types/InputsComponentsProps/InputsComponentsProps';
-import { RegisteredInputsMap } from 'src/types/RegisteredInputsMap';
 import { ALL_INPUTS_MAP } from '../const/ALL_INPUTS_MAP';
 import { StyleByType } from '../helpers/getStyleByType';
 import { IFormProps } from '../types/IFormProps';
 import { InputStyle } from '../types/InputStyle';
+import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputPropsByType } from '../types/InputsProps/InputProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
+import { RegisteredInputsMap } from '../types/RegisteredInputsMap';
 import { UseInputsComponentsReturn } from '../types/UseInputsComponentsReturn';
 import { useInputs } from './useInputs';
 import { useInputsStyles } from './useInputsStyles';

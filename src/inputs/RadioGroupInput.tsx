@@ -1,3 +1,4 @@
+import { InputPropValueType } from 'src/types/InputsProps/InputPropValueType';
 import { Optional } from '../helpers/Optional';
 import { StyleByType } from '../helpers/getStyleByType';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
@@ -5,7 +6,7 @@ import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import CheckboxInput from './CheckboxInput';
 
-const CheckboxGroupInput = ({
+const RadioGroupInput = ({
   formId,
   name,
   label,
@@ -14,7 +15,8 @@ const CheckboxGroupInput = ({
   value,
   valueOptions,
   disabled,
-}: InputComponentProps<InputsProps, InputType.CheckboxGroup>) => {
+  required,
+}: InputComponentProps<InputsProps, InputType.RadioGroup>) => {
   const id = formId + name;
 
   let checkboxStyles: StyleByType[InputType.Checkbox];
@@ -25,26 +27,6 @@ const CheckboxGroupInput = ({
       checkboxesLabel: checkboxesLabelStyle,
       ...checkboxStyles
     } = style);
-
-  const addValue = (newValue: string) => {
-    const oldValues = value === undefined ? [] : value;
-    const newValueOption = valueOptions.find(({ value }) => value === newValue);
-    if (!newValueOption) return;
-    setValue(name, [...oldValues, newValueOption]);
-  };
-
-  const removeValue = (newValue: string) => {
-    const oldValues = value === undefined ? [] : value;
-    const newValueOptionIndex = oldValues.findIndex(
-      ({ value }) => value === newValue,
-    );
-    if (newValueOptionIndex < 0) return;
-
-    setValue(name, [
-      ...oldValues.slice(0, newValueOptionIndex),
-      ...oldValues.slice(newValueOptionIndex + 1, oldValues.length),
-    ]);
-  };
 
   return (
     <div css={checkboxesStyles}>
@@ -61,25 +43,16 @@ const CheckboxGroupInput = ({
           type={InputType.Checkbox}
           formId={formId}
           name={`${name}_${optionValue}`}
-          setValue={(name, isChecked) => {
-            //@ts-ignore
+          setValue={(_, isChecked) => {
+            let newValue;
             if (isChecked) {
-              //@ts-ignore
-              addValue(name);
-            } else {
-              //@ts-ignore
-              removeValue(name);
-            }
+              newValue = { label, value: optionValue };
+            } else if (required) return true as typeof isChecked;
+            setValue(name, newValue);
             return isChecked;
           }}
           updateValue={(_, value) => value}
-          value={
-            value
-              ? !!value.find(
-                  ({ value: valueCandidate }) => valueCandidate === optionValue,
-                )
-              : undefined
-          }
+          value={value ? value.value === optionValue : undefined}
           disabled={disabled}
         />
       ))}
@@ -87,4 +60,4 @@ const CheckboxGroupInput = ({
   );
 };
 
-export default CheckboxGroupInput;
+export default RadioGroupInput;

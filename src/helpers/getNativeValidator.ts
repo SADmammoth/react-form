@@ -1,5 +1,5 @@
-import { Validator } from 'src/types/InputsProps/atomic/ValidatorProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
+import { Validator } from '../types/InputsProps/atomic/ValidatorProps';
 
 const validators = {
   [InputType.Number]: (value: string) => {
