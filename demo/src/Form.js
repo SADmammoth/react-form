@@ -107,7 +107,7 @@ const Form = () => {
       console.log(data);
     },
   });
-  console.log(Inputs);
+
   return (
     <Theme>
       <form {...formProps}>

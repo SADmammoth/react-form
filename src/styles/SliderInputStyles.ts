@@ -8,15 +8,18 @@ export const SliderInputStyles = classes({
   trackContainer: (theme) => css`
     display: flex;
     flex-direction: column;
+    --position: 0;
+    width: ${theme.misc.inputWidth};
   `,
   thumbsContainer: (theme) => css`
     height: 13px;
     position: relative;
+    width: 100%;
     &:before {
       content: '';
       display: block;
       height: 100%;
-      width: ${theme.misc.inputWidth};
+      width: 100%;
       background: ${theme.color.background};
       position: absolute;
       border: solid 3px ${theme.color.common};
@@ -30,6 +33,8 @@ export const SliderInputStyles = classes({
       width: calc(${theme.misc.inputWidth} * var(--position));
       background: ${theme.color.common};
       position: absolute;
+      border-radius: ${theme.misc.borderRadius};
+      padding-right: 7px;
     }
     input:disabled + div &:before {
       border-color: ${theme.color.disabled};
@@ -37,6 +42,11 @@ export const SliderInputStyles = classes({
     input:disabled + div &:after {
       background: ${theme.color.disabled};
     }
+  `,
+  thumbDragArea: css`
+    position: absolute;
+    height: 100px;
+    width: 500px;
   `,
   thumb: (theme) => css`
     border-radius: 100%;
@@ -53,6 +63,12 @@ export const SliderInputStyles = classes({
     }
     input:disabled + div & {
       border-color: ${theme.color.disabled};
+    }
+  `,
+  activeThumb: (theme) => css`
+    border-color: ${theme.color.highlight};
+    & > label {
+      opacity: 1 !important;
     }
   `,
   thumbTip: (theme) => css`
