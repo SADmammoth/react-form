@@ -86,20 +86,14 @@ const Form = () => {
       slider: {
         type: 'slider',
         label: 'Slider',
-        valueOptions: [
-          {
-            label: 'A',
-            value: '1',
+        valueOptions: {
+          from: 1,
+          to: 3.6,
+          step: 0.1,
+          labelCalculator: (i) => {
+            return String.fromCharCode(97 + ((i - 1) / 2.6) * 26);
           },
-          {
-            label: 'B',
-            value: '2',
-          },
-          {
-            label: 'C',
-            value: '3',
-          },
-        ],
+        },
       },
     },
     formId: 'form',

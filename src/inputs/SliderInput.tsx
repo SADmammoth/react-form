@@ -1,4 +1,8 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import {
+  ValueOption,
+  ValueOptions,
+} from 'src/types/InputsProps/atomic/ValueOptions';
 import { getSliderProgress } from '../helpers/getSliderProgress';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
@@ -13,7 +17,7 @@ const SliderInput = ({
   setValue,
   style,
   value,
-  valueOptions,
+  valueOptions: valuesRange,
   disabled,
   required,
 }: InputComponentProps<InputsProps, InputType.Slider>) => {
@@ -36,11 +40,27 @@ const SliderInput = ({
     trackStyles = { label, trackContainer, thumbsContainer };
   }
 
+  const valueOptions = useMemo(() => {
+    if (!(valuesRange instanceof Array)) {
+      let optionsArray: ValueOptions = [];
+      let { from, to, step, labelCalculator } = valuesRange;
+      step = step || 1;
+      for (let i = from; i < to; i += step) {
+        optionsArray.push({
+          value: i.toString(),
+          label: labelCalculator ? labelCalculator(i) : i.toString(),
+        });
+      }
+      console.log(optionsArray);
+      return optionsArray;
+    }
+    return valuesRange;
+  }, [valuesRange]);
+
   const sliderRef = useRef<HTMLDivElement>(null);
   const sliderProgress = getSliderProgress(valueOptions, value);
   const [sliderIndex, setSliderIndex] = useState(sliderProgress);
   const setSliderValue = useCallback(() => {
-    console.log(sliderIndex, valueOptions[sliderIndex]);
     setValue(name, valueOptions[sliderIndex]);
   }, [sliderIndex]);
   return (

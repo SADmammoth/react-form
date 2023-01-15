@@ -38,7 +38,7 @@ const RadioGroupInput = ({
         <CheckboxInput
           key={name + optionValue}
           style={checkboxStyles}
-          label={label}
+          label={label || optionValue}
           type={InputType.Checkbox}
           formId={formId + optionValue}
           name={name + '[]'}

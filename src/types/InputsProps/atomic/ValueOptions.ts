@@ -1,6 +1,14 @@
 export interface ValueOption {
-  label: string;
+  label?: string;
   value: string;
 }
 
-export type ValueOptions = ValueOption[] /*| { from: number; to: number }*/; //TODO
+export type ValueOptions = ValueOption[];
+export type ValuesRange =
+  | ValueOptions
+  | {
+      from: number;
+      to: number;
+      step?: number;
+      labelCalculator?: (item: number) => string;
+    };

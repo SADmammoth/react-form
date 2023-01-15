@@ -25,7 +25,7 @@ export type SliderThumbProps = {
   maxIndex: number;
 };
 
-const SENSITIVITY = 3;
+const SENSITIVITY = 1;
 const ACTIVATION_MARGIN = 0.5;
 
 const SliderThumb = ({
@@ -47,7 +47,8 @@ const SliderThumb = ({
       const { x: thumbX } = (
         event.target as HTMLButtonElement
       ).getBoundingClientRect();
-      const mousePos = event.clientX * SENSITIVITY - trackLeftMargin;
+      const mousePos =
+        event.clientX * SENSITIVITY * valuesCount - trackLeftMargin;
 
       let newIndex = mousePos / trackWidth;
       const diff = Math.abs(newIndex - Math.round(newIndex));
