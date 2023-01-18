@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { SerializedStyles, css } from '@emotion/react';
 import { Optional } from '../../helpers/Optional';
 import { ProcessedClasses } from '../../styles/helpers/classes';
@@ -16,6 +16,7 @@ export type SliderTrackProps = {
   rightPosition?: number;
   style?: TrackStyles;
   ref: React.ForwardedRef<HTMLDivElement | null>;
+  onTrackClick?: MouseEventHandler;
 };
 
 const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
@@ -23,7 +24,7 @@ const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
   SliderTrackProps
 >(
   (
-    { id, label, leftPosition, rightPosition, style, children },
+    { id, label, leftPosition, rightPosition, style, children, onTrackClick },
     forwardedRef,
   ) => {
     return (
@@ -37,7 +38,9 @@ const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
             {label}
           </label>
         </Optional>
-        <div css={style ? style.thumbsContainer : style}>{children}</div>
+        <div css={style ? style.thumbsContainer : style} onClick={onTrackClick}>
+          {children}
+        </div>
       </div>
     );
   },

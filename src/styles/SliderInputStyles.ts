@@ -43,10 +43,14 @@ export const SliderInputStyles = classes({
       background: ${theme.color.disabled};
     }
   `,
-  thumbDragArea: css`
+  thumbDragArea: (theme) => css`
     position: absolute;
+    top: -50px;
+    left: -50px;
     height: 100px;
-    width: 500px;
+    width: calc(${theme.misc.inputWidth} + 100px);
+    user-select: auto !important;
+    z-index: 10000;
   `,
   thumb: (theme) => css`
     border-radius: 100%;

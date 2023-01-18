@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import {
-  ValueOption,
-  ValueOptions,
-} from 'src/types/InputsProps/atomic/ValueOptions';
 import { getSliderProgress } from '../helpers/getSliderProgress';
+import { getSliderProgressOnTrackClick } from '../helpers/getSliderProgressOnTrackClick';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
+import {
+  ValueOption,
+  ValueOptions,
+} from '../types/InputsProps/atomic/ValueOptions';
 import SliderThumb, { ThumbStyles } from './generic/SliderThumb';
 import SliderTrack, { TrackStyles } from './generic/SliderTrack';
 
@@ -79,7 +80,15 @@ const SliderInput = ({
         id={id}
         label={label}
         leftPosition={sliderIndex / (valueOptions.length - 1)}
-        style={trackStyles}>
+        style={trackStyles}
+        onTrackClick={(event) => {
+          setSliderIndex(
+            Math.round(
+              (valueOptions.length - 1) *
+                getSliderProgressOnTrackClick(event, sliderRef),
+            ),
+          );
+        }}>
         <SliderThumb
           sliderRef={sliderRef}
           id={id}

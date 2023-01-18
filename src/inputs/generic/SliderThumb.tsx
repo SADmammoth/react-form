@@ -61,6 +61,9 @@ const SliderThumb = ({
         setNewIndex(newIndex);
       }
     };
+
+  let [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
   return (
     <>
       {isActive ? (
@@ -70,12 +73,33 @@ const SliderThumb = ({
             if (sliderRef.current) {
               const { left, width } = sliderRef.current.getBoundingClientRect();
               onMoveThumb(left, width)(event);
+              document.body.classList.add('block_text_selection');
             }
           }}
           onMouseUp={() => {
+            console.log('HEEEEy');
+
+            setTimeout(
+              () => document.body.classList.remove('block_text_selection'),
+              500,
+            );
             setIsActive(false);
             setValue();
           }}
+          onMouseLeave={() => {
+            setTimeout(
+              () => document.body.classList.remove('block_text_selection'),
+              500,
+            );
+            setIsActive(false);
+            setValue();
+          }}
+          // onMouseEnter={() => {
+          //   if (timer) {
+          //     clearTimeout(timer);
+          //     setTimer(null);
+          //   }
+          // }}
         />
       ) : null}
       <label
