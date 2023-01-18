@@ -94,6 +94,7 @@ const Form = () => {
             return String.fromCharCode(97 + ((i - 1) / 2.6) * 26);
           },
         },
+        valueDisplayStyle: 'HIDE_ALL',
       },
     },
     formId: 'form',

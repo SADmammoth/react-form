@@ -2,6 +2,7 @@ import { ControlProps, ConvertersProps } from './atomic/ControlProps';
 import { IActionButton } from './atomic/IActionButton';
 import { InputType } from './atomic/InputType';
 import { MaskType } from './atomic/MaskType';
+import { ShowTip } from './atomic/ShowTip';
 import { ByCharValidatorProps, ValidatorProps } from './atomic/ValidatorProps';
 import { ValueOption, ValueOptions } from './atomic/ValueOptions';
 import { OptionProps } from './compound/IOptionBasedTypes';
@@ -89,6 +90,8 @@ export type InputPropsIntersection = {
   fileIcons?: FileIcons;
 
   alwaysShowTip?: boolean;
+
+  valueDisplayStyle?: ShowTip;
 
   restrictedToOptions?: boolean;
   allowScroll?: boolean;

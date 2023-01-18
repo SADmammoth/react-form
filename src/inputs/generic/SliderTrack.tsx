@@ -7,16 +7,20 @@ export type TrackStyles = ProcessedClasses<{
   trackContainer: SerializedStyles;
   label: SerializedStyles;
   thumbsContainer: SerializedStyles;
+  minLabel: SerializedStyles;
+  maxLabel: SerializedStyles;
+  minMaxContainer: SerializedStyles;
 }>;
 
 export type SliderTrackProps = {
-  id: string;
-  label?: string;
   leftPosition: number;
   rightPosition?: number;
   style?: TrackStyles;
   ref: React.ForwardedRef<HTMLDivElement | null>;
   onTrackClick?: MouseEventHandler;
+  minLabel: string;
+  maxLabel: string;
+  showMinMax: boolean;
 };
 
 const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
@@ -24,23 +28,37 @@ const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
   SliderTrackProps
 >(
   (
-    { id, label, leftPosition, rightPosition, style, children, onTrackClick },
+    {
+      leftPosition,
+      rightPosition,
+      style,
+      children,
+      onTrackClick,
+      minLabel,
+      maxLabel,
+      showMinMax,
+    },
     forwardedRef,
   ) => {
     return (
-      <div
-        ref={forwardedRef}
-        css={[style ? style.trackContainer : style, css``]}
-        //@ts-ignore
-        style={{ '--position': leftPosition }}>
-        <Optional $={!!label}>
-          <label htmlFor={id} css={style ? style.label : style}>
-            {label}
-          </label>
+      <div css={[style ? style.minMaxContainer : style, css``]}>
+        <Optional $={showMinMax}>
+          <div css={style ? style.minLabel : style}>{minLabel}</div>
         </Optional>
-        <div css={style ? style.thumbsContainer : style} onClick={onTrackClick}>
-          {children}
+        <div
+          ref={forwardedRef}
+          css={[style ? style.trackContainer : style, css``]}
+          //@ts-ignore
+          style={{ '--position': leftPosition }}>
+          <div
+            css={style ? style.thumbsContainer : style}
+            onClick={onTrackClick}>
+            {children}
+          </div>
         </div>
+        <Optional $={showMinMax}>
+          <div css={style ? style.maxLabel : style}>{maxLabel}</div>
+        </Optional>
       </div>
     );
   },

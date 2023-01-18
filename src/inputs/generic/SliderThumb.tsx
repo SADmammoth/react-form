@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import { Optional } from '../../helpers/Optional';
 import { ProcessedClasses } from '../../styles/helpers/classes';
+import { ShowTip } from '../../types/InputsProps/atomic/ShowTip';
 import { ValueOption } from '../../types/InputsProps/atomic/ValueOptions';
 
 export type ThumbStyles = ProcessedClasses<{
@@ -14,7 +15,7 @@ export type ThumbStyles = ProcessedClasses<{
 export type SliderThumbProps = {
   sliderRef: React.RefObject<HTMLDivElement>;
   id: string;
-  showTip: boolean;
+  showTip: ShowTip;
   value: ValueOption;
   style?: ThumbStyles;
   valueIndex: number;
@@ -41,14 +42,16 @@ const SliderThumb = ({
   maxIndex,
 }: SliderThumbProps) => {
   const [isActive, setIsActive] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const onMoveThumb =
     (trackLeftMargin: number, trackWidth: number) =>
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       const { x: thumbX } = (
         event.target as HTMLButtonElement
       ).getBoundingClientRect();
+      console.log(trackLeftMargin);
       const mousePos =
-        event.clientX * SENSITIVITY * valuesCount - trackLeftMargin;
+        (event.clientX - trackLeftMargin) * SENSITIVITY * valuesCount;
 
       let newIndex = mousePos / trackWidth;
       const diff = Math.abs(newIndex - Math.round(newIndex));
@@ -77,8 +80,6 @@ const SliderThumb = ({
             }
           }}
           onMouseUp={() => {
-            console.log('HEEEEy');
-
             setTimeout(
               () => document.body.classList.remove('block_text_selection'),
               500,
@@ -94,12 +95,6 @@ const SliderThumb = ({
             setIsActive(false);
             setValue();
           }}
-          // onMouseEnter={() => {
-          //   if (timer) {
-          //     clearTimeout(timer);
-          //     setTimer(null);
-          //   }
-          // }}
         />
       ) : null}
       <label
@@ -108,8 +103,18 @@ const SliderThumb = ({
           if (!sliderRef.current) return;
           setIsActive(true);
         }}
+        onMouseEnter={() => {
+          setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+        }}
         draggable={false}>
-        <Optional $={showTip}>
+        <Optional
+          $={
+            showTip === ShowTip.Always ||
+            (showTip === ShowTip.WhenActive && (isActive || isHovered))
+          }>
           <label css={style ? style.thumbTip : style} draggable={false}>
             {value.label}
           </label>

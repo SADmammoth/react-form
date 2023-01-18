@@ -1,6 +1,6 @@
-import { InputPropsIntersection } from '../types/InputsProps/InputProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
+import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle';
 
 const defaultProps = {
   [InputType.Text]: {
@@ -81,7 +81,7 @@ const defaultProps = {
     hidden: false,
     required: false,
 
-    alwaysShowTip: false,
+    valueDisplayStyle: ValueDisplayStyle.HideAll,
   },
   [InputType.TextArea]: {
     disabled: false,
