@@ -8,10 +8,13 @@ import { InputType } from '../types/InputsProps/atomic/InputType';
 import { ShowTip } from '../types/InputsProps/atomic/ShowTip';
 import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle';
 import { ValueOptions } from '../types/InputsProps/atomic/ValueOptions';
+import SegmentedSliderTrack, {
+  SegmentedSliderTrackStyles,
+} from './generic/SegmentedSliderTrack';
 import SliderThumb, { ThumbStyles } from './generic/SliderThumb';
 import SliderTrack, { TrackStyles } from './generic/SliderTrack';
 
-const SliderInput = ({
+const SegmentedSliderInput = ({
   formId,
   name,
   label,
@@ -21,11 +24,11 @@ const SliderInput = ({
   valueOptions: valuesRange,
   disabled,
   required,
-  valueDisplayStyle,
-}: InputComponentProps<InputsProps, InputType.Slider>) => {
+  segment,
+}: InputComponentProps<InputsProps, InputType.SegmentedSlider>) => {
   const id = formId + name;
 
-  let trackStyles: TrackStyles | undefined;
+  let trackStyles: SegmentedSliderTrackStyles | undefined;
   let thumbStyles: ThumbStyles | undefined;
 
   if (style) {
@@ -37,9 +40,8 @@ const SliderInput = ({
       trackContainer,
       thumbsContainer,
       thumbDragArea,
-      minLabel,
-      maxLabel,
       minMaxContainer,
+      resetButton,
     } = style;
     thumbStyles = { thumb, thumbTip, activeThumb, thumbDragArea };
     trackStyles = {
@@ -47,22 +49,10 @@ const SliderInput = ({
       label,
       trackContainer,
       thumbsContainer,
-      minLabel,
-      maxLabel,
+      resetButton,
     };
   }
   let sliderInput = style ? style.hiddenSliderInput : null;
-
-  let showTip = ShowTip.WhenActive;
-
-  if (valueDisplayStyle === ValueDisplayStyle.AlwaysShowTip) {
-    showTip = ShowTip.Always;
-  }
-
-  if (valueDisplayStyle === ValueDisplayStyle.ShowValue) {
-    showTip = ShowTip.Never;
-    sliderInput = style ? style.valueSliderInput : null;
-  }
 
   const valueOptions = useMemo(() => {
     if (!(valuesRange instanceof Array)) {
@@ -82,10 +72,40 @@ const SliderInput = ({
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const sliderProgress = getSliderProgress(valueOptions, value);
-  const [sliderIndex, setSliderIndex] = useState(sliderProgress);
+  const [sliderIndex, setSliderIndex] = useState(value ? sliderProgress : null);
   const setSliderValue = useCallback(() => {
-    setValue(name, valueOptions[sliderIndex]);
+    console.log('f', sliderIndex);
+    if (sliderIndex !== null) setValue(name, valueOptions[sliderIndex]);
   }, [sliderIndex]);
+
+  const onTrackClick = useCallback(
+    (event, i) => {
+      const { left, width } = (
+        event.target as HTMLButtonElement
+      ).getBoundingClientRect();
+      let index =
+        ((event.clientX - left) / width) *
+          (valueOptions.length / segmentsCount) +
+        i * (valueOptions.length / segmentsCount);
+      //   if (index <= 0.3) {
+      //     setSliderIndex(null);
+      //     setValue(name, undefined);
+      //     return;
+      //   }
+      console.log(index);
+      if (index < 0 || i === null) {
+        setSliderIndex(null);
+        setValue(name, undefined);
+        return;
+      }
+      setSliderIndex(Math.floor(index));
+      setValue(name, valueOptions[Math.floor(index)]);
+    },
+    [valueOptions, setSliderIndex, setSliderValue],
+  );
+
+  const segmentsCount = valueOptions.length;
+
   return (
     <div css={style ? style.root : style}>
       <Optional $={!!label}>
@@ -101,43 +121,46 @@ const SliderInput = ({
           css={sliderInput}
           disabled={disabled}
           required={required}
-          value={valueOptions[sliderIndex].label}
+          value={sliderIndex !== null ? valueOptions[sliderIndex].label : ''}
         />
-        <SliderTrack
+        <SegmentedSliderTrack
           ref={sliderRef}
-          leftPosition={sliderIndex / (valueOptions.length - 1)}
+          leftPosition={
+            sliderIndex !== null
+              ? sliderIndex / (valueOptions.length - 1)
+              : null
+          }
           style={trackStyles}
-          onTrackClick={(event) => {
-            setSliderIndex(
-              Math.floor(
-                (valueOptions.length - 1) *
-                  getSliderProgressOnTrackClick(event, sliderRef),
-              ),
-            );
-          }}
+          onTrackClick={onTrackClick}
           minLabel={valueOptions[0].label || valueOptions[0].value}
           maxLabel={
             valueOptions[valueOptions.length - 1].label ||
             valueOptions[valueOptions.length - 1].value
           }
-          showMinMax={valueDisplayStyle === ValueDisplayStyle.ShowMinMax}>
+          showMinMax={false}
+          segment={segment}
+          segmentsCount={segmentsCount}>
           <SliderThumb
             sliderRef={sliderRef}
             id={id}
-            showTip={showTip}
-            value={valueOptions[sliderIndex]}
+            showTip={ShowTip.Never}
+            value={
+              sliderIndex !== null
+                ? valueOptions[sliderIndex]
+                : { value: '', label: '' }
+            }
             style={thumbStyles}
-            valueIndex={sliderIndex}
+            valueIndex={sliderIndex !== null ? sliderIndex : 0}
             valuesCount={valueOptions.length}
             setNewIndex={setSliderIndex}
             setValue={setSliderValue}
             minIndex={0}
             maxIndex={valueOptions.length - 1}
           />
-        </SliderTrack>
+        </SegmentedSliderTrack>
       </div>
     </div>
   );
 };
 
-export default SliderInput;
+export default SegmentedSliderInput;

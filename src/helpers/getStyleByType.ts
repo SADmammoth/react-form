@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { SegmentedSliderInputStyles } from '../styles/SegmentedSliderInputStyles';
 import { SliderInputStyles } from '../styles/SliderInputStyles';
 import { ProcessedClasses } from '../styles/helpers/classes';
 import { InputType } from '../types/InputsProps/atomic/InputType';
@@ -24,6 +25,7 @@ const TYPES = {
   [InputType.CheckboxGroup]: CheckboxGroupInputStyles,
   [InputType.RadioGroup]: RadioGroupInputStyles,
   [InputType.Slider]: SliderInputStyles,
+  [InputType.SegmentedSlider]: SegmentedSliderInputStyles,
 };
 
 export type StyleByType = typeof TYPES;

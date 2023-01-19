@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
 import { Optional } from '../../helpers/Optional';
+import { getSliderProgressOnTrackClick } from '../../helpers/getSliderProgressOnTrackClick';
 import { ProcessedClasses } from '../../styles/helpers/classes';
 import { ShowTip } from '../../types/InputsProps/atomic/ShowTip';
 import { ValueOption } from '../../types/InputsProps/atomic/ValueOptions';
@@ -49,7 +50,6 @@ const SliderThumb = ({
       const { x: thumbX } = (
         event.target as HTMLButtonElement
       ).getBoundingClientRect();
-      console.log(trackLeftMargin);
       const mousePos =
         (event.clientX - trackLeftMargin) * SENSITIVITY * valuesCount;
 
@@ -76,7 +76,6 @@ const SliderThumb = ({
             if (sliderRef.current) {
               const { left, width } = sliderRef.current.getBoundingClientRect();
               onMoveThumb(left, width)(event);
-              document.body.classList.add('block_text_selection');
             }
           }}
           onMouseUp={() => {
@@ -99,9 +98,22 @@ const SliderThumb = ({
       ) : null}
       <label
         css={style ? [style.thumb, isActive ? style.activeThumb : null] : style}
+        onClick={(event) => {
+          console.log('Han');
+          return false;
+        }}
         onMouseDown={(event) => {
           if (!sliderRef.current) return;
+          let ind =
+            valuesCount * getSliderProgressOnTrackClick(event, sliderRef);
+
+          let newIndex = Math.floor(ind);
+          console.log(newIndex);
+          if (newIndex >= 0 && newIndex < valuesCount) {
+            setNewIndex(newIndex);
+          }
           setIsActive(true);
+          document.body.classList.add('block_text_selection');
         }}
         onMouseEnter={() => {
           setIsHovered(true);

@@ -6,6 +6,7 @@ export enum InputType {
   CheckboxGroup = 'checkbox-group',
   RadioGroup = 'radio-group',
   Slider = 'slider',
+  SegmentedSlider = 'segmented-slider',
   Range = 'range',
   Select = 'select',
   Search = 'search',

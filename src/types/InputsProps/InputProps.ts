@@ -3,6 +3,7 @@ import { IActionButton } from './atomic/IActionButton';
 import { InputType } from './atomic/InputType';
 import { MaskType } from './atomic/MaskType';
 import { ShowTip } from './atomic/ShowTip';
+import { SliderSegment } from './atomic/SliderSegment';
 import { ByCharValidatorProps, ValidatorProps } from './atomic/ValidatorProps';
 import { ValueOption, ValueOptions } from './atomic/ValueOptions';
 import { OptionProps } from './compound/IOptionBasedTypes';
@@ -14,6 +15,7 @@ import { INumberInputProps } from './inputTypes/INumberInputProps';
 import { IRadioGroupInputProps } from './inputTypes/IRadioGroupInputProps';
 import { IRangeInputProps } from './inputTypes/IRangeInputProps';
 import { ISearchInputProps } from './inputTypes/ISearchInputProps';
+import { ISegmentedSliderInputProps } from './inputTypes/ISegmentedSliderProps';
 import { ISelectInputProps } from './inputTypes/ISelectInputProps';
 import { ISliderInputProps } from './inputTypes/ISliderInputProps';
 import { ISubform } from './inputTypes/ISubformProps';
@@ -43,6 +45,7 @@ export type InputPropsByType = {
   [InputType.RadioGroup]: IRadioGroupInputProps;
   [InputType.TextArea]: ITextAreaInputProps;
   [InputType.Slider]: ISliderInputProps;
+  [InputType.SegmentedSlider]: ISegmentedSliderInputProps;
   [InputType.Range]: IRangeInputProps;
   [InputType.Select]: ISelectInputProps;
   [InputType.Search]: ISearchInputProps;
@@ -92,6 +95,7 @@ export type InputPropsIntersection = {
   alwaysShowTip?: boolean;
 
   valueDisplayStyle?: ShowTip;
+  segment: SliderSegment;
 
   restrictedToOptions?: boolean;
   allowScroll?: boolean;

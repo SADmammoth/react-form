@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Theme, useInputsComponents } from '../../src';
+import { StarSliderSegment } from './StarSliderSegment';
 
 const Form = () => {
   const { Inputs, formProps } = useInputsComponents({
@@ -96,13 +97,26 @@ const Form = () => {
         },
         valueDisplayStyle: 'HIDE_ALL',
       },
+      rating: {
+        type: 'segmented-slider',
+        label: 'Rating',
+        valueOptions: {
+          from: 1,
+          to: 6,
+          step: 1,
+          labelCalculator: (i) => {
+            return String.fromCharCode(97 + ((i - 1) / 2.6) * 26);
+          },
+        },
+        valueDisplayStyle: 'HIDE_ALL',
+        segment: StarSliderSegment,
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
       console.log(data);
     },
   });
-
   return (
     <Theme>
       <form {...formProps}>
@@ -113,6 +127,7 @@ const Form = () => {
         <Inputs.RadioGroup />
         <Inputs.RadioGroupRequired />
         <Inputs.Slider />
+        <Inputs.Rating />
         <button type="submit">Submit</button>
       </form>
     </Theme>
