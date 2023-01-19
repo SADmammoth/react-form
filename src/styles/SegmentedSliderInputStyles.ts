@@ -11,11 +11,6 @@ export const SegmentedSliderInputStyles = classes({
     --position: 0;
     --segments-count: 0;
   `,
-  minMaxContainer: (theme) => css`
-    //TODO Remove
-    display: flex;
-    align-items: center;
-  `,
   resetButton: (theme) => css`
     position: absolute;
     height: 100%;
@@ -56,11 +51,10 @@ export const SegmentedSliderInputStyles = classes({
     box-sizing: border-box;
     z-index: 1;
     left: calc(
-      ${theme.misc.inputWidth} * var(--position) -
-        (
-          ${theme.misc.inputWidth} / (var(--segments-count) + 1) *
-            var(--position)
-        )
+      (
+          ${theme.misc.inputWidth} -
+            (${theme.misc.inputWidth} / (var(--segments-count) + 1))
+        ) * var(--position)
     );
     input:disabled + div & {
       border-color: ${theme.color.disabled};
@@ -68,7 +62,6 @@ export const SegmentedSliderInputStyles = classes({
   `,
   activeThumb: (theme) => css``,
   thumbTip: (theme) => css`
-    //TODO Remove
     display: none;
   `,
   label: (theme) => css`
@@ -84,17 +77,8 @@ export const SegmentedSliderInputStyles = classes({
     position: absolute;
     pointer-events: none;
   `,
-  valueSliderInput: (theme) => css`
-    //TODO Remove
-  `,
   trackRoot: css`
     display: flex;
     align-items: center;
-  `,
-  minLabel: (theme) => css`
-    //TODO Remove
-  `,
-  maxLabel: (theme) => css`
-    //TODO Remove
   `,
 });

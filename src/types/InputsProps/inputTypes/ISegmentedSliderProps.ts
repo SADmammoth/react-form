@@ -6,4 +6,5 @@ import { ISliderInputProps } from './ISliderInputProps';
 export interface ISegmentedSliderInputProps extends IRangeBasedTypes {
   type: InputType.SegmentedSlider;
   segment: SliderSegment;
+  segmentsCount?: number;
 }

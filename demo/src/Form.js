@@ -102,7 +102,7 @@ const Form = () => {
         label: 'Rating',
         valueOptions: {
           from: 1,
-          to: 6,
+          to: 11,
           step: 1,
           labelCalculator: (i) => {
             return String.fromCharCode(97 + ((i - 1) / 2.6) * 26);

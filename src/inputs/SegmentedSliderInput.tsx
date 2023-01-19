@@ -12,7 +12,6 @@ import SegmentedSliderTrack, {
   SegmentedSliderTrackStyles,
 } from './generic/SegmentedSliderTrack';
 import SliderThumb, { ThumbStyles } from './generic/SliderThumb';
-import SliderTrack, { TrackStyles } from './generic/SliderTrack';
 
 const SegmentedSliderInput = ({
   formId,
@@ -25,6 +24,7 @@ const SegmentedSliderInput = ({
   disabled,
   required,
   segment,
+  segmentsCount: segmentsCountProp,
 }: InputComponentProps<InputsProps, InputType.SegmentedSlider>) => {
   const id = formId + name;
 
@@ -40,12 +40,10 @@ const SegmentedSliderInput = ({
       trackContainer,
       thumbsContainer,
       thumbDragArea,
-      minMaxContainer,
       resetButton,
     } = style;
     thumbStyles = { thumb, thumbTip, activeThumb, thumbDragArea };
     trackStyles = {
-      minMaxContainer,
       label,
       trackContainer,
       thumbsContainer,
@@ -74,9 +72,12 @@ const SegmentedSliderInput = ({
   const sliderProgress = getSliderProgress(valueOptions, value);
   const [sliderIndex, setSliderIndex] = useState(value ? sliderProgress : null);
   const setSliderValue = useCallback(() => {
-    console.log('f', sliderIndex);
     if (sliderIndex !== null) setValue(name, valueOptions[sliderIndex]);
   }, [sliderIndex]);
+
+  const segmentsCount = segmentsCountProp
+    ? segmentsCountProp
+    : valueOptions.length;
 
   const onTrackClick = useCallback(
     (event, i) => {
@@ -87,12 +88,7 @@ const SegmentedSliderInput = ({
         ((event.clientX - left) / width) *
           (valueOptions.length / segmentsCount) +
         i * (valueOptions.length / segmentsCount);
-      //   if (index <= 0.3) {
-      //     setSliderIndex(null);
-      //     setValue(name, undefined);
-      //     return;
-      //   }
-      console.log(index);
+
       if (index < 0 || i === null) {
         setSliderIndex(null);
         setValue(name, undefined);
@@ -103,8 +99,6 @@ const SegmentedSliderInput = ({
     },
     [valueOptions, setSliderIndex, setSliderValue],
   );
-
-  const segmentsCount = valueOptions.length;
 
   return (
     <div css={style ? style.root : style}>

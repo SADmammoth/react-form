@@ -8,7 +8,6 @@ export type SegmentedSliderTrackStyles = ProcessedClasses<{
   trackContainer: SerializedStyles;
   label: SerializedStyles;
   thumbsContainer: SerializedStyles;
-  minMaxContainer: SerializedStyles;
   resetButton: SerializedStyles;
 }>;
 

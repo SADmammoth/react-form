@@ -96,6 +96,7 @@ export type InputPropsIntersection = {
 
   valueDisplayStyle?: ShowTip;
   segment: SliderSegment;
+  segmentsCount?: number;
 
   restrictedToOptions?: boolean;
   allowScroll?: boolean;
