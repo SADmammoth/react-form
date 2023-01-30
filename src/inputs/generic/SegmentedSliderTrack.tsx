@@ -12,17 +12,13 @@ export type SegmentedSliderTrackStyles = ProcessedClasses<{
 }>;
 
 export type SegmentedSliderTrackProps = {
-  leftPosition: number | null;
-  rightPosition?: number;
+  rightPosition: number | null;
   style?: SegmentedSliderTrackStyles;
   ref: React.ForwardedRef<HTMLDivElement | null>;
   onTrackClick?: (
     event: React.MouseEvent<HTMLButtonElement>,
     i: number | null,
   ) => void;
-  minLabel: string;
-  maxLabel: string;
-  showMinMax: boolean;
   segment: SliderSegment;
   segmentsCount: number;
 };
@@ -30,23 +26,12 @@ export type SegmentedSliderTrackProps = {
 const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
   React.forwardRef<HTMLDivElement | null, SegmentedSliderTrackProps>(
     (
-      {
-        leftPosition,
-        rightPosition,
-        style,
-        children,
-        onTrackClick,
-        minLabel,
-        maxLabel,
-        showMinMax,
-        segment,
-        segmentsCount,
-      },
+      { rightPosition, style, children, onTrackClick, segment, segmentsCount },
       forwardedRef,
     ) => {
       const Segment = segment;
       const index =
-        leftPosition !== null ? leftPosition * segmentsCount - 1 : null;
+        rightPosition !== null ? rightPosition * segmentsCount - 1 : null;
       let segmentProgress = (i: number) => {
         if (index === null) return 0;
         if (i - 1 < Math.ceil(index) && i - 1 >= Math.floor(index)) {
@@ -65,7 +50,7 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
           //@ts-ignore
           style={{
             //@ts-ignore
-            '--position': leftPosition,
+            '--right-position': leftPosition,
             '--segments-count': segmentsCount,
           }}>
           <div css={style ? style.thumbsContainer : style}>
@@ -73,9 +58,7 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
             <button
               css={style ? style.resetButton : style}
               type="button"
-              onClick={(event) =>
-                onTrackClick ? onTrackClick(event, null) : null
-              }></button>
+              onClick={(event) => onTrackClick?.(event, null)}></button>
             {new Array(segmentsCount).fill(0).map((_, i) => (
               <button
                 type="button"

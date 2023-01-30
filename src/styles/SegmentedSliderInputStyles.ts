@@ -8,7 +8,7 @@ export const SegmentedSliderInputStyles = classes({
     flex-direction: column;
   `,
   trackContainer: (theme) => css`
-    --position: 0;
+    --right-position: 0;
     --segments-count: 0;
   `,
   resetButton: (theme) => css`
@@ -54,7 +54,7 @@ export const SegmentedSliderInputStyles = classes({
       (
           ${theme.misc.inputWidth} -
             (${theme.misc.inputWidth} / (var(--segments-count) + 1))
-        ) * var(--position)
+        ) * var(--right-position)
     );
     input:disabled + div & {
       border-color: ${theme.color.disabled};

@@ -13,8 +13,8 @@ export type TrackStyles = ProcessedClasses<{
 }>;
 
 export type SliderTrackProps = {
-  leftPosition: number;
-  rightPosition?: number;
+  leftPosition?: number;
+  rightPosition: number;
   style?: TrackStyles;
   ref: React.ForwardedRef<HTMLDivElement | null>;
   onTrackClick?: MouseEventHandler;
@@ -48,8 +48,11 @@ const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
         <div
           ref={forwardedRef}
           css={[style ? style.trackContainer : style, css``]}
-          //@ts-ignore
-          style={{ '--position': leftPosition }}>
+          style={{
+            //@ts-ignore
+            '--left-position': leftPosition ?? 0,
+            '--right-position': rightPosition,
+          }}>
           <div
             css={style ? style.thumbsContainer : style}
             onClick={onTrackClick}>

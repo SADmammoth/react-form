@@ -8,7 +8,7 @@ export const SliderInputStyles = classes({
     flex-direction: column;
   `,
   trackContainer: (theme) => css`
-    --position: 0;
+    --right-position: 0;
   `,
   minMaxContainer: (theme) => css`
     display: flex;
@@ -33,7 +33,7 @@ export const SliderInputStyles = classes({
       content: '';
       display: block;
       height: 100%;
-      width: calc(${theme.misc.inputWidth} * var(--position));
+      width: calc(${theme.misc.inputWidth} * var(--right-position));
       background: ${theme.color.common};
       position: absolute;
       border-radius: ${theme.misc.borderRadius};
@@ -64,7 +64,7 @@ export const SliderInputStyles = classes({
     position: absolute;
     top: -3px;
     z-index: 1;
-    left: calc(${theme.misc.inputWidth} * var(--position) - 9px);
+    left: calc(${theme.misc.inputWidth} * var(--right-position) - 9px);
     input:disabled + div & {
       border-color: ${theme.color.disabled};
     }

@@ -1,7 +1,11 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { useOnSliderTrackClick } from 'src/hooks/useOnSliderTrackClick';
+import { useValueOptionsRange } from 'src/hooks/useValueOptionsRange';
 import { Optional } from '../helpers/Optional';
 import { getSliderProgress } from '../helpers/getSliderProgress';
 import { getSliderProgressOnTrackClick } from '../helpers/getSliderProgressOnTrackClick';
+import { getSliderThumbStyles } from '../helpers/getSliderThumbStyles';
+import { getSliderTrackStyles } from '../helpers/getSliderTrackStyles';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
@@ -25,34 +29,7 @@ const SliderInput = ({
 }: InputComponentProps<InputsProps, InputType.Slider>) => {
   const id = formId + name;
 
-  let trackStyles: TrackStyles | undefined;
-  let thumbStyles: ThumbStyles | undefined;
-
-  if (style) {
-    const {
-      thumb,
-      thumbTip,
-      activeThumb,
-      label,
-      trackContainer,
-      thumbsContainer,
-      thumbDragArea,
-      minLabel,
-      maxLabel,
-      minMaxContainer,
-    } = style;
-    thumbStyles = { thumb, thumbTip, activeThumb, thumbDragArea };
-    trackStyles = {
-      minMaxContainer,
-      label,
-      trackContainer,
-      thumbsContainer,
-      minLabel,
-      maxLabel,
-    };
-  }
-  let sliderInput = style ? style.hiddenSliderInput : null;
-
+  let sliderInput = style?.hiddenSliderInput;
   let showTip = ShowTip.WhenActive;
 
   if (valueDisplayStyle === ValueDisplayStyle.AlwaysShowTip) {
@@ -61,39 +38,38 @@ const SliderInput = ({
 
   if (valueDisplayStyle === ValueDisplayStyle.ShowValue) {
     showTip = ShowTip.Never;
-    sliderInput = style ? style.valueSliderInput : null;
+    sliderInput = style?.valueSliderInput;
   }
 
-  const valueOptions = useMemo(() => {
-    if (!(valuesRange instanceof Array)) {
-      let optionsArray: ValueOptions = [];
-      let { from, to, step, labelCalculator } = valuesRange;
-      step = step || 1;
-      for (let i = from; i < to; i += step) {
-        optionsArray.push({
-          value: i.toString(),
-          label: labelCalculator ? labelCalculator(i) : i.toString(),
-        });
-      }
-      return optionsArray;
-    }
-    return valuesRange;
-  }, [valuesRange]);
+  const valueOptions = useValueOptionsRange(valuesRange);
 
   const sliderRef = useRef<HTMLDivElement>(null);
+
   const sliderProgress = getSliderProgress(valueOptions, value);
+
   const [sliderIndex, setSliderIndex] = useState(sliderProgress);
   const setSliderValue = useCallback(() => {
     setValue(name, valueOptions[sliderIndex]);
   }, [sliderIndex]);
+
+  const onTrackClick = useOnSliderTrackClick(
+    setSliderIndex,
+    valueOptions.length,
+    sliderRef,
+  );
+  const lastIndex = valueOptions.length - 1;
+  const firstOption = valueOptions[0];
+  const lastOption = valueOptions[lastIndex];
+  const currentOption = valueOptions[sliderIndex];
+
   return (
-    <div css={style ? style.root : style}>
+    <div css={style?.root}>
       <Optional $={!!label}>
-        <label htmlFor={id} css={style ? style.label : style}>
+        <label htmlFor={id} css={style?.label}>
           {label}
         </label>
       </Optional>
-      <div css={style ? style.trackRoot : style}>
+      <div css={style?.trackRoot}>
         <input
           type="text"
           name={name}
@@ -101,38 +77,28 @@ const SliderInput = ({
           css={sliderInput}
           disabled={disabled}
           required={required}
-          value={valueOptions[sliderIndex].label}
+          value={currentOption.label}
         />
         <SliderTrack
           ref={sliderRef}
-          leftPosition={sliderIndex / (valueOptions.length - 1)}
-          style={trackStyles}
-          onTrackClick={(event) => {
-            setSliderIndex(
-              Math.floor(
-                (valueOptions.length - 1) *
-                  getSliderProgressOnTrackClick(event, sliderRef),
-              ),
-            );
-          }}
-          minLabel={valueOptions[0].label || valueOptions[0].value}
-          maxLabel={
-            valueOptions[valueOptions.length - 1].label ||
-            valueOptions[valueOptions.length - 1].value
-          }
+          rightPosition={sliderIndex / lastIndex}
+          style={getSliderTrackStyles(style)}
+          onTrackClick={onTrackClick}
+          minLabel={firstOption.label ?? firstOption.value}
+          maxLabel={lastOption.label ?? lastOption.value}
           showMinMax={valueDisplayStyle === ValueDisplayStyle.ShowMinMax}>
           <SliderThumb
             sliderRef={sliderRef}
             id={id}
             showTip={showTip}
-            value={valueOptions[sliderIndex]}
-            style={thumbStyles}
+            value={currentOption}
+            style={getSliderThumbStyles(style)}
             valueIndex={sliderIndex}
             valuesCount={valueOptions.length}
             setNewIndex={setSliderIndex}
             setValue={setSliderValue}
             minIndex={0}
-            maxIndex={valueOptions.length - 1}
+            maxIndex={lastIndex}
           />
         </SliderTrack>
       </div>
