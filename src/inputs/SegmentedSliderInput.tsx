@@ -1,21 +1,16 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { getSliderThumbStyles } from 'src/helpers/getSliderThumbStyles';
-import { useOnSegmentedSliderTrackClick } from 'src/hooks/useOnSegmentedSliderTrackClick';
-import { useValueOptionsRange } from 'src/hooks/useValueOptionsRange';
+import { useCallback, useRef, useState } from 'react';
 import { Optional } from '../helpers/Optional';
 import { getSegmentedSliderTrackStyles } from '../helpers/getSegmentedSliderTrackStyles';
 import { getSliderProgress } from '../helpers/getSliderProgress';
-import { getSliderProgressOnTrackClick } from '../helpers/getSliderProgressOnTrackClick';
+import { getSliderThumbStyles } from '../helpers/getSliderThumbStyles';
+import { useOnSegmentedSliderTrackClick } from '../hooks/useOnSegmentedSliderTrackClick';
+import { useValueOptionsRange } from '../hooks/useValueOptionsRange';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { ShowTip } from '../types/InputsProps/atomic/ShowTip';
-import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle';
-import { ValueOptions } from '../types/InputsProps/atomic/ValueOptions';
-import SegmentedSliderTrack, {
-  SegmentedSliderTrackStyles,
-} from './generic/SegmentedSliderTrack';
-import SliderThumb, { ThumbStyles } from './generic/SliderThumb';
+import SegmentedSliderTrack from './generic/SegmentedSliderTrack';
+import SliderThumb from './generic/SliderThumb';
 
 const SegmentedSliderInput = ({
   formId,
@@ -73,8 +68,10 @@ const SegmentedSliderInput = ({
           disabled={disabled}
           required={required}
           value={currentOption.label}
+          onChange={() => {}}
         />
         <SegmentedSliderTrack
+          id={id}
           ref={sliderRef}
           rightPosition={sliderIndex !== null ? sliderIndex / lastIndex : null}
           style={getSegmentedSliderTrackStyles(style)}

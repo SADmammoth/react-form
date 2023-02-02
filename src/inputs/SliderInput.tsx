@@ -1,17 +1,15 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useOnSliderTrackClick } from 'src/hooks/useOnSliderTrackClick';
-import { useValueOptionsRange } from 'src/hooks/useValueOptionsRange';
 import { Optional } from '../helpers/Optional';
 import { getSliderProgress } from '../helpers/getSliderProgress';
-import { getSliderProgressOnTrackClick } from '../helpers/getSliderProgressOnTrackClick';
 import { getSliderThumbStyles } from '../helpers/getSliderThumbStyles';
 import { getSliderTrackStyles } from '../helpers/getSliderTrackStyles';
+import { useOnSliderTrackClick } from '../hooks/useOnSliderTrackClick';
+import { useValueOptionsRange } from '../hooks/useValueOptionsRange';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { ShowTip } from '../types/InputsProps/atomic/ShowTip';
 import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle';
-import { ValueOptions } from '../types/InputsProps/atomic/ValueOptions';
 import SliderThumb, { ThumbStyles } from './generic/SliderThumb';
 import SliderTrack, { TrackStyles } from './generic/SliderTrack';
 
@@ -78,6 +76,7 @@ const SliderInput = ({
           disabled={disabled}
           required={required}
           value={currentOption.label}
+          onChange={() => {}}
         />
         <SliderTrack
           ref={sliderRef}

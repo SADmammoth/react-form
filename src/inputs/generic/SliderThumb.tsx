@@ -99,7 +99,6 @@ const SliderThumb = ({
       <label
         css={style ? [style.thumb, isActive ? style.activeThumb : null] : style}
         onClick={(event) => {
-          console.log('Han');
           return false;
         }}
         onMouseDown={(event) => {
@@ -108,7 +107,6 @@ const SliderThumb = ({
             valuesCount * getSliderProgressOnTrackClick(event, sliderRef);
 
           let newIndex = Math.floor(ind);
-          console.log(newIndex);
           if (newIndex >= 0 && newIndex < valuesCount) {
             setNewIndex(newIndex);
           }

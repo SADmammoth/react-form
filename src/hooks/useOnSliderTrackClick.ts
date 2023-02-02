@@ -1,4 +1,4 @@
-import { getSliderProgressOnTrackClick } from 'src/helpers/getSliderProgressOnTrackClick';
+import { getSliderProgressOnTrackClick } from '../helpers/getSliderProgressOnTrackClick';
 
 export const useOnSliderTrackClick =
   (

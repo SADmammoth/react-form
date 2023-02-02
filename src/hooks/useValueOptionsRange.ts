@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import {
   ValueOptions,
   ValuesRange,
-} from 'src/types/InputsProps/atomic/ValueOptions';
+} from '../types/InputsProps/atomic/ValueOptions';
 
 export function useValueOptionsRange(valuesRange: ValuesRange): ValueOptions {
   return useMemo(() => {

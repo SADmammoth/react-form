@@ -12,6 +12,7 @@ export type SegmentedSliderTrackStyles = ProcessedClasses<{
 }>;
 
 export type SegmentedSliderTrackProps = {
+  id: string;
   rightPosition: number | null;
   style?: SegmentedSliderTrackStyles;
   ref: React.ForwardedRef<HTMLDivElement | null>;
@@ -26,7 +27,15 @@ export type SegmentedSliderTrackProps = {
 const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
   React.forwardRef<HTMLDivElement | null, SegmentedSliderTrackProps>(
     (
-      { rightPosition, style, children, onTrackClick, segment, segmentsCount },
+      {
+        id,
+        rightPosition,
+        style,
+        children,
+        onTrackClick,
+        segment,
+        segmentsCount,
+      },
       forwardedRef,
     ) => {
       const Segment = segment;
@@ -50,7 +59,7 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
           //@ts-ignore
           style={{
             //@ts-ignore
-            '--right-position': leftPosition,
+            '--right-position': rightPosition,
             '--segments-count': segmentsCount,
           }}>
           <div css={style ? style.thumbsContainer : style}>
@@ -61,6 +70,7 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
               onClick={(event) => onTrackClick?.(event, null)}></button>
             {new Array(segmentsCount).fill(0).map((_, i) => (
               <button
+                key={`${id}_${i}`}
                 type="button"
                 onClick={(event) =>
                   onTrackClick ? onTrackClick(event, i) : null
