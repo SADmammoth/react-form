@@ -20,7 +20,7 @@ export const SegmentedSliderInputStyles = classes({
     width: ${theme.misc.inputWidth};
     position: relative;
     display: flex;
-    & > button {
+    & > div > button {
       background: none;
       display: block;
       width: auto;
@@ -61,9 +61,7 @@ export const SegmentedSliderInputStyles = classes({
     }
   `,
   activeThumb: (theme) => css``,
-  thumbTip: (theme) => css`
-    display: none;
-  `,
+  thumbTip: (theme) => css``,
   label: (theme) => css`
     color: ${theme.color.commonText};
     padding: 10px 5px;

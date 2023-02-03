@@ -1,8 +1,9 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useCallback } from 'react';
 import { SerializedStyles, css } from '@emotion/react';
 import { SliderSegment } from 'src/types/InputsProps/atomic/SliderSegment';
 import { Optional } from '../../helpers/Optional';
 import { ProcessedClasses } from '../../styles/helpers/classes';
+import HoverToolTip from './HoverToolTip';
 
 export type SegmentedSliderTrackStyles = ProcessedClasses<{
   trackContainer: SerializedStyles;
@@ -22,6 +23,7 @@ export type SegmentedSliderTrackProps = {
   ) => void;
   segment: SliderSegment;
   segmentsCount: number;
+  labelCalculator?: (item: number) => string;
 };
 
 const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
@@ -35,6 +37,7 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
         onTrackClick,
         segment,
         segmentsCount,
+        labelCalculator,
       },
       forwardedRef,
     ) => {
@@ -52,6 +55,30 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
         return 1;
       };
 
+      const renderSegment = useCallback(
+        (i: number) => {
+          console.log(i, 'f' + labelCalculator?.(i));
+          return (
+            <HoverToolTip
+              key={'' + id + i + 'segment'}
+              text={labelCalculator?.(i) ?? ''}
+              showOverride={(isHovered) =>
+                labelCalculator !== undefined && isHovered
+              }>
+              <button
+                key={`${id}_${i}`}
+                type="button"
+                onClick={(event) =>
+                  onTrackClick ? onTrackClick(event, i) : null
+                }>
+                <Segment segmentProgress={segmentProgress(i)} />
+              </button>
+            </HoverToolTip>
+          );
+        },
+        [labelCalculator],
+      );
+
       return (
         <div
           ref={forwardedRef}
@@ -68,16 +95,7 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
               css={style ? style.resetButton : style}
               type="button"
               onClick={(event) => onTrackClick?.(event, null)}></button>
-            {new Array(segmentsCount).fill(0).map((_, i) => (
-              <button
-                key={`${id}_${i}`}
-                type="button"
-                onClick={(event) =>
-                  onTrackClick ? onTrackClick(event, i) : null
-                }>
-                <Segment segmentProgress={segmentProgress(i)} />
-              </button>
-            ))}
+            {new Array(segmentsCount).fill(0).map((_, i) => renderSegment(i))}
           </div>
         </div>
       );

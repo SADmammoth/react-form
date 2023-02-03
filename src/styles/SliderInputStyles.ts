@@ -72,66 +72,6 @@ export const SliderInputStyles = classes({
   activeThumb: (theme) => css`
     border-color: ${theme.color.highlight};
   `,
-  thumbTip: (theme) => css`
-    font-size: 70%;
-    position: absolute;
-    top: 10px;
-    transform: translate(50%);
-    right: 50%;
-    height: 10px;
-    max-width: 30px;
-    padding: 8px 5px;
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    background: linear-gradient(
-        0deg,
-        ${theme.color.highlight} 2px,
-        transparent 2px
-      ),
-      linear-gradient(
-        0deg,
-        ${theme.color.popupBackground} 16px,
-        transparent 16px
-      );
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 10px;
-      height: 15px;
-      width: 100%;
-      max-width: 30px;
-      transform: translate(50%);
-      right: 50%;
-      z-index: 0;
-
-      background: linear-gradient(
-          90deg,
-          ${theme.color.highlight} 1px,
-          transparent 1px
-        ),
-        linear-gradient(-90deg, ${theme.color.highlight} 1px, transparent 1px);
-    }
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: -10px;
-      height: 20px;
-      width: 20px;
-      transform: translate(50%);
-      right: 50%;
-      z-index: 1;
-      background: conic-gradient(
-        transparent 130deg,
-        ${theme.color.popupBackground} 130deg,
-        ${theme.color.popupBackground} 220deg,
-        transparent 220deg
-      );
-    }
-  `,
   label: (theme) => css`
     color: ${theme.color.commonText};
     padding: 10px 5px;

@@ -102,13 +102,15 @@ const Form = () => {
         label: 'Rating',
         valueOptions: {
           from: 1,
-          to: 11,
+          to: 6,
           step: 1,
           labelCalculator: (i) => {
-            return String.fromCharCode(97 + ((i - 1) / 2.6) * 26);
+            if (i === 1) {
+              return '1 star';
+            }
+            return `${i} stars`;
           },
         },
-        valueDisplayStyle: 'HIDE_ALL',
         segment: StarSliderSegment,
       },
     },

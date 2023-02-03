@@ -83,6 +83,11 @@ const defaultProps = {
 
     valueDisplayStyle: ValueDisplayStyle.HideAll,
   },
+  [InputType.SegmentedSlider]: {
+    disabled: false,
+    hidden: false,
+    required: false,
+  },
   [InputType.TextArea]: {
     disabled: false,
     hidden: false,

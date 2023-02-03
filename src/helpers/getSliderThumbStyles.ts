@@ -8,6 +8,6 @@ export function getSliderThumbStyles(
     | StyleByType[InputType.SegmentedSlider],
 ): ThumbStyles | undefined {
   if (!styles) return undefined;
-  const { thumb, thumbTip, activeThumb, thumbDragArea } = styles;
-  return { thumb, thumbTip, activeThumb, thumbDragArea };
+  const { thumb, activeThumb, thumbDragArea } = styles;
+  return { thumb, activeThumb, thumbDragArea };
 }

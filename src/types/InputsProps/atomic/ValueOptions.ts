@@ -4,11 +4,10 @@ export interface ValueOption {
 }
 
 export type ValueOptions = ValueOption[];
-export type ValuesRange =
-  | ValueOptions
-  | {
-      from: number;
-      to: number;
-      step?: number;
-      labelCalculator?: (item: number) => string;
-    };
+export type OptionsRange = {
+  from: number;
+  to: number;
+  step?: number;
+  labelCalculator?: (item: number) => string;
+};
+export type ValuesRange = ValueOptions | OptionsRange;

@@ -4,6 +4,7 @@ import { getSegmentedSliderTrackStyles } from '../helpers/getSegmentedSliderTrac
 import { getSliderProgress } from '../helpers/getSliderProgress';
 import { getSliderThumbStyles } from '../helpers/getSliderThumbStyles';
 import { useOnSegmentedSliderTrackClick } from '../hooks/useOnSegmentedSliderTrackClick';
+import { useSegmentedTrackLabelCalculator } from '../hooks/useSegmentedTrackLabelCalculator';
 import { useValueOptionsRange } from '../hooks/useValueOptionsRange';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
@@ -52,6 +53,8 @@ const SegmentedSliderInput = ({
   const currentOption =
     sliderIndex !== null ? valueOptions[sliderIndex] : { value: '', label: '' };
 
+  const labelCalculator = useSegmentedTrackLabelCalculator(valuesRange);
+
   return (
     <div css={style ? style.root : style}>
       <Optional $={!!label}>
@@ -77,7 +80,8 @@ const SegmentedSliderInput = ({
           style={getSegmentedSliderTrackStyles(style)}
           onTrackClick={onTrackClick}
           segment={segment}
-          segmentsCount={segmentsCount}>
+          segmentsCount={segmentsCount}
+          labelCalculator={labelCalculator}>
           <SliderThumb
             sliderRef={sliderRef}
             id={id}

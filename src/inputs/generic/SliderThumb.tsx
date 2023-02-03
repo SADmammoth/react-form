@@ -5,10 +5,11 @@ import { getSliderProgressOnTrackClick } from '../../helpers/getSliderProgressOn
 import { ProcessedClasses } from '../../styles/helpers/classes';
 import { ShowTip } from '../../types/InputsProps/atomic/ShowTip';
 import { ValueOption } from '../../types/InputsProps/atomic/ValueOptions';
+import HoverToolTip from './HoverToolTip';
+import ToolTip from './ToolTip';
 
 export type ThumbStyles = ProcessedClasses<{
   thumb: SerializedStyles;
-  thumbTip: SerializedStyles;
   activeThumb: SerializedStyles;
   thumbDragArea: SerializedStyles;
 }>;
@@ -43,15 +44,11 @@ const SliderThumb = ({
   maxIndex,
 }: SliderThumbProps) => {
   const [isActive, setIsActive] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+
   const onMoveThumb =
     (trackLeftMargin: number, trackWidth: number) =>
-    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      const { x: thumbX } = (
-        event.target as HTMLButtonElement
-      ).getBoundingClientRect();
-      const mousePos =
-        (event.clientX - trackLeftMargin) * SENSITIVITY * valuesCount;
+    ({ clientX }: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      const mousePos = (clientX - trackLeftMargin) * SENSITIVITY * valuesCount;
 
       let newIndex = mousePos / trackWidth;
       const diff = Math.abs(newIndex - Math.round(newIndex));
@@ -65,13 +62,11 @@ const SliderThumb = ({
       }
     };
 
-  let [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-
   return (
     <>
       {isActive ? (
         <div
-          css={style ? style.thumbDragArea : null}
+          css={style?.thumbDragArea}
           onMouseMove={(event) => {
             if (sliderRef.current) {
               const { left, width } = sliderRef.current.getBoundingClientRect();
@@ -96,40 +91,60 @@ const SliderThumb = ({
           }}
         />
       ) : null}
-      <label
-        css={style ? [style.thumb, isActive ? style.activeThumb : null] : style}
-        onClick={(event) => {
-          return false;
-        }}
-        onMouseDown={(event) => {
-          if (!sliderRef.current) return;
-          let ind =
-            valuesCount * getSliderProgressOnTrackClick(event, sliderRef);
-
-          let newIndex = Math.floor(ind);
-          if (newIndex >= 0 && newIndex < valuesCount) {
-            setNewIndex(newIndex);
+      {showTip !== ShowTip.Never ? (
+        <HoverToolTip
+          wrapperStyle={
+            style ? [style.thumb, isActive ? style.activeThumb : null] : style
           }
-          setIsActive(true);
-          document.body.classList.add('block_text_selection');
-        }}
-        onMouseEnter={() => {
-          setIsHovered(true);
-        }}
-        onMouseLeave={() => {
-          setIsHovered(false);
-        }}
-        draggable={false}>
-        <Optional
-          $={
-            showTip === ShowTip.Always ||
-            (showTip === ShowTip.WhenActive && (isActive || isHovered))
-          }>
-          <label css={style ? style.thumbTip : style} draggable={false}>
-            {value.label}
-          </label>
-        </Optional>
-      </label>
+          onClick={(event) => {
+            return false;
+          }}
+          onMouseDown={(event) => {
+            if (!sliderRef.current) return;
+            let ind =
+              valuesCount * getSliderProgressOnTrackClick(event, sliderRef);
+
+            let newIndex = Math.floor(ind);
+            if (newIndex >= 0 && newIndex < valuesCount) {
+              setNewIndex(newIndex);
+            }
+            setIsActive(true);
+            document.body.classList.add('block_text_selection');
+          }}
+          draggable={false}
+          text={value.label || ''}
+          showOverride={(isHovered) => {
+            return (
+              showTip === ShowTip.Always ||
+              (showTip === ShowTip.WhenActive && (isActive || isHovered)) ||
+              showTip === ShowTip.OnHover ||
+              isHovered
+            );
+          }}
+        />
+      ) : (
+        <div
+          css={
+            style ? [style.thumb, isActive ? style.activeThumb : null] : style
+          }
+          onClick={(event) => {
+            return false;
+          }}
+          onMouseDown={(event) => {
+            if (!sliderRef.current) return;
+            let ind =
+              valuesCount * getSliderProgressOnTrackClick(event, sliderRef);
+
+            let newIndex = Math.floor(ind);
+            if (newIndex >= 0 && newIndex < valuesCount) {
+              setNewIndex(newIndex);
+            }
+            setIsActive(true);
+            document.body.classList.add('block_text_selection');
+          }}
+          draggable={false}
+        />
+      )}
     </>
   );
 };
