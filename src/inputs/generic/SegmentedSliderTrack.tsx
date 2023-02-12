@@ -10,6 +10,10 @@ export type SegmentedSliderTrackStyles = ProcessedClasses<{
   label: SerializedStyles;
   thumbsContainer: SerializedStyles;
   resetButton: SerializedStyles;
+  minLabel: SerializedStyles;
+  maxLabel: SerializedStyles;
+  minMaxContainer: SerializedStyles;
+  segment: SerializedStyles;
 }>;
 
 export type SegmentedSliderTrackProps = {
@@ -24,6 +28,9 @@ export type SegmentedSliderTrackProps = {
   segment: SliderSegment;
   segmentsCount: number;
   labelCalculator?: (item: number) => string;
+  showMinMax: boolean;
+  minLabel: string;
+  maxLabel: string;
 };
 
 const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
@@ -38,6 +45,9 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
         segment,
         segmentsCount,
         labelCalculator,
+        showMinMax,
+        minLabel,
+        maxLabel,
       },
       forwardedRef,
     ) => {
@@ -67,6 +77,7 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
               }>
               <button
                 key={`${id}_${i}`}
+                css={style?.segment}
                 type="button"
                 onClick={(event) =>
                   onTrackClick ? onTrackClick(event, i) : null
@@ -80,23 +91,31 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
       );
 
       return (
-        <div
-          ref={forwardedRef}
-          css={[style ? style.trackContainer : style, css``]}
-          //@ts-ignore
-          style={{
+        <div css={[style ? style.minMaxContainer : style, css``]}>
+          <Optional $={showMinMax}>
+            <div css={style ? style.minLabel : style}>{minLabel}</div>
+          </Optional>
+          <div
+            ref={forwardedRef}
+            css={[style ? style.trackContainer : style, css``]}
             //@ts-ignore
-            '--right-position': rightPosition,
-            '--segments-count': segmentsCount,
-          }}>
-          <div css={style ? style.thumbsContainer : style}>
-            {children}
-            <button
-              css={style ? style.resetButton : style}
-              type="button"
-              onClick={(event) => onTrackClick?.(event, null)}></button>
-            {new Array(segmentsCount).fill(0).map((_, i) => renderSegment(i))}
+            style={{
+              //@ts-ignore
+              '--right-position': rightPosition,
+              '--segments-count': segmentsCount,
+            }}>
+            <div css={style ? style.thumbsContainer : style}>
+              {children}
+              <button
+                css={style ? style.resetButton : style}
+                type="button"
+                onClick={(event) => onTrackClick?.(event, null)}></button>
+              {new Array(segmentsCount).fill(0).map((_, i) => renderSegment(i))}
+            </div>
           </div>
+          <Optional $={showMinMax}>
+            <div css={style ? style.maxLabel : style}>{maxLabel}</div>
+          </Optional>
         </div>
       );
     },

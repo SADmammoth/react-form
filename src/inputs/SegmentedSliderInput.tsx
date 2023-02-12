@@ -10,6 +10,7 @@ import { InputComponentProps } from '../types/InputsComponentsProps/InputsCompon
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { ShowTip } from '../types/InputsProps/atomic/ShowTip';
+import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle';
 import SegmentedSliderTrack from './generic/SegmentedSliderTrack';
 import SliderThumb from './generic/SliderThumb';
 
@@ -25,10 +26,16 @@ const SegmentedSliderInput = ({
   required,
   segment,
   segmentsCount: segmentsCountProp,
+  valueDisplayStyle,
 }: InputComponentProps<InputsProps, InputType.SegmentedSlider>) => {
   const id = formId + name;
 
   const valueOptions = useValueOptionsRange(valuesRange);
+
+  let sliderInput = style?.hiddenSliderInput;
+  if (valueDisplayStyle === ValueDisplayStyle.ShowValue) {
+    sliderInput = style?.valueSliderInput;
+  }
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const sliderProgress = getSliderProgress(valueOptions, value);
@@ -52,6 +59,8 @@ const SegmentedSliderInput = ({
   const lastIndex = valueOptions.length - 1;
   const currentOption =
     sliderIndex !== null ? valueOptions[sliderIndex] : { value: '', label: '' };
+  const firstOption = valueOptions[0];
+  const lastOption = valueOptions[lastIndex];
 
   const labelCalculator = useSegmentedTrackLabelCalculator(valuesRange);
 
@@ -67,7 +76,7 @@ const SegmentedSliderInput = ({
           type="text"
           name={name}
           id={id}
-          css={style?.hiddenSliderInput}
+          css={sliderInput}
           disabled={disabled}
           required={required}
           value={currentOption.label}
@@ -81,7 +90,10 @@ const SegmentedSliderInput = ({
           onTrackClick={onTrackClick}
           segment={segment}
           segmentsCount={segmentsCount}
-          labelCalculator={labelCalculator}>
+          labelCalculator={labelCalculator}
+          minLabel={firstOption.label ?? firstOption.value}
+          maxLabel={lastOption.label ?? lastOption.value}
+          showMinMax={valueDisplayStyle === ValueDisplayStyle.ShowMinMax}>
           <SliderThumb
             sliderRef={sliderRef}
             id={id}

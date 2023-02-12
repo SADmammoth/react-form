@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Optional } from '../helpers/Optional';
 import { getSliderProgress } from '../helpers/getSliderProgress';
 import { getSliderThumbStyles } from '../helpers/getSliderThumbStyles';
@@ -10,8 +10,8 @@ import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { ShowTip } from '../types/InputsProps/atomic/ShowTip';
 import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle';
-import SliderThumb, { ThumbStyles } from './generic/SliderThumb';
-import SliderTrack, { TrackStyles } from './generic/SliderTrack';
+import SliderThumb from './generic/SliderThumb';
+import SliderTrack from './generic/SliderTrack';
 
 const SliderInput = ({
   formId,

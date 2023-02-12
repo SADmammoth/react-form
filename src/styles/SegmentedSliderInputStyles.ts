@@ -11,27 +11,37 @@ export const SegmentedSliderInputStyles = classes({
     --right-position: 0;
     --segments-count: 0;
   `,
+  minMaxContainer: (theme) => css`
+    display: flex;
+    align-items: center;
+  `,
   resetButton: (theme) => css`
     position: absolute;
     height: 100%;
     left: calc(-1 * ${theme.misc.inputWidth} / var(--segments-count));
+    background: none;
+    display: block;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    border: none;
+  `,
+  segment: (theme) => css`
+    background: none;
+    display: block;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    border: none;
+    width: calc(${theme.misc.inputWidth} / var(--segments-count));
+    & * {
+      width: 100%;
+    }
   `,
   thumbsContainer: (theme) => css`
     width: ${theme.misc.inputWidth};
     position: relative;
     display: flex;
-    & > div > button {
-      background: none;
-      display: block;
-      width: auto;
-      padding: 0;
-      margin: 0;
-      border: none;
-      width: calc(${theme.misc.inputWidth} / var(--segments-count));
-      & * {
-        width: 100%;
-      }
-    }
   `,
   thumbDragArea: (theme) => css`
     position: absolute;
@@ -75,8 +85,42 @@ export const SegmentedSliderInputStyles = classes({
     position: absolute;
     pointer-events: none;
   `,
+  valueSliderInput: (theme) => css`
+    width: 20px;
+    height: 8px;
+    margin-right: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    border: none;
+    padding: 5px;
+    border: 2px solid ${theme.color.common};
+    border-radius: ${theme.misc.borderRadius};
+    color: ${theme.color.commonText};
+  `,
   trackRoot: css`
     display: flex;
     align-items: center;
+  `,
+  minLabel: (theme) => css`
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 50px;
+    margin-right: 15px;
+    margin-bottom: 4px;
+    color: ${theme.color.commonText};
+  `,
+  maxLabel: (theme) => css`
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 50px;
+    margin-left: 15px;
+    margin-bottom: 4px;
+    color: ${theme.color.commonText};
   `,
 });

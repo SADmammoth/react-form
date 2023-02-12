@@ -7,11 +7,24 @@ export function getSegmentedSliderTrackStyles(
   styles?: StyleByType[InputType.SegmentedSlider],
 ): SegmentedSliderTrackStyles | undefined {
   if (!styles) return undefined;
-  const { label, trackContainer, thumbsContainer, resetButton } = styles;
+  const {
+    label,
+    trackContainer,
+    thumbsContainer,
+    resetButton,
+    minLabel,
+    maxLabel,
+    minMaxContainer,
+    segment,
+  } = styles;
   return {
     label,
     trackContainer,
     thumbsContainer,
     resetButton,
+    minLabel,
+    maxLabel,
+    minMaxContainer,
+    segment,
   };
 }
