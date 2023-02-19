@@ -3,7 +3,6 @@ import { Optional } from '../helpers/Optional';
 import { getSliderProgress } from '../helpers/getSliderProgress';
 import { getSliderThumbStyles } from '../helpers/getSliderThumbStyles';
 import { getSliderTrackStyles } from '../helpers/getSliderTrackStyles';
-import { useOnSliderTrackClick } from '../hooks/useOnSliderTrackClick';
 import { useValueOptionsRange } from '../hooks/useValueOptionsRange';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
@@ -13,7 +12,7 @@ import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle
 import SliderThumb from './generic/SliderThumb';
 import SliderTrack from './generic/SliderTrack';
 
-const SliderInput = ({
+const RangeInput = ({
   formId,
   name,
   label,
@@ -24,7 +23,7 @@ const SliderInput = ({
   disabled,
   required,
   valueDisplayStyle,
-}: InputComponentProps<InputsProps, InputType.Slider>) => {
+}: InputComponentProps<InputsProps, InputType.Range>) => {
   const id = formId + name;
 
   let sliderInput = style?.hiddenSliderInput;
@@ -43,22 +42,29 @@ const SliderInput = ({
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const sliderProgress = getSliderProgress(valueOptions, value);
-
-  const [sliderIndex, setSliderIndex] = useState(sliderProgress);
-  const setSliderValue = useCallback(() => {
-    setValue(name, valueOptions[sliderIndex]);
-  }, [sliderIndex]);
-
-  const onTrackClick = useOnSliderTrackClick(
-    setSliderIndex,
-    valueOptions.length,
-    sliderRef,
+  const sliderLeftProgress = getSliderProgress(valueOptions, value?.from);
+  const sliderRightProgress = getSliderProgress(
+    valueOptions,
+    value?.to,
+    valueOptions.length - 1,
   );
+
+  const [sliderLeftIndex, setSliderLeftIndex] = useState(sliderLeftProgress);
+  const [sliderRightIndex, setSliderRightIndex] = useState(sliderRightProgress);
+
+  const setSliderValue = useCallback(() => {
+    setValue(name, {
+      from: valueOptions[sliderLeftIndex],
+      to: valueOptions[sliderRightIndex],
+      range: valueOptions.slice(sliderLeftIndex, sliderRightIndex + 1),
+    });
+  }, [sliderLeftIndex, sliderRightIndex]);
+
   const lastIndex = valueOptions.length - 1;
   const firstOption = valueOptions[0];
   const lastOption = valueOptions[lastIndex];
-  const currentOption = valueOptions[sliderIndex];
+  const currentLeftOption = valueOptions[sliderLeftIndex];
+  const currentRightOption = valueOptions[sliderRightIndex];
 
   return (
     <div css={style?.root}>
@@ -70,34 +76,58 @@ const SliderInput = ({
       <div css={style?.trackRoot}>
         <input
           type="text"
-          name={name}
-          id={id}
+          name={name + '_from'}
+          id={id + '_from'}
           css={sliderInput}
           disabled={disabled}
           required={required}
-          value={currentOption.label}
+          value={currentLeftOption.label}
+          onChange={() => {}}
+        />
+        <input
+          type="text"
+          name={name + '_to'}
+          id={id + '_to'}
+          css={sliderInput}
+          disabled={disabled}
+          required={required}
+          value={currentRightOption.label}
           onChange={() => {}}
         />
         <SliderTrack
           ref={sliderRef}
-          rightPosition={sliderIndex / lastIndex}
+          leftPosition={sliderLeftIndex / lastIndex}
+          rightPosition={sliderRightIndex / lastIndex}
           style={getSliderTrackStyles(style)}
-          onTrackClick={onTrackClick}
           minLabel={firstOption.label ?? firstOption.value}
           maxLabel={lastOption.label ?? lastOption.value}
           showMinMax={valueDisplayStyle === ValueDisplayStyle.ShowMinMax}>
           <SliderThumb
             sliderRef={sliderRef}
             id={id}
-            position={sliderProgress}
+            position={sliderLeftIndex / lastIndex}
             showTip={showTip}
-            value={currentOption}
+            value={currentLeftOption}
             style={getSliderThumbStyles(style)}
-            valueIndex={sliderIndex}
+            valueIndex={sliderLeftIndex}
             valuesCount={valueOptions.length}
-            setNewIndex={setSliderIndex}
+            setNewIndex={setSliderLeftIndex}
             setValue={setSliderValue}
             minIndex={0}
+            maxIndex={sliderRightIndex}
+          />
+          <SliderThumb
+            sliderRef={sliderRef}
+            id={id}
+            showTip={showTip}
+            position={sliderRightIndex / lastIndex}
+            value={currentRightOption}
+            style={getSliderThumbStyles(style)}
+            valueIndex={sliderRightIndex}
+            valuesCount={valueOptions.length}
+            setNewIndex={setSliderRightIndex}
+            setValue={setSliderValue}
+            minIndex={sliderLeftIndex}
             maxIndex={lastIndex}
           />
         </SliderTrack>
@@ -106,4 +136,4 @@ const SliderInput = ({
   );
 };
 
-export default SliderInput;
+export default RangeInput;

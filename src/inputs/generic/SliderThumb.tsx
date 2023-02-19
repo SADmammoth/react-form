@@ -26,6 +26,7 @@ export type SliderThumbProps = {
   setValue: () => void;
   minIndex: number;
   maxIndex: number;
+  position: number;
 };
 
 const SENSITIVITY = 1;
@@ -42,6 +43,7 @@ const SliderThumb = ({
   setValue,
   minIndex,
   maxIndex,
+  position,
 }: SliderThumbProps) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -61,6 +63,8 @@ const SliderThumb = ({
         setNewIndex(newIndex);
       }
     };
+
+  console.log('POS', position);
 
   return (
     <>
@@ -93,9 +97,10 @@ const SliderThumb = ({
       ) : null}
       {showTip !== ShowTip.Never ? (
         <HoverToolTip
-          wrapperStyle={
-            style ? [style.thumb, isActive ? style.activeThumb : null] : style
-          }
+          wrapperStyle={[
+            style ? [style.thumb, isActive ? style.activeThumb : null] : style,
+            { '--position': position },
+          ]}
           onClick={(event) => {
             return false;
           }}
@@ -143,6 +148,8 @@ const SliderThumb = ({
             document.body.classList.add('block_text_selection');
           }}
           draggable={false}
+          //@ts-ignore
+          style={{ '--position': position }}
         />
       )}
     </>

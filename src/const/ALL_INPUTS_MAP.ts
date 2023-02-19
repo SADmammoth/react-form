@@ -2,6 +2,7 @@ import CheckboxGroupInput from '../inputs/CheckboxGroupInput';
 import CheckboxInput from '../inputs/CheckboxInput';
 import NumberInput from '../inputs/NumberInput';
 import RadioGroupInput from '../inputs/RadioGroupInput';
+import RangeInput from '../inputs/RangeInput';
 import SegmentedSliderInput from '../inputs/SegmentedSliderInput';
 import SliderInput from '../inputs/SliderInput';
 import TextInput from '../inputs/TextInput';
@@ -16,4 +17,5 @@ export const ALL_INPUTS_MAP: RegisteredInputsMap = {
   [InputType.RadioGroup]: RadioGroupInput,
   [InputType.Slider]: SliderInput,
   [InputType.SegmentedSlider]: SegmentedSliderInput,
+  [InputType.Range]: RangeInput,
 };

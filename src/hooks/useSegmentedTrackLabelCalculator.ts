@@ -4,7 +4,6 @@ import { ValuesRange } from '../types/InputsProps/atomic/ValueOptions';
 export function useSegmentedTrackLabelCalculator(valuesRange: ValuesRange) {
   return useCallback(
     (index: number) => {
-      console.log(valuesRange);
       if (valuesRange instanceof Array) {
         return valuesRange[index].label ?? '';
       }

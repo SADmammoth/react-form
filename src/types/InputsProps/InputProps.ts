@@ -15,7 +15,7 @@ import { INumberInputProps } from './inputTypes/INumberInputProps';
 import { IRadioGroupInputProps } from './inputTypes/IRadioGroupInputProps';
 import { IRangeInputProps } from './inputTypes/IRangeInputProps';
 import { ISearchInputProps } from './inputTypes/ISearchInputProps';
-import { ISegmentedSliderInputProps } from './inputTypes/ISegmentedSliderProps';
+import { ISegmentedSliderInputProps } from './inputTypes/ISegmentedSliderInputProps';
 import { ISelectInputProps } from './inputTypes/ISelectInputProps';
 import { ISliderInputProps } from './inputTypes/ISliderInputProps';
 import { ISubform } from './inputTypes/ISubformProps';

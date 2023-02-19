@@ -97,6 +97,7 @@ const SegmentedSliderInput = ({
           <SliderThumb
             sliderRef={sliderRef}
             id={id}
+            position={sliderProgress}
             showTip={ShowTip.Never}
             value={currentOption}
             style={getSliderThumbStyles(style)}

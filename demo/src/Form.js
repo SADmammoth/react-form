@@ -113,6 +113,21 @@ const Form = () => {
         },
         segment: StarSliderSegment,
       },
+      range: {
+        type: 'range',
+        label: 'Range',
+        valueOptions: {
+          from: 1,
+          to: 6,
+          step: 1,
+          labelCalculator: (i) => {
+            if (i === 1) {
+              return '1 star';
+            }
+            return `${i} stars`;
+          },
+        },
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
@@ -130,6 +145,7 @@ const Form = () => {
         <Inputs.RadioGroupRequired />
         <Inputs.Slider />
         <Inputs.Rating />
+        <Inputs.Range />
         <button type="submit">Submit</button>
       </form>
     </Theme>
