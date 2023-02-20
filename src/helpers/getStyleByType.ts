@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { RangeInputStyles } from '../styles/RangeInputStyles';
 import { SegmentedSliderInputStyles } from '../styles/SegmentedSliderInputStyles';
+import { SelectInputStyles } from '../styles/SelectInputStyles';
 import { SliderInputStyles } from '../styles/SliderInputStyles';
 import { ProcessedClasses } from '../styles/helpers/classes';
 import { InputType } from '../types/InputsProps/atomic/InputType';
@@ -28,6 +29,7 @@ const TYPES = {
   [InputType.Slider]: SliderInputStyles,
   [InputType.SegmentedSlider]: SegmentedSliderInputStyles,
   [InputType.Range]: RangeInputStyles,
+  [InputType.Select]: SelectInputStyles,
 };
 
 export type StyleByType = typeof TYPES;

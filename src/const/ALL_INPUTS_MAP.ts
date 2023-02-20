@@ -4,6 +4,7 @@ import NumberInput from '../inputs/NumberInput';
 import RadioGroupInput from '../inputs/RadioGroupInput';
 import RangeInput from '../inputs/RangeInput';
 import SegmentedSliderInput from '../inputs/SegmentedSliderInput';
+import SelectInput from '../inputs/SelectInput';
 import SliderInput from '../inputs/SliderInput';
 import TextInput from '../inputs/TextInput';
 import { InputType } from '../types/InputsProps/atomic/InputType';
@@ -18,4 +19,5 @@ export const ALL_INPUTS_MAP: RegisteredInputsMap = {
   [InputType.Slider]: SliderInput,
   [InputType.SegmentedSlider]: SegmentedSliderInput,
   [InputType.Range]: RangeInput,
+  [InputType.Select]: SelectInput,
 };

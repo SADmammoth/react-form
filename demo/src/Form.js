@@ -128,6 +128,28 @@ const Form = () => {
           },
         },
       },
+      select: {
+        type: 'select',
+        label: 'Select',
+        value: {
+          label: 'Option 1',
+          value: '1',
+        },
+        valueOptions: [
+          {
+            label: 'Option 1',
+            value: '1',
+          },
+          {
+            label: 'Option 2',
+            value: '2',
+          },
+          {
+            label: 'Option 3',
+            value: '3',
+          },
+        ],
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
@@ -146,6 +168,7 @@ const Form = () => {
         <Inputs.Slider />
         <Inputs.Rating />
         <Inputs.Range />
+        <Inputs.Select />
         <button type="submit">Submit</button>
       </form>
     </Theme>
