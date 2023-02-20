@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import { Optional } from '../helpers/Optional';
+import { EKeyboardKey } from '../types/EKeyboardKey';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
@@ -28,19 +29,60 @@ const SelectInput = ({
 
   const [isFocused, setIsFocused] = useState(false);
 
+  const findIndex = () => {
+    return valueOptions.findIndex(
+      ({ value: currValue }) => currValue === currentValue?.value,
+    );
+  };
+
+  const [currentValue, setCurrentValue] = useState(value);
+
+  const setCurrentValueByIndex = (index: number) => {
+    if (index < 0 || index >= valueOptions.length) {
+      return;
+    }
+    setCurrentValue(valueOptions[index]);
+  };
+
+  const c = useCallback(
+    (event) => {
+      console.log(event.key, findIndex());
+      switch (event.key) {
+        case EKeyboardKey.ArrowDown: {
+          setCurrentValueByIndex(findIndex() + 1);
+          return;
+        }
+        case EKeyboardKey.ArrowUp: {
+          setCurrentValueByIndex(findIndex() - 1);
+          return;
+        }
+        case EKeyboardKey.Enter:
+        case EKeyboardKey.Space: {
+          if (isFocused) {
+            setIsFocused(false);
+            setValue(name, currentValue);
+          } else {
+            setIsFocused(true);
+          }
+          return;
+        }
+      }
+    },
+    [currentValue, isFocused],
+  );
+
   return (
     <div css={inputBoxStyle}>
       <OptionList
         options={valueOptions.map((option) => {
-          console.log('FF', option.value === value?.value);
-          if (option.value === value?.value) {
+          if (option.value === currentValue?.value) {
             return { option, isActive: true };
           }
           return { option };
         })}
         id={id}
         onSelect={(option) => {
-          console.log(option);
+          setValue(name, option);
         }}
         show={isFocused}>
         <input
@@ -49,22 +91,16 @@ const SelectInput = ({
           type={type}
           name={name}
           placeholder={placeholder}
-          value={value?.label}
+          value={currentValue?.label}
           list={name}
-          onFocus={() => {
-            setIsFocused(true);
+          onClick={() => {
+            setIsFocused(!isFocused);
           }}
-          onBlur={() => {
+          onBlur={(event) => {
             setIsFocused(false);
           }}
-          // onChange={(event) => {
-          //   //@ts-ignore
-          //   event.target.value = updateValue(name, event.target.value);
-          // }}
-          // onBlur={(event) => {
-          //   //@ts-ignore
-          //   event.target.value = setValue(name, event.target.value);
-          // }}
+          onKeyDown={c}
+          readOnly={true}
           disabled={disabled}
           required={required}
         />

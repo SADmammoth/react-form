@@ -76,17 +76,24 @@ type OptionProps = {
   label: string;
   id: string;
   isActive?: boolean;
+  onSelect: React.MouseEventHandler;
 };
 
-const Option: React.FC<OptionProps> = ({ style, label, id }) => {
+const Option: React.FC<OptionProps> = ({ style, label, id, onSelect }) => {
   return (
-    <button css={style} type="button" value={id}>
+    <button css={style} type="button" value={id} onMouseDown={onSelect}>
       {label}
     </button>
   );
 };
 
-const OptionList: React.FC<Props> = ({ id, children, options, show }) => {
+const OptionList: React.FC<Props> = ({
+  id,
+  children,
+  options,
+  show,
+  onSelect,
+}) => {
   return (
     <>
       <div css={styles?.wrapper}>
@@ -94,7 +101,7 @@ const OptionList: React.FC<Props> = ({ id, children, options, show }) => {
         <div css={show ? styles?.optionList : styles?.hidden}>
           <ul css={styles?.optionsContainer}>
             {options.map(({ option: { label, value }, isActive }) => (
-              <li css={styles?.optionContainer}>
+              <li key={id + value} css={styles?.optionContainer}>
                 <Option
                   style={
                     isActive
@@ -103,6 +110,7 @@ const OptionList: React.FC<Props> = ({ id, children, options, show }) => {
                   }
                   label={label ?? value}
                   id={id + value}
+                  onSelect={() => onSelect({ label, value })}
                 />
               </li>
             ))}

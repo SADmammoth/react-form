@@ -67,7 +67,6 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
 
       const renderSegment = useCallback(
         (i: number) => {
-          console.log(i, 'f' + labelCalculator?.(i));
           return (
             <HoverToolTip
               key={'' + id + i + 'segment'}

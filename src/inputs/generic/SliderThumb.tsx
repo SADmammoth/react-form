@@ -64,8 +64,6 @@ const SliderThumb = ({
       }
     };
 
-  console.log('POS', position);
-
   return (
     <>
       {isActive ? (
