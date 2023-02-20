@@ -106,7 +106,9 @@ const SelectInput = ({
         />
       </OptionList>
       <Optional $={!!label}>
-        <label htmlFor={id} css={labelStyle}>
+        <label
+          htmlFor={id}
+          css={isFocused ? [labelStyle, style?.labelActive] : labelStyle}>
           {label}
         </label>
       </Optional>

@@ -35,6 +35,48 @@ export const SelectInputStyles = classes({
     input:disabled + & {
       color: ${theme.color.disabledText};
     }
+    position: relative;
+    &::after {
+      content: '\\23f7';
+
+      font-size: 105%;
+      font-weight: 700;
+      display: block;
+      width: 10px;
+      height: 10px;
+      color: ${theme.color.commonText};
+      position: absolute;
+      right: 15px;
+      top: 115%;
+    }
+    input:focus + &::after {
+      content: '\\23f6';
+      font-size: 105%;
+      font-weight: 700;
+      display: block;
+      width: 10px;
+      height: 10px;
+      color: ${theme.color.commonText};
+      position: absolute;
+      right: 15px;
+      top: 115%;
+      pointer-events: none;
+    }
+  `,
+  labelActive: (theme) => css`
+    &::after {
+      content: '\\23f6';
+      font-size: 105%;
+      font-weight: 700;
+      display: block;
+      width: 10px;
+      height: 10px;
+      color: ${theme.color.highlight};
+      position: absolute;
+      right: 15px;
+      top: 115%;
+      pointer-events: none;
+    }
   `,
   inputBox: (theme) => css`
     display: flex;
