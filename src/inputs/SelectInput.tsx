@@ -5,6 +5,7 @@ import { EKeyboardKey } from '../types/EKeyboardKey';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
+import { ValueOption } from '../types/InputsProps/atomic/ValueOptions';
 import OptionList from './generic/OptionList';
 
 const SelectInput = ({
@@ -20,6 +21,7 @@ const SelectInput = ({
   required,
   style,
   valueOptions,
+  allowMultiple,
 }: InputComponentProps<InputsProps, InputType.Select>) => {
   const id = formId + name;
 
@@ -29,31 +31,78 @@ const SelectInput = ({
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const findIndex = () => {
-    return valueOptions.findIndex(
-      ({ value: currValue }) => currValue === currentValue?.value,
+  // const [currentValue, setCurrentValue] = useState(value);
+
+  const setCurrentValue = (value?: ValueOption[]) => {
+    setValue(name, value);
+  };
+
+  const currentValue = value;
+
+  const isValueSelected = (currValue: string) =>
+    !!currentValue?.find(({ value }) => currValue === value);
+
+  const findSelectedIndex = () => {
+    return valueOptions.findIndex(({ value: currValue }) =>
+      isValueSelected(currValue),
     );
   };
 
-  const [currentValue, setCurrentValue] = useState(value);
+  const findIndex = (value: string) => {
+    return valueOptions.findIndex(
+      ({ value: currValue }) => currValue === value,
+    );
+  };
 
-  const setCurrentValueByIndex = (index: number) => {
-    if (index < 0 || index >= valueOptions.length) {
+  const setCurrentValueOption = (valueOption: ValueOption) => {
+    const isSelected = isValueSelected(valueOption?.value);
+    if (!allowMultiple) {
+      if (isSelected) {
+        setCurrentValue(undefined);
+        return;
+      }
+      setCurrentValue([valueOption]);
       return;
     }
-    setCurrentValue(valueOptions[index]);
+    if (currentValue && !required && isSelected) {
+      if (currentValue.length === 1) {
+        setCurrentValue(undefined);
+        return;
+      }
+      const index = currentValue?.findIndex(
+        ({ value }) => valueOption.value === value,
+      );
+      setCurrentValue([
+        ...currentValue.slice(0, index),
+        ...currentValue.slice(index + 1, currentValue.length),
+      ]);
+      return;
+    }
+    if (!currentValue) {
+      setCurrentValue([valueOption]);
+      return;
+    }
+    setCurrentValue([...currentValue, valueOption]);
   };
+
+  const sendCurrentValue = useCallback(() => {
+    setCurrentValue(value);
+  }, []);
 
   const c = useCallback(
     (event) => {
-      console.log(event.key, findIndex());
+      event.preventDefault();
+      const index = findSelectedIndex();
+      if (index < 0 || index >= valueOptions.length) {
+        return;
+      }
       switch (event.key) {
         case EKeyboardKey.ArrowDown: {
-          setCurrentValueByIndex(findIndex() + 1);
+          setCurrentValueOption(valueOptions[index + 1]);
           return;
         }
         case EKeyboardKey.ArrowUp: {
-          setCurrentValueByIndex(findIndex() - 1);
+          setCurrentValueOption(valueOptions[index - 1]);
           return;
         }
         case EKeyboardKey.Enter:
@@ -66,9 +115,6 @@ const SelectInput = ({
           }
           return;
         }
-        default: {
-          event.preventDefault();
-        }
       }
     },
     [currentValue, isFocused],
@@ -78,22 +124,15 @@ const SelectInput = ({
     <div css={inputBoxStyle}>
       <OptionList
         options={valueOptions.map((option) => {
-          if (option.value === currentValue?.value) {
+          if (isValueSelected(option?.value)) {
             return { option, isActive: true };
           }
           return { option };
         })}
         id={id}
         onSelect={(option) => {
-          if (option?.value === value?.value) {
-            if (required) {
-              return;
-            }
-            setValue(name, undefined);
-            return;
-          }
-
-          setValue(name, option);
+          setCurrentValueOption(option);
+          setIsFocused(false);
         }}
         show={isFocused}>
         <input
@@ -102,19 +141,19 @@ const SelectInput = ({
           type={type}
           name={name}
           placeholder={placeholder}
-          value={currentValue?.label}
+          value={currentValue?.map(({ label }) => label).join(', ')}
           list={name}
           onClick={(event) => {
             setIsFocused(!isFocused);
-            event.preventDefault();
+            // event.preventDefault();
           }}
           onBlur={(event) => {
             setIsFocused(false);
-            event.preventDefault();
+            // event.preventDefault();
           }}
-          onPaste={(event) => event.preventDefault()}
-          onFocus={(event) => event.preventDefault()}
-          onMouseDown={(event) => event.preventDefault()}
+          // onPaste={(event) => event.preventDefault()}
+          // // onFocus={(event) => event.preventDefault()}
+          // onMouseDown={(event) => event.preventDefault()}
           onKeyDown={c}
           disabled={disabled}
           required={required}
@@ -123,12 +162,12 @@ const SelectInput = ({
       <Optional $={!!label}>
         <label
           htmlFor={id}
-          onPaste={(event) => event.preventDefault()}
-          onFocus={(event) => event.preventDefault()}
-          onMouseDown={(event) => event.preventDefault()}
+          // onPaste={(event) => event.preventDefault()}
+          // // onFocus={(event) => event.preventDefault()}
+          // onMouseDown={(event) => event.preventDefault()}
           onClick={(event) => {
             setIsFocused(!isFocused);
-            event.preventDefault();
+            // event.preventDefault();
           }}
           css={isFocused ? [labelStyle, style?.labelActive] : labelStyle}>
           {label}

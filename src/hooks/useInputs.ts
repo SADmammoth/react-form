@@ -44,7 +44,7 @@ export function useInputs<InitInputsProps extends InputsProps>({
       updateValue,
     }),
     formProps: {
-      onSubmit: (event: SubmitEvent) => {
+      onSubmit: (event) => {
         if (onSubmit) {
           event.preventDefault();
         }
