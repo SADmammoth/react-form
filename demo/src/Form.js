@@ -127,12 +127,12 @@ const Form = () => {
             return `${i} stars`;
           },
         },
+        segmentScale: 0.1,
       },
       select: {
         type: 'select',
         label: 'Select',
         placeholder: 'Click to select option',
-        required: true,
         valueOptions: [
           {
             label: 'Option 1',

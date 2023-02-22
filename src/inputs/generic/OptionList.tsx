@@ -5,6 +5,25 @@ import { ProcessedClasses } from '../../styles/helpers/classes';
 import { ValueOption } from '../../types/InputsProps/atomic/ValueOptions';
 
 const styles = {
+  childrenBackground: (theme: Theme) => css`
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 2px solid ${theme.color.highlight};
+    border-left: 2px solid ${theme.color.highlight};
+    border-right: 2px solid ${theme.color.highlight};
+    border-top-left-radius: ${theme.misc.borderRadius};
+    border-top-right-radius: ${theme.misc.borderRadius};
+    padding: 5px;
+    left: -7px;
+    top: -7px;
+    width: 100%;
+    height: 100%;
+    background-color: ${theme.color.popupBackground};
+    position: absolute;
+    z-index: -1;
+  `,
   wrapper: (theme: Theme) => css`
     position: relative;
   `,
@@ -15,12 +34,15 @@ const styles = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 2px solid ${theme.color.highlight};
-    border-radius: ${theme.misc.borderRadius};
-    padding: 10px;
+    border-bottom: 2px solid ${theme.color.highlight};
+    border-left: 2px solid ${theme.color.highlight};
+    border-right: 2px solid ${theme.color.highlight};
+    border-bottom-left-radius: ${theme.misc.borderRadius};
+    border-bottom-right-radius: ${theme.misc.borderRadius};
+    padding: 5px;
     margin-top: 5px;
     width: 100%;
-    box-sizing: border-box;
+    margin-left: -7px;
     background-color: ${theme.color.popupBackground};
     position: absolute;
   `,
@@ -98,6 +120,7 @@ const OptionList: React.FC<Props> = ({
   return (
     <>
       <div css={styles?.wrapper}>
+        <div css={show ? styles?.childrenBackground : styles?.hidden}></div>
         {children}
         <div css={show ? styles?.optionList : styles?.hidden}>
           <ul css={styles?.optionsContainer}>
