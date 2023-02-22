@@ -27,6 +27,7 @@ export const SelectInputStyles = classes({
         color: ${theme.color.disabledText};
       }
     }
+    cursor: pointer;
   `,
   label: (theme) => css`
     color: ${theme.color.commonText};
@@ -36,6 +37,7 @@ export const SelectInputStyles = classes({
       color: ${theme.color.disabledText};
     }
     position: relative;
+    cursor: pointer;
     &::after {
       content: '\\23f7';
 

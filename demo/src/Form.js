@@ -131,10 +131,8 @@ const Form = () => {
       select: {
         type: 'select',
         label: 'Select',
-        value: {
-          label: 'Option 1',
-          value: '1',
-        },
+        placeholder: 'Click to select option',
+        required: true,
         valueOptions: [
           {
             label: 'Option 1',

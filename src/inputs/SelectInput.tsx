@@ -66,6 +66,9 @@ const SelectInput = ({
           }
           return;
         }
+        default: {
+          event.preventDefault();
+        }
       }
     },
     [currentValue, isFocused],
@@ -82,6 +85,14 @@ const SelectInput = ({
         })}
         id={id}
         onSelect={(option) => {
+          if (option?.value === value?.value) {
+            if (required) {
+              return;
+            }
+            setValue(name, undefined);
+            return;
+          }
+
           setValue(name, option);
         }}
         show={isFocused}>
@@ -93,14 +104,18 @@ const SelectInput = ({
           placeholder={placeholder}
           value={currentValue?.label}
           list={name}
-          onClick={() => {
+          onClick={(event) => {
             setIsFocused(!isFocused);
+            event.preventDefault();
           }}
           onBlur={(event) => {
             setIsFocused(false);
+            event.preventDefault();
           }}
+          onPaste={(event) => event.preventDefault()}
+          onFocus={(event) => event.preventDefault()}
+          onMouseDown={(event) => event.preventDefault()}
           onKeyDown={c}
-          readOnly={true}
           disabled={disabled}
           required={required}
         />
@@ -108,6 +123,13 @@ const SelectInput = ({
       <Optional $={!!label}>
         <label
           htmlFor={id}
+          onPaste={(event) => event.preventDefault()}
+          onFocus={(event) => event.preventDefault()}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={(event) => {
+            setIsFocused(!isFocused);
+            event.preventDefault();
+          }}
           css={isFocused ? [labelStyle, style?.labelActive] : labelStyle}>
           {label}
         </label>

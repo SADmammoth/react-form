@@ -57,6 +57,7 @@ const styles = {
     &:hover {
       background-color: ${theme.color.background};
     }
+    cursor: pointer;
   `,
 };
 
