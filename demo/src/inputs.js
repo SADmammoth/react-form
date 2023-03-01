@@ -1,4 +1,4 @@
-import countries from './countries';
+import { countries } from './countries';
 import imagebytes from './imagebytes';
 import subform from './subform';
 

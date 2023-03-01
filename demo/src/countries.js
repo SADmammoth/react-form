@@ -1,4 +1,6 @@
-export default async function countries() {
+import countriesData from './countriesStatic.json';
+
+export async function countries() {
   const countries = await fetch('https://restcountries.com/v2/all').then(
     (res) => res.json(),
   );
@@ -11,5 +13,11 @@ export default async function countries() {
     setTimeout(() => {
       resolve(result);
     }, 1000);
+  });
+}
+
+export function countriesStatic() {
+  return countriesData.map(({ name, alpha2Code }) => {
+    return { label: name, value: alpha2Code };
   });
 }

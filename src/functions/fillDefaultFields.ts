@@ -73,7 +73,6 @@ const defaultProps = {
     hidden: false,
     required: false,
 
-    allowScroll: false,
     allowMultiple: false,
   },
   [InputType.Slider]: {

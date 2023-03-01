@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Theme, useInputsComponents } from '../../src';
 import { StarSliderSegment } from './StarSliderSegment';
+import { countriesStatic } from './countries';
 
 const Form = () => {
   const { Inputs, formProps } = useInputsComponents({
@@ -133,20 +134,7 @@ const Form = () => {
         type: 'select',
         label: 'Select',
         placeholder: 'Click to select option',
-        valueOptions: [
-          {
-            label: 'Option 1',
-            value: '1',
-          },
-          {
-            label: 'Option 2',
-            value: '2',
-          },
-          {
-            label: 'Option 3',
-            value: '3',
-          },
-        ],
+        valueOptions: countriesStatic(),
       },
     },
     formId: 'form',

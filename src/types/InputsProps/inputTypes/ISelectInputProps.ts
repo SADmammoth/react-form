@@ -5,8 +5,7 @@ import { IOptionBasedTypes } from '../compound/IOptionBasedTypes';
 
 export interface ISelectInputProps extends Omit<IOptionBasedTypes, 'value'> {
   type: InputType.Select;
-  allowScroll?: boolean;
   placeholder?: string;
-  allowMultiple: true;
+  allowMultiple?: boolean;
   value?: ValueOption[];
 }
