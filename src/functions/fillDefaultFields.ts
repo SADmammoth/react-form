@@ -63,10 +63,10 @@ const defaultProps = {
     required: false,
 
     allowScroll: false,
-    allowMultiple: false,
     minSymbols: 0,
     maxSymbols: Infinity,
     placeholder: '',
+    restrictedToOptions: false,
   },
   [InputType.Select]: {
     disabled: false,

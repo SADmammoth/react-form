@@ -9,8 +9,8 @@
     "altSpellings": ["AF", "Afġānistān"],
     "subregion": "Southern Asia",
     "region": "Asia",
-    "population": 40218234,
-    "latlng": [33.0, 65.0],
+
+    "latlng": [33.0, 65.0],    "population": 40218234,
     "demonym": "Afghan",
     "area": 652230.0,
     "timezones": ["UTC+04:30"],

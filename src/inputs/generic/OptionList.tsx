@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { css, Theme } from '@emotion/react';
 import { CSSInterpolation, SerializedStyles } from '@emotion/serialize';
 import { Optional } from '../../helpers/Optional';
@@ -47,7 +47,7 @@ const styles = {
     background-color: ${theme.color.popupBackground};
     position: absolute;
     --display-height: 50px;
-    height: var(--display-height);
+    max-height: var(--display-height);
     overflow-y: auto;
   `,
   optionsContainer: (theme: Theme) => css`
@@ -133,6 +133,7 @@ const OptionList: React.FC<Props> = ({
   onSelect,
   allowScroll = true,
   minDisplayedOptions = 5,
+  searchPrompt = '',
 }) => {
   const list = useRef<HTMLUListElement>(null);
   const [height, setHeight] = useState(50);
@@ -170,6 +171,85 @@ const OptionList: React.FC<Props> = ({
     );
   }
 
+  const filterRegex = useMemo(
+    () =>
+      searchPrompt !== ''
+        ? new RegExp(
+            `^.*${searchPrompt
+              .split('')
+              .map((letter) => `[${letter}]`)
+              .join('.*')}.*$`,
+            'gi',
+          )
+        : /.*/,
+    [searchPrompt],
+  );
+
+  const relevanceRegex = useMemo(
+    () =>
+      searchPrompt !== ''
+        ? new RegExp(
+            `${searchPrompt
+              .split('')
+              .map((letter, i, arr) =>
+                i !== arr.length - 1
+                  ? `|(?<t${i * 2 + 1}>^[${arr
+                      .slice(0, i + 1)
+                      .join('][')}].*[${arr
+                      .slice(i + 1, arr.length)
+                      .join('].*[')}].*$)`
+                  : `(?<t${i * 2 + 1}>^[${arr.join('][')}].*$)`,
+              )
+              .reverse()
+              .join('')}|${searchPrompt
+              .split('')
+              .map((letter, i, arr) =>
+                i !== arr.length - 1
+                  ? `|(?<t${i * 2}>^.*[${arr
+                      .slice(0, i + 1)
+                      .join('][')}].*[${arr
+                      .slice(i + 1, arr.length)
+                      .join('].*[')}].*$)`
+                  : `(?<t${i * 2}>^.*[${arr.join('][')}].*$)`,
+              )
+              .reverse()
+              .join('')}`,
+            'i',
+          )
+        : /.*/,
+    [searchPrompt],
+  );
+  const filteredOptions =
+    searchPrompt !== ''
+      ? options.filter(
+          ({ option: { value, label } }) =>
+            filterRegex.test(value) || (label && filterRegex.test(label)),
+        )
+      : options;
+
+  const sortedOptions =
+    searchPrompt !== ''
+      ? filteredOptions.sort(
+          (
+            { option: { value: value1, label: label1 } },
+            { option: { value: value2, label: label2 } },
+          ) => {
+            const score1 = parseInt(
+              Object.entries(
+                (label1 ?? value1).match(relevanceRegex)?.groups ?? {},
+              ).filter(([key, value]) => !!value)[0]?.[0]?.[1],
+            );
+            const score2 = parseInt(
+              Object.entries(
+                (label2 ?? value2).match(relevanceRegex)?.groups ?? {},
+              ).filter(([key, value]) => !!value)[0]?.[0]?.[1],
+            );
+
+            return score2 - score1;
+          },
+        )
+      : options;
+
   return (
     <>
       <div css={styles?.wrapper}>
@@ -187,12 +267,14 @@ const OptionList: React.FC<Props> = ({
               : styles?.hidden
           }>
           <ul css={styles?.optionsContainer} ref={list}>
-            {options.slice(0, minDisplayedOptions).map(toOptions)}
+            {sortedOptions.slice(0, minDisplayedOptions).map(toOptions)}
             {allowScroll ? (
-              options.slice(minDisplayedOptions, options.length).map(toOptions)
+              sortedOptions
+                .slice(minDisplayedOptions, options.length)
+                .map(toOptions)
             ) : (
               <li css={styles?.moreLabel}>
-                {options.length - minDisplayedOptions} more
+                {filteredOptions.length - minDisplayedOptions} more
               </li>
             )}
           </ul>

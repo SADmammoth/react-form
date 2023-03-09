@@ -136,6 +136,12 @@ const Form = () => {
         placeholder: 'Click to select option',
         valueOptions: countriesStatic(),
       },
+      search: {
+        type: 'search',
+        label: 'Search',
+        placeholder: 'Type here to search...',
+        valueOptions: countriesStatic(),
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
@@ -155,6 +161,7 @@ const Form = () => {
         <Inputs.Rating />
         <Inputs.Range />
         <Inputs.Select />
+        <Inputs.Search />
         <button type="submit">Submit</button>
       </form>
     </Theme>

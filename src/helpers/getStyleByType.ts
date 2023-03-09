@@ -9,6 +9,7 @@ import { CheckboxGroupInputStyles } from '../styles/CheckboxGroupInput.styles';
 import { CheckboxInputStyles } from '../styles/CheckboxInput.styles';
 import { NumberInputStyles } from '../styles/NumberInput.styles';
 import { RadioGroupInputStyles } from '../styles/RadioGroupInput.styles';
+import { SearchInputStyles } from '../styles/SearchInput.styles';
 import { TextInputStyles } from '../styles/TextInput.styles';
 
 function _placeholderStyles() {
@@ -30,6 +31,7 @@ const TYPES = {
   [InputType.SegmentedSlider]: SegmentedSliderInputStyles,
   [InputType.Range]: RangeInputStyles,
   [InputType.Select]: SelectInputStyles,
+  [InputType.Search]: SearchInputStyles,
 };
 
 export type StyleByType = typeof TYPES;

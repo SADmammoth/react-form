@@ -3,6 +3,7 @@ import CheckboxInput from '../inputs/CheckboxInput';
 import NumberInput from '../inputs/NumberInput';
 import RadioGroupInput from '../inputs/RadioGroupInput';
 import RangeInput from '../inputs/RangeInput';
+import SearchInput from '../inputs/SearchInputs';
 import SegmentedSliderInput from '../inputs/SegmentedSliderInput';
 import SelectInput from '../inputs/SelectInput';
 import SliderInput from '../inputs/SliderInput';
@@ -20,4 +21,5 @@ export const ALL_INPUTS_MAP: RegisteredInputsMap = {
   [InputType.SegmentedSlider]: SegmentedSliderInput,
   [InputType.Range]: RangeInput,
   [InputType.Select]: SelectInput,
+  [InputType.Search]: SearchInput,
 };
