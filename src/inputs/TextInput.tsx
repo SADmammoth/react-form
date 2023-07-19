@@ -32,14 +32,14 @@ const TextInput = ({
         type={type}
         name={name}
         placeholder={placeholder}
-        value={value as string}
+        value={value ?? ''}
         onChange={(event) => {
           //@ts-ignore
-          event.target.value = updateValue(name, event.target.value);
+          updateValue(name, event.target.value);
         }}
         onBlur={(event) => {
           //@ts-ignore
-          event.target.value = setValue(name, event.target.value);
+          setValue(name, event.target.value);
         }}
         disabled={disabled}
         required={required}

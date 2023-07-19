@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { ALL_INPUTS_MAP } from '../const/ALL_INPUTS_MAP';
 import { StyleByType } from '../helpers/getStyleByType';
 import { IFormProps } from '../types/IFormProps';
@@ -20,18 +21,14 @@ const createComponent = <InitInputsProps extends InputsProps>(
 ) => {
   type Props = InputComponentProps<InitInputsProps, keyof InputPropsByType>;
   return ([name, { type, ...inputProps }]: [name: string, props: Props]) => {
-    return [
-      capitalize(name),
-      ({ style }: { style: StyleByType[keyof StyleByType] }) => {
-        const Input = registeredInputs[type] as React.ComponentType<Props>;
-        const mappedInputProps = {
-          type,
-          style: styles[name],
-          ...inputProps,
-        } as Props;
-        return <Input key={mappedInputProps.name} {...mappedInputProps} />;
-      },
-    ];
+    const Input = registeredInputs[type] as React.ComponentType<Props>;
+    const mappedInputProps = {
+      type,
+      style: styles[name],
+      ...inputProps,
+    } as Props;
+
+    return [capitalize(name), <Input key={name} {...mappedInputProps} />];
   };
 };
 
@@ -42,10 +39,14 @@ export function useInputsComponents<InitInputsProps extends InputsProps>(
   const { inputs, stylesData, ...rest } = useInputs(props);
   const styles = useInputsStyles(stylesData);
 
-  return {
-    Inputs: Object.fromEntries(
+  const Inputs = useMemo(() => {
+    return Object.fromEntries(
       Object.entries(inputs).map(createComponent(registeredInputsMap, styles)),
-    ),
+    );
+  }, [inputs, registeredInputsMap]);
+
+  return {
+    Inputs,
     ...rest,
   };
 }

@@ -162,16 +162,16 @@ const Form = () => {
   return (
     <Theme>
       <form {...formProps}>
-        <Inputs.Text />
-        <Inputs.Number />
-        <Inputs.Checkbox />
-        <Inputs.CheckboxGroup />
-        <Inputs.RadioGroup />
-        <Inputs.RadioGroupRequired />
-        <Inputs.Slider />
-        <Inputs.Rating />
-        <Inputs.Range />
-        <Inputs.Select />
+        {Inputs.Text}
+        {Inputs.Number}
+        {Inputs.Checkbox}
+        {Inputs.CheckboxGroup}
+        {Inputs.RadioGroup}
+        {Inputs.RadioGroupRequired}
+        {Inputs.Slider}
+        {Inputs.Rating}
+        {Inputs.Range}
+        {Inputs.Select}
         <button type="submit">Submit</button>
       </form>
     </Theme>
