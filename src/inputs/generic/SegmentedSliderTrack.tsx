@@ -65,29 +65,26 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
         return 1;
       };
 
-      const renderSegment = useCallback(
-        (i: number) => {
-          return (
-            <HoverToolTip
-              key={'' + id + i + 'segment'}
-              text={labelCalculator?.(i) ?? ''}
-              showOverride={(isHovered) =>
-                labelCalculator !== undefined && isHovered
+      const renderSegment = (i: number) => {
+        return (
+          <HoverToolTip
+            key={'' + id + i + 'segment'}
+            text={labelCalculator?.(i) ?? ''}
+            showOverride={(isHovered) =>
+              labelCalculator !== undefined && isHovered
+            }>
+            <button
+              key={`${id}_${i}`}
+              css={style?.segment}
+              type="button"
+              onClick={(event) =>
+                onTrackClick ? onTrackClick(event, i) : null
               }>
-              <button
-                key={`${id}_${i}`}
-                css={style?.segment}
-                type="button"
-                onClick={(event) =>
-                  onTrackClick ? onTrackClick(event, i) : null
-                }>
-                <Segment segmentProgress={segmentProgress(i)} />
-              </button>
-            </HoverToolTip>
-          );
-        },
-        [labelCalculator],
-      );
+              <Segment segmentProgress={segmentProgress(i)} />
+            </button>
+          </HoverToolTip>
+        );
+      };
 
       return (
         <div css={[style ? style.minMaxContainer : style, css``]}>
@@ -97,7 +94,6 @@ const SegmentedSliderTrack: React.FC<SegmentedSliderTrackProps> =
           <div
             ref={forwardedRef}
             css={[style ? style.trackContainer : style, css``]}
-            //@ts-ignore
             style={{
               //@ts-ignore
               '--right-position': rightPosition,

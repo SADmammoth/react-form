@@ -30,6 +30,7 @@ export type InputProps =
   | IRadioGroupInputProps
   | ITextAreaInputProps
   | ISliderInputProps
+  | ISegmentedSliderInputProps
   | IRangeInputProps
   | ISelectInputProps
   | ISearchInputProps
