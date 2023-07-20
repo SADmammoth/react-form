@@ -8,16 +8,18 @@ const App = () => {
 
   return (
     <Fragment>
-      <Form />
-      <Inp
-        label="Der"
-        name="name"
-        type="checkbox"
-        value="der"
-        onChange={(value) => {
-          console.log('OnChange', value);
-        }}
-      />
+      <div style={{ paddingBottom: '200px' }}>
+        <Form />
+        <Inp
+          label="Der"
+          name="name"
+          type="checkbox"
+          value="der"
+          onChange={(value) => {
+            console.log('OnChange', value);
+          }}
+        />
+      </div>
     </Fragment>
   );
 };

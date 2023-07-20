@@ -28,6 +28,7 @@ const SelectInput = ({
   const inputStyle = style ? style.root : null;
   const inputBoxStyle = style ? style.inputBox : null;
   const labelStyle = style ? style.label : null;
+  const focusedInputBox = style ? style.focusedInputBox : null;
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -121,7 +122,7 @@ const SelectInput = ({
   );
 
   return (
-    <div css={inputBoxStyle}>
+    <div css={isFocused ? focusedInputBox : inputBoxStyle}>
       <OptionList
         options={valueOptions.map((option) => {
           if (isValueSelected(option?.value)) {

@@ -86,6 +86,14 @@ export const SearchInputStyles = classes({
     width: ${theme.misc.inputWidth};
     padding: 10px 20px;
   `,
+  focusedInputBox: (theme) => css`
+    display: flex;
+    flex-direction: column-reverse;
+    width: ${theme.misc.inputWidth};
+    padding: 10px 20px;
+    z-index: 100;
+    position: relative;
+  `,
   invalid: (theme) => css`
     color: ${theme.color.errorText};
     background-color: ${theme.color.errorBackground};

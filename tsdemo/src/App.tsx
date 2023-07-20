@@ -4,7 +4,9 @@ import Form from './Form';
 const App = () => {
   return (
     <Fragment>
-      <Form />
+      <div style={{ paddingBottom: '200px' }}>
+        <Form />
+      </div>
     </Fragment>
   );
 };
