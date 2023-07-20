@@ -34,28 +34,31 @@ const RadioGroupInput = ({
           {label}
         </label>
       </Optional>
-      {valueOptions.map(({ label, value: optionValue }) => (
-        <CheckboxInput
-          key={name + optionValue}
-          style={checkboxStyles}
-          label={label || optionValue}
-          type={InputType.Checkbox}
-          formId={formId + optionValue}
-          name={name + '[]'}
-          setValue={(m, isChecked) => {
-            let newValue;
-            if (isChecked) {
-              newValue = { label, value: optionValue };
-            } else if (required) return true as typeof isChecked;
-            setValue(name, newValue);
-            return isChecked;
-          }}
-          updateValue={(_, value) => value}
-          value={value ? value.value === optionValue : undefined}
-          disabled={disabled}
-          required={!value && required}
-        />
-      ))}
+      {valueOptions.map(({ label, value: optionValue }) => {
+        console.log(name, value, optionValue);
+        return (
+          <CheckboxInput
+            key={name + optionValue}
+            style={checkboxStyles}
+            label={label || optionValue}
+            type={InputType.Checkbox}
+            formId={formId + optionValue}
+            name={name + '[]'}
+            setValue={(m, isChecked) => {
+              let newValue;
+              if (isChecked) {
+                newValue = { label, value: optionValue };
+              } else if (required) return true as typeof isChecked;
+              setValue(name, newValue);
+              return isChecked;
+            }}
+            updateValue={(_, value) => value}
+            value={value ? value.value === optionValue : undefined}
+            disabled={disabled}
+            required={!value && required}
+          />
+        );
+      })}
     </div>
   );
 };

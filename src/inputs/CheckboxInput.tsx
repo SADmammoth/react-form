@@ -27,11 +27,10 @@ const CheckboxInput = ({
         name={name}
         type={type}
         onChange={(event) => {
-          //@ts-ignore
-          event.target.checked = setValue(name, event.target.checked);
+          setValue(name, event.target.checked);
         }}
         css={checkboxStyle}
-        defaultChecked={value}
+        checked={value ?? false}
         disabled={disabled}
         required={required}
         value={id}
