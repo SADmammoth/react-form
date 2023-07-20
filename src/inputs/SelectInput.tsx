@@ -146,6 +146,7 @@ const SelectInput = ({
           list={name}
           onClick={(event) => {
             setIsFocused(!isFocused);
+            // TODO Scroll to first selected item
             // event.preventDefault();
           }}
           onBlur={(event) => {
