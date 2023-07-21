@@ -21,6 +21,7 @@ const SearchInput = ({
   required,
   style,
   valueOptions,
+  restrictedToOptions,
 }: InputComponentProps<InputsProps, InputType.Search>) => {
   const id = formId + name;
 
@@ -99,9 +100,12 @@ const SearchInput = ({
 
             if (selectedFromList) {
               setSelectedFromList(false);
-            } else {
+            } else if (!restrictedToOptions) {
               const input = event.target as HTMLInputElement;
               setValue(name, input.value);
+            } else {
+              setValue(name, undefined);
+              setSearchPrompt('');
             }
             // event.preventDefault();
           }}

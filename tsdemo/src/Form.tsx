@@ -153,6 +153,26 @@ const Form = () => {
           },
         ],
       },
+      search: {
+        type: InputType.Search,
+        label: 'Search',
+        placeholder: 'Type here to search...',
+        valueOptions: [
+          {
+            label: 'Option 1',
+            value: '1',
+          },
+          {
+            label: 'Option 2',
+            value: '2',
+          },
+          {
+            label: 'Option 3',
+            value: '3',
+          },
+        ],
+        restrictedToOptions: false,
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {

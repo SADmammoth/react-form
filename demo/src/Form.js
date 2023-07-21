@@ -141,6 +141,7 @@ const Form = () => {
         label: 'Search',
         placeholder: 'Type here to search...',
         valueOptions: countriesStatic(),
+        restrictedToOptions: true,
       },
     },
     formId: 'form',
