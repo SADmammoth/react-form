@@ -33,6 +33,7 @@ const SearchInput = ({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchPrompt, setSearchPrompt] = useState('');
+  const [selectedFromList, setSelectedFromList] = useState(false);
 
   const c = useCallback(
     (event) => {
@@ -70,7 +71,11 @@ const SearchInput = ({
           return { option };
         })}
         id={id}
-        onSelect={() => {}}
+        onSelect={(value) => {
+          setValue(name, value.value);
+          setSearchPrompt(value.label ?? '');
+          setSelectedFromList(true);
+        }}
         show={isFocused}
         searchPrompt={searchPrompt}>
         <input
@@ -91,8 +96,13 @@ const SearchInput = ({
           }}
           onBlur={(event) => {
             setIsFocused(false);
-            const input = event.target as HTMLInputElement;
-            setValue(name, input.value);
+
+            if (selectedFromList) {
+              setSelectedFromList(false);
+            } else {
+              const input = event.target as HTMLInputElement;
+              setValue(name, input.value);
+            }
             // event.preventDefault();
           }}
           // onPaste={(event) => event.preventDefault()}
@@ -101,6 +111,7 @@ const SearchInput = ({
           onKeyDown={c}
           disabled={disabled}
           required={required}
+          value={searchPrompt ?? ''}
         />
       </OptionList>
       <Optional $={!!label}>

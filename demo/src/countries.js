@@ -21,3 +21,9 @@ export function countriesStatic() {
     return { label: name, value: alpha2Code };
   });
 }
+
+export function countriesNamesStatic() {
+  return countriesData.map(({ name, alpha2Code }) => {
+    return { label: name, value: alpha2Code };
+  });
+}
