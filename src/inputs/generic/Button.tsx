@@ -1,8 +1,8 @@
 import React from 'react';
-import { CSSInterpolation } from '@emotion/serialize';
+import { Interpolation, Theme } from '@emotion/react';
 
 type Props = {
-  style?: CSSInterpolation;
+  style?: Interpolation<Theme>;
   disabled?: boolean;
   onClick: () => void;
   label: string;

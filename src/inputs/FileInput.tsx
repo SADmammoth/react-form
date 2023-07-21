@@ -26,6 +26,9 @@ const FileInput = ({
 }: InputComponentProps<InputsProps, InputType.File>) => {
   const id = formId + name;
 
+  const fileLabelStyle = style ? style.fileLabel : null;
+  const fileLabelsStyle = style ? style.fileLabels : null;
+
   const [currentValue, setCurrentValue] = useState<IFileData[]>([]);
   useEffect(() => {
     if (value && value.length) {
@@ -79,16 +82,17 @@ const FileInput = ({
         <Optional $={!!label}>
           <p>{label}</p>
         </Optional>
-
-        {!currentValue ||
-          currentValue.map(({ fileName, size }, i) => (
-            <FileLabel
-              name={fileName}
-              size={size}
-              onClose={onClose(i)}
-              disabled={disabled}
-            />
-          ))}
+        <ul css={fileLabelsStyle}>
+          {!currentValue ||
+            currentValue.map(({ fileName, size }, i) => (
+              <FileLabel
+                name={fileName}
+                size={size}
+                onClose={onClose(i)}
+                disabled={disabled}
+              />
+            ))}
+        </ul>
       </label>
     </div>
   );
