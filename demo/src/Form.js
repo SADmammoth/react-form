@@ -143,6 +143,10 @@ const Form = () => {
         valueOptions: countriesStatic(),
         restrictedToOptions: true,
       },
+      file: {
+        type: 'file',
+        label: 'File',
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
@@ -163,6 +167,7 @@ const Form = () => {
         {Inputs.Range}
         {Inputs.Select}
         {Inputs.Search}
+        {Inputs.File}
         <button type="submit">Submit</button>
       </form>
     </Theme>

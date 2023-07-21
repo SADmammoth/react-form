@@ -1,5 +1,6 @@
 import CheckboxGroupInput from '../inputs/CheckboxGroupInput';
 import CheckboxInput from '../inputs/CheckboxInput';
+import FileInput from '../inputs/FileInput';
 import NumberInput from '../inputs/NumberInput';
 import RadioGroupInput from '../inputs/RadioGroupInput';
 import RangeInput from '../inputs/RangeInput';
@@ -22,4 +23,5 @@ export const ALL_INPUTS_MAP: RegisteredInputsMap = {
   [InputType.Range]: RangeInput,
   [InputType.Select]: SelectInput,
   [InputType.Search]: SearchInput,
+  [InputType.File]: FileInput,
 };
