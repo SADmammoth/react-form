@@ -25,36 +25,49 @@ const root = (theme: Theme) => css`
   background-color: ${theme.color.popupBackground};
   color: ${theme.color.commonText};
   position: relative;
-  padding: 10px;
+  padding: 3px;
   border-radius: 20px;
   margin: 0;
-  padding-left: 15px;
+  padding-left: 10px;
+  padding-right: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
 `;
 
 const nameStyle = (theme: Theme) =>
   css`
     margin: 0;
     padding: 0;
-    padding-bottom: 5px;
-    margin-right: 50px;
+    text-overflow: ellipsis;
+    max-width: 63px;
+    overflow: hidden;
   `;
 
 const sizeStyle = (theme: Theme) =>
   css`
     margin: 0;
     padding: 0;
-    font-size: 80%;
+    font-size: 70%;
+    margin-right: 10px;
   `;
 
 const closeButton = (theme: Theme) => css`
-  background-color: ${theme.color.background};
-  border-radius: 100%;
-  border-color: ${theme.color.highlight};
+  background-color: transparent;
+  border: none;
   color: ${theme.color.highlight};
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 10px;
+  right: 2px;
+`;
+
+const extensionStyle = css`
+  margin: 0;
+  padding: 0;
+  margin-left: -5px;
+  margin-right: 5px;
 `;
 
 type Props = {
@@ -65,16 +78,19 @@ type Props = {
 };
 
 function FileLabel({ name, size, onClose, disabled }: Props) {
+  const nameParts = name.split('.');
+  const extension = nameParts.pop();
   return (
     <li css={root}>
-      <p css={nameStyle}>{name}</p>
+      <p css={nameStyle}>{nameParts.join('.')}</p>
+      <p css={extensionStyle}>.{extension}</p>
       <p css={sizeStyle}>{formatFileSize(size)}</p>
       <Button
         style={closeButton}
         label="Close"
         onClick={onClose}
         disabled={disabled}>
-        x
+        &#10799;
       </Button>
     </li>
   );

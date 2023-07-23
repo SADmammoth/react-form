@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Ref, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { Optional } from '../helpers/Optional';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
@@ -23,11 +23,16 @@ const FileInput = ({
   disabled,
   required,
   style,
+  placeholder,
 }: InputComponentProps<InputsProps, InputType.File>) => {
   const id = formId + name;
 
-  const fileLabelStyle = style ? style.fileLabel : null;
+  const inputBoxStyle = style ? style.inputBox : null;
+  const inputStyle = style ? style.input : null;
   const fileLabelsStyle = style ? style.fileLabels : null;
+  const uploadFileButtonStyle = style ? style.uploadFileButton : null;
+  const labelStyle = style ? style.label : null;
+  const inputPlaceholderStyle = style ? style.inputPlaceholder : null;
 
   const [currentValue, setCurrentValue] = useState<IFileData[]>([]);
   useEffect(() => {
@@ -62,9 +67,45 @@ const FileInput = ({
     ]);
   };
 
+  const input = useRef<HTMLInputElement>(null);
+
   return (
-    <div>
+    <div css={inputBoxStyle}>
+      <Optional $={!!label}>
+        <label css={labelStyle} htmlFor={id}>
+          {label}
+        </label>
+      </Optional>
+      <div css={inputPlaceholderStyle}>
+        {currentValue && currentValue.length ? (
+          <ul css={fileLabelsStyle}>
+            {currentValue.map(({ fileName, size }, i) => (
+              <FileLabel
+                name={fileName}
+                size={size}
+                onClose={onClose(i)}
+                disabled={disabled}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p>{placeholder ?? 'Choose file'}</p>
+        )}
+
+        <Button
+          style={uploadFileButtonStyle}
+          label={currentValue && currentValue.length ? 'Add file' : 'Browse'}
+          onClick={() => {
+            console.log('Gwer');
+            input?.current?.click();
+          }}>
+          {currentValue && currentValue.length ? 'Add file' : 'Browse'}
+        </Button>
+      </div>
+
       <input
+        ref={input}
+        css={inputStyle}
         id={id}
         type={type}
         name={name}
@@ -77,23 +118,6 @@ const FileInput = ({
         disabled={disabled}
         required={required}
       />
-
-      <label htmlFor={id}>
-        <Optional $={!!label}>
-          <p>{label}</p>
-        </Optional>
-        <ul css={fileLabelsStyle}>
-          {!currentValue ||
-            currentValue.map(({ fileName, size }, i) => (
-              <FileLabel
-                name={fileName}
-                size={size}
-                onClose={onClose(i)}
-                disabled={disabled}
-              />
-            ))}
-        </ul>
-      </label>
     </div>
   );
 };
