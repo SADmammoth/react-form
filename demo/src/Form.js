@@ -147,6 +147,7 @@ const Form = () => {
         type: 'file',
         label: 'File',
         allowMultiple: true,
+        accept: '.log',
       },
     },
     formId: 'form',
