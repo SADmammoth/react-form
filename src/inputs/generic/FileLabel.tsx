@@ -34,6 +34,7 @@ const root = (theme: Theme) => css`
   flex-direction: row;
   gap: 5px;
   align-items: center;
+  min-width: calc(${theme.misc.inputWidth} - 30px);
 `;
 
 const nameStyle = (theme: Theme) =>

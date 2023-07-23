@@ -146,6 +146,7 @@ const Form = () => {
       file: {
         type: 'file',
         label: 'File',
+        allowMultiple: true,
       },
     },
     formId: 'form',

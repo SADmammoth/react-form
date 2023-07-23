@@ -24,6 +24,7 @@ const FileInput = ({
   required,
   style,
   placeholder,
+  allowMultiple,
 }: InputComponentProps<InputsProps, InputType.File>) => {
   const id = formId + name;
 
@@ -94,12 +95,11 @@ const FileInput = ({
 
         <Button
           style={uploadFileButtonStyle}
-          label={currentValue && currentValue.length ? 'Add file' : 'Browse'}
+          label={'Browse'}
           onClick={() => {
-            console.log('Gwer');
             input?.current?.click();
           }}>
-          {currentValue && currentValue.length ? 'Add file' : 'Browse'}
+          Browse
         </Button>
       </div>
 
@@ -112,9 +112,9 @@ const FileInput = ({
         // value={value ?? ''}
         onChange={(event) => {
           //@ts-ignore
-          setValue(name, [...(value ?? []), ...event.target.files]);
-          event.target.value = '';
+          setValue(name, [...event.target.files]);
         }}
+        multiple={allowMultiple}
         disabled={disabled}
         required={required}
       />
