@@ -149,6 +149,11 @@ const Form = () => {
         allowMultiple: true,
         accept: '.log',
       },
+      image: {
+        type: 'image',
+        label: 'Image',
+        allowMultiple: true,
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
@@ -170,6 +175,7 @@ const Form = () => {
         {Inputs.Select}
         {Inputs.Search}
         {Inputs.File}
+        {Inputs.Image}
         <button type="submit">Submit</button>
       </form>
     </Theme>

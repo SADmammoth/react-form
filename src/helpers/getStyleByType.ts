@@ -8,6 +8,7 @@ import { InputType } from '../types/InputsProps/atomic/InputType';
 import { CheckboxGroupInputStyles } from '../styles/CheckboxGroupInput.styles';
 import { CheckboxInputStyles } from '../styles/CheckboxInput.styles';
 import { FileInputStyles } from '../styles/FileInput.styles';
+import { ImageInputStyles } from '../styles/ImageInput.styles';
 import { NumberInputStyles } from '../styles/NumberInput.styles';
 import { RadioGroupInputStyles } from '../styles/RadioGroupInput.styles';
 import { SearchInputStyles } from '../styles/SearchInput.styles';
@@ -34,6 +35,7 @@ const TYPES = {
   [InputType.Select]: SelectInputStyles,
   [InputType.Search]: SearchInputStyles,
   [InputType.File]: FileInputStyles,
+  [InputType.Image]: ImageInputStyles,
 };
 
 export type StyleByType = typeof TYPES;

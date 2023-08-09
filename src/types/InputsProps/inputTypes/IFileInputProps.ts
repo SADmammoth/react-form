@@ -9,5 +9,4 @@ export type FileIcons = {
 export interface IFileInputProps extends IFileBasedInputs {
   type: InputType.File;
   fileIcons?: FileIcons;
-  placeholder?: string;
 }

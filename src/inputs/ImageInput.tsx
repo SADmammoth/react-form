@@ -6,6 +6,7 @@ import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import Button from './generic/Button';
 import FileLabel from './generic/FileLabel';
+import ImageTile from './generic/ImageTile';
 
 interface IFileData {
   url: string;
@@ -13,7 +14,7 @@ interface IFileData {
   size: number;
 }
 
-const FileInput = ({
+const ImageInput = ({
   type,
   label,
   name,
@@ -26,7 +27,7 @@ const FileInput = ({
   placeholder,
   allowMultiple,
   accept,
-}: InputComponentProps<InputsProps, InputType.File>) => {
+}: InputComponentProps<InputsProps, InputType.Image>) => {
   const id = formId + name;
 
   const inputBoxStyle = style ? style.inputBox : null;
@@ -82,11 +83,11 @@ const FileInput = ({
       <div css={inputPlaceholderStyle}>
         {currentValue && currentValue.length ? (
           <ul css={fileLabelsStyle}>
-            {currentValue.map(({ fileName, size }, i) => (
-              <FileLabel
-                key={fileName + size}
+            {currentValue.map(({ fileName, url }, i) => (
+              <ImageTile
+                key={fileName}
+                url={url}
                 name={fileName}
-                size={size}
                 onClose={onClose(i)}
                 disabled={disabled}
               />
@@ -110,7 +111,7 @@ const FileInput = ({
         ref={input}
         css={inputStyle}
         id={id}
-        type={type}
+        type="file"
         name={name}
         // value={value ?? ''}
         onChange={(event) => {
@@ -120,10 +121,10 @@ const FileInput = ({
         multiple={allowMultiple}
         disabled={disabled}
         required={required}
-        accept={accept}
+        accept={accept ?? 'image/*'}
       />
     </div>
   );
 };
 
-export default FileInput;
+export default ImageInput;
