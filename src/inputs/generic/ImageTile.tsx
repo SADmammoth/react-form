@@ -21,8 +21,8 @@ const closeButton = (theme: Theme) => css`
 `;
 
 const imageStyle = (theme: Theme) => css`
-  width: 90px;
-  height: 90px;
+  width: var(--image-size);
+  height: var(--image-size);
   border: 2px solid ${theme.color.common};
   border-radius: ${theme.misc.borderRadius};
   background: ${theme.color.background};

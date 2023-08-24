@@ -152,7 +152,6 @@ const Form = () => {
       image: {
         type: 'image',
         label: 'Image',
-        allowMultiple: true,
       },
     },
     formId: 'form',
