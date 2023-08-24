@@ -34,12 +34,19 @@ type Props = {
   url?: string;
   onClose: () => void;
   disabled?: boolean;
+  onClick: () => void;
 };
 
-function ImageTile({ name, url, onClose, disabled }: Props) {
+function ImageTile({ name, url, onClose, disabled, onClick }: Props) {
   return (
     <li css={root}>
-      <img css={imageStyle} src={url} alt={name} title={name} />
+      <img
+        css={imageStyle}
+        src={url}
+        alt={name}
+        title={name}
+        onClick={onClick}
+      />
       <Button
         style={closeButton}
         label="Close"

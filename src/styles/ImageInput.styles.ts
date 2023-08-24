@@ -35,7 +35,7 @@ export const ImageInputStyles = classes({
   fileLabelsSingle: (theme) => css`
     list-style-type: none;
     padding: 0px;
-    margin; 0;
+    margin: 0;
     position: relative;
   `,
   input: css`
@@ -117,5 +117,24 @@ export const ImageInputStyles = classes({
     }
 
     margin-bottom: 20px;
+  `,
+  inputPlaceholderSingle: (theme) => css`
+    border-radius: ${theme.misc.borderRadius};
+    height: calc(var(--image-size) + 10px);
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(${theme.misc.inputWidth} + 80px);
+
+    & > p {
+      padding: 0;
+      margin: 0;
+      color: ${theme.color.secondaryText};
+      background: ${theme.color.background};
+      margin-left: 10px;
+    }
+
+    margin-bottom: 26px;
   `,
 });

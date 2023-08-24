@@ -39,6 +39,9 @@ const ImageInput = ({
   const addImageButtonStyle = style ? style.addImageButton : null;
   const labelStyle = style ? style.label : null;
   const inputPlaceholderStyle = style ? style.inputPlaceholder : null;
+  const inputPlaceholderSingleStyle = style
+    ? style.inputPlaceholderSingle
+    : null;
   const emptyInputPlaceholderStyle = style ? style.emptyInputPlaceholder : null;
 
   const [currentValue, setCurrentValue] = useState<IFileData[]>([]);
@@ -87,12 +90,9 @@ const ImageInput = ({
 
       {currentValue && currentValue.length ? (
         <div
-          css={inputPlaceholderStyle}
-          onClick={() => {
-            if (!allowMultiple) {
-              input?.current?.click();
-            }
-          }}>
+          css={
+            allowMultiple ? inputPlaceholderStyle : inputPlaceholderSingleStyle
+          }>
           <ul css={allowMultiple ? fileLabelsStyle : fileLabelsSingleStyle}>
             {currentValue.map(({ fileName, url }, i) => (
               <ImageTile
@@ -101,6 +101,11 @@ const ImageInput = ({
                 name={fileName}
                 onClose={onClose(i)}
                 disabled={disabled}
+                onClick={() => {
+                  if (!allowMultiple) {
+                    input?.current?.click();
+                  }
+                }}
               />
             ))}
           </ul>
