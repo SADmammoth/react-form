@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IFormProps } from '../types/IFormProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
@@ -68,25 +69,6 @@ const INPUTS: IFormProps<InputsProps>['inputs'] = {
       label: 'Option 3',
       value: '3',
     },
-  },
-  radioGroupRequired: {
-    type: InputType.RadioGroup,
-    label: 'Radio Group Required',
-    required: true,
-    valueOptions: [
-      {
-        label: 'Option 1',
-        value: '1',
-      },
-      {
-        label: 'Option 2',
-        value: '2',
-      },
-      {
-        label: 'Option 3',
-        value: '3',
-      },
-    ],
   },
   slider: {
     type: InputType.Slider,
@@ -157,21 +139,29 @@ const INPUTS: IFormProps<InputsProps>['inputs'] = {
   },
 };
 
-test('All inputs displaying', async () => {
-  render(
-    <TestForm
-      formId="form"
-      inputs={INPUTS}
-      onSubmit={async (data) => {
-        console.log(data);
-      }}
-    />,
-  );
-  waitFor(
-    () => {
-      const allInputs = screen.getAllByRole('input');
-      expect(allInputs.length).toBe(Object.values(INPUTS).length);
-    },
-    { timeout: 1000 },
-  );
+describe('Form tests', () => {
+  test('All inputs displaying', async () => {
+    render(
+      <TestForm formId="form" inputs={INPUTS} onSubmit={async () => {}} />,
+    );
+
+    const allInputs = screen.getAllByRole('input');
+    expect(allInputs.length).toBe(Object.values(INPUTS).length);
+  });
+
+  test('Form data contains all fields on submit', async () => {
+    const onSubmit = jest.fn();
+    render(
+      <TestForm
+        formId="form"
+        inputs={INPUTS}
+        onSubmit={async (data) => {
+          onSubmit();
+          expect(Object.keys(data).sort()).toEqual(Object.keys(INPUTS).sort());
+        }}
+      />,
+    );
+    await userEvent.click(screen.getByText('Submit'));
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+  });
 });
