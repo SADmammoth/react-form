@@ -9,11 +9,15 @@ const TestForm = (props: IFormProps<InputsProps>) => {
   return (
     <Theme>
       <form data-testid="form" {...formProps}>
-        {Object.entries(Inputs).map(([key, Input]) => (
-          <div key={key} role="input" data-testid={key}>
-            {Input}
-          </div>
-        ))}
+        {Object.keys(Inputs).map((key) => {
+          const MyInput = Inputs[key];
+          return (
+            <div role="input" data-testid={key}>
+              {/*@ts-ignore*/}
+              <MyInput key={key} />
+            </div>
+          );
+        })}
         <button type="submit">Submit</button>
       </form>
     </Theme>

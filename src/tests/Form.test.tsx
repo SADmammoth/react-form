@@ -83,22 +83,6 @@ const INPUTS: IFormProps<InputsProps>['inputs'] = {
     },
     valueDisplayStyle: ValueDisplayStyle.HideAll,
   },
-  rating: {
-    type: InputType.SegmentedSlider,
-    label: 'Rating',
-    valueOptions: {
-      from: 1,
-      to: 6,
-      step: 1,
-      labelCalculator: (i) => {
-        if (i === 1) {
-          return '1 star';
-        }
-        return `${i} stars`;
-      },
-    },
-    segment: StarSliderSegment,
-  },
   range: {
     type: InputType.Range,
     label: 'Range',
@@ -126,16 +110,6 @@ const INPUTS: IFormProps<InputsProps>['inputs'] = {
     placeholder: 'Type here to search...',
     valueOptions: countriesStatic(),
     restrictedToOptions: true,
-  },
-  file: {
-    type: InputType.File,
-    label: 'File',
-    allowMultiple: true,
-    accept: '.log',
-  },
-  image: {
-    type: InputType.Image,
-    label: 'Image',
   },
 };
 
