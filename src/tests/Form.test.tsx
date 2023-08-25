@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { IFormProps } from '../types/IFormProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
@@ -8,6 +7,7 @@ import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle
 import { StarSliderSegment } from './helpers/StarSliderSegment';
 import TestForm from './helpers/TestForm';
 import { countriesStatic } from './helpers/countries';
+import { testForm } from './helpers/formTests';
 
 const INPUTS: IFormProps<InputsProps>['inputs'] = {
   text: {
@@ -141,27 +141,15 @@ const INPUTS: IFormProps<InputsProps>['inputs'] = {
 
 describe('Form tests', () => {
   test('All inputs displaying', async () => {
-    render(
-      <TestForm formId="form" inputs={INPUTS} onSubmit={async () => {}} />,
-    );
+    testForm(INPUTS);
 
     const allInputs = screen.getAllByRole('input');
     expect(allInputs.length).toBe(Object.values(INPUTS).length);
   });
 
   test('Form data contains all fields on submit', async () => {
-    const onSubmit = jest.fn();
-    render(
-      <TestForm
-        formId="form"
-        inputs={INPUTS}
-        onSubmit={async (data) => {
-          onSubmit();
-          expect(Object.keys(data).sort()).toEqual(Object.keys(INPUTS).sort());
-        }}
-      />,
-    );
-    await userEvent.click(screen.getByText('Submit'));
-    expect(onSubmit).toHaveBeenCalledTimes(1);
+    await testForm(INPUTS).testSubmit(async (data) => {
+      expect(Object.keys(data).sort()).toEqual(Object.keys(INPUTS).sort());
+    });
   });
 });
