@@ -26,5 +26,11 @@ export const testForm = (inputs: IFormProps<InputsProps>['inputs']) => {
       expect(onSubmitMock).toHaveBeenCalledTimes(1);
       onSubmitMock.mockClear();
     },
+    expectNoSubmit: async () => {
+      await userEvent.click(await screen.findByText('Submit'));
+
+      expect(onSubmitMock).not.toHaveBeenCalled();
+      onSubmitMock.mockClear();
+    },
   };
 };
