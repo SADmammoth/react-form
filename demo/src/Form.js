@@ -15,6 +15,10 @@ const Form = () => {
         type: 'number',
         label: 'Number',
         placeholder: '1234',
+        //FIXME: unable to enter negative and decimal values
+        min: 0, // FIXME: min max not working for input on validation on submit
+        max: 6,
+        step: 2, // FIXME: steps not working
       },
       checkbox: {
         type: 'checkbox',
