@@ -44,6 +44,10 @@ const Form = () => {
         value: [
           {
             label: 'Option 3',
+            value: '1',
+          },
+          {
+            label: 'Option 3',
             value: '3',
           },
         ],
