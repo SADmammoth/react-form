@@ -81,7 +81,7 @@ interface IProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
 function ToolTip({ show, text, ...props }: IProps) {
   return (
     <Optional $={show}>
-      <label {...props} css={style} draggable={false}>
+      <label role="tooltip" {...props} css={style} draggable={false}>
         {text}
       </label>
     </Optional>

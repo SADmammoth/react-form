@@ -137,7 +137,6 @@ const SliderThumb = ({
           }}
           onMouseDown={(event) => {
             if (!sliderRef.current) return;
-            console.log('MOUSE DOWN');
             let ind =
               valuesCount * getSliderProgressOnTrackClick(event, sliderRef);
 

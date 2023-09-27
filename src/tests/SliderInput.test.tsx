@@ -18,8 +18,7 @@ describe('Slider input', () => {
       slider: {
         type: InputType.Slider,
         label: 'Test Label',
-        valueOptions: { from: 0, to: 99 },
-        valueDisplayStyle: ValueDisplayStyle.ShowValue,
+        valueOptions: { from: 0, to: 100 },
       },
     };
 
@@ -33,7 +32,7 @@ describe('Slider input', () => {
       slider: {
         type: InputType.Slider,
         label: 'Test Label',
-        valueOptions: { from: 0, to: 99 },
+        valueOptions: { from: 0, to: 100 },
       },
     };
 
@@ -59,12 +58,48 @@ describe('Slider input', () => {
     });
   });
 
+  test('Tooltip displays correctly (explicit valueOptions)', async () => {
+    const VALUE_OPTIONS = new Array(100).fill(0).map((_, i) => {
+      return {
+        label: `Label ${i + 1}`,
+        value: `Value ${i + 1}`,
+      };
+    });
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: VALUE_OPTIONS,
+      },
+    };
+
+    const {
+      formData: { container },
+      testSubmit,
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 5, 99);
+
+    await testSubmit(async (data) => {
+      expect(data).toMatchObject({
+        slider: {
+          label: 'Label 6',
+          value: 'Value 6',
+        },
+      });
+    });
+  });
+
   test('Correctly saves the value (click)', async () => {
     const INPUTS: InputsPropsType = {
       slider: {
         type: InputType.Slider,
         label: 'Test Label',
-        valueOptions: { from: 0, to: 99 },
+        valueOptions: { from: 0, to: 100 },
       },
     };
 
@@ -99,5 +134,99 @@ describe('Slider input', () => {
       });
     });
     await userEvent.click(container);
+  });
+
+  test('Tooltip displays correctly (from-to)', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: { from: 0, to: 100 },
+      },
+    };
+
+    testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    await slideTheValue(
+      sliderThumb,
+      sliderTrack,
+      0,
+      99,
+      99,
+      (index: number) => {
+        screen.findByRole('tooltip').then((tooltip) => {
+          expect(tooltip).toHaveTextContent(index.toString());
+        });
+      },
+    );
+  });
+
+  test('Tooltip displays correctly (from-to, labelCalculator)', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: {
+          from: 0,
+          to: 26,
+          labelCalculator: (item) => {
+            return String.fromCharCode('a'.charCodeAt(0) + item);
+          },
+        },
+      },
+    };
+
+    testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    await slideTheValue(
+      sliderThumb,
+      sliderTrack,
+      0,
+      25,
+      25,
+      (index: number) => {
+        screen.findByRole('tooltip').then((tooltip) => {
+          expect(tooltip).toHaveTextContent(
+            String.fromCharCode('a'.charCodeAt(0) + index),
+          );
+        });
+      },
+    );
+  });
+
+  test('Tooltip displays correctly (valueOptions)', async () => {
+    const VALUE_OPTIONS = new Array(10).fill(0).map((_, i) => {
+      return {
+        label: `Label ${i + 1}`,
+        value: `Value ${i + 1}`,
+      };
+    });
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: VALUE_OPTIONS,
+      },
+    };
+
+    testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 5, 9, (index: number) => {
+      screen.findByRole('tooltip').then((tooltip) => {
+        expect(tooltip).toHaveTextContent(`Label ${index + 1}`);
+      });
+    });
   });
 });

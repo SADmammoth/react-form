@@ -21,7 +21,7 @@ export const getSliderCoordinatesFromIndex = (
     };
   });
   const { left, width, top, height } = sliderTrack.getBoundingClientRect();
-  const progress = index / maxIndex;
+  const progress = index / (maxIndex + 1);
   return { x: width * progress + left, y: height / 2 + top };
 };
 
@@ -31,6 +31,7 @@ export const slideTheValue = async (
   currentIndex: number,
   targetIndex: number,
   maxIndex: number,
+  onDrag?: (index: number) => void,
 ) => {
   const from = getSliderCoordinatesFromIndex(
     sliderTrack,
@@ -43,16 +44,24 @@ export const slideTheValue = async (
   sliderThumb.getBoundingClientRect = jest.fn(() => {
     return {
       bottom: 0,
-      height: 20,
+      height: 0,
       left: 0,
       right: 0,
       top: 0,
-      width: 20,
+      width: 0,
       x: 0,
       y: 0,
     };
   });
-  await drag(sliderThumb, from, to);
+  await drag(
+    sliderThumb,
+    from,
+    to,
+    (i) => {
+      onDrag?.(currentIndex + i);
+    },
+    targetIndex - currentIndex,
+  );
 };
 
 export const clickTheValue = async (

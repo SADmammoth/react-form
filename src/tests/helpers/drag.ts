@@ -14,6 +14,7 @@ export default async function drag(
   element: HTMLElement,
   from: Point,
   to: Point,
+  onDrag?: (i: number) => void,
   steps = 20,
   duration = 500,
 ) {
@@ -34,6 +35,7 @@ export default async function drag(
   for (let i = 0; i < steps; i++) {
     current.clientX += step.x;
     current.clientY += step.y;
+    onDrag?.(i);
     await sleep(duration / steps);
     fireEvent.mouseMove(element.previousSibling || element, current);
   }
