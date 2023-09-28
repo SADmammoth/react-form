@@ -9,7 +9,11 @@ import TestForm from './helpers/TestForm';
 import drag from './helpers/drag';
 import { testForm } from './helpers/formTests';
 import { getLetterByAlphabetIndex } from './helpers/getLetterByAlphabetIndex';
-import { clickTheValue, slideTheValue } from './helpers/sliderHelpers';
+import {
+  clickTheValue,
+  getSliderCoordinatesFromIndex,
+  slideTheValue,
+} from './helpers/sliderHelpers';
 
 type InputsPropsType = IFormProps<InputsProps>['inputs'];
 
@@ -54,6 +58,18 @@ describe('Slider input', () => {
         slider: {
           label: '10',
           value: '10',
+        },
+      });
+    });
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 5, 99);
+    await userEvent.click(container);
+
+    await testSubmit(async (data) => {
+      expect(data).toMatchObject({
+        slider: {
+          label: '5',
+          value: '5',
         },
       });
     });
@@ -446,4 +462,46 @@ describe('Slider input', () => {
     expect(min).toHaveTextContent('a');
     expect(max).toHaveTextContent('z');
   });
+
+  test('Default value is set correctly', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueDisplayStyle: ValueDisplayStyle.ShowValue,
+        valueOptions: {
+          from: 0,
+          to: 26,
+          labelCalculator: getLetterByAlphabetIndex,
+        },
+        value: {
+          label: getLetterByAlphabetIndex(10),
+          value: '10',
+        },
+      },
+    };
+
+    const {
+      formData: { container },
+      testSubmit,
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    const input = await screen.findByLabelText('Test Label');
+    if (!sliderThumb || !sliderTrack || !input) return;
+
+    expect(input).toHaveValue(getLetterByAlphabetIndex(10));
+
+    await testSubmit(async (data) => {
+      expect(data).toMatchObject({
+        slider: {
+          label: getLetterByAlphabetIndex(10),
+          value: '10',
+        },
+      });
+    });
+  });
+
+  // TODO: Think how required slider would behave
 });
