@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { queryByRole, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IFormProps } from '../types/IFormProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
@@ -8,6 +8,7 @@ import { ValueDisplayStyle } from '../types/InputsProps/atomic/ValueDisplayStyle
 import TestForm from './helpers/TestForm';
 import drag from './helpers/drag';
 import { testForm } from './helpers/formTests';
+import { getLetterByAlphabetIndex } from './helpers/getLetterByAlphabetIndex';
 import { clickTheValue, slideTheValue } from './helpers/sliderHelpers';
 
 type InputsPropsType = IFormProps<InputsProps>['inputs'];
@@ -173,9 +174,7 @@ describe('Slider input', () => {
         valueOptions: {
           from: 0,
           to: 26,
-          labelCalculator: (item) => {
-            return String.fromCharCode('a'.charCodeAt(0) + item);
-          },
+          labelCalculator: getLetterByAlphabetIndex,
         },
       },
     };
@@ -194,9 +193,7 @@ describe('Slider input', () => {
       25,
       (index: number) => {
         screen.findByRole('tooltip').then((tooltip) => {
-          expect(tooltip).toHaveTextContent(
-            String.fromCharCode('a'.charCodeAt(0) + index),
-          );
+          expect(tooltip).toHaveTextContent(getLetterByAlphabetIndex(index));
         });
       },
     );
@@ -228,5 +225,225 @@ describe('Slider input', () => {
         expect(tooltip).toHaveTextContent(`Label ${index + 1}`);
       });
     });
+  });
+
+  test('Tooltip is hidden, when display style is HIDE_ALL', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: { from: 0, to: 10 },
+        valueDisplayStyle: ValueDisplayStyle.HideAll,
+      },
+    };
+
+    const {
+      formData: { container },
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 9, 9, (index: number) => {
+      expect(queryByRole(container, 'tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  test('Tooltip is hidden, when display style is SHOW_VALUE', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: { from: 0, to: 10 },
+        valueDisplayStyle: ValueDisplayStyle.ShowValue,
+      },
+    };
+
+    const {
+      formData: { container },
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 9, 9, (index: number) => {
+      expect(queryByRole(container, 'tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  test('Tooltip is always shown, when display style is ALWAYS_SHOW_TIP', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: { from: 0, to: 10 },
+        valueDisplayStyle: ValueDisplayStyle.AlwaysShowTip,
+      },
+    };
+
+    testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    let tooltip = screen.getByRole('tooltip');
+    expect(tooltip).not.toBeNull();
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 9, 9, (index: number) => {
+      tooltip = screen.getByRole('tooltip');
+      expect(tooltip).not.toBeNull();
+    });
+
+    tooltip = screen.getByRole('tooltip');
+    expect(tooltip).not.toBeNull();
+  });
+
+  test('Tooltip is shown on hover, when display style is SHOW_MIN_MAX', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: { from: 0, to: 10 },
+        valueDisplayStyle: ValueDisplayStyle.ShowMinMax,
+      },
+    };
+
+    const {
+      formData: { container },
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    expect(queryByRole(container, 'tooltip')).not.toBeInTheDocument();
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 9, 9, (index: number) => {
+      expect(queryByRole(container, 'tooltip')).toBeInTheDocument();
+    });
+
+    expect(queryByRole(container, 'tooltip')).not.toBeInTheDocument();
+
+    await userEvent.hover(sliderThumb);
+    expect(queryByRole(container, 'tooltip')).toBeInTheDocument();
+  });
+
+  test('Tooltip is shown on hover by default', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: { from: 0, to: 10 },
+      },
+    };
+
+    const {
+      formData: { container },
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    if (!sliderThumb || !sliderTrack) return;
+
+    expect(queryByRole(container, 'tooltip')).not.toBeInTheDocument();
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 9, 9, (index: number) => {
+      expect(queryByRole(container, 'tooltip')).toBeInTheDocument();
+    });
+
+    expect(queryByRole(container, 'tooltip')).not.toBeInTheDocument();
+
+    await userEvent.hover(sliderThumb);
+    expect(queryByRole(container, 'tooltip')).toBeInTheDocument();
+  });
+
+  test('Value is displayed correctly on drag (SHOW_VALUE)', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: { from: 0, to: 10 },
+        valueDisplayStyle: ValueDisplayStyle.ShowValue,
+      },
+    };
+
+    const {
+      formData: { container },
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    const input = await screen.findByLabelText('Test Label');
+    if (!sliderThumb || !sliderTrack || !input) return;
+
+    await slideTheValue(sliderThumb, sliderTrack, 0, 9, 9, (index: number) => {
+      const { value } = input as HTMLInputElement;
+      expect(value).toBe(index.toString());
+    });
+  });
+
+  test('Value is displayed correctly on drag (SHOW_VALUE, labelCalculator)', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: {
+          from: 0,
+          to: 26,
+          labelCalculator: getLetterByAlphabetIndex,
+        },
+        valueDisplayStyle: ValueDisplayStyle.ShowValue,
+      },
+    };
+
+    const {
+      formData: { container },
+    } = testForm(INPUTS);
+
+    const sliderThumb = await screen.findByTestId('sliderThumb');
+    const sliderTrack = await screen.findByTestId('sliderTrack');
+    const input = await screen.findByLabelText('Test Label');
+    if (!sliderThumb || !sliderTrack || !input) return;
+
+    await slideTheValue(
+      sliderThumb,
+      sliderTrack,
+      0,
+      25,
+      25,
+      (index: number) => {
+        const { value } = input as HTMLInputElement;
+        expect(value).toBe(getLetterByAlphabetIndex(index));
+      },
+    );
+  });
+
+  test('Min and max is displayed correctly', async () => {
+    const INPUTS: InputsPropsType = {
+      slider: {
+        type: InputType.Slider,
+        label: 'Test Label',
+        valueOptions: {
+          from: 0,
+          to: 26,
+          labelCalculator: getLetterByAlphabetIndex,
+        },
+        valueDisplayStyle: ValueDisplayStyle.ShowMinMax,
+      },
+    };
+
+    const {
+      formData: { container },
+    } = testForm(INPUTS);
+
+    const min = await screen.findByTestId('sliderMin');
+    const max = await screen.findByTestId('sliderMax');
+    if (!min || !max) return;
+
+    expect(min).toHaveTextContent('a');
+    expect(max).toHaveTextContent('z');
   });
 });
