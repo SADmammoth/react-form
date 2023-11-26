@@ -36,7 +36,9 @@ export default async function drag(
     current.clientX += step.x;
     current.clientY += step.y;
     onDrag?.(i);
-    await sleep(duration / steps);
+    if (duration !== 0) {
+      await sleep(duration / steps);
+    }
     fireEvent.mouseMove(element.previousSibling || element, current);
   }
   fireEvent.mouseUp(element.previousSibling || element, current);

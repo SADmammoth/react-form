@@ -29,6 +29,8 @@ const RangeInput = ({
   let sliderInput = style?.hiddenSliderInput;
   let showTip = ShowTip.WhenActive;
 
+  // FIXME: Hide tooltip when ValueDisplayStyle.HideAll
+
   if (valueDisplayStyle === ValueDisplayStyle.AlwaysShowTip) {
     showTip = ShowTip.Always;
   }
@@ -69,7 +71,8 @@ const RangeInput = ({
   return (
     <div css={style?.root}>
       <Optional $={!!label}>
-        <label htmlFor={id} css={style?.label}>
+        <label htmlFor={id + '_from'} css={style?.label}>
+          {/* FIXME: fix htmlFor*/}
           {label}
         </label>
       </Optional>

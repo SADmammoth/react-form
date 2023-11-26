@@ -32,6 +32,7 @@ export const slideTheValue = async (
   targetIndex: number,
   maxIndex: number,
   onDrag?: (index: number) => void,
+  teleport = false,
 ) => {
   const from = getSliderCoordinatesFromIndex(
     sliderTrack,
@@ -45,12 +46,12 @@ export const slideTheValue = async (
     return {
       bottom: 0,
       height: 0,
-      left: 0,
-      right: 0,
+      left: (currentIndex / maxIndex) * 100,
+      right: 100 - (currentIndex / maxIndex) * 100,
       top: 0,
       width: 0,
-      x: 0,
-      y: 0,
+      x: from.x,
+      y: from.y,
     };
   });
   await drag(
@@ -60,7 +61,8 @@ export const slideTheValue = async (
     (i) => {
       onDrag?.(currentIndex + i);
     },
-    targetIndex - currentIndex,
+    Math.abs(targetIndex - currentIndex),
+    teleport ? 0 : 500,
   );
 };
 
