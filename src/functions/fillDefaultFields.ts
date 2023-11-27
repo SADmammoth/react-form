@@ -87,11 +87,6 @@ const defaultProps = {
     hidden: false,
     required: false,
   },
-  [InputType.Range]: {
-    disabled: false,
-    hidden: false,
-    required: false,
-  },
   [InputType.TextArea]: {
     disabled: false,
     hidden: false,
@@ -99,6 +94,15 @@ const defaultProps = {
 
     allowScroll: false,
     isResizable: true,
+    minSymbols: 0,
+    maxSymbols: Infinity,
+    placeholder: '',
+  },
+  [InputType.CustomTextArea]: {
+    disabled: false,
+    hidden: false,
+    required: false,
+
     minSymbols: 0,
     maxSymbols: Infinity,
     placeholder: '',

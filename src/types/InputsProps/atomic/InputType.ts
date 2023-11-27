@@ -12,5 +12,6 @@ export enum InputType {
   Search = 'search',
   File = 'file',
   Image = 'image',
+  CustomTextArea = 'custom-textarea',
   Subform = 'subform',
 }

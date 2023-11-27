@@ -1,5 +1,6 @@
 import CheckboxGroupInput from '../inputs/CheckboxGroupInput';
 import CheckboxInput from '../inputs/CheckboxInput';
+import CustomTextAreaInput from '../inputs/CustomTextAreaInput';
 import FileInput from '../inputs/FileInput';
 import ImageInput from '../inputs/ImageInput';
 import NumberInput from '../inputs/NumberInput';
@@ -26,4 +27,5 @@ export const ALL_INPUTS_MAP: RegisteredInputsMap = {
   [InputType.Search]: SearchInput,
   [InputType.File]: FileInput,
   [InputType.Image]: ImageInput,
+  [InputType.CustomTextArea]: CustomTextAreaInput,
 };

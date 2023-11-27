@@ -9,6 +9,10 @@ import { ValueOption, ValueOptions } from './atomic/ValueOptions';
 import { OptionProps } from './compound/IOptionBasedTypes';
 import { ICheckboxGroupInputProps } from './inputTypes/ICheckboxGroupInputProps';
 import { ICheckboxInputProps } from './inputTypes/ICheckboxInputProps';
+import {
+  ICustomTextAreaInputProps,
+  MacrosCollection,
+} from './inputTypes/ICustomTextAreaInputProps';
 import { FileIcons, IFileInputProps } from './inputTypes/IFileInputProps';
 import { IImageInputProps } from './inputTypes/IImageInputProps';
 import { INumberInputProps } from './inputTypes/INumberInputProps';
@@ -35,7 +39,8 @@ export type InputProps =
   | ISelectInputProps
   | ISearchInputProps
   | IFileInputProps
-  | IImageInputProps;
+  | IImageInputProps
+  | ICustomTextAreaInputProps;
 // | ISubform
 
 export type InputPropsByType = {
@@ -52,6 +57,7 @@ export type InputPropsByType = {
   [InputType.Search]: ISearchInputProps;
   [InputType.File]: IFileInputProps;
   [InputType.Image]: IImageInputProps;
+  [InputType.CustomTextArea]: ICustomTextAreaInputProps;
   // [InputType.Subform]: ISubform;
 };
 
@@ -104,4 +110,7 @@ export type InputPropsIntersection = {
 
   isResizable?: boolean;
   actionButton?: IActionButton;
+
+  macrosCommandPrefix?: string;
+  macrosCollection?: MacrosCollection;
 };

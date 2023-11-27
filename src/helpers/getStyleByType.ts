@@ -7,6 +7,7 @@ import { ProcessedClasses } from '../styles/helpers/classes';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { CheckboxGroupInputStyles } from '../styles/CheckboxGroupInput.styles';
 import { CheckboxInputStyles } from '../styles/CheckboxInput.styles';
+import { CustomTextAreaInputStyles } from '../styles/CustomTextAreaInput.styles';
 import { FileInputStyles } from '../styles/FileInput.styles';
 import { ImageInputStyles } from '../styles/ImageInput.styles';
 import { NumberInputStyles } from '../styles/NumberInput.styles';
@@ -36,6 +37,7 @@ const TYPES = {
   [InputType.Search]: SearchInputStyles,
   [InputType.File]: FileInputStyles,
   [InputType.Image]: ImageInputStyles,
+  [InputType.CustomTextArea]: CustomTextAreaInputStyles,
 };
 
 export type StyleByType = typeof TYPES;

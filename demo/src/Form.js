@@ -161,12 +161,25 @@ const Form = () => {
         type: 'image',
         label: 'Image',
       },
+      customTextArea: {
+        type: 'custom-textarea',
+        label: 'Custom Text Area',
+        macrosCollection: {
+          header1: {
+            openingCommand: '#',
+            commandEffect: (text) => {
+              return <h1>{text}</h1>;
+            },
+          },
+        },
+      },
     },
     formId: 'form',
     onSubmit: async (data) => {
       console.log(data);
     },
   });
+  console.log(Inputs);
   return (
     <Theme>
       <form {...formProps}>
@@ -183,6 +196,7 @@ const Form = () => {
         {Inputs.Search}
         {Inputs.File}
         {Inputs.Image}
+        {Inputs.CustomTextArea}
         <button type="submit">Submit</button>
       </form>
     </Theme>
