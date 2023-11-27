@@ -23,6 +23,7 @@ export class MacrosContext {
   macrosCommandKey: string | null = null;
   value: MacrosContextValue = [];
   parent: MacrosContextPointer | null = null;
+  indexOffset: number = 0;
 
   constructor(
     id: string,
@@ -44,11 +45,13 @@ export type UseMacrosCommandTreeReturnType = {
   exitContext: () => void;
   createNewContext: (macrosCommandKey: string, index: number) => void;
   textInput: (value: ReactNodeLike) => void;
+  offsetIndex: (offsetValue: number) => void;
 };
 
 function appendToContextValue(
   currentDisplayValue: MacrosContextValue,
   currentInputBuffer: ReactNodeLike,
+  indexOffset: number = 0,
 ) {
   if (!currentDisplayValue[currentDisplayValue.length - 1]) {
     return [currentInputBuffer];
@@ -57,9 +60,21 @@ function appendToContextValue(
     typeof currentDisplayValue[currentDisplayValue.length - 1] === 'string' &&
     typeof currentInputBuffer === 'string'
   ) {
+    const stringToUpdate = currentDisplayValue[
+      currentDisplayValue.length - 1
+    ] as string;
+    if (indexOffset === 0) {
+      return [
+        ...currentDisplayValue.slice(0, currentDisplayValue.length - 1),
+        stringToUpdate + currentInputBuffer,
+      ];
+    }
+    console.log(stringToUpdate.slice(indexOffset + stringToUpdate.length + 1));
     return [
       ...currentDisplayValue.slice(0, currentDisplayValue.length - 1),
-      currentDisplayValue[currentDisplayValue.length - 1] + currentInputBuffer,
+      stringToUpdate.slice(0, indexOffset + stringToUpdate.length) +
+        currentInputBuffer +
+        stringToUpdate.slice(indexOffset + stringToUpdate.length),
     ];
   }
   return [...currentDisplayValue, currentInputBuffer];
@@ -192,6 +207,7 @@ export function useMacrosCommandTree(
   };
   const textInput = useCallback(
     (value: ReactNodeLike) => {
+      console.log('FWQEr', contexts[currentMacrosContext].indexOffset);
       setContexts([
         ...contexts.slice(0, currentMacrosContext),
         {
@@ -199,6 +215,7 @@ export function useMacrosCommandTree(
           value: appendToContextValue(
             contexts[currentMacrosContext].value,
             value,
+            contexts[currentMacrosContext].indexOffset,
           ),
         },
         ...contexts.slice(currentMacrosContext + 1),
@@ -206,6 +223,19 @@ export function useMacrosCommandTree(
     },
     [contexts, currentMacrosContext],
   );
+
+  const offsetIndex = (offsetValue: number) => {
+    const newOffset = contexts[currentMacrosContext].indexOffset + offsetValue;
+
+    setContexts([
+      ...contexts.slice(0, currentMacrosContext),
+      {
+        ...contexts[currentMacrosContext],
+        indexOffset: newOffset,
+      },
+      ...contexts.slice(currentMacrosContext + 1),
+    ]);
+  };
 
   const reactNode = useMemo(() => {
     return macrosCommandTreeToReact(contexts[0], macrosCollection, contexts);
@@ -218,5 +248,6 @@ export function useMacrosCommandTree(
     exitContext,
     createNewContext,
     textInput,
+    offsetIndex,
   };
 }

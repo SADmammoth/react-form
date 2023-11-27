@@ -55,14 +55,18 @@ const CustomTextAreaInput = ({
     string | undefined
   >();
 
-  const { reactNode, createNewContext, textInput, exitContext } =
+  const { reactNode, createNewContext, textInput, exitContext, offsetIndex } =
     useMacrosCommandTree(macrosCollection);
 
+  const [caretIndex, setCaretIndex] = useState(value ? value.length - 1 : 0);
+
   const onInput = useCallback(
-    (currentValue: string) => {
+    (currentValue: string, selectionStart: number) => {
+      offsetIndex(selectionStart - caretIndex - 1);
+      setCaretIndex(selectionStart);
       setCurrentInputBuffer(currentValue.slice(outdatedInputBuffer?.length));
     },
-    [outdatedInputBuffer],
+    [outdatedInputBuffer, caretIndex],
   );
 
   const [openCommands, setOpenCommands] = useState<string[]>([]);
@@ -120,7 +124,7 @@ const CustomTextAreaInput = ({
         placeholder={placeholder}
         value={value ?? ''}
         onChange={(event) => {
-          onInput(event.target.value);
+          onInput(event.target.value, event.target.selectionStart);
           //@ts-ignore
           updateValue(name, event.target.value);
         }}
