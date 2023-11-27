@@ -4,7 +4,7 @@ import ToolTip from './ToolTip';
 
 interface IProps
   extends Omit<
-    React.LabelHTMLAttributes<HTMLLabelElement>,
+    React.HTMLAttributes<HTMLDivElement>,
     'onMouseEnter' | 'onMouseLeave'
   > {
   showOverride?: (isHovered: boolean) => boolean;
@@ -45,13 +45,10 @@ const HoverToolTip: React.FC<IProps> = ({
         setHovered(false);
         onMouseLeave?.(event);
       }}
+      {...props} // FIXME: This props should not be on tooltip
       draggable={false}>
       {children}
-      <ToolTip
-        {...props}
-        show={showOverride?.(hovered) ?? hovered}
-        text={text}
-      />
+      <ToolTip show={showOverride?.(hovered) ?? hovered} text={text} />
     </div>
   );
 };

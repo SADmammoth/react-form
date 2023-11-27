@@ -95,6 +95,7 @@ const SliderThumb = ({
       ) : null}
       {showTip !== ShowTip.Never ? (
         <HoverToolTip
+          data-testid="sliderThumb"
           wrapperStyle={[
             style ? [style.thumb, isActive ? style.activeThumb : null] : style,
             { '--position': position },
@@ -127,6 +128,7 @@ const SliderThumb = ({
         />
       ) : (
         <div
+          data-testid="sliderThumb"
           css={
             style ? [style.thumb, isActive ? style.activeThumb : null] : style
           }

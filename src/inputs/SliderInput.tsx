@@ -30,6 +30,8 @@ const SliderInput = ({
   let sliderInput = style?.hiddenSliderInput;
   let showTip = ShowTip.WhenActive;
 
+  // FIXME: Hide tooltip when ValueDisplayStyle.HideAll
+
   if (valueDisplayStyle === ValueDisplayStyle.AlwaysShowTip) {
     showTip = ShowTip.Always;
   }

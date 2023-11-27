@@ -43,9 +43,12 @@ const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
     return (
       <div css={[style ? style.minMaxContainer : style, css``]}>
         <Optional $={showMinMax}>
-          <div css={style ? style.minLabel : style}>{minLabel}</div>
+          <div data-testid="sliderMin" css={style ? style.minLabel : style}>
+            {minLabel}
+          </div>
         </Optional>
         <div
+          data-testid="sliderTrack"
           ref={forwardedRef}
           css={[style ? style.trackContainer : style, css``]}
           style={{
@@ -54,13 +57,16 @@ const SliderTrack: React.FC<SliderTrackProps> = React.forwardRef<
             '--right-position': rightPosition,
           }}>
           <div
+            data-testid="sliderTrackClickTarget"
             css={style ? style.thumbsContainer : style}
             onClick={onTrackClick}>
             {children}
           </div>
         </div>
         <Optional $={showMinMax}>
-          <div css={style ? style.maxLabel : style}>{maxLabel}</div>
+          <div data-testid="sliderMax" css={style ? style.maxLabel : style}>
+            {maxLabel}
+          </div>
         </Optional>
       </div>
     );
