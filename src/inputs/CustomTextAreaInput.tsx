@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { ReactNodeLike } from 'prop-types';
-import { MacrosCollection } from 'src/types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 import { Optional } from '../helpers/Optional';
+import { useMacrosCommandTree } from '../helpers/useMacrosCommandTree';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
+import { MacrosCollection } from '../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 
 function filterCommands(
   currentInput: string,
@@ -26,26 +27,6 @@ function filterCommands(
 //     return currentInput === closingCommand;
 //   });
 // }
-
-function appendDisplayValue(
-  currentDisplayValue: ReactNodeLike[],
-  currentInputBuffer: ReactNodeLike,
-) {
-  console.log(typeof currentDisplayValue[currentDisplayValue.length - 1]);
-  if (!currentDisplayValue[currentDisplayValue.length - 1]) {
-    return [currentInputBuffer];
-  }
-  if (
-    typeof currentDisplayValue[currentDisplayValue.length - 1] === 'string' &&
-    typeof currentInputBuffer === 'string'
-  ) {
-    return [
-      ...currentDisplayValue.slice(0, currentDisplayValue.length - 1),
-      currentDisplayValue[currentDisplayValue.length - 1] + currentInputBuffer,
-    ];
-  }
-  return [...currentDisplayValue, currentInputBuffer];
-}
 
 const CustomTextAreaInput = ({
   type,
@@ -73,9 +54,9 @@ const CustomTextAreaInput = ({
   const [currentInputBuffer, setCurrentInputBuffer] = useState<
     string | undefined
   >();
-  const [displayValue, setDisplayValue] = useState<ReactNodeLike[]>(
-    value ? [value] : [],
-  );
+
+  const { reactNode, createNewContext, textInput, exitContext } =
+    useMacrosCommandTree(macrosCollection);
 
   const onInput = useCallback(
     (currentValue: string) => {
@@ -99,16 +80,18 @@ const CustomTextAreaInput = ({
       const activeCommandsCount = Object.values(activeCommands).length;
 
       if (openCommands.length > 0) {
-        openCommands.reverse().find((key) => {
+        const closingCommand = openCommands.reverse().find((key) => {
           return macrosCollection[key].closingCommand === currentInputBuffer;
         });
+        if (closingCommand) {
+          exitContext();
+        }
       }
       if (activeCommandsCount === 0) {
-        console.log(outdatedInputBuffer + currentInputBuffer);
         setOutdatedInputBuffer(
           (outdatedInputBuffer ?? '') + currentInputBuffer,
         );
-        setDisplayValue(appendDisplayValue(displayValue, currentInputBuffer));
+        textInput(currentInputBuffer);
         setCurrentInputBuffer('');
         return;
       }
@@ -117,23 +100,22 @@ const CustomTextAreaInput = ({
         const { commandEffect } = activeCommands[activeCommandKey];
         setOpenCommands([...openCommands, activeCommandKey]);
         const macrosResult = await commandEffect(currentInputBuffer.slice(1));
-        setDisplayValue(appendDisplayValue(displayValue, macrosResult));
+        createNewContext(activeCommandKey, -1);
         setOutdatedInputBuffer(
           (outdatedInputBuffer ?? '') + currentInputBuffer,
         );
         setCurrentInputBuffer('');
         return;
       }
-      setDisplayValue([displayValue, currentInputBuffer]);
+      //   textInput(currentInputBuffer);
     })();
   }, [currentInputBuffer]);
 
   return (
     <div css={inputBoxStyle}>
-      <input
+      <textarea
         css={inputStyle}
         id={id}
-        type={type}
         name={name}
         placeholder={placeholder}
         value={value ?? ''}
@@ -154,7 +136,7 @@ const CustomTextAreaInput = ({
           {label}
         </label>
       </Optional>
-      <div>{displayValue}</div>
+      <div>{reactNode}</div>
     </div>
   );
 };

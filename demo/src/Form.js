@@ -167,6 +167,7 @@ const Form = () => {
         macrosCollection: {
           header1: {
             openingCommand: '#',
+            closingCommand: '\n',
             commandEffect: (text) => {
               return <h1>{text}</h1>;
             },

@@ -7,7 +7,7 @@ export type MacrosCollection = {
   [commandKey: string]: {
     openingCommand: string;
     closingCommand?: string;
-    commandEffect: (input: string) => Promise<ReactNodeLike>;
+    commandEffect: (input: ReactNodeLike) => ReactNodeLike;
   };
 };
 
