@@ -169,7 +169,7 @@ const Form = () => {
             openingCommand: '#',
             closingCommand: '\n',
             commandEffect: (text) => {
-              return <h1>{text}</h1>;
+              return `<h1>${text}</h1>`;
             },
           },
         },

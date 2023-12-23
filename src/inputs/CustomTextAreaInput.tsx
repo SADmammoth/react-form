@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { ReactNodeLike } from 'prop-types';
+import ContentEditable from 'react-contenteditable';
 import { Optional } from '../helpers/Optional';
 import { useMacrosCommandTree } from '../helpers/useMacrosCommandTree';
 import { InputComponentProps } from '../types/InputsComponentsProps/InputsComponentsProps';
@@ -53,23 +54,25 @@ const CustomTextAreaInput = ({
   >(value);
   const [currentInputBuffer, setCurrentInputBuffer] = useState<
     string | undefined
-  >();
+  >('');
 
   const { reactNode, createNewContext, textInput, exitContext, offsetIndex } =
     useMacrosCommandTree(macrosCollection);
 
   const [caretIndex, setCaretIndex] = useState(value ? value.length - 1 : 0);
 
-  const onInput = useCallback(
-    (currentValue: string, selectionStart: number) => {
-      offsetIndex(selectionStart - caretIndex - 1);
-      setCaretIndex(selectionStart);
-      setCurrentInputBuffer(currentValue.slice(outdatedInputBuffer?.length));
-    },
-    [outdatedInputBuffer, caretIndex],
-  );
+  // const onInput = useCallback(
+  //   (currentValue: string, selectionStart: number) => {
+  //     offsetIndex(selectionStart - caretIndex - 1);
+  //     setCaretIndex(selectionStart);
+  //     setCurrentInputBuffer(currentValue.slice(outdatedInputBuffer?.length));
+  //   },
+  //   [outdatedInputBuffer, caretIndex],
+  // );
 
-  const [openCommands, setOpenCommands] = useState<string[]>([]);
+  const [displayValue, setDisplayValue] = useState<ReactNodeLike[]>([]);
+
+  const input = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -80,21 +83,19 @@ const CustomTextAreaInput = ({
         currentInputBuffer,
         macrosCollection,
       );
-
       const activeCommandsCount = Object.values(activeCommands).length;
-
-      if (openCommands.length > 0) {
-        const closingCommand = openCommands.reverse().find((key) => {
-          return macrosCollection[key].closingCommand === currentInputBuffer;
-        });
-        if (closingCommand) {
-          exitContext();
-        }
-      }
+      // if (openCommands.length > 0) {
+      //   const closingCommand = openCommands.reverse().find((key) => {
+      //     return macrosCollection[key].closingCommand === currentInputBuffer;
+      //   });
+      //   if (closingCommand) {
+      //     exitContext();
+      //   }
+      // }
       if (activeCommandsCount === 0) {
-        setOutdatedInputBuffer(
-          (outdatedInputBuffer ?? '') + currentInputBuffer,
-        );
+        // setOutdatedInputBuffer(
+        //   (outdatedInputBuffer ?? '') + currentInputBuffer,
+        // );
         textInput(currentInputBuffer);
         setCurrentInputBuffer('');
         return;
@@ -102,45 +103,98 @@ const CustomTextAreaInput = ({
       if (activeCommandsCount === 1) {
         const activeCommandKey = Object.keys(activeCommands)[0];
         const { commandEffect } = activeCommands[activeCommandKey];
-        setOpenCommands([...openCommands, activeCommandKey]);
+        // setOpenCommands([...openCommands, activeCommandKey]);
         const macrosResult = await commandEffect(currentInputBuffer.slice(1));
         createNewContext(activeCommandKey, -1);
-        setOutdatedInputBuffer(
-          (outdatedInputBuffer ?? '') + currentInputBuffer,
-        );
+        // setOutdatedInputBuffer(
+        //   (outdatedInputBuffer ?? '') + currentInputBuffer,
+        // );
+        //@ts-ignore
+        document.execCommand('insertHtml', false, '<i>');
         setCurrentInputBuffer('');
         return;
       }
-      //   textInput(currentInputBuffer);
+      textInput(currentInputBuffer);
     })();
   }, [currentInputBuffer]);
 
+  // useEffect(() => {
+  //   text.current = '';
+  //   //@ts-ignore
+  // }, [reactNode]);
+  // console.log('werwe', reactNode);
+  const text = useRef('');
+
   return (
     <div css={inputBoxStyle}>
-      <textarea
+      {/* <div
+        ref={input}
         css={inputStyle}
         id={id}
-        name={name}
         placeholder={placeholder}
-        value={value ?? ''}
+        contentEditable={true}
+        onInput={(event) => {
+          const {
+            //@ts-ignore
+            nativeEvent: { data, inputType },
+          } = event;
+          switch (inputType) {
+            case 'insertText': {
+              setCurrentInputBuffer(currentInputBuffer + data);
+              break;
+            }
+            case 'deleteContentBackward': {
+              setCurrentInputBuffer(currentInputBuffer?.slice(-1));
+              break;
+            }
+            case 'deleteContentForward': {
+              break;
+            }
+          }
+          return false;
+        }}
+        //@ts-ignore
+        dangerouslySetInnerHTML={{ __html: reactNode.join('') }}
         onChange={(event) => {
-          onInput(event.target.value, event.target.selectionStart);
+          console.log(event);
+          // onInput(event.target.value, event.target.selectionStart);
           //@ts-ignore
-          updateValue(name, event.target.value);
+          // updateValue(name, event.target.value);
         }}
-        onBlur={(event) => {
+        // onBlur={(event) => {
+        //   //@ts-ignore
+        //   setValue(name, event.target.value);
+        // }}
+      ></div> */}
+      <ContentEditable
+        html={text.current}
+        onChange={(event) => {
+          const {
+            //@ts-ignore
+            nativeEvent: { data, inputType },
+          } = event;
+          switch (inputType) {
+            case 'insertText': {
+              setCurrentInputBuffer(currentInputBuffer + data);
+              break;
+            }
+            case 'deleteContentBackward': {
+              setCurrentInputBuffer(currentInputBuffer?.slice(-1));
+              break;
+            }
+            case 'deleteContentForward': {
+              break;
+            }
+          }
           //@ts-ignore
-          setValue(name, event.target.value);
+          text.current = event.target.value;
         }}
-        disabled={disabled}
-        required={required}
       />
       <Optional $={!!label}>
         <label htmlFor={id} css={labelStyle}>
           {label}
         </label>
       </Optional>
-      <div>{reactNode}</div>
     </div>
   );
 };
