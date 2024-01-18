@@ -9,25 +9,49 @@ import { InputsProps } from '../types/InputsProps/InputsProps';
 import { InputType } from '../types/InputsProps/atomic/InputType';
 import { MacrosCollection } from '../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 
+function _filterCommands(
+  currentInput: string,
+  macrosCollection: MacrosCollection[keyof MacrosCollection][],
+  sliceIndex = 0,
+  strictComparision = false,
+): MacrosCollection[keyof MacrosCollection] | undefined {
+  const input = currentInput.slice(
+    currentInput.length - (sliceIndex + 1),
+    currentInput.length,
+  );
+  const result = macrosCollection.filter(({ openingCommand }) => {
+    return (
+      input === openingCommand ||
+      (!strictComparision && openingCommand.includes(input))
+    );
+  });
+  const macrosesCount = Object.keys(result).length;
+  if (sliceIndex + 1 >= currentInput.length || macrosesCount === 1) {
+    if (!strictComparision) {
+      return _filterCommands(currentInput, result, sliceIndex, true);
+    }
+    return result[0];
+  }
+  if (macrosesCount === 0) {
+    if (!strictComparision && sliceIndex !== 0) {
+      return _filterCommands(
+        currentInput,
+        macrosCollection,
+        sliceIndex - 1,
+        true,
+      );
+    }
+    return;
+  }
+  return _filterCommands(currentInput, result, sliceIndex + 1);
+}
+
 function filterCommands(
   currentInput: string,
   macrosCollection: MacrosCollection,
 ) {
-  return Object.fromEntries(
-    Object.entries(macrosCollection).filter(([key, { openingCommand }]) => {
-      return currentInput === openingCommand;
-    }),
-  );
+  return _filterCommands(currentInput, Object.values(macrosCollection));
 }
-
-// function filterOpenCommands(
-//   currentInput: string,
-//   macrosCollection: MacrosCollection,
-// ) {
-//   return Object.values(macrosCollection).filter(({ closingCommand }) => {
-//     return currentInput === closingCommand;
-//   });
-// }
 
 const CustomTextAreaInput = ({
   type,
@@ -49,147 +73,101 @@ const CustomTextAreaInput = ({
   const inputBoxStyle = style ? style.inputBox : null;
   const labelStyle = style ? style.label : null;
 
-  const [outdatedInputBuffer, setOutdatedInputBuffer] = useState<
-    string | undefined
-  >(value);
-  const [currentInputBuffer, setCurrentInputBuffer] = useState<
-    string | undefined
-  >('');
+  const [display, setDisplay] = useState<ReactNodeLike[]>([]);
 
-  const { reactNode, createNewContext, textInput, exitContext, offsetIndex } =
-    useMacrosCommandTree(macrosCollection);
+  const currentInput = useRef<HTMLInputElement>();
+  const [activeDisplayElement, setActiveDisplayElement] = useState<
+    number | null
+  >(null);
 
-  const [caretIndex, setCaretIndex] = useState(value ? value.length - 1 : 0);
+  const onChange = (name: string, value: string) => {
+    const activeCommand = filterCommands(value, macrosCollection);
+    if (activeCommand) {
+      const newComponent = activeCommand.commandEffect('');
+      if (currentInput.current) {
+        currentInput.current.innerHTML =
+          currentInput.current?.innerHTML.replace(
+            activeCommand.openingCommand,
+            '',
+          );
+      }
+      setDisplay([...display, newComponent]);
+      setActiveDisplayElement(
+        activeDisplayElement !== null ? activeDisplayElement + 1 : 0,
+      );
 
-  // const onInput = useCallback(
-  //   (currentValue: string, selectionStart: number) => {
-  //     offsetIndex(selectionStart - caretIndex - 1);
-  //     setCaretIndex(selectionStart);
-  //     setCurrentInputBuffer(currentValue.slice(outdatedInputBuffer?.length));
-  //   },
-  //   [outdatedInputBuffer, caretIndex],
-  // );
+      return;
+    }
 
-  const [displayValue, setDisplayValue] = useState<ReactNodeLike[]>([]);
-
-  const input = useRef(null);
+    updateValue(name, value);
+  };
 
   useEffect(() => {
-    (async () => {
-      if (!currentInputBuffer) {
-        return;
-      }
-      const activeCommands = filterCommands(
-        currentInputBuffer,
-        macrosCollection,
-      );
-      const activeCommandsCount = Object.values(activeCommands).length;
-      // if (openCommands.length > 0) {
-      //   const closingCommand = openCommands.reverse().find((key) => {
-      //     return macrosCollection[key].closingCommand === currentInputBuffer;
-      //   });
-      //   if (closingCommand) {
-      //     exitContext();
-      //   }
-      // }
-      if (activeCommandsCount === 0) {
-        // setOutdatedInputBuffer(
-        //   (outdatedInputBuffer ?? '') + currentInputBuffer,
-        // );
-        textInput(currentInputBuffer);
-        setCurrentInputBuffer('');
-        return;
-      }
-      if (activeCommandsCount === 1) {
-        const activeCommandKey = Object.keys(activeCommands)[0];
-        const { commandEffect } = activeCommands[activeCommandKey];
-        // setOpenCommands([...openCommands, activeCommandKey]);
-        const macrosResult = await commandEffect(currentInputBuffer.slice(1));
-        createNewContext(activeCommandKey, -1);
-        // setOutdatedInputBuffer(
-        //   (outdatedInputBuffer ?? '') + currentInputBuffer,
-        // );
-        //@ts-ignore
-        document.execCommand('insertHtml', false, '<i>');
-        setCurrentInputBuffer('');
-        return;
-      }
-      textInput(currentInputBuffer);
-    })();
-  }, [currentInputBuffer]);
-
-  // useEffect(() => {
-  //   text.current = '';
-  //   //@ts-ignore
-  // }, [reactNode]);
-  // console.log('werwe', reactNode);
-  const text = useRef('');
+    if (currentInput.current) {
+      currentInput.current.focus();
+    }
+  }, [display]);
 
   return (
     <div css={inputBoxStyle}>
-      {/* <div
-        ref={input}
-        css={inputStyle}
-        id={id}
-        placeholder={placeholder}
-        contentEditable={true}
-        onInput={(event) => {
-          const {
-            //@ts-ignore
-            nativeEvent: { data, inputType },
-          } = event;
-          switch (inputType) {
-            case 'insertText': {
-              setCurrentInputBuffer(currentInputBuffer + data);
-              break;
-            }
-            case 'deleteContentBackward': {
-              setCurrentInputBuffer(currentInputBuffer?.slice(-1));
-              break;
-            }
-            case 'deleteContentForward': {
-              break;
-            }
-          }
-          return false;
-        }}
-        //@ts-ignore
-        dangerouslySetInnerHTML={{ __html: reactNode.join('') }}
-        onChange={(event) => {
-          console.log(event);
-          // onInput(event.target.value, event.target.selectionStart);
+      <div>
+        <span
+          contenteditable="true"
+          style={{ width: '100%', height: '20px', display: 'inline-block' }}
+          key={`init_input`}
           //@ts-ignore
-          // updateValue(name, event.target.value);
-        }}
-        // onBlur={(event) => {
-        //   //@ts-ignore
-        //   setValue(name, event.target.value);
-        // }}
-      ></div> */}
-      <ContentEditable
-        html={text.current}
-        onChange={(event) => {
-          const {
+          ref={activeDisplayElement === -1 ? currentInput : null}
+          // css={inputStyle}
+          name={name}
+          placeholder={placeholder}
+          onFocus={(event) => {
+            setActiveDisplayElement(-1);
+          }}
+          onKeyUp={(event) => {
+            console.log('HEEEY');
             //@ts-ignore
-            nativeEvent: { data, inputType },
-          } = event;
-          switch (inputType) {
-            case 'insertText': {
-              setCurrentInputBuffer(currentInputBuffer + data);
-              break;
-            }
-            case 'deleteContentBackward': {
-              setCurrentInputBuffer(currentInputBuffer?.slice(-1));
-              break;
-            }
-            case 'deleteContentForward': {
-              break;
-            }
-          }
-          //@ts-ignore
-          text.current = event.target.value;
-        }}
-      />
+            console.log(event.target.innerHTML);
+            //@ts-ignore
+            onChange(name, event.target.innerHTML);
+          }}
+          onBlur={(event) => {
+            //@ts-ignore
+            setValue(name, event.target.value);
+            setActiveDisplayElement(null);
+          }}>
+          {placeholder}
+        </span>
+        {display.length > 0
+          ? display.reduce((acc, displayItem, i) => {
+              return [
+                ...(acc as ReactNodeLike[]),
+                displayItem,
+                <span
+                  contenteditable="true"
+                  key={`input-${i}`}
+                  //@ts-ignore
+                  ref={i === activeDisplayElement ? currentInput : null}
+                  name={name}
+                  placeholder={placeholder}
+                  onFocus={(event) => {
+                    setActiveDisplayElement(i);
+                  }}
+                  onKeyUp={(event) => {
+                    console.log('HEEEY');
+                    //@ts-ignore
+                    console.log(event.target.innerHTML);
+                    //@ts-ignore
+                    onChange(name, event.target.innerHTML);
+                  }}
+                  onBlur={(event) => {
+                    //@ts-ignore
+                    setValue(name, event.target.value);
+                    setActiveDisplayElement(null);
+                  }}></span>,
+              ];
+            }, [])
+          : []}
+      </div>
       <Optional $={!!label}>
         <label htmlFor={id} css={labelStyle}>
           {label}
