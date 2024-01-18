@@ -167,20 +167,29 @@ const Form = () => {
         macrosCollection: {
           header1: {
             openingCommand: '#',
-            closingCommand: '\n',
-            commandEffect: (text, ref, onChange) => {
-              return (
-                <h1>
-                  <input ref={ref} onChange={onChange} />
-                </h1>
-              );
+            commandEffect: {
+              type: 'custom-input',
+              input: (ref, onChange) => {
+                return (
+                  <h1>
+                    <input ref={ref} onChange={onChange} />
+                  </h1>
+                );
+              },
             },
           },
-          header2: {
+          hey: {
+            openingCommand: '**',
+            commandEffect: {
+              type: 'element',
+              element: <b>Hey</b>,
+            },
+          },
+          bold: {
             openingCommand: '*',
-            closingCommand: '\n',
-            commandEffect: (text) => {
-              return <b>{text}</b>;
+            commandEffect: {
+              type: 'text-input',
+              wrapper: 'b',
             },
           },
         },
