@@ -79,11 +79,27 @@ const CustomTextAreaInput = ({
   const [activeDisplayElement, setActiveDisplayElement] = useState<
     number | null
   >(null);
+  const [input, setInput] = useState<string[]>([]);
 
   const onChange = (name: string, value: string) => {
+    console.log(input);
+    const newInput = [...input.slice(0, input.length - 1), `${value}`];
+
     const activeCommand = filterCommands(value, macrosCollection);
     if (activeCommand) {
-      const newComponent = activeCommand.commandEffect('');
+      newInput.push('');
+      const newComponent = activeCommand.commandEffect(
+        '',
+        //@ts-ignore
+        currentInput,
+        //@ts-ignore
+        (event) => {
+          setInput([
+            ...newInput.slice(0, newInput.length - 1),
+            event.target.value,
+          ]);
+        },
+      );
       if (currentInput.current) {
         currentInput.current.innerHTML =
           currentInput.current?.innerHTML.replace(
@@ -95,11 +111,8 @@ const CustomTextAreaInput = ({
       setActiveDisplayElement(
         activeDisplayElement !== null ? activeDisplayElement + 1 : 0,
       );
-
-      return;
     }
-
-    updateValue(name, value);
+    setInput(newInput);
   };
 
   useEffect(() => {
@@ -107,6 +120,11 @@ const CustomTextAreaInput = ({
       currentInput.current.focus();
     }
   }, [display]);
+
+  useEffect(() => {
+    console.log(input);
+    updateValue(name, input.join(''));
+  }, [input]);
 
   return (
     <div css={inputBoxStyle}>
@@ -124,15 +142,12 @@ const CustomTextAreaInput = ({
             setActiveDisplayElement(-1);
           }}
           onKeyUp={(event) => {
-            console.log('HEEEY');
-            //@ts-ignore
-            console.log(event.target.innerHTML);
             //@ts-ignore
             onChange(name, event.target.innerHTML);
           }}
           onBlur={(event) => {
             //@ts-ignore
-            setValue(name, event.target.value);
+            setValue(name, input.join(''));
             setActiveDisplayElement(null);
           }}>
           {placeholder}
@@ -146,7 +161,7 @@ const CustomTextAreaInput = ({
                   contenteditable="true"
                   key={`input-${i}`}
                   //@ts-ignore
-                  ref={i === activeDisplayElement ? currentInput : null}
+                  ref={i + 1 === activeDisplayElement ? currentInput : null}
                   name={name}
                   placeholder={placeholder}
                   onFocus={(event) => {
@@ -155,13 +170,11 @@ const CustomTextAreaInput = ({
                   onKeyUp={(event) => {
                     console.log('HEEEY');
                     //@ts-ignore
-                    console.log(event.target.innerHTML);
-                    //@ts-ignore
                     onChange(name, event.target.innerHTML);
                   }}
                   onBlur={(event) => {
                     //@ts-ignore
-                    setValue(name, event.target.value);
+                    setValue(name, input.join(''));
                     setActiveDisplayElement(null);
                   }}></span>,
               ];

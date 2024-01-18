@@ -168,8 +168,12 @@ const Form = () => {
           header1: {
             openingCommand: '#',
             closingCommand: '\n',
-            commandEffect: (text) => {
-              return <h1>{text}</h1>;
+            commandEffect: (text, ref, onChange) => {
+              return (
+                <h1>
+                  <input ref={ref} onChange={onChange} />
+                </h1>
+              );
             },
           },
           header2: {
