@@ -114,9 +114,6 @@ const CustomTextAreaInput = (
             },
           );
           if (detectedCommand) {
-            console.log(
-              activeDisplayElement !== null ? activeDisplayElement + 2 : 1,
-            );
             // @ts-ignore
             setActiveDisplayElement(
               activeDisplayElement !== null ? activeDisplayElement + 2 : 1,
@@ -137,10 +134,18 @@ const CustomTextAreaInput = (
         }
         setDisplay([...display, newComponent]);
 
-        console.log(activeDisplayElement);
-        setActiveDisplayElement(
-          activeDisplayElement !== null ? activeDisplayElement + 1 : 0,
-        );
+        if (
+          newComponent &&
+          activeCommand.commandEffect.type === CommandEffectType.Element
+        ) {
+          setActiveDisplayElement(
+            activeDisplayElement !== null ? activeDisplayElement + 2 : 0,
+          );
+        } else {
+          setActiveDisplayElement(
+            activeDisplayElement !== null ? activeDisplayElement + 1 : 0,
+          );
+        }
       }
     }
     setInput(newInput);
@@ -206,7 +211,6 @@ const CustomTextAreaInput = (
   }
 
   useEffect(() => {
-    console.log('FOCUS', activeDisplayElement, currentInput.current);
     if (currentInput.current) {
       currentInput.current.focus();
     }
@@ -221,7 +225,6 @@ const CustomTextAreaInput = (
       <div>
         <span
           contenteditable="true"
-          style={{ width: '100%', height: '20px', display: 'inline-block' }}
           key={`init_input`}
           //@ts-ignore
           ref={activeDisplayElement === -1 ? currentInput : null}
@@ -270,7 +273,10 @@ const CustomTextAreaInput = (
           : []}
       </div>
       <Optional $={!!label}>
-        <label htmlFor={id} css={labelStyle}>
+        <label
+          htmlFor={id}
+          css={labelStyle}
+          onClick={() => setActiveDisplayElement(-1)}>
           {label}
         </label>
       </Optional>
