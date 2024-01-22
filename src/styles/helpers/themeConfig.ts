@@ -2,7 +2,7 @@ import { Theme } from '@emotion/react';
 
 const themeConfig: Theme = {
   typography: {
-    fontFamily: 'SF Pro Display',
+    fontFamily: 'Segoe UI',
   },
   color: {
     common: '#9ebfeb',

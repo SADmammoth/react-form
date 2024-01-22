@@ -1,4 +1,4 @@
-import { MutableRefObject, RefObject } from 'react';
+import { MutableRefObject, ReactEventHandler, RefObject } from 'react';
 import { ReactComponentLike, ReactNodeLike } from 'prop-types';
 import { IActionButton } from '../atomic/IActionButton';
 import { InputType } from '../atomic/InputType';
@@ -15,31 +15,38 @@ export enum CommandEffectType {
 export type CommandEffect =
   | {
       type: 'simple';
-      callback: () => ReactNodeLike;
+      callback: () => Promise<ReactNodeLike>;
     }
   | {
       type: 'text-input';
       wrapper: ReactComponentLike;
+      closingCommands?: string[];
     }
   | {
       type: 'custom-input';
       input: (
         ref: RefObject<HTMLElement>,
-        onChange: (value: string) => {},
+        onChange: ReactEventHandler,
+        onClose: (placeholderElement?: ReactNodeLike) => void,
+        isActive: boolean,
       ) => ReactNodeLike;
     }
-  | { type: 'element'; element: ReactNodeLike }
   | {
       type: 'self';
-      macrosCollection?: MacrosCollection;
+      macrosCollection?: (
+        parentMacrosCollection: MacrosCollection,
+      ) => MacrosCollection;
       wrapper: ReactComponentLike;
+      closingCommands?: string[];
     };
 
+export interface IMacros {
+  openingCommand: string;
+  commandEffect: CommandEffect;
+}
+
 export type MacrosCollection = {
-  [commandKey: string]: {
-    openingCommand: string;
-    commandEffect: CommandEffect;
-  };
+  [commandKey: string]: IMacros;
 };
 
 export interface ICustomTextAreaInputProps extends ITextBasedInputs {

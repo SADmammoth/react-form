@@ -178,13 +178,6 @@ const Form = () => {
               },
             },
           },
-          hey: {
-            openingCommand: '_',
-            commandEffect: {
-              type: 'element',
-              element: <b>Hey</b>,
-            },
-          },
           bold: {
             openingCommand: '*',
             commandEffect: {
