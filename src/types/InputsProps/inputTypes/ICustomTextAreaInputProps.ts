@@ -27,7 +27,10 @@ export type CommandEffect =
       input: (
         ref: RefObject<HTMLElement>,
         onChange: ReactEventHandler,
-        onClose: (placeholderElement?: ReactNodeLike) => void,
+        onClose: (
+          finalValue: string,
+          placeholderElement?: ReactNodeLike,
+        ) => void,
         isActive: boolean,
       ) => ReactNodeLike;
     }

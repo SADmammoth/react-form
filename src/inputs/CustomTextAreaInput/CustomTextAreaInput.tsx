@@ -18,6 +18,13 @@ import {
 import NestedTextInput from './NestedTextInput';
 import { filterCommands } from './filterCommands';
 
+type DisplayItem =
+  | {
+      type: 'item';
+      content: IMacros;
+    }
+  | { type: 'placeholder'; content: ReactNodeLike };
+
 const CustomTextAreaInput = (
   props: InputComponentProps<InputsProps, InputType.CustomTextArea>,
 ) => {
@@ -41,7 +48,7 @@ const CustomTextAreaInput = (
   const inputBoxStyle = style ? style.inputBox : null;
   const labelStyle = style ? style.label : null;
 
-  const [display, setDisplay] = useState<IMacros[]>([]);
+  const [display, setDisplay] = useState<DisplayItem[]>([]);
 
   const currentInput = useRef<HTMLInputElement>();
   const [activeDisplayElement, setActiveDisplayElement] = useState<
@@ -49,13 +56,13 @@ const CustomTextAreaInput = (
   >(null);
   const [input, setInput] = useState<string[]>([]);
 
-  const onChange = (name: string, value: string) => {
+  const onChange = (value: string) => {
     const newInput = [...input.slice(0, input.length - 1), `${value}`];
 
     const activeCommand = filterCommands(value, macrosCollection);
     if (activeCommand) {
       newInput.push('');
-      setDisplay([...display, activeCommand]);
+      setDisplay([...display, { type: 'item', content: activeCommand }]);
       if (currentInput.current) {
         currentInput.current.innerHTML =
           currentInput.current?.innerHTML.replace(
@@ -70,7 +77,14 @@ const CustomTextAreaInput = (
     setInput(newInput);
   };
 
-  const onClose = (placeholderElement?: ReactNodeLike) => {
+  const onClose = (finalValue: string, placeholderElement?: ReactNodeLike) => {
+    setInput([...input.slice(0, input.length - 1), `${finalValue}`, '']);
+    if (placeholderElement) {
+      setDisplay([
+        ...display.slice(0, display.length - 1),
+        { type: 'placeholder', content: placeholderElement },
+      ]);
+    }
     setActiveDisplayElement(
       activeDisplayElement !== null ? activeDisplayElement + 1 : -1,
     );
@@ -81,6 +95,8 @@ const CustomTextAreaInput = (
     activeCommand: IMacros,
     currentInput: RefObject<HTMLElement>,
     isActive: boolean,
+    onChange: (value: string) => void,
+    onClose: (finalValue: string, placeholderElement?: ReactNodeLike) => void,
   ): ReactNodeLike {
     const effect = activeCommand.commandEffect;
     switch (effect.type) {
@@ -93,6 +109,7 @@ const CustomTextAreaInput = (
           <NestedTextInput
             wrapper={effect.wrapper}
             activeCommand={activeCommand}
+            onChange={onChange}
             commandId={commandId}
             onClose={onClose}
             ref={currentInput}
@@ -156,7 +173,7 @@ const CustomTextAreaInput = (
           }}
           onKeyUp={(event) => {
             //@ts-ignore
-            onChange(name, event.target.innerHTML);
+            onChange(event.target.innerHTML);
           }}
           onBlur={(event) => {
             //@ts-ignore
@@ -166,16 +183,29 @@ const CustomTextAreaInput = (
         </span>
         {display.length > 0
           ? //@ts-ignore
-            display.reduce((acc, displayItem, i) => {
+            display.reduce((acc, { type, content }, i) => {
+              let displayItem;
+
+              switch (type) {
+                case 'item':
+                  displayItem = commandEffectHandler(
+                    `item-${i}`,
+                    content,
+                    //@ts-ignore
+                    currentInput,
+                    2 * i === activeDisplayElement,
+                    onChange,
+                    onClose,
+                  );
+                  break;
+                case 'placeholder':
+                  displayItem = content;
+                  break;
+              }
+
               return [
                 ...(acc as ReactNodeLike[]),
-                commandEffectHandler(
-                  `item-${i}`,
-                  displayItem,
-                  //@ts-ignore
-                  currentInput,
-                  2 * i === activeDisplayElement,
-                ),
+                displayItem,
                 <span
                   contenteditable="true"
                   key={`input-${i}`}
@@ -189,7 +219,7 @@ const CustomTextAreaInput = (
                   // }}
                   onKeyUp={(event) => {
                     //@ts-ignore
-                    onChange(name, event.target.innerHTML);
+                    onChange(event.target.innerHTML);
                   }}
                   onBlur={(event) => {
                     //@ts-ignore

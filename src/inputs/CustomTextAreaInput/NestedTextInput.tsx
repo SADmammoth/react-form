@@ -20,17 +20,16 @@ type NestedTextInputProps = {
   wrapper: ReactComponentLike;
   commandId: string;
   activeCommand: IMacros;
-  onClose: (placeholderElement?: ReactNodeLike) => void;
+  onChange: (value: string) => void;
+  onClose: (finalValue: string, placeholderElement?: ReactNodeLike) => void;
   isActive: boolean;
 };
 
 const NestedTextInput = React.forwardRef<HTMLElement, NestedTextInputProps>(
-  ({ wrapper, commandId, activeCommand, onClose, isActive }, ref) => {
+  ({ wrapper, commandId, activeCommand, onClose, onChange }, ref) => {
     const Wrapper = wrapper;
 
-    const [content, setContent] = useState('');
-
-    return isActive ? (
+    return (
       <Wrapper
         contentEditable={true}
         key={commandId}
@@ -42,20 +41,15 @@ const NestedTextInput = React.forwardRef<HTMLElement, NestedTextInputProps>(
             activeCommand,
           });
           if (detectedCommand) {
-            console.log('' + event.target.innerHTML);
             event.target.innerHTML = event.target.innerHTML.replace(
               activeCommand.openingCommand,
               '',
             );
-            console.log('' + event.target.innerHTML);
-            onClose(
-              <TextInputPlaceholder
-                wrapper={wrapper}
-                content={event.target.innerHTML}
-              />,
-            );
+            onClose(event.target.innerHTML + activeCommand.openingCommand);
+            return;
           }
-          setContent(event.target.innerHTML);
+          console.log('fwer', event.target.innerHTML);
+          onChange(event.target.innerHTML);
         }}
         // //@ts-ignore
         // onBlur={(event) => {
@@ -66,8 +60,6 @@ const NestedTextInput = React.forwardRef<HTMLElement, NestedTextInputProps>(
         //   );
         // }}
       ></Wrapper>
-    ) : (
-      <TextInputPlaceholder wrapper={wrapper} content={content} />
     );
   },
 );
