@@ -26,8 +26,24 @@ type NestedTextInputProps = {
 };
 
 const NestedTextInput = React.forwardRef<HTMLElement, NestedTextInputProps>(
-  ({ wrapper, commandId, activeCommand, onClose, onChange }, ref) => {
+  ({ wrapper, commandId, activeCommand, onClose, onChange, isActive }, ref) => {
     const Wrapper = wrapper;
+
+    const changeHandler = (event: any) => {
+      const detectedCommand = filterCommands(event.target.innerHTML, {
+        activeCommand,
+        closing: { openingCommand: '\n' } as IMacros,
+      });
+      if (detectedCommand) {
+        event.target.innerHTML = event.target.innerHTML.replace(
+          activeCommand.openingCommand,
+          '',
+        );
+        onClose(event.target.innerHTML + activeCommand.openingCommand);
+        return;
+      }
+      onChange(event.target.innerHTML);
+    };
 
     return (
       <Wrapper
@@ -36,30 +52,23 @@ const NestedTextInput = React.forwardRef<HTMLElement, NestedTextInputProps>(
         //@ts-ignore
         ref={ref}
         //@ts-ignore
-        onKeyUp={(event) => {
-          const detectedCommand = filterCommands(event.target.innerHTML, {
-            activeCommand,
-          });
-          if (detectedCommand) {
-            event.target.innerHTML = event.target.innerHTML.replace(
-              activeCommand.openingCommand,
-              '',
-            );
-            onClose(event.target.innerHTML + activeCommand.openingCommand);
-            return;
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            const old = '' + event.target.innerHTML;
+            event.target.innerHTML += '\n';
+            changeHandler(event);
+            event.target.innerHTML = old + '<br/>';
           }
-          console.log('fwer', event.target.innerHTML);
-          onChange(event.target.innerHTML);
         }}
-        // //@ts-ignore
-        // onBlur={(event) => {
-        //   //@ts-ignore
-        //   event.target.innerHTML = event.target.innerHTML.replace(
-        //     activeCommand.openingCommand,
-        //     '',
-        //   );
-        // }}
-      ></Wrapper>
+        //@ts-ignore
+        onKeyUp={changeHandler}
+        //@ts-ignore
+        onBlur={(event) => {
+          if (isActive) {
+            onClose(event.target.innerHTML + activeCommand.openingCommand);
+          }
+        }}></Wrapper>
     );
   },
 );

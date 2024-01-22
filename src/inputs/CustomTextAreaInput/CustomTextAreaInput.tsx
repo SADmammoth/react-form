@@ -14,6 +14,7 @@ import { InputType } from '../../types/InputsProps/atomic/InputType';
 import {
   CommandEffectType,
   IMacros,
+  MacrosCollection,
 } from '../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 import NestedTextInput from './NestedTextInput';
 import { filterCommands } from './filterCommands';
@@ -125,12 +126,23 @@ const CustomTextAreaInput = (
             //@ts-ignore
             onChange(event.target.value);
             //@ts-ignore
-            event.target.value = event.target.value.replace(
-              activeCommand.openingCommand,
-              '',
-            );
+            // event.target.value = event.target.value.replace(
+            //   activeCommand.openingCommand,
+            //   '',
+            // );
           },
           onClose,
+          (input, macroses) =>
+            filterCommands(
+              input,
+              macroses
+                ? (Object.fromEntries(
+                    macroses.map((macros) => {
+                      return [macros, { openingCommand: macros }];
+                    }),
+                  ) as MacrosCollection)
+                : macrosCollection,
+            )?.openingCommand,
           isActive,
         );
       }

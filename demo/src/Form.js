@@ -169,10 +169,35 @@ const Form = () => {
             openingCommand: '#',
             commandEffect: {
               type: 'custom-input',
-              input: (ref, onChange) => {
+              input: (ref, onChange, onClose, macrosFilter, isActive) => {
                 return (
                   <h1>
-                    <input ref={ref} onChange={onChange} />
+                    <input
+                      ref={ref}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          onClose(event.target.value + '\n ');
+                          event.preventDefault();
+                        }
+                      }}
+                      onChange={(event) => {
+                        const command = macrosFilter(event.target.value, ['#']);
+                        if (command) {
+                          event.target.value = event.target.value.replace(
+                            command,
+                            '',
+                          );
+                          onClose(event.target.value);
+                          return;
+                        }
+                        onChange(event);
+                      }}
+                      onBlur={(event) => {
+                        if (isActive) {
+                          onClose(event.target.value + '\n ');
+                        }
+                      }}
+                    />
                   </h1>
                 );
               },
@@ -193,7 +218,7 @@ const Form = () => {
       console.log(data);
     },
   });
-  console.log(Inputs);
+
   return (
     <Theme>
       <form {...formProps}>

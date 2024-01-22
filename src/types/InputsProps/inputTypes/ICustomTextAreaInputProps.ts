@@ -31,6 +31,10 @@ export type CommandEffect =
           finalValue: string,
           placeholderElement?: ReactNodeLike,
         ) => void,
+        commandFilter: (
+          currentInput: string,
+          commands?: string[],
+        ) => string | undefined,
         isActive: boolean,
       ) => ReactNodeLike;
     }
