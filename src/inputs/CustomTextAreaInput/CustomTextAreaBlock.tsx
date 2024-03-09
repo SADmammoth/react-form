@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useState } from 'react';
+import React, { ReactEventHandler, UIEvent, useState } from 'react';
 import { css } from '@emotion/react';
 import { ReactComponentLike, ReactNodeLike } from 'prop-types';
 import { genrateRandomString } from '../../helpers/generateRandomString';
@@ -25,20 +25,19 @@ export interface ICustomTextAreaBlockProps {
 interface ISimpleInputProps {
   id: string;
   value?: string;
-  baseComponent: ReactComponentLike;
   placeholder?: string;
   onChange: (value: string) => string;
   onInput: (value: string, valueDiff: string) => string;
 }
 
 const SimpleInput = React.forwardRef<HTMLElement, ISimpleInputProps>(
-  (
-    { id, value, placeholder, baseComponent: BaseComponent, onInput, onChange },
-    ref,
-  ) => {
+  ({ id, value, placeholder, onInput, onChange }, ref) => {
     const eventHandler =
-      (callback: (value: string) => string) => (event: Event) => {
-        const target = event.target as HTMLElement;
+      (
+        callback: (value: string) => string,
+      ): ReactEventHandler<HTMLSpanElement> =>
+      (event) => {
+        const target = event.currentTarget;
         if (!target) return;
         const newValue = callback(target.innerHTML);
         if (newValue !== target.innerHTML) {
@@ -47,19 +46,19 @@ const SimpleInput = React.forwardRef<HTMLElement, ISimpleInputProps>(
       };
 
     return (
-      <BaseComponent
+      <span
         ref={ref}
         id={id}
         css={css`
           display: inline-block;
         `}
-        onKeyUp={(event: KeyboardEvent) => {
+        onKeyUp={(event) => {
           eventHandler((value) => onInput(value, event.key))(event);
         }}
         onBlur={eventHandler(onChange)}
         contentEditable={true}>
         {value ?? placeholder}
-      </BaseComponent>
+      </span>
     );
   },
 );
@@ -135,7 +134,10 @@ const CustomTextAreaBlock = React.forwardRef<
         return value;
       }
       if (detectedCommands) {
-        if (detectedCommands.length === 1) {
+        if (
+          detectedCommands.length === 1 &&
+          detectedCommands[0].openingCommand === newCommandBuffer
+        ) {
           // Command detected
           const expectedCommand = detectedCommands[0].openingCommand;
           console.log('BOLD');
@@ -206,7 +208,6 @@ const CustomTextAreaBlock = React.forwardRef<
         <SimpleInput
           ref={currentInput}
           id={id + '_initial'}
-          baseComponent={'span'}
           onInput={internalOnInput}
           onChange={internalOnChange}
         />
@@ -223,7 +224,6 @@ const CustomTextAreaBlock = React.forwardRef<
                 key={id + '_input_' + contentParams.id}
                 ref={currentInput}
                 id={id + '_input_' + contentParams.id}
-                baseComponent={'span'}
                 onInput={internalOnInput}
                 onChange={internalOnChange}
               />,

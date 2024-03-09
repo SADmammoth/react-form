@@ -15,7 +15,8 @@ export enum CommandEffectType {
 export type CommandEffect =
   | {
       type: 'simple';
-      callback: () => Promise<ReactNodeLike>;
+      callback: (initialValue?: string) => Promise<ReactNodeLike>;
+      placeholder?: (initialValue?: string) => ReactNodeLike;
     }
   | {
       type: 'text-input';
@@ -36,6 +37,7 @@ export type CommandEffect =
           commands?: string[],
         ) => string | undefined,
         isActive: boolean,
+        initialValue?: string,
       ) => ReactNodeLike;
     }
   | {
