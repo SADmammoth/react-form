@@ -1,75 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ReactComponentLike, ReactNodeLike } from 'prop-types';
 import { IMacros } from 'src/types/InputsProps/inputTypes/ICustomTextAreaInputProps';
-import { filterCommands } from './filterCommands';
 
-type TextInputPlaceholderProps = {
+interface INestedTextInputProps {
+  id: string;
   wrapper: ReactComponentLike;
-  content: string;
-};
+  command: IMacros;
+  onInput: (value: string) => void;
+  onChange: (value: string, focusNext?: boolean) => void;
+  placeholder: string;
+  closingCommands?: string[] | null;
+}
 
-const TextInputPlaceholder = ({
-  wrapper,
-  content,
-}: TextInputPlaceholderProps) => {
-  const Wrapper = wrapper;
-  return <Wrapper>{content}</Wrapper>;
-};
-
-type NestedTextInputProps = {
-  wrapper: ReactComponentLike;
-  commandId: string;
-  activeCommand: IMacros;
-  onChange: (value: string) => void;
-  onClose: (finalValue: string, placeholderElement?: ReactNodeLike) => void;
-  isActive: boolean;
-};
-
-const NestedTextInput = React.forwardRef<HTMLElement, NestedTextInputProps>(
-  ({ wrapper, commandId, activeCommand, onClose, onChange, isActive }, ref) => {
+const NestedTextInput = React.forwardRef<HTMLElement, INestedTextInputProps>(
+  (
+    { id, wrapper, placeholder, onInput, onChange, closingCommands },
+    currentInput,
+  ) => {
     const Wrapper = wrapper;
 
-    const changeHandler = (event: any) => {
-      const detectedCommand = filterCommands(event.target.innerHTML, {
-        activeCommand,
-        closing: { openingCommand: '\n' } as IMacros,
-      });
-      if (detectedCommand) {
-        event.target.innerHTML = event.target.innerHTML.replace(
-          activeCommand.openingCommand,
-          '',
-        );
-        onClose(event.target.innerHTML + activeCommand.openingCommand);
-        return;
-      }
-      onChange(event.target.innerHTML);
+    const internalOnInput = (value: string, valueDiff: string) => {
+      // Use command detector
+      onInput(value);
+      return value;
     };
 
-    return (
-      <Wrapper
-        contentEditable={true}
-        key={commandId}
-        //@ts-ignore
-        ref={ref}
-        //@ts-ignore
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            const old = '' + event.target.innerHTML;
-            event.target.innerHTML += '\n';
-            changeHandler(event);
-            event.target.innerHTML = old + '<br/>';
-          }
+    const input = (
+      <input
+        type="text"
+        placeholder={placeholder}
+        onKeyUp={(event) => {
+          const target = event.currentTarget;
+          target.value = internalOnInput(target.value, event.key);
         }}
-        //@ts-ignore
-        onKeyUp={changeHandler}
-        //@ts-ignore
-        onBlur={(event) => {
-          if (isActive) {
-            onClose(event.target.innerHTML + activeCommand.openingCommand);
-          }
-        }}></Wrapper>
+        onBlur={(event) => onChange(event.target.value, false)}
+      />
     );
+
+    return wrapper ? <Wrapper>{input}</Wrapper> : input;
   },
 );
 

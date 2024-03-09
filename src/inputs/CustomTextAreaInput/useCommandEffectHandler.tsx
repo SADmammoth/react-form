@@ -7,6 +7,7 @@ import {
 import AsyncCommandPlaceholder from './AsyncCommandEffectPlaceholder';
 
 interface ICommandEffectHandlerArgs {
+  id: string;
   onInput: any;
   onChange: any;
   command: IMacros;
@@ -15,8 +16,9 @@ interface ICommandEffectHandlerArgs {
 }
 
 export const useCommandEffectHandler =
-  (id: string) =>
+  () =>
   ({
+    id,
     currentInputRef,
     command: { commandEffect, openingCommand },
     onInput,
@@ -27,10 +29,13 @@ export const useCommandEffectHandler =
       case CommandEffectType.Simple: {
         return (
           <AsyncCommandPlaceholder
+            key={id}
             commandEffectPromise={commandEffect.callback(backtrackOverflow)}
             placeholder={commandEffect.placeholder?.(backtrackOverflow)}
           />
         );
+      }
+      case CommandEffectType.TextInput: {
       }
       // TODO
       default: {

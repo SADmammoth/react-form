@@ -8,23 +8,23 @@ export enum CommandEffectType {
   Simple = 'simple',
   TextInput = 'text-input',
   CustomInput = 'custom-input',
-  Element = 'element',
-  Self = 'self',
+  NestedBlock = 'nested-block',
 }
 
 export type CommandEffect =
   | {
-      type: 'simple';
+      type: CommandEffectType.Simple;
       callback: (initialValue?: string) => Promise<ReactNodeLike>;
       placeholder?: (initialValue?: string) => ReactNodeLike;
     }
   | {
-      type: 'text-input';
+      type: CommandEffectType.TextInput;
       wrapper: ReactComponentLike;
-      closingCommands?: string[];
+      closingCommands?: string[] | null;
+      placeholder?: string;
     }
   | {
-      type: 'custom-input';
+      type: CommandEffectType.CustomInput;
       input: (
         ref: RefObject<HTMLElement>,
         onChange: ReactEventHandler,
@@ -41,7 +41,7 @@ export type CommandEffect =
       ) => ReactNodeLike;
     }
   | {
-      type: 'self';
+      type: CommandEffectType.NestedBlock;
       macrosCollection?: (
         parentMacrosCollection: MacrosCollection,
       ) => MacrosCollection;
