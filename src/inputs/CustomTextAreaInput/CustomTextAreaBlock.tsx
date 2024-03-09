@@ -1,11 +1,14 @@
 import React, { ReactEventHandler, useState } from 'react';
 import { css } from '@emotion/react';
 import { ReactComponentLike, ReactNodeLike } from 'prop-types';
+import { genrateRandomString } from '../../helpers/generateRandomString';
+import { useStateArray } from '../../hooks/useStateArray';
 import {
   IMacros,
   MacrosCollection,
 } from '../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 import NestedTextInput from './NestedTextInput';
+import { useCommandEffectHandler } from './useCommandEffectHandler';
 
 export interface ICustomTextAreaBlockProps {
   id: string;
@@ -61,15 +64,10 @@ const SimpleInput = React.forwardRef<HTMLElement, ISimpleInputProps>(
   },
 );
 
-const contentFromParams = (
-  inputId: string,
-  contentParams: any,
-): ReactNodeLike => {
-  return <></>;
-};
-
 type ComponentParams = {
   id: string;
+  backtrackOverflow?: string;
+  command: IMacros;
 };
 
 const commandPartialCheck = (
@@ -117,10 +115,10 @@ const CustomTextAreaBlock = React.forwardRef<
     },
     currentInput,
   ) => {
-    const [contentParamsSet, setContentParamsSet] = useState<ComponentParams[]>(
-      [],
-    );
+    const [contentParamsSet, addToContentParamsSet] =
+      useStateArray<ComponentParams>([]);
     const [commandInputBuffer, setCommandInputBuffer] = useState('');
+    const contentFromParams = useCommandEffectHandler(id);
 
     const internalOnInput = (value: string, valueDiff: string) => {
       let newValue = value;
@@ -141,6 +139,10 @@ const CustomTextAreaBlock = React.forwardRef<
           // Command detected
           const expectedCommand = detectedCommands[0].openingCommand;
           console.log('BOLD');
+          addToContentParamsSet({
+            id: id + '_' + genrateRandomString(),
+            command: detectedCommands[0],
+          });
           setCommandInputBuffer('');
         } else {
           // Multiple commands partial match detected, user is, possibly, typing a command
@@ -180,6 +182,11 @@ const CustomTextAreaBlock = React.forwardRef<
               overflowLength -
               partialCommand.openingCommand.length,
           );
+          addToContentParamsSet({
+            id: id + '_' + genrateRandomString(),
+            command: partialCommand,
+            backtrackOverflow,
+          });
           setCommandInputBuffer('');
         }
       }
@@ -193,31 +200,37 @@ const CustomTextAreaBlock = React.forwardRef<
       return value;
     };
 
+    const BaseComponent = baseComponent || 'div';
     return (
-      <div>
+      <BaseComponent>
         <SimpleInput
           ref={currentInput}
           id={id + '_initial'}
-          baseComponent={baseComponent || 'span'}
+          baseComponent={'span'}
           onInput={internalOnInput}
           onChange={internalOnChange}
         />
         {contentParamsSet
           .map((contentParams) => {
             return [
-              contentFromParams(id, contentParams),
+              contentFromParams({
+                ...contentParams,
+                onInput: internalOnInput,
+                onChange: internalOnChange,
+                currentInputRef: currentInput,
+              }),
               <SimpleInput
                 key={id + '_input_' + contentParams.id}
                 ref={currentInput}
                 id={id + '_input_' + contentParams.id}
-                baseComponent={baseComponent || 'span'}
+                baseComponent={'span'}
                 onInput={internalOnInput}
                 onChange={internalOnChange}
               />,
             ];
           })
           .flat()}
-      </div>
+      </BaseComponent>
     );
   },
 );
