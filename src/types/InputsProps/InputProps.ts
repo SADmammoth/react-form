@@ -1,3 +1,4 @@
+import { ReactComponentLike } from 'prop-types';
 import { ControlProps, ConvertersProps } from './atomic/ControlProps';
 import { IActionButton } from './atomic/IActionButton';
 import { InputType } from './atomic/InputType';
@@ -113,4 +114,5 @@ export type InputPropsIntersection = {
 
   macrosCommandPrefix?: string;
   macrosCollection?: MacrosCollection;
+  baseComponent?: ReactComponentLike;
 };

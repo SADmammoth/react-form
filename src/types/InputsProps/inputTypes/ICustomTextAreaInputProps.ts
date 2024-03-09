@@ -61,4 +61,5 @@ export interface ICustomTextAreaInputProps extends ITextBasedInputs {
   macrosCommandPrefix?: string;
   macrosCollection: MacrosCollection;
   actionButton?: IActionButton;
+  baseComponent?: ReactComponentLike;
 }

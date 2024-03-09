@@ -106,6 +106,7 @@ const defaultProps = {
     minSymbols: 0,
     maxSymbols: Infinity,
     placeholder: '',
+    baseComponent: 'span',
   },
 };
 
