@@ -16,6 +16,8 @@ export type CommandEffect =
       type: CommandEffectType.Simple;
       callback: (initialValue?: string) => Promise<ReactNodeLike>;
       placeholder?: (initialValue?: string) => ReactNodeLike;
+      //TODO call callback on click: bool
+      //TODO Static rendering === placeholder?
     }
   | {
       type: CommandEffectType.TextInput;
@@ -26,17 +28,13 @@ export type CommandEffect =
   | {
       type: CommandEffectType.CustomInput;
       input: (
-        ref: RefObject<HTMLElement>,
-        onChange: ReactEventHandler,
-        onClose: (
+        ref: RefObject<HTMLElement> | null,
+        onInput: (value: string) => void,
+        onChange: (
           finalValue: string,
+          focusNext?: boolean,
           placeholderElement?: ReactNodeLike,
         ) => void,
-        commandFilter: (
-          currentInput: string,
-          commands?: string[],
-        ) => string | undefined,
-        isActive: boolean,
         initialValue?: string,
       ) => ReactNodeLike;
     }

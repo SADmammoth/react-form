@@ -169,33 +169,27 @@ const Form = () => {
             openingCommand: '#',
             commandEffect: {
               type: 'custom-input',
-              input: (ref, onChange, onClose, macrosFilter, isActive) => {
+              input: (ref, onInput, onChange, initialValue) => {
                 return (
                   <h1>
                     <input
                       ref={ref}
                       onKeyDown={(event) => {
                         if (event.key === 'Enter') {
-                          onClose(event.target.value + '\n ');
+                          onChange(event.target.value + '\n ', true);
                           event.preventDefault();
+                          // FIXME Close already closed input
                         }
-                      }}
-                      onChange={(event) => {
-                        const command = macrosFilter(event.target.value, ['#']);
-                        if (command) {
-                          event.target.value = event.target.value.replace(
-                            command,
-                            '',
-                          );
-                          onClose(event.target.value);
+                        if (event.key === '#') {
+                          onChange(event.target.value + '#', true);
+                          event.preventDefault();
                           return;
                         }
-                        onChange(event);
+                        onInput(event.target.value);
                       }}
+                      defaultValue={initialValue}
                       onBlur={(event) => {
-                        if (isActive) {
-                          onClose(event.target.value + '\n ');
-                        }
+                        onChange(event.target.value + '\n ', false);
                       }}
                     />
                   </h1>
@@ -203,11 +197,51 @@ const Form = () => {
               },
             },
           },
+          // bold_simple: {
+          //   openingCommand: '*',
+          //   commandEffect: {
+          //     type: 'text-input',
+          //     wrapper: 'b',
+          //   },
+          // },
           bold: {
             openingCommand: '*',
             commandEffect: {
-              type: 'text-input',
+              type: 'self',
               wrapper: 'b',
+              macrosCollection: ({ bold, ...rest }) => rest,
+            },
+          },
+          boldbold: {
+            openingCommand: '**',
+            commandEffect: {
+              type: 'self',
+              wrapper: 'b',
+              macrosCollection: ({ bold, ...rest }) => rest,
+            },
+          },
+          boldboldbold: {
+            openingCommand: '***',
+            commandEffect: {
+              type: 'self',
+              wrapper: 'b',
+              macrosCollection: ({ bold, ...rest }) => rest,
+            },
+          },
+          italic: {
+            openingCommand: '_',
+            commandEffect: {
+              type: 'self',
+              wrapper: 'i',
+              macrosCollection: ({ italic, ...rest }) => rest,
+            },
+          },
+          something: {
+            openingCommand: '//',
+            commandEffect: {
+              type: 'text-input',
+              wrapper: 'span',
+              closingCommands: ['//', 'ArrowUp'],
             },
           },
         },
@@ -222,19 +256,6 @@ const Form = () => {
   return (
     <Theme>
       <form {...formProps}>
-        {Inputs.Text}
-        {Inputs.Number}
-        {Inputs.Checkbox}
-        {Inputs.CheckboxGroup}
-        {Inputs.RadioGroup}
-        {Inputs.RadioGroupRequired}
-        {Inputs.Slider}
-        {Inputs.Rating}
-        {Inputs.Range}
-        {Inputs.Select}
-        {Inputs.Search}
-        {Inputs.File}
-        {Inputs.Image}
         {Inputs.CustomTextArea}
         <button type="submit">Submit</button>
       </form>

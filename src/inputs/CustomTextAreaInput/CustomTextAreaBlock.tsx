@@ -148,6 +148,7 @@ const CustomTextAreaBlock = React.forwardRef<
       return value;
     };
 
+    // TODO Enable user to add command characters into text by reverting commands effect on Backspace
     const BaseComponent = baseComponent || 'div';
     return (
       <BaseComponent>
@@ -162,8 +163,8 @@ const CustomTextAreaBlock = React.forwardRef<
             return [
               contentFromParams({
                 ...contentParams,
-                onInput,
-                onChange,
+                onInput, // FIXME Append value of nested inputs, not replace
+                onChange: (value, focusNext) => onChange(value), // TODO Use focus next
                 currentInputRef: currentInput,
               }),
               <SimpleInput

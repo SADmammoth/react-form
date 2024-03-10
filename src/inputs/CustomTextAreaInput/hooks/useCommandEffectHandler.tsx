@@ -9,8 +9,8 @@ import NestedTextInput from '../NestedTextInput';
 
 interface ICommandEffectHandlerArgs {
   id: string;
-  onInput: any;
-  onChange: any;
+  onInput: (value: string) => void;
+  onChange: (value: string, focusNext?: boolean) => void;
   command: IMacros;
   currentInputRef: ForwardedRef<HTMLInputElement>;
   backtrackOverflow?: string;
@@ -50,6 +50,17 @@ export const useCommandEffectHandler =
             placeholder={commandEffect.placeholder}
             closingCommands={commandEffect.closingCommands}
           />
+        );
+      }
+      case CommandEffectType.CustomInput: {
+        return commandEffect.input(
+          currentInputRef as RefObject<HTMLElement>,
+          onInput,
+          (finalValue, focusNext, placeholderElement) => {
+            console.log(focusNext ? 'CLOSE' : 'FOCUS AWAY');
+            onChange(finalValue, focusNext); //TODO Use placeholder
+          },
+          backtrackOverflow,
         );
       }
       // TODO
