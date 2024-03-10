@@ -3,7 +3,8 @@ import { genrateRandomString } from 'src/helpers/generateRandomString';
 import {
   IMacros,
   MacrosCollection,
-} from '../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
+} from '../../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
+import { MacrosCommand } from '../helpers/macrosCollectionConverter';
 
 export enum CommandDetectorStatus {
   Detected,
@@ -15,7 +16,7 @@ export enum CommandDetectorStatus {
 export type CommandDetectorResult =
   | {
       status: CommandDetectorStatus.Detected;
-      command: IMacros;
+      command: MacrosCommand;
     }
   | {
       status: CommandDetectorStatus.TypingInProgress;
@@ -23,7 +24,7 @@ export type CommandDetectorResult =
   | {
       status: CommandDetectorStatus.Backtrack;
       backtrackOverflow: string;
-      command: IMacros;
+      command: MacrosCommand;
     }
   | {
       status: CommandDetectorStatus.None;
@@ -47,25 +48,26 @@ const commandPartialCheck = (
 
 const checkForCommands = (
   commandsInputBuffer: string,
-  macrosCollection: MacrosCollection,
-): IMacros[] | null => {
-  const foundCommands = Object.values(macrosCollection).filter(
-    ({ openingCommand }) => {
-      return openingCommand.startsWith(commandsInputBuffer);
-    },
-  );
+  commands: string[],
+): string[] | null => {
+  const foundCommands = commands.filter((command) => {
+    return command.startsWith(commandsInputBuffer);
+  });
   return foundCommands.length ? foundCommands : null;
 };
 
-export const useCommandDetector = (macrosCollection: MacrosCollection) => {
+export const useCommandDetector = (
+  commands: MacrosCommand[],
+  ignoreNonCharactersInput = true,
+) => {
   const [commandInputBuffer, setCommandInputBuffer] = useState('');
-  return (value: string, valueDiff: string) => {
+  return (value: string, valueDiff: string): CommandDetectorResult => {
+    if (valueDiff === '' || value === '' || commands.length === 0) {
+      return { status: CommandDetectorStatus.None };
+    }
     const newCommandBuffer = commandInputBuffer + valueDiff;
-    const detectedCommands = checkForCommands(
-      newCommandBuffer,
-      macrosCollection,
-    );
-    if (valueDiff.length > 1) {
+    const detectedCommands = checkForCommands(newCommandBuffer, commands);
+    if (ignoreNonCharactersInput && valueDiff.length > 1) {
       console.log('NONE');
       // Not a character
       setCommandInputBuffer('');
@@ -75,9 +77,9 @@ export const useCommandDetector = (macrosCollection: MacrosCollection) => {
     if (detectedCommands) {
       if (
         detectedCommands.length === 1 &&
-        detectedCommands[0].openingCommand === newCommandBuffer
+        detectedCommands[0] === newCommandBuffer
       ) {
-        const expectedCommand = detectedCommands[0].openingCommand;
+        const expectedCommand = detectedCommands[0];
         console.log('DETECTED');
         setCommandInputBuffer('');
         return {
@@ -93,26 +95,22 @@ export const useCommandDetector = (macrosCollection: MacrosCollection) => {
     }
 
     //FIXME Dont use command buffer, to process case  * > * > backspace > any key
-    const partialCommand = Object.values(macrosCollection)
-      .filter(({ openingCommand }) =>
-        commandPartialCheck(openingCommand, newCommandBuffer),
-      )
+    const partialCommand = commands
+      .filter((command) => commandPartialCheck(command, newCommandBuffer))
       .reduce(
         (longestCommand, foundCommand) =>
-          longestCommand === null ||
-          foundCommand.openingCommand.length >
-            longestCommand.openingCommand.length
+          longestCommand === null || foundCommand.length > longestCommand.length
             ? foundCommand
             : longestCommand,
-        null as IMacros | null,
+        null as string | null,
       );
     if (
       partialCommand &&
-      newCommandBuffer.length - partialCommand.openingCommand.length === 1
+      newCommandBuffer.length - partialCommand.length === 1
     ) {
       // Command not detected, but user's previous input matched the command
       const backtrackOverflow = newCommandBuffer.substring(
-        partialCommand.openingCommand.length,
+        partialCommand.length,
         newCommandBuffer.length,
       );
       //Fix special actions (backspace, etc)

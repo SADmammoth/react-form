@@ -3,8 +3,9 @@ import { ReactNodeLike } from 'prop-types';
 import {
   CommandEffectType,
   IMacros,
-} from '../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
-import AsyncCommandPlaceholder from './AsyncCommandEffectPlaceholder';
+} from '../../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
+import AsyncCommandPlaceholder from '../AsyncCommandEffectPlaceholder';
+import NestedTextInput from '../NestedTextInput';
 
 interface ICommandEffectHandlerArgs {
   id: string;
@@ -20,11 +21,12 @@ export const useCommandEffectHandler =
   ({
     id,
     currentInputRef,
-    command: { commandEffect, openingCommand },
+    command,
     onInput,
     onChange,
     backtrackOverflow,
   }: ICommandEffectHandlerArgs): ReactNodeLike => {
+    const { commandEffect, openingCommand } = command;
     switch (commandEffect.type) {
       case CommandEffectType.Simple: {
         return (
@@ -36,6 +38,19 @@ export const useCommandEffectHandler =
         );
       }
       case CommandEffectType.TextInput: {
+        return (
+          <NestedTextInput
+            key={id}
+            id={id}
+            ref={currentInputRef}
+            command={command}
+            wrapper={commandEffect.wrapper}
+            onChange={onChange}
+            onInput={onInput}
+            placeholder={commandEffect.placeholder}
+            closingCommands={commandEffect.closingCommands}
+          />
+        );
       }
       // TODO
       default: {

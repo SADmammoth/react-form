@@ -10,10 +10,15 @@ import {
 } from '../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 import NestedTextInput from './NestedTextInput';
 import {
+  commandToMacros,
+  macrosCollectionToCommands,
+} from './helpers/macrosCollectionConverter';
+import { removeCommandFromString } from './helpers/removeCommandFromString';
+import {
   CommandDetectorStatus,
   useCommandDetector,
-} from './useCommandDetector';
-import { useCommandEffectHandler } from './useCommandEffectHandler';
+} from './hooks/useCommandDetector';
+import { useCommandEffectHandler } from './hooks/useCommandEffectHandler';
 
 export interface ICustomTextAreaBlockProps {
   id: string;
@@ -93,37 +98,37 @@ const CustomTextAreaBlock = React.forwardRef<
   ) => {
     const [contentParamsSet, addToContentParamsSet] =
       useStateArray<ComponentParams>([]);
-    const commandDetector = useCommandDetector(macrosCollection);
+    const commandDetector = useCommandDetector(
+      macrosCollectionToCommands(macrosCollection),
+    );
     const contentFromParams = useCommandEffectHandler();
 
     const internalOnInput = (value: string, valueDiff: string) => {
       let newValue = value;
       let newValueDisplay = value;
 
-      const { command, status, backtrackOverflow } = commandDetector(
-        value,
-        valueDiff,
-      );
+      const commandDetectorResult = commandDetector(value, valueDiff);
 
-      switch (status) {
-        case CommandDetectorStatus.Backtrack:
+      switch (commandDetectorResult.status) {
         case CommandDetectorStatus.Detected: {
-          console.log(
-            `${regexEscape((command as IMacros).openingCommand)}${
-              backtrackOverflow ? regexEscape(backtrackOverflow) : ''
-            }$`,
-          );
-          newValueDisplay = newValueDisplay.replace(
-            new RegExp(
-              `${regexEscape((command as IMacros).openingCommand)}${
-                backtrackOverflow ? regexEscape(backtrackOverflow) : ''
-              }$`,
-            ),
-            '',
+          const { command } = commandDetectorResult;
+          newValueDisplay = removeCommandFromString(newValueDisplay, command);
+          addToContentParamsSet({
+            id: id + '_' + genrateRandomString(),
+            command: commandToMacros(command, macrosCollection),
+          });
+          break;
+        }
+        case CommandDetectorStatus.Backtrack: {
+          const { command, backtrackOverflow } = commandDetectorResult;
+          newValueDisplay = removeCommandFromString(
+            newValueDisplay,
+            command,
+            backtrackOverflow,
           );
           addToContentParamsSet({
             id: id + '_' + genrateRandomString(),
-            command: command as IMacros,
+            command: commandToMacros(command, macrosCollection),
             backtrackOverflow,
           });
           break;
@@ -139,7 +144,6 @@ const CustomTextAreaBlock = React.forwardRef<
     };
 
     const internalOnChange = (value: string) => {
-      console.log('f', value);
       onChange(value);
       return value;
     };
@@ -158,8 +162,8 @@ const CustomTextAreaBlock = React.forwardRef<
             return [
               contentFromParams({
                 ...contentParams,
-                onInput: internalOnInput,
-                onChange: internalOnChange,
+                onInput,
+                onChange,
                 currentInputRef: currentInput,
               }),
               <SimpleInput
