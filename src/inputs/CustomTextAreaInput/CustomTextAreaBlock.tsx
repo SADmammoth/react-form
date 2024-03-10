@@ -1,4 +1,11 @@
-import React, { ReactEventHandler, UIEvent, useState } from 'react';
+import React, {
+  ReactEventHandler,
+  RefObject,
+  UIEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { css } from '@emotion/react';
 import { ReactComponentLike, ReactNodeLike } from 'prop-types';
 import { genrateRandomString } from '../../helpers/generateRandomString';
@@ -19,6 +26,7 @@ import {
   useCommandDetector,
 } from './hooks/useCommandDetector';
 import { useCommandEffectHandler } from './hooks/useCommandEffectHandler';
+import { useFocus } from './hooks/useFocus';
 
 export interface ICustomTextAreaBlockProps {
   id: string;
@@ -28,26 +36,29 @@ export interface ICustomTextAreaBlockProps {
   macrosCollection: MacrosCollection;
   onChange: (value: string) => void;
   onInput: (value: string) => void;
+  isFocused?: boolean;
 }
 
 interface ISimpleInputProps {
   id: string;
   value?: string;
   placeholder?: string;
-  onChange: (value: string) => string;
+  onChange: (value: string, shouldFocusNext?: boolean) => string;
   onInput: (value: string, valueDiff: string) => string;
+  onFocus: (target: HTMLElement) => void;
 }
 
 const SimpleInput = React.forwardRef<HTMLElement, ISimpleInputProps>(
-  ({ id, value, placeholder, onInput, onChange }, ref) => {
+  ({ id, value, placeholder, onInput, onChange, onFocus }, currentInput) => {
     const eventHandler =
-      (
-        callback: (value: string) => string,
+      <Args extends any[]>(
+        callback: (value: string, ...args: Args) => string,
+        ...args: Args
       ): ReactEventHandler<HTMLSpanElement> =>
       (event) => {
         const target = event.currentTarget;
         if (!target) return;
-        const newValue = callback(target.innerHTML);
+        const newValue = callback(target.innerHTML, ...args);
         if (newValue !== target.innerHTML) {
           target.innerHTML = newValue;
         }
@@ -55,15 +66,16 @@ const SimpleInput = React.forwardRef<HTMLElement, ISimpleInputProps>(
 
     return (
       <span
-        ref={ref}
+        ref={currentInput}
         id={id}
         css={css`
           display: inline-block;
         `}
         onKeyUp={(event) => {
-          eventHandler((value) => onInput(value, event.key))(event);
+          eventHandler(onInput, event.key)(event);
         }}
-        onBlur={eventHandler(onChange)}
+        onBlur={eventHandler(onChange, false)}
+        onFocus={(event) => onFocus(event.currentTarget)}
         contentEditable={true}>
         {value ?? placeholder}
       </span>
@@ -78,11 +90,19 @@ type ComponentParams = {
 };
 
 const CustomTextAreaBlock = React.forwardRef<
-  HTMLInputElement,
+  HTMLElement,
   ICustomTextAreaBlockProps
 >(
   (
-    { baseComponent, placeholder, macrosCollection, onChange, onInput, id },
+    {
+      baseComponent,
+      placeholder,
+      macrosCollection,
+      onChange,
+      onInput,
+      id,
+      isFocused,
+    },
     currentInput,
   ) => {
     const [contentParamsSet, addToContentParamsSet] =
@@ -91,6 +111,9 @@ const CustomTextAreaBlock = React.forwardRef<
       macrosCollectionToCommands(macrosCollection),
     );
     const contentFromParams = useCommandEffectHandler(macrosCollection);
+    const [refByIndex, focus, focusInit, focusNext, unfocus] = useFocus(
+      currentInput as RefObject<HTMLElement>,
+    );
 
     const internalOnInput = (value: string, valueDiff: string) => {
       let newValue = value;
@@ -106,6 +129,8 @@ const CustomTextAreaBlock = React.forwardRef<
             id: id + '_' + genrateRandomString(),
             command: commandToMacros(command, macrosCollection),
           });
+
+          focusNext();
           break;
         }
         case CommandDetectorStatus.Backtrack: {
@@ -120,6 +145,8 @@ const CustomTextAreaBlock = React.forwardRef<
             command: commandToMacros(command, macrosCollection),
             backtrackOverflow,
           });
+
+          focusNext();
           break;
         }
         case CommandDetectorStatus.TypingInProgress:
@@ -132,10 +159,60 @@ const CustomTextAreaBlock = React.forwardRef<
       return newValueDisplay;
     };
 
-    const internalOnChange = (value: string) => {
+    const internalOnChange = (value: string, shouldFocusNext?: boolean) => {
+      console.log('INTERNAL ON CHANGE');
+      if (shouldFocusNext) {
+        focusNext();
+      } // else {
+      //   unfocus();
+      // }
       onChange(value);
       return value;
     };
+
+    const onFocus = (index: number) => (target: HTMLElement) => {
+      console.log('INPUT FOCUS');
+      focus(index);
+    };
+
+    useEffect(() => {
+      //@ts-ignore
+      if (isFocused) {
+        console.log('INIT');
+        focusInit();
+      } // else {
+      //   unfocus();
+      // }
+      //@ts-ignore
+    }, []);
+
+    const commandEffectElements = contentParamsSet
+      .map((contentParams, i) => {
+        console.log(
+          'LOOP',
+          refByIndex(2 * i + 1),
+          2 * i + 1,
+          refByIndex(2 * i + 2),
+          2 * i + 2,
+        );
+        return [
+          contentFromParams({
+            ...contentParams,
+            onInput, // FIXME Append value of nested inputs, not replace
+            onChange: internalOnChange, // TODO Use focus next
+            currentInputRef: refByIndex(2 * i + 1),
+          }),
+          <SimpleInput
+            ref={refByIndex(2 * i + 2)}
+            key={id + '_input_' + contentParams.id}
+            id={id + '_input_' + contentParams.id}
+            onInput={internalOnInput}
+            onChange={internalOnChange}
+            onFocus={onFocus(2 * i + 2)}
+          />,
+        ];
+      })
+      .flat();
 
     // TODO Enable user to add command characters into text by reverting commands effect on Backspace
     const BaseComponent = baseComponent || 'div';
@@ -146,30 +223,13 @@ const CustomTextAreaBlock = React.forwardRef<
           display: inline-block;
         `}>
         <SimpleInput
-          ref={currentInput}
+          ref={refByIndex(0)}
           id={id + '_initial'}
           onInput={internalOnInput}
           onChange={internalOnChange}
+          onFocus={onFocus(0)}
         />
-        {contentParamsSet
-          .map((contentParams) => {
-            return [
-              contentFromParams({
-                ...contentParams,
-                onInput, // FIXME Append value of nested inputs, not replace
-                onChange: (value, focusNext) => onChange(value), // TODO Use focus next
-                currentInputRef: currentInput,
-              }),
-              <SimpleInput
-                key={id + '_input_' + contentParams.id}
-                ref={currentInput}
-                id={id + '_input_' + contentParams.id}
-                onInput={internalOnInput}
-                onChange={internalOnChange}
-              />,
-            ];
-          })
-          .flat()}
+        {commandEffectElements}
       </BaseComponent>
     );
   },

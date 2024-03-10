@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { InputComponentProps } from '../../types/InputsComponentsProps/InputsComponentsProps';
 import { InputsProps } from '../../types/InputsProps/InputsProps';
 import { InputType } from '../../types/InputsProps/atomic/InputType';
@@ -22,6 +23,8 @@ const CustomTextAreaInput = (
     baseComponent,
   } = props;
 
+  const ref = useRef<HTMLElement>(null);
+
   const onInput = (value: string) => {
     updateValue(name, value);
   };
@@ -36,12 +39,14 @@ const CustomTextAreaInput = (
         {label}
       </label>
       <CustomTextAreaBlock
+        ref={ref}
         id={formId + name}
         value={value}
         onInput={onInput}
         onChange={onChange}
         placeholder={placeholder}
         macrosCollection={macrosCollection}
+        isFocused={false}
       />
     </div>
   );

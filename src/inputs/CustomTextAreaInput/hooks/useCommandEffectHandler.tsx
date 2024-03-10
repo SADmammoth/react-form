@@ -15,7 +15,7 @@ interface ICommandEffectHandlerArgs {
   onInput: (value: string) => void;
   onChange: (value: string, focusNext?: boolean) => void;
   command: IMacros;
-  currentInputRef: ForwardedRef<HTMLInputElement>;
+  currentInputRef: RefObject<HTMLElement> | null;
   backtrackOverflow?: string;
 }
 
@@ -85,6 +85,7 @@ export const useCommandEffectHandler =
             onInput={onInput} // TODO Closing commands handling
             onChange={(value) => onChange(value)}
             value={backtrackOverflow}
+            isFocused={true}
           />
         );
       }

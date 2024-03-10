@@ -176,20 +176,23 @@ const Form = () => {
                       ref={ref}
                       onKeyDown={(event) => {
                         if (event.key === 'Enter') {
+                          console.log('ENTER');
                           onChange(event.target.value + '\n ', true);
                           event.preventDefault();
                           // FIXME Close already closed input
                         }
                         if (event.key === '#') {
-                          onChange(event.target.value + '#', true);
+                          console.log('#');
                           event.preventDefault();
+                          onChange(event.target.value + '#', true);
                           return;
                         }
                         onInput(event.target.value);
                       }}
                       defaultValue={initialValue}
                       onBlur={(event) => {
-                        onChange(event.target.value + '\n ', false);
+                        // console.log('Blur');
+                        // onChange(event.target.value + '\n ', false);
                       }}
                     />
                   </h1>

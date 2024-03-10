@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { RefObject, useMemo } from 'react';
 import { ReactComponentLike, ReactNodeLike } from 'prop-types';
 import { IMacros } from 'src/types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 import { removeCommandFromString } from './helpers/removeCommandFromString';
@@ -63,6 +63,7 @@ const NestedTextInput = React.forwardRef<HTMLElement, INestedTextInputProps>(
 
     const input = (
       <input
+        ref={currentInput as RefObject<HTMLInputElement>}
         type="text"
         placeholder={placeholder}
         onKeyUp={(event) => {
