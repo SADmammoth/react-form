@@ -23,13 +23,11 @@ import { useCommandEffectHandler } from './hooks/useCommandEffectHandler';
 export interface ICustomTextAreaBlockProps {
   id: string;
   value?: string;
-  isActive?: boolean;
   baseComponent?: ReactComponentLike;
   placeholder?: string;
   macrosCollection: MacrosCollection;
   onChange: (value: string) => void;
   onInput: (value: string) => void;
-  closingCommands?: string[];
 }
 
 interface ISimpleInputProps {
@@ -84,16 +82,7 @@ const CustomTextAreaBlock = React.forwardRef<
   ICustomTextAreaBlockProps
 >(
   (
-    {
-      isActive,
-      baseComponent,
-      placeholder,
-      macrosCollection,
-      onChange,
-      onInput,
-      closingCommands,
-      id,
-    },
+    { baseComponent, placeholder, macrosCollection, onChange, onInput, id },
     currentInput,
   ) => {
     const [contentParamsSet, addToContentParamsSet] =
@@ -101,7 +90,7 @@ const CustomTextAreaBlock = React.forwardRef<
     const commandDetector = useCommandDetector(
       macrosCollectionToCommands(macrosCollection),
     );
-    const contentFromParams = useCommandEffectHandler();
+    const contentFromParams = useCommandEffectHandler(macrosCollection);
 
     const internalOnInput = (value: string, valueDiff: string) => {
       let newValue = value;
@@ -151,7 +140,11 @@ const CustomTextAreaBlock = React.forwardRef<
     // TODO Enable user to add command characters into text by reverting commands effect on Backspace
     const BaseComponent = baseComponent || 'div';
     return (
-      <BaseComponent>
+      <BaseComponent
+        css={css`
+          min-width: 20px;
+          display: inline-block;
+        `}>
         <SimpleInput
           ref={currentInput}
           id={id + '_initial'}

@@ -1,10 +1,13 @@
 import { ForwardedRef, RefObject } from 'react';
 import { ReactNodeLike } from 'prop-types';
+import { genrateRandomString } from 'src/helpers/generateRandomString';
 import {
   CommandEffectType,
   IMacros,
+  MacrosCollection,
 } from '../../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
 import AsyncCommandPlaceholder from '../AsyncCommandEffectPlaceholder';
+import CustomTextAreaBlock from '../CustomTextAreaBlock';
 import NestedTextInput from '../NestedTextInput';
 
 interface ICommandEffectHandlerArgs {
@@ -17,7 +20,7 @@ interface ICommandEffectHandlerArgs {
 }
 
 export const useCommandEffectHandler =
-  () =>
+  (macrosCollection: MacrosCollection) =>
   ({
     id,
     currentInputRef,
@@ -63,9 +66,30 @@ export const useCommandEffectHandler =
           backtrackOverflow,
         );
       }
-      // TODO
+      case CommandEffectType.NestedBlock: {
+        return (
+          <CustomTextAreaBlock
+            id={id}
+            key={id}
+            ref={currentInputRef}
+            macrosCollection={
+              commandEffect.macrosCollection?.(macrosCollection) ??
+              Object.fromEntries(
+                Object.entries(macrosCollection).filter(
+                  ([commandKey, macros]) =>
+                    macros.openingCommand === command.openingCommand,
+                ),
+              )
+            }
+            baseComponent={commandEffect.wrapper}
+            onInput={onInput} // TODO Closing commands handling
+            onChange={(value) => onChange(value)}
+            value={backtrackOverflow}
+          />
+        );
+      }
       default: {
-        return <b>{backtrackOverflow || '"' + openingCommand + '"'}</b>;
+        return `<UNKNOWN COMMAND EFFECT TYPE '${command.commandEffect.type}'>`;
       }
     }
   };

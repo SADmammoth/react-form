@@ -207,7 +207,7 @@ const Form = () => {
           bold: {
             openingCommand: '*',
             commandEffect: {
-              type: 'self',
+              type: 'nested-block',
               wrapper: 'b',
               macrosCollection: ({ bold, ...rest }) => rest,
             },
@@ -215,23 +215,23 @@ const Form = () => {
           boldbold: {
             openingCommand: '**',
             commandEffect: {
-              type: 'self',
+              type: 'nested-block',
               wrapper: 'b',
-              macrosCollection: ({ bold, ...rest }) => rest,
+              macrosCollection: ({ boldbold, ...rest }) => rest,
             },
           },
           boldboldbold: {
             openingCommand: '***',
             commandEffect: {
-              type: 'self',
+              type: 'nested-block',
               wrapper: 'b',
-              macrosCollection: ({ bold, ...rest }) => rest,
+              macrosCollection: ({ boldboldbold, ...rest }) => rest,
             },
           },
           italic: {
             openingCommand: '_',
             commandEffect: {
-              type: 'self',
+              type: 'nested-block',
               wrapper: 'i',
               macrosCollection: ({ italic, ...rest }) => rest,
             },
