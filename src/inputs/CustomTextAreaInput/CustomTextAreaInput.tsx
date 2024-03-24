@@ -3,6 +3,7 @@ import { InputComponentProps } from '../../types/InputsComponentsProps/InputsCom
 import { InputsProps } from '../../types/InputsProps/InputsProps';
 import { InputType } from '../../types/InputsProps/atomic/InputType';
 import CustomTextAreaBlock from './CustomTextAreaBlock';
+import { filterClosingCommands } from './helpers/macrosCollectionConverter';
 
 const CustomTextAreaInput = (
   props: InputComponentProps<InputsProps, InputType.CustomTextArea>,
@@ -43,9 +44,9 @@ const CustomTextAreaInput = (
         id={formId + name}
         value={value}
         onInput={onInput}
-        onChange={onChange}
+        onChange={(value) => onChange(value)}
         placeholder={placeholder}
-        macrosCollection={macrosCollection}
+        macrosCollection={filterClosingCommands(macrosCollection)}
         isFocused={false}
       />
     </div>

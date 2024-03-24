@@ -12,6 +12,7 @@ import { genrateRandomString } from '../../helpers/generateRandomString';
 import { regexEscape } from '../../helpers/regexExcape';
 import { useStateArray } from '../../hooks/useStateArray';
 import {
+  CommandEffectType,
   IMacros,
   MacrosCollection,
 } from '../../types/InputsProps/inputTypes/ICustomTextAreaInputProps';
@@ -34,7 +35,7 @@ export interface ICustomTextAreaBlockProps {
   baseComponent?: ReactComponentLike;
   placeholder?: string;
   macrosCollection: MacrosCollection;
-  onChange: (value: string) => void;
+  onChange: (value: string, shouldFocusNext?: boolean) => void;
   onInput: (value: string) => void;
   isFocused?: boolean;
 }
@@ -111,9 +112,8 @@ const CustomTextAreaBlock = React.forwardRef<
       macrosCollectionToCommands(macrosCollection),
     );
     const contentFromParams = useCommandEffectHandler(macrosCollection);
-    const { refByIndex, focus, focusInit, focusNext, focusIndex } = useFocus(
-      currentInput as RefObject<HTMLElement>,
-    );
+    const { refByIndex, focus, focusInit, focusNext, focusIndex, unfocus } =
+      useFocus(currentInput as RefObject<HTMLElement>);
 
     const {
       state: input,
@@ -132,10 +132,16 @@ const CustomTextAreaBlock = React.forwardRef<
       switch (commandDetectorResult.status) {
         case CommandDetectorStatus.Detected: {
           const { command } = commandDetectorResult;
+          const macros = commandToMacros(command, macrosCollection);
           newValueDisplay = removeCommandFromString(newValueDisplay, command);
+          if (macros.commandEffect.type === CommandEffectType.ClosingCommand) {
+            console.log('CLOSING');
+            onChange(newValue + command, true);
+            break;
+          }
           addToContentParamsSet({
             id: id + '_' + genrateRandomString(),
-            command: commandToMacros(command, macrosCollection),
+            command: macros,
           });
 
           isFocusNext = true;
@@ -143,11 +149,23 @@ const CustomTextAreaBlock = React.forwardRef<
         }
         case CommandDetectorStatus.Backtrack: {
           const { command, backtrackOverflow } = commandDetectorResult;
+          const macros = commandToMacros(command, macrosCollection);
           newValueDisplay = removeCommandFromString(
             newValueDisplay,
             command,
             backtrackOverflow,
           );
+          if (macros.commandEffect.type === CommandEffectType.ClosingCommand) {
+            // TODO Refactor as "immediate commands".
+            /**  Immediate commands - commands, that have a function as a command effect
+             * and execute it immediately after detection.
+             * These commands do not display any components.
+             * */
+            console.log('CLOSING');
+            onChange(newValue + command, true);
+            break;
+          }
+
           addToContentParamsSet({
             id: id + '_' + genrateRandomString(),
             command: commandToMacros(command, macrosCollection),
@@ -177,12 +195,12 @@ const CustomTextAreaBlock = React.forwardRef<
 
     const internalOnChange = (value: string, shouldFocusNext?: boolean) => {
       console.log('INTERNAL ON CHANGE');
-      if (shouldFocusNext) {
-        focusNext();
-      } // else {
+      // if (shouldFocusNext) {
+      //   focusNext();
+      // } // else {
       //   unfocus();
       // }
-      onChange(input.join(''));
+      onChange(input.join(''), shouldFocusNext);
       return value;
     };
 
@@ -217,7 +235,14 @@ const CustomTextAreaBlock = React.forwardRef<
             onInput: (value) => {
               updateInput(2 * i + 1, value);
             }, // FIXME Append value of nested inputs, not replace
-            onChange: internalOnChange, // TODO Use focus next
+            onChange: (value: string, shouldFocusNext) => {
+              if (!shouldFocusNext) {
+                internalOnChange(value, false);
+                return;
+              }
+              console.log('INDEX', focusIndex);
+              focusNext();
+            }, // TODO Use focus next
             currentInputRef: refByIndex(2 * i + 1),
           }),
           <SimpleInput

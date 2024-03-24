@@ -9,6 +9,12 @@ export enum CommandEffectType {
   TextInput = 'text-input',
   CustomInput = 'custom-input',
   NestedBlock = 'nested-block',
+  ClosingCommand = 'closing-command',
+  // TODO Replace with the "immediate commands".
+  /**  Immediate commands - commands, that have a function as a command effect
+   * and execute it immediately after detection.
+   * These commands do not display any components.
+   * */
 }
 
 export type CommandEffect =
@@ -45,6 +51,9 @@ export type CommandEffect =
       ) => MacrosCollection;
       wrapper: ReactComponentLike;
       closingCommands?: string[];
+    }
+  | {
+      type: CommandEffectType.ClosingCommand;
     };
 
 export interface IMacros {

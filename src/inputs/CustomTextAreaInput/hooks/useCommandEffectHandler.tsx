@@ -9,6 +9,13 @@ import {
 import AsyncCommandPlaceholder from '../AsyncCommandEffectPlaceholder';
 import CustomTextAreaBlock from '../CustomTextAreaBlock';
 import NestedTextInput from '../NestedTextInput';
+import {
+  addClosingMacroses,
+  commandToMacros,
+  createClosingMacros,
+  createClosingMacroses,
+  filterClosingCommands,
+} from '../helpers/macrosCollectionConverter';
 
 interface ICommandEffectHandlerArgs {
   id: string;
@@ -67,23 +74,25 @@ export const useCommandEffectHandler =
         );
       }
       case CommandEffectType.NestedBlock: {
+        const closingCommands = commandEffect.closingCommands ?? [
+          command.openingCommand,
+        ];
+        const extendedMacrosCollection = addClosingMacroses(
+          filterClosingCommands(
+            commandEffect.macrosCollection?.(macrosCollection) ??
+              macrosCollection,
+          ),
+          closingCommands,
+        );
         return (
           <CustomTextAreaBlock
             id={id}
             key={id}
             ref={currentInputRef}
-            macrosCollection={
-              commandEffect.macrosCollection?.(macrosCollection) ??
-              Object.fromEntries(
-                Object.entries(macrosCollection).filter(
-                  ([commandKey, macros]) =>
-                    macros.openingCommand === command.openingCommand,
-                ),
-              )
-            }
+            macrosCollection={extendedMacrosCollection}
             baseComponent={commandEffect.wrapper}
             onInput={onInput} // TODO Closing commands handling
-            onChange={(value) => onChange(value)}
+            onChange={onChange}
             value={backtrackOverflow}
             isFocused={true}
           />
