@@ -1,12 +1,13 @@
 import { ForwardedRef, RefObject, useEffect, useRef, useState } from 'react';
 
-export type UseFocusReturnValue = [
-  refByIndex: (index: number) => RefObject<HTMLElement> | null,
-  focus: (index: number) => void,
-  focusInit: () => void,
-  focusNext: () => void,
-  unfocus: () => void,
-];
+export type UseFocusReturnValue = {
+  refByIndex: (index: number) => RefObject<HTMLElement> | null;
+  focus: (index: number) => void;
+  focusInit: () => void;
+  focusNext: () => void;
+  unfocus: () => void;
+  focusIndex: number;
+};
 
 export function useFocus(
   parentInputRef: RefObject<HTMLElement>,
@@ -48,5 +49,5 @@ export function useFocus(
     setFocusIndex(-1);
   };
 
-  return [refByIndex, focus, focusInit, focusNext, unfocus];
+  return { refByIndex, focus, focusInit, focusNext, unfocus, focusIndex };
 }

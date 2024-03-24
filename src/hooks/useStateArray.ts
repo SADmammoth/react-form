@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-export type UseStateArrayReturnValue<T> = [
-  state: T[],
-  push: (item: T) => void,
-  insert: (index: number, item: T) => void,
-  set: React.Dispatch<React.SetStateAction<T[]>>,
-];
+export type UseStateArrayReturnValue<T> = {
+  state: T[];
+  push: (item: T) => void;
+  setItem: (index: number, item: T) => void;
+  insert: (index: number, item: T) => void;
+  set: React.Dispatch<React.SetStateAction<T[]>>;
+};
 
 export function useStateArray<T>(init: T[]): UseStateArrayReturnValue<T> {
   const [state, setState] = useState<T[]>(init);
@@ -14,7 +15,7 @@ export function useStateArray<T>(init: T[]): UseStateArrayReturnValue<T> {
     setState(() => [...state, item]);
   };
 
-  const insert = (index: number, item: T) => {
+  const setItem = (index: number, item: T) => {
     setState(() => [
       ...state.slice(0, index),
       item,
@@ -22,5 +23,13 @@ export function useStateArray<T>(init: T[]): UseStateArrayReturnValue<T> {
     ]);
   };
 
-  return [state, push, insert, setState];
+  const insert = (index: number, item: T) => {
+    setState(() => [
+      ...state.slice(0, index),
+      item,
+      ...state.slice(index, state.length),
+    ]);
+  };
+
+  return { state, push, setItem, insert, set: setState };
 }

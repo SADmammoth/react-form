@@ -105,15 +105,23 @@ const CustomTextAreaBlock = React.forwardRef<
     },
     currentInput,
   ) => {
-    const [contentParamsSet, addToContentParamsSet] =
+    const { state: contentParamsSet, push: addToContentParamsSet } =
       useStateArray<ComponentParams>([]);
     const commandDetector = useCommandDetector(
       macrosCollectionToCommands(macrosCollection),
     );
     const contentFromParams = useCommandEffectHandler(macrosCollection);
-    const [refByIndex, focus, focusInit, focusNext, unfocus] = useFocus(
+    const { refByIndex, focus, focusInit, focusNext, focusIndex } = useFocus(
       currentInput as RefObject<HTMLElement>,
     );
+
+    const {
+      state: input,
+      push: pushInput,
+      setItem: updateInput,
+    } = useStateArray<string>([]);
+
+    let isFocusNext = false;
 
     const internalOnInput = (value: string, valueDiff: string) => {
       let newValue = value;
@@ -130,7 +138,7 @@ const CustomTextAreaBlock = React.forwardRef<
             command: commandToMacros(command, macrosCollection),
           });
 
-          focusNext();
+          isFocusNext = true;
           break;
         }
         case CommandDetectorStatus.Backtrack: {
@@ -146,7 +154,7 @@ const CustomTextAreaBlock = React.forwardRef<
             backtrackOverflow,
           });
 
-          focusNext();
+          isFocusNext = true;
           break;
         }
         case CommandDetectorStatus.TypingInProgress:
@@ -155,9 +163,17 @@ const CustomTextAreaBlock = React.forwardRef<
           break;
       }
 
-      onInput(newValue);
+      updateInput(focusIndex, newValue);
+      if (isFocusNext) {
+        focusNext();
+      }
       return newValueDisplay;
     };
+
+    useEffect(() => {
+      console.log(input);
+      onInput(input.join(''));
+    }, [input]);
 
     const internalOnChange = (value: string, shouldFocusNext?: boolean) => {
       console.log('INTERNAL ON CHANGE');
@@ -166,7 +182,7 @@ const CustomTextAreaBlock = React.forwardRef<
       } // else {
       //   unfocus();
       // }
-      onChange(value);
+      onChange(input.join(''));
       return value;
     };
 
@@ -198,7 +214,9 @@ const CustomTextAreaBlock = React.forwardRef<
         return [
           contentFromParams({
             ...contentParams,
-            onInput, // FIXME Append value of nested inputs, not replace
+            onInput: (value) => {
+              updateInput(2 * i + 1, value);
+            }, // FIXME Append value of nested inputs, not replace
             onChange: internalOnChange, // TODO Use focus next
             currentInputRef: refByIndex(2 * i + 1),
           }),
