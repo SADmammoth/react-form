@@ -4,6 +4,7 @@ import React, {
   UIEvent,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { css } from '@emotion/react';
@@ -29,6 +30,8 @@ import {
 import { useCommandEffectHandler } from './hooks/useCommandEffectHandler';
 import { useFocus } from './hooks/useFocus';
 
+const CANCEL_COMMAND_KEYS = ['Backspace'];
+
 export interface ICustomTextAreaBlockProps {
   id: string;
   value?: string;
@@ -36,6 +39,7 @@ export interface ICustomTextAreaBlockProps {
   placeholder?: string;
   macrosCollection: MacrosCollection;
   onChange: (value: string, shouldFocusNext?: boolean) => void;
+  onAbort?: (value: string) => void;
   onInput: (value: string) => void;
   isFocused?: boolean;
 }
@@ -101,24 +105,36 @@ const CustomTextAreaBlock = React.forwardRef<
       macrosCollection,
       onChange,
       onInput,
+      onAbort,
       id,
       isFocused,
     },
     currentInput,
   ) => {
-    const { state: contentParamsSet, push: addToContentParamsSet } =
-      useStateArray<ComponentParams>([]);
+    const {
+      state: contentParamsSet,
+      push: addToContentParamsSet,
+      pop: popFromContentParamsSet,
+    } = useStateArray<ComponentParams>([]);
     const commandDetector = useCommandDetector(
       macrosCollectionToCommands(macrosCollection),
     );
     const contentFromParams = useCommandEffectHandler(macrosCollection);
-    const { refByIndex, focus, focusInit, focusNext, focusIndex, unfocus } =
-      useFocus(currentInput as RefObject<HTMLElement>);
+    const {
+      refByIndex,
+      focus,
+      focusInit,
+      focusNext,
+      focusPrev,
+      focusIndex,
+      unfocus,
+    } = useFocus(currentInput as RefObject<HTMLElement>);
 
     const {
       state: input,
       push: pushInput,
       setItem: updateInput,
+      removeIndex: removeInput,
     } = useStateArray<string>([]);
 
     let isFocusNext = false;
@@ -126,6 +142,11 @@ const CustomTextAreaBlock = React.forwardRef<
     const internalOnInput = (value: string, valueDiff: string) => {
       let newValue = value;
       let newValueDisplay = value;
+
+      if (onAbort && value === '' && CANCEL_COMMAND_KEYS.includes(valueDiff)) {
+        onAbort(value);
+        return value;
+      }
 
       const commandDetectorResult = commandDetector(value, valueDiff);
 
@@ -187,6 +208,7 @@ const CustomTextAreaBlock = React.forwardRef<
     }, [input]);
 
     const internalOnChange = (value: string, shouldFocusNext?: boolean) => {
+      // TODO Replace shouldFocusNext with focusIndex, to focus previous input on certain keys
       console.log('INTERNAL ON CHANGE');
       // if (shouldFocusNext) {
       //   focusNext();
@@ -215,13 +237,6 @@ const CustomTextAreaBlock = React.forwardRef<
 
     const commandEffectElements = contentParamsSet
       .map((contentParams, i) => {
-        console.log(
-          'LOOP',
-          refByIndex(2 * i + 1),
-          2 * i + 1,
-          refByIndex(2 * i + 2),
-          2 * i + 2,
-        );
         return [
           contentFromParams({
             ...contentParams,
@@ -234,6 +249,19 @@ const CustomTextAreaBlock = React.forwardRef<
                 return;
               }
               focusNext();
+            },
+            onAbort: (value: string) => {
+              console.log('ABORT', value);
+              const removedCommand = popFromContentParamsSet();
+              const {
+                command: { openingCommand },
+                backtrackOverflow,
+              } = removedCommand;
+              const commandReplacement = openingCommand + backtrackOverflow;
+              const previousInput = input[focusIndex - 1];
+              updateInput(focusIndex - 1, previousInput + commandReplacement);
+              removeInput(focusIndex);
+              focusPrev();
             },
             currentInputRef: refByIndex(2 * i + 1),
           }),

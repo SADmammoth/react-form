@@ -15,6 +15,7 @@ interface ICommandEffectHandlerArgs {
   id: string;
   onInput: (value: string) => void;
   onChange: (value: string, focusNext?: boolean) => void;
+  onAbort: (value: string) => void;
   command: IMacros;
   currentInputRef: RefObject<HTMLElement> | null;
   backtrackOverflow?: string;
@@ -28,6 +29,7 @@ export const useCommandEffectHandler =
     command,
     onInput,
     onChange,
+    onAbort,
     backtrackOverflow,
   }: ICommandEffectHandlerArgs): ReactNodeLike => {
     const { commandEffect, openingCommand } = command;
@@ -88,6 +90,7 @@ export const useCommandEffectHandler =
             baseComponent={commandEffect.wrapper}
             onInput={onInput} // TODO Closing commands handling
             onChange={onChange}
+            onAbort={onAbort}
             value={backtrackOverflow}
             isFocused={true}
           />

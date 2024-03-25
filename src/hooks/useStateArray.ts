@@ -3,6 +3,8 @@ import { useState } from 'react';
 export type UseStateArrayReturnValue<T> = {
   state: T[];
   push: (item: T) => void;
+  pop: () => T;
+  removeIndex: (index: number) => T;
   setItem: (index: number, item: T) => void;
   insert: (index: number, item: T) => void;
   set: React.Dispatch<React.SetStateAction<T[]>>;
@@ -31,5 +33,21 @@ export function useStateArray<T>(init: T[]): UseStateArrayReturnValue<T> {
     ]);
   };
 
-  return { state, push, setItem, insert, set: setState };
+  const pop = () => {
+    const removed = state[state.length - 1];
+    setState(() => state.slice(0, state.length - 1));
+    return removed;
+  };
+
+  const removeIndex = (index: number) => {
+    const removed = state[index];
+    setState(() => [
+      ...state.slice(0, index),
+      ...state.slice(index + 1, state.length),
+    ]);
+
+    return removed;
+  };
+
+  return { state, push, pop, removeIndex, setItem, insert, set: setState };
 }

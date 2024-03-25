@@ -5,6 +5,7 @@ export type UseFocusReturnValue = {
   focus: (index: number) => void;
   focusInit: () => void;
   focusNext: () => void;
+  focusPrev: () => void;
   unfocus: () => void;
   focusIndex: number;
 };
@@ -44,10 +45,23 @@ export function useFocus(
     setFocusIndex(focusIndex + 1);
   };
 
+  const focusPrev = () => {
+    console.log('FOCUS PREV', focusIndex - 1);
+    setFocusIndex(focusIndex - 1);
+  };
+
   const unfocus = () => {
     console.log('UNFOCUS');
     setFocusIndex(-1);
   };
 
-  return { refByIndex, focus, focusInit, focusNext, unfocus, focusIndex };
+  return {
+    refByIndex,
+    focus,
+    focusInit,
+    focusNext,
+    focusPrev,
+    unfocus,
+    focusIndex,
+  };
 }
