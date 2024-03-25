@@ -9,12 +9,7 @@ export enum CommandEffectType {
   TextInput = 'text-input',
   CustomInput = 'custom-input',
   NestedBlock = 'nested-block',
-  ClosingCommand = 'closing-command',
-  // TODO Replace with the "immediate commands".
-  /**  Immediate commands - commands, that have a function as a command effect
-   * and execute it immediately after detection.
-   * These commands do not display any components.
-   * */
+  FunctionCall = 'function-call',
 }
 
 export type CommandEffect =
@@ -53,7 +48,8 @@ export type CommandEffect =
       closingCommands?: string[];
     }
   | {
-      type: CommandEffectType.ClosingCommand;
+      type: CommandEffectType.FunctionCall;
+      function: (value: string) => void;
     };
 
 export interface IMacros {

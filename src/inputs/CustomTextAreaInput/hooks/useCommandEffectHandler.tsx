@@ -9,13 +9,7 @@ import {
 import AsyncCommandPlaceholder from '../AsyncCommandEffectPlaceholder';
 import CustomTextAreaBlock from '../CustomTextAreaBlock';
 import NestedTextInput from '../NestedTextInput';
-import {
-  addClosingMacroses,
-  commandToMacros,
-  createClosingMacros,
-  createClosingMacroses,
-  filterClosingCommands,
-} from '../helpers/macrosCollectionConverter';
+import { addClosingMacroses } from '../helpers/macrosCollectionConverter';
 
 interface ICommandEffectHandlerArgs {
   id: string;
@@ -78,11 +72,12 @@ export const useCommandEffectHandler =
           command.openingCommand,
         ];
         const extendedMacrosCollection = addClosingMacroses(
-          filterClosingCommands(
-            commandEffect.macrosCollection?.(macrosCollection) ??
-              macrosCollection,
-          ),
+          commandEffect.macrosCollection?.(macrosCollection) ??
+            macrosCollection,
           closingCommands,
+          (value) => {
+            onChange(value, true);
+          },
         );
         return (
           <CustomTextAreaBlock

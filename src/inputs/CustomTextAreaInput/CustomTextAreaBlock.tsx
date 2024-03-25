@@ -134,9 +134,8 @@ const CustomTextAreaBlock = React.forwardRef<
           const { command } = commandDetectorResult;
           const macros = commandToMacros(command, macrosCollection);
           newValueDisplay = removeCommandFromString(newValueDisplay, command);
-          if (macros.commandEffect.type === CommandEffectType.ClosingCommand) {
-            console.log('CLOSING');
-            onChange(newValue + command, true);
+          if (macros.commandEffect.type === CommandEffectType.FunctionCall) {
+            macros.commandEffect.function(value);
             break;
           }
           addToContentParamsSet({
@@ -155,14 +154,8 @@ const CustomTextAreaBlock = React.forwardRef<
             command,
             backtrackOverflow,
           );
-          if (macros.commandEffect.type === CommandEffectType.ClosingCommand) {
-            // TODO Refactor as "immediate commands".
-            /**  Immediate commands - commands, that have a function as a command effect
-             * and execute it immediately after detection.
-             * These commands do not display any components.
-             * */
-            console.log('CLOSING');
-            onChange(newValue + command, true);
+          if (macros.commandEffect.type === CommandEffectType.FunctionCall) {
+            macros.commandEffect.function(value);
             break;
           }
 
@@ -240,9 +233,8 @@ const CustomTextAreaBlock = React.forwardRef<
                 internalOnChange(value, false);
                 return;
               }
-              console.log('INDEX', focusIndex);
               focusNext();
-            }, // TODO Use focus next
+            },
             currentInputRef: refByIndex(2 * i + 1),
           }),
           <SimpleInput

@@ -26,6 +26,7 @@ export const commandToMacros = (
 
 export const createClosingMacros = (
   command: string,
+  closeCallback: (value: string) => void,
 ): [name: string, macros: IMacros] => {
   const commandId = genrateRandomString(6);
   return [
@@ -33,16 +34,20 @@ export const createClosingMacros = (
     {
       openingCommand: command,
       commandEffect: {
-        type: CommandEffectType.ClosingCommand,
+        type: CommandEffectType.FunctionCall,
+        function: closeCallback,
       },
     },
   ];
 };
 
-export const createClosingMacroses = (commands: string[]): MacrosCollection => {
+export const createClosingMacroses = (
+  commands: string[],
+  closeCallback: (value: string) => void,
+): MacrosCollection => {
   return Object.fromEntries(
     commands.map((command) => {
-      return createClosingMacros(command);
+      return createClosingMacros(command, closeCallback);
     }),
   );
 };
@@ -50,29 +55,15 @@ export const createClosingMacroses = (commands: string[]): MacrosCollection => {
 export const addClosingMacroses = (
   macrosCollection: MacrosCollection,
   closingCommands: string[],
+  closeCallback: (value: string) => void,
 ): MacrosCollection => {
   const collectionEntries = [
     ...Object.entries(macrosCollection).filter(
       ([, { openingCommand }]) => !closingCommands.includes(openingCommand),
     ),
     ...closingCommands.map((command) => {
-      return createClosingMacros(command);
+      return createClosingMacros(command, closeCallback);
     }),
   ];
   return Object.fromEntries(collectionEntries);
-};
-
-export const filterClosingCommands = (
-  macrosCollection: MacrosCollection,
-): MacrosCollection => {
-  return Object.fromEntries(
-    Object.entries(macrosCollection).filter(
-      ([
-        key,
-        {
-          commandEffect: { type },
-        },
-      ]) => type !== CommandEffectType.ClosingCommand,
-    ),
-  );
 };
