@@ -22,6 +22,7 @@ import {
   commandToMacros,
   macrosCollectionToCommands,
 } from './helpers/macrosCollectionConverter';
+import { putContentEditableCursorToEnd } from './helpers/putContentEditableCursorToEnd';
 import { removeCommandFromString } from './helpers/removeCommandFromString';
 import {
   CommandDetectorStatus,
@@ -80,9 +81,18 @@ const SimpleInput = React.forwardRef<HTMLElement, ISimpleInputProps>(
           eventHandler(onInput, event.key)(event);
         }}
         onBlur={eventHandler(onChange, false)}
-        onFocus={(event) => onFocus(event.currentTarget)}
+        onFocus={(event) => {
+          const target = event.currentTarget;
+          if (!target) return;
+          onFocus(event.currentTarget);
+          console.log('VALUE', value);
+          if (value !== target.innerHTML) {
+            target.innerHTML = value ?? '';
+          }
+          putContentEditableCursorToEnd(target);
+        }}
         contentEditable={true}>
-        {value ?? placeholder}
+        {placeholder}
       </span>
     );
   },
@@ -129,6 +139,11 @@ const CustomTextAreaBlock = React.forwardRef<
       focusIndex,
       unfocus,
     } = useFocus(currentInput as RefObject<HTMLElement>);
+    const {
+      state: inputsValues,
+      setItem: updateInputValue,
+      removeIndex: removeInputValue,
+    } = useStateArray<string>([]);
 
     const {
       state: input,
@@ -196,6 +211,7 @@ const CustomTextAreaBlock = React.forwardRef<
       }
 
       updateInput(focusIndex, newValue);
+      updateInputValue(focusIndex, newValueDisplay);
       if (isFocusNext) {
         focusNext();
       }
@@ -257,12 +273,25 @@ const CustomTextAreaBlock = React.forwardRef<
                 command: { openingCommand },
                 backtrackOverflow,
               } = removedCommand;
-              const commandReplacement = openingCommand + backtrackOverflow;
+              const commandReplacement =
+                openingCommand + (backtrackOverflow ?? '');
               const previousInput = input[focusIndex - 1];
               updateInput(focusIndex - 1, previousInput + commandReplacement);
               removeInput(focusIndex);
+
+              const previousInputValue = inputsValues[focusIndex - 1];
+              console.log(
+                focusIndex - 1,
+                previousInputValue + commandReplacement,
+              );
+              updateInputValue(
+                focusIndex - 1,
+                previousInputValue + commandReplacement,
+              );
+              removeInputValue(focusIndex);
               focusPrev();
             },
+            value: contentParams.backtrackOverflow ?? inputsValues[2 * i + 1],
             currentInputRef: refByIndex(2 * i + 1),
           }),
           <SimpleInput
@@ -272,11 +301,12 @@ const CustomTextAreaBlock = React.forwardRef<
             onInput={internalOnInput}
             onChange={internalOnChange}
             onFocus={onFocus(2 * i + 2)}
+            value={inputsValues[2 * i + 1]}
           />,
         ];
       })
       .flat();
-
+    console.log('VALUES', inputsValues);
     // TODO Enable user to add command characters into text by reverting commands effect on Backspace
     const BaseComponent = baseComponent || 'div';
     return (
@@ -291,6 +321,7 @@ const CustomTextAreaBlock = React.forwardRef<
           onInput={internalOnInput}
           onChange={internalOnChange}
           onFocus={onFocus(0)}
+          value={inputsValues[0]}
         />
         {commandEffectElements}
       </BaseComponent>

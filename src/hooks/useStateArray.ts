@@ -18,15 +18,17 @@ export function useStateArray<T>(init: T[]): UseStateArrayReturnValue<T> {
   };
 
   const setItem = (index: number, item: T) => {
-    setState(() => [
-      ...state.slice(0, index),
-      item,
-      ...state.slice(index + 1, state.length),
-    ]);
+    setState((state) => {
+      return [
+        ...state.slice(0, index),
+        item,
+        ...state.slice(index + 1, state.length),
+      ];
+    });
   };
 
   const insert = (index: number, item: T) => {
-    setState(() => [
+    setState((state) => [
       ...state.slice(0, index),
       item,
       ...state.slice(index, state.length),
@@ -35,13 +37,13 @@ export function useStateArray<T>(init: T[]): UseStateArrayReturnValue<T> {
 
   const pop = () => {
     const removed = state[state.length - 1];
-    setState(() => state.slice(0, state.length - 1));
+    setState((state) => state.slice(0, state.length - 1));
     return removed;
   };
 
   const removeIndex = (index: number) => {
     const removed = state[index];
-    setState(() => [
+    setState((state) => [
       ...state.slice(0, index),
       ...state.slice(index + 1, state.length),
     ]);

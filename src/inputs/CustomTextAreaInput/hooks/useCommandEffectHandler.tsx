@@ -18,7 +18,7 @@ interface ICommandEffectHandlerArgs {
   onAbort: (value: string) => void;
   command: IMacros;
   currentInputRef: RefObject<HTMLElement> | null;
-  backtrackOverflow?: string;
+  value?: string;
 }
 
 export const useCommandEffectHandler =
@@ -30,7 +30,7 @@ export const useCommandEffectHandler =
     onInput,
     onChange,
     onAbort,
-    backtrackOverflow,
+    value,
   }: ICommandEffectHandlerArgs): ReactNodeLike => {
     const { commandEffect, openingCommand } = command;
     switch (commandEffect.type) {
@@ -38,8 +38,8 @@ export const useCommandEffectHandler =
         return (
           <AsyncCommandPlaceholder
             key={id}
-            commandEffectPromise={commandEffect.callback(backtrackOverflow)}
-            placeholder={commandEffect.placeholder?.(backtrackOverflow)}
+            commandEffectPromise={commandEffect.callback(value)}
+            placeholder={commandEffect.placeholder?.(value)}
           />
         );
       }
@@ -66,7 +66,7 @@ export const useCommandEffectHandler =
             console.log(focusNext ? 'CLOSE' : 'FOCUS AWAY');
             onChange(finalValue, focusNext); //TODO Use placeholder
           },
-          backtrackOverflow,
+          value,
         );
       }
       case CommandEffectType.NestedBlock: {
@@ -91,7 +91,7 @@ export const useCommandEffectHandler =
             onInput={onInput} // TODO Closing commands handling
             onChange={onChange}
             onAbort={onAbort}
-            value={backtrackOverflow}
+            value={value}
             isFocused={true}
           />
         );

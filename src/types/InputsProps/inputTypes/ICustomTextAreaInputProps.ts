@@ -46,6 +46,7 @@ export type CommandEffect =
       ) => MacrosCollection;
       wrapper: ReactComponentLike;
       closingCommands?: string[];
+      isAbortable?: boolean;
     }
   | {
       type: CommandEffectType.FunctionCall;
